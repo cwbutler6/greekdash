@@ -19,8 +19,16 @@ export const metadata: Metadata = {
   description: "All-in-one chapter management, made easy.",
   keywords: ["GreekDash", "chapter management", "Greek community", "chapter operations"],
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.svg", type: "image/svg+xml" }
+    ],
+    apple: [
+      { url: "/apple-icon.png" }
+    ],
+    shortcut: "/favicon.ico",
   },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
