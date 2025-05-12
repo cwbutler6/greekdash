@@ -1,22 +1,17 @@
 import { requireChapterAccess } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
-interface ChapterDashboardPageProps {
-  params: {
-    chapterSlug: string;
-  };
-}
-
-export default async function ChapterDashboardPage({
-  params,
-}: ChapterDashboardPageProps) {
+export default async function ChapterDashboardPage(props: { params: Promise<{ chapterSlug: string }> }) {
+  // In Next.js 15, params is now a Promise that needs to be awaited
+  const { chapterSlug } = await props.params;
+  
   // This will redirect if user isn't authenticated or doesn't have access to this chapter
-  const { membership } = await requireChapterAccess(params.chapterSlug);
+  const { membership } = await requireChapterAccess(chapterSlug);
 
   // Get chapter details with subscription info (demonstrating multi-tenant data access)
   const chapter = await prisma.chapter.findUnique({
     where: {
-      slug: params.chapterSlug,
+      slug: chapterSlug,
     },
     include: {
       subscription: true,

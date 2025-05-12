@@ -3,15 +3,12 @@ import { getCurrentUser } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { UpgradeButton } from '@/components/subscription/upgrade-button';
 
-interface PortalPageProps {
-  params: {
-    chapterSlug: string;
-  };
-}
-
-export default async function PortalPage({ params }: PortalPageProps) {
+export default async function PortalPage(props: { params: Promise<{ chapterSlug: string }> }) {
+  // In Next.js 15, params is now a Promise that needs to be awaited
+  const { chapterSlug } = await props.params;
+  
   // This will redirect if user isn't authenticated or doesn't have access to this chapter
-  const { membership } = await requireChapterAccess(params.chapterSlug);
+  const { membership } = await requireChapterAccess(chapterSlug);
   const isAdmin = membership.role === 'ADMIN' || membership.role === 'OWNER';
   
   // Get current user for display
@@ -20,7 +17,7 @@ export default async function PortalPage({ params }: PortalPageProps) {
   // Get chapter details with subscription info
   const chapter = await prisma.chapter.findUnique({
     where: {
-      slug: params.chapterSlug,
+      slug: chapterSlug,
     },
     include: {
       subscription: true,
@@ -88,14 +85,14 @@ export default async function PortalPage({ params }: PortalPageProps) {
                 </p>
                 <div className="flex space-x-2">
                   <UpgradeButton
-                    chapterSlug={params.chapterSlug}
+                    chapterSlug={chapterSlug}
                     planId="basic"
                     className="bg-blue-600 hover:bg-blue-700"
                   >
                     Upgrade to Basic
                   </UpgradeButton>
                   <UpgradeButton
-                    chapterSlug={params.chapterSlug}
+                    chapterSlug={chapterSlug}
                     planId="pro"
                     className="bg-purple-600 hover:bg-purple-700"
                   >
@@ -112,7 +109,7 @@ export default async function PortalPage({ params }: PortalPageProps) {
                 </p>
                 <div className="mt-2">
                   <a 
-                    href={`/${params.chapterSlug}/admin`}
+                    href={`/${chapterSlug}/admin`}
                     className="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                   >
                     Go to Admin Dashboard

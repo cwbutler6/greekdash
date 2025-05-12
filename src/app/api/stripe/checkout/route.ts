@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth/next';
 import { z } from 'zod';
 import stripe from '@/lib/stripe';
 import prisma from '@/lib/prisma';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/lib/auth-options';
 
 // Define request schema for type safety
 const checkoutRequestSchema = z.object({

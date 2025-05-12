@@ -1,20 +1,17 @@
 import { requireChapterAccess } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 
-interface ChapterPageProps {
-  params: {
-    chapterSlug: string;
-  };
-}
-
-export default async function ChapterPage({ params }: ChapterPageProps) {
+export default async function ChapterPage(props: { params: Promise<{ chapterSlug: string }> }) {
+  // In Next.js 15, params is now a Promise that needs to be awaited
+  const { chapterSlug } = await props.params;
+  
   // This will redirect if user isn't authenticated or doesn't have access to this chapter
-  const { membership } = await requireChapterAccess(params.chapterSlug);
+  const { membership } = await requireChapterAccess(chapterSlug);
 
   // Get chapter details
   const chapter = await prisma.chapter.findUnique({
     where: {
-      slug: params.chapterSlug,
+      slug: chapterSlug,
     },
     include: {
       subscription: true,
@@ -57,7 +54,7 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
           <h2 className="mb-4 text-xl font-semibold">Quick Links</h2>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <a
-              href={`/${params.chapterSlug}/portal`}
+              href={`/${chapterSlug}/portal`}
               className="flex items-center rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md"
             >
               <div>
@@ -68,7 +65,7 @@ export default async function ChapterPage({ params }: ChapterPageProps) {
             
             {(membership.role === 'ADMIN' || membership.role === 'OWNER') && (
               <a
-                href={`/${params.chapterSlug}/admin`}
+                href={`/${chapterSlug}/admin`}
                 className="flex items-center rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-all hover:shadow-md"
               >
                 <div>

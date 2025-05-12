@@ -4,25 +4,22 @@ import { redirect } from 'next/navigation';
 import { UpgradeButton } from '@/components/subscription/upgrade-button';
 import { ManageBillingButton } from '@/components/subscription/manage-billing-button';
 
-interface AdminPageProps {
-  params: {
-    chapterSlug: string;
-  };
-}
-
-export default async function AdminPage({ params }: AdminPageProps) {
+export default async function AdminPage(props: { params: Promise<{ chapterSlug: string }> }) {
+  // In Next.js 15, params is now a Promise that needs to be awaited
+  const { chapterSlug } = await props.params;
+  
   // This will redirect if user isn't authenticated or doesn't have access to this chapter
-  const { membership } = await requireChapterAccess(params.chapterSlug);
+  const { membership } = await requireChapterAccess(chapterSlug);
   
   // Check if user has admin privileges
   if (membership.role !== 'ADMIN' && membership.role !== 'OWNER') {
-    redirect(`/${params.chapterSlug}`);
+    redirect(`/${chapterSlug}`);
   }
 
   // Get chapter details with subscription info
   const chapter = await prisma.chapter.findUnique({
     where: {
-      slug: params.chapterSlug,
+      slug: chapterSlug,
     },
     include: {
       subscription: true,
@@ -111,14 +108,14 @@ export default async function AdminPage({ params }: AdminPageProps) {
                   </p>
                   <div className="flex space-x-2">
                     <UpgradeButton
-                      chapterSlug={params.chapterSlug}
+                      chapterSlug={chapterSlug}
                       planId="basic"
                       className="bg-blue-600 hover:bg-blue-700"
                     >
                       Upgrade to Basic
                     </UpgradeButton>
                     <UpgradeButton
-                      chapterSlug={params.chapterSlug}
+                      chapterSlug={chapterSlug}
                       planId="pro"
                       className="bg-purple-600 hover:bg-purple-700"
                     >
@@ -135,7 +132,7 @@ export default async function AdminPage({ params }: AdminPageProps) {
                   </p>
                   <div className="mt-2 flex space-x-2">
                     <ManageBillingButton
-                      chapterSlug={params.chapterSlug}
+                      chapterSlug={chapterSlug}
                       variant="default"
                       className="bg-gray-600 hover:bg-gray-700"
                     >
@@ -143,7 +140,7 @@ export default async function AdminPage({ params }: AdminPageProps) {
                     </ManageBillingButton>
                     {chapter.subscription.plan === "BASIC" && (
                       <UpgradeButton
-                        chapterSlug={params.chapterSlug}
+                        chapterSlug={chapterSlug}
                         planId="pro"
                         className="bg-purple-600 hover:bg-purple-700"
                       >
