@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="120" rx="60" fill="#00b894" opacity="0.1"/>
+  <g transform="translate(30, 30)">
+    <!-- Dollar sign -->
+    <circle cx="30" cy="30" r="25" fill="white" stroke="#00b894" stroke-width="2"/>
+    <path d="M30 15V45" stroke="#00b894" stroke-width="3" stroke-linecap="round"/>
+    <path d="M20 25C20 22.2386 24.4772 20 30 20C35.5228 20 40 22.2386 40 25C40 27.7614 35.5228 30 30 30C24.4772 30 20 32.2386 20 35C20 37.7614 24.4772 40 30 40C35.5228 40 40 37.7614 40 35" stroke="#00b894" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Coins -->
+    <circle cx="15" cy="45" r="10" fill="#00b894" opacity="0.5" stroke="#00b894" stroke-width="1.5"/>
+    <circle cx="45" cy="15" r="8" fill="#00b894" opacity="0.3" stroke="#00b894" stroke-width="1.5"/>
+  </g>
+</svg>

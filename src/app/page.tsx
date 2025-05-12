@@ -24,8 +24,8 @@ export default function Home() {
               </div>
             </div>
             <div className="lg:w-1/2">
-              <div className="aspect-video bg-[#00b894]/10 rounded-xl border-2 border-[#00b894]/20 flex items-center justify-center">
-                <span className="text-6xl">🏛️</span>
+              <div className="aspect-video bg-[#00b894]/10 rounded-xl border-2 border-[#00b894]/20 overflow-hidden">
+                <img src="/images/hero/dashboard-preview.svg" alt="GreekDash Dashboard Preview" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -53,37 +53,45 @@ export default function Home() {
               {
                 title: "Event Management",
                 description: "Schedule, manage, and track attendance for all chapter events.",
-                icon: "📅"
+                icon: "event-management"
               },
               {
                 title: "Membership Directory",
                 description: "Keep your member information organized and accessible.",
-                icon: "👥"
+                icon: "membership"
               },
               {
                 title: "Communication Tools",
                 description: "Connect your chapter with announcements and messaging.",
-                icon: "💬"
+                icon: "communication"
               },
               {
                 title: "Dues & Finances",
                 description: "Collect dues, manage your budget, and track expenses.",
-                icon: "💰"
+                icon: "finances"
               },
               {
                 title: "Points Tracking",
                 description: "Award points for participation and track member engagement.",
-                icon: "⭐"
+                icon: "points"
               },
               {
                 title: "File Sharing",
                 description: "Securely store and share important chapter documents.",
-                icon: "📁"
+                icon: "files"
               }
             ].map((feature, i) => (
               <div key={i} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                <div className="bg-[#00b894]/10 w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-2xl">{feature.icon}</span>
+                <div className="w-12 h-12 mb-4">
+                  <img 
+                    src={`/images/features/${feature.title === 'Event Management' ? 'event-management' : 
+                          feature.title === 'Membership Directory' ? 'membership' : 
+                          feature.title === 'Communication Tools' ? 'communication' : 
+                          feature.title === 'Dues & Finances' ? 'finances' : 
+                          feature.title === 'Points Tracking' ? 'points' : 'files'}.svg`} 
+                    alt={feature.title} 
+                    className="w-full h-full" 
+                  />
                 </div>
                 <h3 className="text-xl font-bold text-black mb-2">{feature.title}</h3>
                 <p className="text-gray-600">{feature.description}</p>

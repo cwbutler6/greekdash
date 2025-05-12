@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="120" rx="60" fill="#00b894" opacity="0.1"/>
+  <g transform="translate(30, 30)">
+    <!-- Message bubble 1 -->
+    <rect x="5" y="10" width="35" height="25" rx="6" fill="#FFFFFF" stroke="#00b894" stroke-width="2"/>
+    <path d="M5 25L2 35L12 25" fill="#FFFFFF"/>
+    <path d="M5 25L2 35L12 25" stroke="#00b894" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="15" cy="22.5" r="2.5" fill="#00b894"/>
+    <circle cx="25" cy="22.5" r="2.5" fill="#00b894"/>
+    <circle cx="35" cy="22.5" r="2.5" fill="#00b894"/>
+    
+    <!-- Message bubble 2 -->
+    <rect x="20" y="40" width="35" height="25" rx="6" fill="#00b894"/>
+    <path d="M55 50L58 60L48 50" fill="#00b894"/>
+    <path d="M55 50L58 60L48 50" stroke="#00b894" stroke-width="2" stroke-linejoin="round"/>
+    <circle cx="30" cy="52.5" r="2.5" fill="white"/>
+    <circle cx="40" cy="52.5" r="2.5" fill="white"/>
+    <circle cx="50" cy="52.5" r="2.5" fill="white"/>
+  </g>
+</svg>

@@ -68,7 +68,7 @@ export const config = {
     // Match all paths that require authentication
     "/dashboard/:path*",
     "/settings/:path*",
-    // Skip authentication check for public routes and API
-    "/((?!api/auth|_next/static|_next/image|favicon.ico).*)",
+    // Skip authentication check for public routes, API, and static files
+    "/((?!api/auth|_next/static|_next/image|images|favicon.ico).*)",
   ],
 };

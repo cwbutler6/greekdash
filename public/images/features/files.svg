@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="120" height="120" rx="60" fill="#00b894" opacity="0.1"/>
+  <g transform="translate(30, 30)">
+    <!-- Folder -->
+    <path d="M5 15C5 13.3431 6.34315 12 8 12H22L28 18H52C53.6569 18 55 19.3431 55 21V45C55 46.6569 53.6569 48 52 48H8C6.34315 48 5 46.6569 5 45V15Z" fill="#FFFFFF" stroke="#00b894" stroke-width="2"/>
+    <path d="M5 21H55" stroke="#00b894" stroke-width="2"/>
+    
+    <!-- Files -->
+    <rect x="15" y="28" width="20" height="4" rx="1" fill="#00b894" opacity="0.5"/>
+    <rect x="15" y="36" width="30" height="4" rx="1" fill="#00b894" opacity="0.5"/>
+  </g>
+</svg>
