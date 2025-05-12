@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GreekDash
 
-## Getting Started
+GreekDash is a multi-tenant SaaS platform designed for fraternity and sorority chapters. It provides a customizable dashboard, member portal, lineage tracking, and subscription-based features using modern web technologies.
 
-First, run the development server:
+## 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Frontend:** Next.js (App Router), Tailwind CSS, shadcn/ui
+- **Backend:** Next.js API Routes, Prisma ORM
+- **Database:** PostgreSQL (via Supabase or direct)
+- **Authentication:** NextAuth.js (multi-tenant, chapter-based)
+- **Billing:** Stripe Subscriptions (Free, Basic, Pro)
+
+## 🧩 Features
+
+- Multi-tenant support (each chapter has a unique slug and branded experience)
+- Admin dashboard to manage users, content, and billing
+- Public-facing site for recruitment and events
+- Member portal with searchable directory and lineage tree
+- Stripe-powered billing with plan upgrades and billing portal
+- Responsive, accessible UI powered by shadcn/ui
+
+## 🗂️ Project Structure
+
+```
+/app                  # Next.js App Router structure
+  /[chapterSlug]      # Dynamic route per chapter
+    /admin            # Chapter admin dashboard
+    /portal           # Member-only portal
+  /api                # API routes
+/components/ui        # shadcn/ui components
+/lib                  # Utility functions and shared logic
+/prisma               # Prisma schema and migration files
+/styles               # Global styles
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📦 Scripts
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Script         | Description                      |
+|----------------|----------------------------------|
+| `dev`          | Run the development server       |
+| `build`        | Build the app for production     |
+| `start`        | Start the production server      |
+| `lint`         | Run ESLint                       |
+| `test`         | Run tests                        |
+| `prisma`       | Prisma CLI tools                 |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚙️ Environment Variables
 
-## Learn More
+- `DATABASE_URL` – Supabase/Postgres connection string
+- `NEXTAUTH_URL` – Site URL for NextAuth
+- `NEXTAUTH_SECRET` – Secret key for signing sessions
+- `STRIPE_SECRET_KEY` – Stripe API key
+- `STRIPE_WEBHOOK_SECRET` – Stripe webhook secret
+- `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` – Stripe publishable key
 
-To learn more about Next.js, take a look at the following resources:
+## 🧪 Testing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Use your preferred framework (e.g., Jest, Vitest)
+- Coverage recommended for all features
+- E2E testing setup TBD
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🧠 AI Rules
 
-## Deploy on Vercel
+This project includes a `.windsurf/rules/` folder defining strict code style, folder conventions, auth patterns, and feature guides for Windsurf Editor users.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📄 License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT
+
+---
+
+© 2025 GreekDash
