@@ -125,6 +125,8 @@ exports.Prisma.ChapterScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   joinCode: 'joinCode',
+  publicInfo: 'publicInfo',
+  primaryColor: 'primaryColor',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   stripeCustomerId: 'stripeCustomerId'
@@ -238,6 +240,24 @@ exports.Prisma.AuditLogScalarFieldEnum = {
   chapterId: 'chapterId'
 };
 
+exports.Prisma.GalleryImageScalarFieldEnum = {
+  id: 'id',
+  url: 'url',
+  caption: 'caption',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  chapterId: 'chapterId'
+};
+
+exports.Prisma.ContactMessageScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  message: 'message',
+  createdAt: 'createdAt',
+  chapterId: 'chapterId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -308,7 +328,9 @@ exports.Prisma.ModelName = {
   Invite: 'Invite',
   Event: 'Event',
   EventRSVP: 'EventRSVP',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  GalleryImage: 'GalleryImage',
+  ContactMessage: 'ContactMessage'
 };
 
 /**

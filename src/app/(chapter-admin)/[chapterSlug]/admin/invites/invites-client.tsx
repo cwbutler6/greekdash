@@ -427,12 +427,13 @@ export default function AdminInvitesClient({ chapterSlug }: { chapterSlug: strin
           </DialogHeader>
           
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="space-y-4 py-4">
-              <div>
-                <Label htmlFor="email">Email Address</Label>
+            <div className="space-y-6 py-5">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-sm font-medium">Email Address</Label>
                 <Input 
                   id="email"
                   placeholder="example@email.com"
+                  className="mt-1.5"
                   {...register("email")}
                 />
                 {errors.email && (
@@ -440,8 +441,8 @@ export default function AdminInvitesClient({ chapterSlug }: { chapterSlug: strin
                 )}
               </div>
               
-              <div>
-                <Label htmlFor="role">Role</Label>
+              <div className="space-y-2">
+                <Label htmlFor="role" className="text-sm font-medium">Role</Label>
                 <Select
                   defaultValue="MEMBER"
                   onValueChange={(value) => setValue("role", value as "MEMBER" | "ADMIN")}

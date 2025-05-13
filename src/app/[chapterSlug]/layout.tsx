@@ -1,90 +1,99 @@
 import { ReactNode } from 'react';
-import { requireChapterAccess } from '@/lib/auth';
 import Link from 'next/link';
+import prisma from '@/lib/prisma';
 
 type LayoutProps = {
   children: ReactNode;
   params: Promise<{ chapterSlug: string }>;
 };
 
-export default async function ChapterLayout({ children, params }: LayoutProps) {
+export default async function PublicChapterLayout({ children, params }: LayoutProps) {
   // In Next.js 15, params is now a Promise that needs to be awaited
   const { chapterSlug } = await params;
   
-  // Check if we're rendering an admin route
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
-  const isAdminRoute = pathname.includes(`/${chapterSlug}/admin`) || 
-                      // For server-side detection, we can check segment names in a more dynamic way
-                      // This is a simplified check for this example
-                      false;
+  // Get basic chapter info for the header
+  const chapter = await prisma.chapter.findUnique({
+    where: { slug: chapterSlug },
+    select: { name: true }
+  });
 
-  // If this is an admin route, we don't want to wrap it in the chapter layout UI
-  // but we still need the auth check to run
-  
-  // This will redirect if user isn't authenticated or doesn't have access to this chapter  
-  const { membership } = await requireChapterAccess(chapterSlug);
-  const isAdmin = membership.role === 'ADMIN' || membership.role === 'OWNER';
-
-  // For admin routes, skip rendering the layout UI
-  if (isAdminRoute) {
-    return <>{children}</>;
-  }
-  
-  // For non-admin routes, render the full chapter layout
   return (
-    <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
-      <header className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-3xl font-bold">{chapterSlug}</h1>
-          <div className="space-x-2">
-            <Link 
-              href={`/dashboard/${chapterSlug}`}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
-            >
-              Dashboard
-            </Link>
-            <Link 
-              href={`/${chapterSlug}/portal`}
-              className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700"
-            >
-              Member Portal
-            </Link>
-            {isAdmin && (
-              <Link 
-                href={`/${chapterSlug}/admin`}
-                className="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded-md shadow-sm hover:bg-purple-700"
+    <div className="min-h-screen bg-gray-50">
+      <header className="bg-white shadow-sm">
+        <div className="container mx-auto py-4 px-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                {chapter?.name || chapterSlug}
+              </h1>
+              <p className="text-sm text-gray-500">Chapter Public Page</p>
+            </div>
+            <div className="space-x-3">
+              <Link
+                href="/"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
               >
-                Admin
+                GreekDash Home
               </Link>
-            )}
+              <Link
+                href="/login"
+                className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700"
+              >
+                Member Login
+              </Link>
+            </div>
           </div>
         </div>
-        <nav className="flex space-x-4 border-b border-gray-200 pb-4">
-          <Link
-            href={`/${chapterSlug}`}
-            className="text-gray-500 hover:text-gray-700 hover:border-gray-300"
-          >
-            Home
-          </Link>
-          <Link
-            href={`/${chapterSlug}/portal`}
-            className="text-gray-500 hover:text-gray-700 hover:border-gray-300"
-          >
-            Portal
-          </Link>
-          {isAdmin && (
-            <Link
-              href={`/${chapterSlug}/admin`}
-              className="text-gray-500 hover:text-gray-700 hover:border-gray-300"
-            >
-              Admin
-            </Link>
-          )}
-        </nav>
       </header>
-      <main className="max-w-7xl mx-auto">
+      
+      <main>
         {children}
       </main>
+      
+      <footer className="bg-white border-t border-gray-200 mt-12">
+        <div className="container mx-auto py-8 px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+                {chapter?.name || 'Chapter'}
+              </h3>
+              <p className="text-gray-500 text-sm">
+                A proud chapter on the GreekDash platform.
+              </p>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+                Quick Links
+              </h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link href={`/${chapterSlug}`} className="text-blue-600 hover:text-blue-800 text-sm">
+                    Chapter Home
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/login" className="text-blue-600 hover:text-blue-800 text-sm">
+                    Member Login
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-gray-900 tracking-wider uppercase mb-4">
+                GreekDash
+              </h3>
+              <p className="text-gray-500 text-sm">
+                GreekDash is a platform for fraternity and sorority chapter management.
+              </p>
+            </div>
+          </div>
+          <div className="mt-8 border-t border-gray-200 pt-8">
+            <p className="text-sm text-gray-500 text-center">
+              &copy; {new Date().getFullYear()} GreekDash. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -68,6 +68,16 @@ export type EventRSVP = $Result.DefaultSelection<Prisma.$EventRSVPPayload>
  * 
  */
 export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
+/**
+ * Model GalleryImage
+ * 
+ */
+export type GalleryImage = $Result.DefaultSelection<Prisma.$GalleryImagePayload>
+/**
+ * Model ContactMessage
+ * 
+ */
+export type ContactMessage = $Result.DefaultSelection<Prisma.$ContactMessagePayload>
 
 /**
  * Enums
@@ -377,6 +387,26 @@ export class PrismaClient<
     * ```
     */
   get auditLog(): Prisma.AuditLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.galleryImage`: Exposes CRUD operations for the **GalleryImage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GalleryImages
+    * const galleryImages = await prisma.galleryImage.findMany()
+    * ```
+    */
+  get galleryImage(): Prisma.GalleryImageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.contactMessage`: Exposes CRUD operations for the **ContactMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ContactMessages
+    * const contactMessages = await prisma.contactMessage.findMany()
+    * ```
+    */
+  get contactMessage(): Prisma.ContactMessageDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -827,7 +857,9 @@ export namespace Prisma {
     Invite: 'Invite',
     Event: 'Event',
     EventRSVP: 'EventRSVP',
-    AuditLog: 'AuditLog'
+    AuditLog: 'AuditLog',
+    GalleryImage: 'GalleryImage',
+    ContactMessage: 'ContactMessage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -846,7 +878,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog"
+      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1664,6 +1696,154 @@ export namespace Prisma {
           }
         }
       }
+      GalleryImage: {
+        payload: Prisma.$GalleryImagePayload<ExtArgs>
+        fields: Prisma.GalleryImageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.GalleryImageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.GalleryImageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload>
+          }
+          findFirst: {
+            args: Prisma.GalleryImageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.GalleryImageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload>
+          }
+          findMany: {
+            args: Prisma.GalleryImageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload>[]
+          }
+          create: {
+            args: Prisma.GalleryImageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload>
+          }
+          createMany: {
+            args: Prisma.GalleryImageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.GalleryImageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload>[]
+          }
+          delete: {
+            args: Prisma.GalleryImageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload>
+          }
+          update: {
+            args: Prisma.GalleryImageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload>
+          }
+          deleteMany: {
+            args: Prisma.GalleryImageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.GalleryImageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GalleryImageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload>[]
+          }
+          upsert: {
+            args: Prisma.GalleryImageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GalleryImagePayload>
+          }
+          aggregate: {
+            args: Prisma.GalleryImageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateGalleryImage>
+          }
+          groupBy: {
+            args: Prisma.GalleryImageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<GalleryImageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.GalleryImageCountArgs<ExtArgs>
+            result: $Utils.Optional<GalleryImageCountAggregateOutputType> | number
+          }
+        }
+      }
+      ContactMessage: {
+        payload: Prisma.$ContactMessagePayload<ExtArgs>
+        fields: Prisma.ContactMessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ContactMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ContactMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload>
+          }
+          findFirst: {
+            args: Prisma.ContactMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ContactMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload>
+          }
+          findMany: {
+            args: Prisma.ContactMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload>[]
+          }
+          create: {
+            args: Prisma.ContactMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload>
+          }
+          createMany: {
+            args: Prisma.ContactMessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ContactMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload>[]
+          }
+          delete: {
+            args: Prisma.ContactMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload>
+          }
+          update: {
+            args: Prisma.ContactMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.ContactMessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ContactMessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ContactMessageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload>[]
+          }
+          upsert: {
+            args: Prisma.ContactMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ContactMessagePayload>
+          }
+          aggregate: {
+            args: Prisma.ContactMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateContactMessage>
+          }
+          groupBy: {
+            args: Prisma.ContactMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ContactMessageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ContactMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<ContactMessageCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1759,6 +1939,8 @@ export namespace Prisma {
     event?: EventOmit
     eventRSVP?: EventRSVPOmit
     auditLog?: AuditLogOmit
+    galleryImage?: GalleryImageOmit
+    contactMessage?: ContactMessageOmit
   }
 
   /* Types for Logging */
@@ -1857,6 +2039,8 @@ export namespace Prisma {
     invites: number
     events: number
     auditLogs: number
+    galleryImages: number
+    contactMessages: number
   }
 
   export type ChapterCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1864,6 +2048,8 @@ export namespace Prisma {
     invites?: boolean | ChapterCountOutputTypeCountInvitesArgs
     events?: boolean | ChapterCountOutputTypeCountEventsArgs
     auditLogs?: boolean | ChapterCountOutputTypeCountAuditLogsArgs
+    galleryImages?: boolean | ChapterCountOutputTypeCountGalleryImagesArgs
+    contactMessages?: boolean | ChapterCountOutputTypeCountContactMessagesArgs
   }
 
   // Custom InputTypes
@@ -1903,6 +2089,20 @@ export namespace Prisma {
    */
   export type ChapterCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuditLogWhereInput
+  }
+
+  /**
+   * ChapterCountOutputType without action
+   */
+  export type ChapterCountOutputTypeCountGalleryImagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GalleryImageWhereInput
+  }
+
+  /**
+   * ChapterCountOutputType without action
+   */
+  export type ChapterCountOutputTypeCountContactMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContactMessageWhereInput
   }
 
 
@@ -2050,6 +2250,8 @@ export namespace Prisma {
     name: string | null
     slug: string | null
     joinCode: string | null
+    publicInfo: string | null
+    primaryColor: string | null
     createdAt: Date | null
     updatedAt: Date | null
     stripeCustomerId: string | null
@@ -2060,6 +2262,8 @@ export namespace Prisma {
     name: string | null
     slug: string | null
     joinCode: string | null
+    publicInfo: string | null
+    primaryColor: string | null
     createdAt: Date | null
     updatedAt: Date | null
     stripeCustomerId: string | null
@@ -2070,6 +2274,8 @@ export namespace Prisma {
     name: number
     slug: number
     joinCode: number
+    publicInfo: number
+    primaryColor: number
     createdAt: number
     updatedAt: number
     stripeCustomerId: number
@@ -2082,6 +2288,8 @@ export namespace Prisma {
     name?: true
     slug?: true
     joinCode?: true
+    publicInfo?: true
+    primaryColor?: true
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
@@ -2092,6 +2300,8 @@ export namespace Prisma {
     name?: true
     slug?: true
     joinCode?: true
+    publicInfo?: true
+    primaryColor?: true
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
@@ -2102,6 +2312,8 @@ export namespace Prisma {
     name?: true
     slug?: true
     joinCode?: true
+    publicInfo?: true
+    primaryColor?: true
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
@@ -2185,6 +2397,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode: string
+    publicInfo: string | null
+    primaryColor: string | null
     createdAt: Date
     updatedAt: Date
     stripeCustomerId: string | null
@@ -2212,6 +2426,8 @@ export namespace Prisma {
     name?: boolean
     slug?: boolean
     joinCode?: boolean
+    publicInfo?: boolean
+    primaryColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
@@ -2220,6 +2436,8 @@ export namespace Prisma {
     invites?: boolean | Chapter$invitesArgs<ExtArgs>
     events?: boolean | Chapter$eventsArgs<ExtArgs>
     auditLogs?: boolean | Chapter$auditLogsArgs<ExtArgs>
+    galleryImages?: boolean | Chapter$galleryImagesArgs<ExtArgs>
+    contactMessages?: boolean | Chapter$contactMessagesArgs<ExtArgs>
     _count?: boolean | ChapterCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chapter"]>
 
@@ -2228,6 +2446,8 @@ export namespace Prisma {
     name?: boolean
     slug?: boolean
     joinCode?: boolean
+    publicInfo?: boolean
+    primaryColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
@@ -2238,6 +2458,8 @@ export namespace Prisma {
     name?: boolean
     slug?: boolean
     joinCode?: boolean
+    publicInfo?: boolean
+    primaryColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
@@ -2248,18 +2470,22 @@ export namespace Prisma {
     name?: boolean
     slug?: boolean
     joinCode?: boolean
+    publicInfo?: boolean
+    primaryColor?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
   }
 
-  export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "createdAt" | "updatedAt" | "stripeCustomerId", ExtArgs["result"]["chapter"]>
+  export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "publicInfo" | "primaryColor" | "createdAt" | "updatedAt" | "stripeCustomerId", ExtArgs["result"]["chapter"]>
   export type ChapterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     memberships?: boolean | Chapter$membershipsArgs<ExtArgs>
     subscription?: boolean | Chapter$subscriptionArgs<ExtArgs>
     invites?: boolean | Chapter$invitesArgs<ExtArgs>
     events?: boolean | Chapter$eventsArgs<ExtArgs>
     auditLogs?: boolean | Chapter$auditLogsArgs<ExtArgs>
+    galleryImages?: boolean | Chapter$galleryImagesArgs<ExtArgs>
+    contactMessages?: boolean | Chapter$contactMessagesArgs<ExtArgs>
     _count?: boolean | ChapterCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ChapterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2273,12 +2499,16 @@ export namespace Prisma {
       invites: Prisma.$InvitePayload<ExtArgs>[]
       events: Prisma.$EventPayload<ExtArgs>[]
       auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+      galleryImages: Prisma.$GalleryImagePayload<ExtArgs>[]
+      contactMessages: Prisma.$ContactMessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
       slug: string
       joinCode: string
+      publicInfo: string | null
+      primaryColor: string | null
       createdAt: Date
       updatedAt: Date
       stripeCustomerId: string | null
@@ -2681,6 +2911,8 @@ export namespace Prisma {
     invites<T extends Chapter$invitesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$invitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     events<T extends Chapter$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     auditLogs<T extends Chapter$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    galleryImages<T extends Chapter$galleryImagesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$galleryImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    contactMessages<T extends Chapter$contactMessagesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$contactMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2714,6 +2946,8 @@ export namespace Prisma {
     readonly name: FieldRef<"Chapter", 'String'>
     readonly slug: FieldRef<"Chapter", 'String'>
     readonly joinCode: FieldRef<"Chapter", 'String'>
+    readonly publicInfo: FieldRef<"Chapter", 'String'>
+    readonly primaryColor: FieldRef<"Chapter", 'String'>
     readonly createdAt: FieldRef<"Chapter", 'DateTime'>
     readonly updatedAt: FieldRef<"Chapter", 'DateTime'>
     readonly stripeCustomerId: FieldRef<"Chapter", 'String'>
@@ -3217,6 +3451,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: AuditLogScalarFieldEnum | AuditLogScalarFieldEnum[]
+  }
+
+  /**
+   * Chapter.galleryImages
+   */
+  export type Chapter$galleryImagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+    where?: GalleryImageWhereInput
+    orderBy?: GalleryImageOrderByWithRelationInput | GalleryImageOrderByWithRelationInput[]
+    cursor?: GalleryImageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GalleryImageScalarFieldEnum | GalleryImageScalarFieldEnum[]
+  }
+
+  /**
+   * Chapter.contactMessages
+   */
+  export type Chapter$contactMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    where?: ContactMessageWhereInput
+    orderBy?: ContactMessageOrderByWithRelationInput | ContactMessageOrderByWithRelationInput[]
+    cursor?: ContactMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ContactMessageScalarFieldEnum | ContactMessageScalarFieldEnum[]
   }
 
   /**
@@ -14508,6 +14790,2148 @@ export namespace Prisma {
 
 
   /**
+   * Model GalleryImage
+   */
+
+  export type AggregateGalleryImage = {
+    _count: GalleryImageCountAggregateOutputType | null
+    _min: GalleryImageMinAggregateOutputType | null
+    _max: GalleryImageMaxAggregateOutputType | null
+  }
+
+  export type GalleryImageMinAggregateOutputType = {
+    id: string | null
+    url: string | null
+    caption: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    chapterId: string | null
+  }
+
+  export type GalleryImageMaxAggregateOutputType = {
+    id: string | null
+    url: string | null
+    caption: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    chapterId: string | null
+  }
+
+  export type GalleryImageCountAggregateOutputType = {
+    id: number
+    url: number
+    caption: number
+    createdAt: number
+    updatedAt: number
+    chapterId: number
+    _all: number
+  }
+
+
+  export type GalleryImageMinAggregateInputType = {
+    id?: true
+    url?: true
+    caption?: true
+    createdAt?: true
+    updatedAt?: true
+    chapterId?: true
+  }
+
+  export type GalleryImageMaxAggregateInputType = {
+    id?: true
+    url?: true
+    caption?: true
+    createdAt?: true
+    updatedAt?: true
+    chapterId?: true
+  }
+
+  export type GalleryImageCountAggregateInputType = {
+    id?: true
+    url?: true
+    caption?: true
+    createdAt?: true
+    updatedAt?: true
+    chapterId?: true
+    _all?: true
+  }
+
+  export type GalleryImageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GalleryImage to aggregate.
+     */
+    where?: GalleryImageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GalleryImages to fetch.
+     */
+    orderBy?: GalleryImageOrderByWithRelationInput | GalleryImageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: GalleryImageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GalleryImages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GalleryImages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned GalleryImages
+    **/
+    _count?: true | GalleryImageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: GalleryImageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: GalleryImageMaxAggregateInputType
+  }
+
+  export type GetGalleryImageAggregateType<T extends GalleryImageAggregateArgs> = {
+        [P in keyof T & keyof AggregateGalleryImage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateGalleryImage[P]>
+      : GetScalarType<T[P], AggregateGalleryImage[P]>
+  }
+
+
+
+
+  export type GalleryImageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GalleryImageWhereInput
+    orderBy?: GalleryImageOrderByWithAggregationInput | GalleryImageOrderByWithAggregationInput[]
+    by: GalleryImageScalarFieldEnum[] | GalleryImageScalarFieldEnum
+    having?: GalleryImageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: GalleryImageCountAggregateInputType | true
+    _min?: GalleryImageMinAggregateInputType
+    _max?: GalleryImageMaxAggregateInputType
+  }
+
+  export type GalleryImageGroupByOutputType = {
+    id: string
+    url: string
+    caption: string | null
+    createdAt: Date
+    updatedAt: Date
+    chapterId: string
+    _count: GalleryImageCountAggregateOutputType | null
+    _min: GalleryImageMinAggregateOutputType | null
+    _max: GalleryImageMaxAggregateOutputType | null
+  }
+
+  type GetGalleryImageGroupByPayload<T extends GalleryImageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<GalleryImageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof GalleryImageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], GalleryImageGroupByOutputType[P]>
+            : GetScalarType<T[P], GalleryImageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type GalleryImageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    caption?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["galleryImage"]>
+
+  export type GalleryImageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    caption?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["galleryImage"]>
+
+  export type GalleryImageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    url?: boolean
+    caption?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["galleryImage"]>
+
+  export type GalleryImageSelectScalar = {
+    id?: boolean
+    url?: boolean
+    caption?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+  }
+
+  export type GalleryImageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "url" | "caption" | "createdAt" | "updatedAt" | "chapterId", ExtArgs["result"]["galleryImage"]>
+  export type GalleryImageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type GalleryImageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type GalleryImageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+
+  export type $GalleryImagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "GalleryImage"
+    objects: {
+      chapter: Prisma.$ChapterPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      url: string
+      caption: string | null
+      createdAt: Date
+      updatedAt: Date
+      chapterId: string
+    }, ExtArgs["result"]["galleryImage"]>
+    composites: {}
+  }
+
+  type GalleryImageGetPayload<S extends boolean | null | undefined | GalleryImageDefaultArgs> = $Result.GetResult<Prisma.$GalleryImagePayload, S>
+
+  type GalleryImageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<GalleryImageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: GalleryImageCountAggregateInputType | true
+    }
+
+  export interface GalleryImageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GalleryImage'], meta: { name: 'GalleryImage' } }
+    /**
+     * Find zero or one GalleryImage that matches the filter.
+     * @param {GalleryImageFindUniqueArgs} args - Arguments to find a GalleryImage
+     * @example
+     * // Get one GalleryImage
+     * const galleryImage = await prisma.galleryImage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends GalleryImageFindUniqueArgs>(args: SelectSubset<T, GalleryImageFindUniqueArgs<ExtArgs>>): Prisma__GalleryImageClient<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one GalleryImage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {GalleryImageFindUniqueOrThrowArgs} args - Arguments to find a GalleryImage
+     * @example
+     * // Get one GalleryImage
+     * const galleryImage = await prisma.galleryImage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends GalleryImageFindUniqueOrThrowArgs>(args: SelectSubset<T, GalleryImageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GalleryImageClient<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GalleryImage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GalleryImageFindFirstArgs} args - Arguments to find a GalleryImage
+     * @example
+     * // Get one GalleryImage
+     * const galleryImage = await prisma.galleryImage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends GalleryImageFindFirstArgs>(args?: SelectSubset<T, GalleryImageFindFirstArgs<ExtArgs>>): Prisma__GalleryImageClient<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first GalleryImage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GalleryImageFindFirstOrThrowArgs} args - Arguments to find a GalleryImage
+     * @example
+     * // Get one GalleryImage
+     * const galleryImage = await prisma.galleryImage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends GalleryImageFindFirstOrThrowArgs>(args?: SelectSubset<T, GalleryImageFindFirstOrThrowArgs<ExtArgs>>): Prisma__GalleryImageClient<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more GalleryImages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GalleryImageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all GalleryImages
+     * const galleryImages = await prisma.galleryImage.findMany()
+     * 
+     * // Get first 10 GalleryImages
+     * const galleryImages = await prisma.galleryImage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const galleryImageWithIdOnly = await prisma.galleryImage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends GalleryImageFindManyArgs>(args?: SelectSubset<T, GalleryImageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a GalleryImage.
+     * @param {GalleryImageCreateArgs} args - Arguments to create a GalleryImage.
+     * @example
+     * // Create one GalleryImage
+     * const GalleryImage = await prisma.galleryImage.create({
+     *   data: {
+     *     // ... data to create a GalleryImage
+     *   }
+     * })
+     * 
+     */
+    create<T extends GalleryImageCreateArgs>(args: SelectSubset<T, GalleryImageCreateArgs<ExtArgs>>): Prisma__GalleryImageClient<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many GalleryImages.
+     * @param {GalleryImageCreateManyArgs} args - Arguments to create many GalleryImages.
+     * @example
+     * // Create many GalleryImages
+     * const galleryImage = await prisma.galleryImage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends GalleryImageCreateManyArgs>(args?: SelectSubset<T, GalleryImageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many GalleryImages and returns the data saved in the database.
+     * @param {GalleryImageCreateManyAndReturnArgs} args - Arguments to create many GalleryImages.
+     * @example
+     * // Create many GalleryImages
+     * const galleryImage = await prisma.galleryImage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many GalleryImages and only return the `id`
+     * const galleryImageWithIdOnly = await prisma.galleryImage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends GalleryImageCreateManyAndReturnArgs>(args?: SelectSubset<T, GalleryImageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a GalleryImage.
+     * @param {GalleryImageDeleteArgs} args - Arguments to delete one GalleryImage.
+     * @example
+     * // Delete one GalleryImage
+     * const GalleryImage = await prisma.galleryImage.delete({
+     *   where: {
+     *     // ... filter to delete one GalleryImage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends GalleryImageDeleteArgs>(args: SelectSubset<T, GalleryImageDeleteArgs<ExtArgs>>): Prisma__GalleryImageClient<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one GalleryImage.
+     * @param {GalleryImageUpdateArgs} args - Arguments to update one GalleryImage.
+     * @example
+     * // Update one GalleryImage
+     * const galleryImage = await prisma.galleryImage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends GalleryImageUpdateArgs>(args: SelectSubset<T, GalleryImageUpdateArgs<ExtArgs>>): Prisma__GalleryImageClient<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more GalleryImages.
+     * @param {GalleryImageDeleteManyArgs} args - Arguments to filter GalleryImages to delete.
+     * @example
+     * // Delete a few GalleryImages
+     * const { count } = await prisma.galleryImage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends GalleryImageDeleteManyArgs>(args?: SelectSubset<T, GalleryImageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GalleryImages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GalleryImageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many GalleryImages
+     * const galleryImage = await prisma.galleryImage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends GalleryImageUpdateManyArgs>(args: SelectSubset<T, GalleryImageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more GalleryImages and returns the data updated in the database.
+     * @param {GalleryImageUpdateManyAndReturnArgs} args - Arguments to update many GalleryImages.
+     * @example
+     * // Update many GalleryImages
+     * const galleryImage = await prisma.galleryImage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GalleryImages and only return the `id`
+     * const galleryImageWithIdOnly = await prisma.galleryImage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GalleryImageUpdateManyAndReturnArgs>(args: SelectSubset<T, GalleryImageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one GalleryImage.
+     * @param {GalleryImageUpsertArgs} args - Arguments to update or create a GalleryImage.
+     * @example
+     * // Update or create a GalleryImage
+     * const galleryImage = await prisma.galleryImage.upsert({
+     *   create: {
+     *     // ... data to create a GalleryImage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the GalleryImage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends GalleryImageUpsertArgs>(args: SelectSubset<T, GalleryImageUpsertArgs<ExtArgs>>): Prisma__GalleryImageClient<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of GalleryImages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GalleryImageCountArgs} args - Arguments to filter GalleryImages to count.
+     * @example
+     * // Count the number of GalleryImages
+     * const count = await prisma.galleryImage.count({
+     *   where: {
+     *     // ... the filter for the GalleryImages we want to count
+     *   }
+     * })
+    **/
+    count<T extends GalleryImageCountArgs>(
+      args?: Subset<T, GalleryImageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], GalleryImageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a GalleryImage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GalleryImageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends GalleryImageAggregateArgs>(args: Subset<T, GalleryImageAggregateArgs>): Prisma.PrismaPromise<GetGalleryImageAggregateType<T>>
+
+    /**
+     * Group by GalleryImage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {GalleryImageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends GalleryImageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: GalleryImageGroupByArgs['orderBy'] }
+        : { orderBy?: GalleryImageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, GalleryImageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetGalleryImageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the GalleryImage model
+   */
+  readonly fields: GalleryImageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for GalleryImage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__GalleryImageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the GalleryImage model
+   */
+  interface GalleryImageFieldRefs {
+    readonly id: FieldRef<"GalleryImage", 'String'>
+    readonly url: FieldRef<"GalleryImage", 'String'>
+    readonly caption: FieldRef<"GalleryImage", 'String'>
+    readonly createdAt: FieldRef<"GalleryImage", 'DateTime'>
+    readonly updatedAt: FieldRef<"GalleryImage", 'DateTime'>
+    readonly chapterId: FieldRef<"GalleryImage", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * GalleryImage findUnique
+   */
+  export type GalleryImageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+    /**
+     * Filter, which GalleryImage to fetch.
+     */
+    where: GalleryImageWhereUniqueInput
+  }
+
+  /**
+   * GalleryImage findUniqueOrThrow
+   */
+  export type GalleryImageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+    /**
+     * Filter, which GalleryImage to fetch.
+     */
+    where: GalleryImageWhereUniqueInput
+  }
+
+  /**
+   * GalleryImage findFirst
+   */
+  export type GalleryImageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+    /**
+     * Filter, which GalleryImage to fetch.
+     */
+    where?: GalleryImageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GalleryImages to fetch.
+     */
+    orderBy?: GalleryImageOrderByWithRelationInput | GalleryImageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GalleryImages.
+     */
+    cursor?: GalleryImageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GalleryImages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GalleryImages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GalleryImages.
+     */
+    distinct?: GalleryImageScalarFieldEnum | GalleryImageScalarFieldEnum[]
+  }
+
+  /**
+   * GalleryImage findFirstOrThrow
+   */
+  export type GalleryImageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+    /**
+     * Filter, which GalleryImage to fetch.
+     */
+    where?: GalleryImageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GalleryImages to fetch.
+     */
+    orderBy?: GalleryImageOrderByWithRelationInput | GalleryImageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for GalleryImages.
+     */
+    cursor?: GalleryImageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GalleryImages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GalleryImages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of GalleryImages.
+     */
+    distinct?: GalleryImageScalarFieldEnum | GalleryImageScalarFieldEnum[]
+  }
+
+  /**
+   * GalleryImage findMany
+   */
+  export type GalleryImageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+    /**
+     * Filter, which GalleryImages to fetch.
+     */
+    where?: GalleryImageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of GalleryImages to fetch.
+     */
+    orderBy?: GalleryImageOrderByWithRelationInput | GalleryImageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing GalleryImages.
+     */
+    cursor?: GalleryImageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` GalleryImages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` GalleryImages.
+     */
+    skip?: number
+    distinct?: GalleryImageScalarFieldEnum | GalleryImageScalarFieldEnum[]
+  }
+
+  /**
+   * GalleryImage create
+   */
+  export type GalleryImageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a GalleryImage.
+     */
+    data: XOR<GalleryImageCreateInput, GalleryImageUncheckedCreateInput>
+  }
+
+  /**
+   * GalleryImage createMany
+   */
+  export type GalleryImageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many GalleryImages.
+     */
+    data: GalleryImageCreateManyInput | GalleryImageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * GalleryImage createManyAndReturn
+   */
+  export type GalleryImageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * The data used to create many GalleryImages.
+     */
+    data: GalleryImageCreateManyInput | GalleryImageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GalleryImage update
+   */
+  export type GalleryImageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a GalleryImage.
+     */
+    data: XOR<GalleryImageUpdateInput, GalleryImageUncheckedUpdateInput>
+    /**
+     * Choose, which GalleryImage to update.
+     */
+    where: GalleryImageWhereUniqueInput
+  }
+
+  /**
+   * GalleryImage updateMany
+   */
+  export type GalleryImageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update GalleryImages.
+     */
+    data: XOR<GalleryImageUpdateManyMutationInput, GalleryImageUncheckedUpdateManyInput>
+    /**
+     * Filter which GalleryImages to update
+     */
+    where?: GalleryImageWhereInput
+    /**
+     * Limit how many GalleryImages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GalleryImage updateManyAndReturn
+   */
+  export type GalleryImageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * The data used to update GalleryImages.
+     */
+    data: XOR<GalleryImageUpdateManyMutationInput, GalleryImageUncheckedUpdateManyInput>
+    /**
+     * Filter which GalleryImages to update
+     */
+    where?: GalleryImageWhereInput
+    /**
+     * Limit how many GalleryImages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * GalleryImage upsert
+   */
+  export type GalleryImageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the GalleryImage to update in case it exists.
+     */
+    where: GalleryImageWhereUniqueInput
+    /**
+     * In case the GalleryImage found by the `where` argument doesn't exist, create a new GalleryImage with this data.
+     */
+    create: XOR<GalleryImageCreateInput, GalleryImageUncheckedCreateInput>
+    /**
+     * In case the GalleryImage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<GalleryImageUpdateInput, GalleryImageUncheckedUpdateInput>
+  }
+
+  /**
+   * GalleryImage delete
+   */
+  export type GalleryImageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+    /**
+     * Filter which GalleryImage to delete.
+     */
+    where: GalleryImageWhereUniqueInput
+  }
+
+  /**
+   * GalleryImage deleteMany
+   */
+  export type GalleryImageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which GalleryImages to delete
+     */
+    where?: GalleryImageWhereInput
+    /**
+     * Limit how many GalleryImages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * GalleryImage without action
+   */
+  export type GalleryImageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GalleryImage
+     */
+    select?: GalleryImageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GalleryImage
+     */
+    omit?: GalleryImageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GalleryImageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ContactMessage
+   */
+
+  export type AggregateContactMessage = {
+    _count: ContactMessageCountAggregateOutputType | null
+    _min: ContactMessageMinAggregateOutputType | null
+    _max: ContactMessageMaxAggregateOutputType | null
+  }
+
+  export type ContactMessageMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    email: string | null
+    message: string | null
+    createdAt: Date | null
+    chapterId: string | null
+  }
+
+  export type ContactMessageMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    email: string | null
+    message: string | null
+    createdAt: Date | null
+    chapterId: string | null
+  }
+
+  export type ContactMessageCountAggregateOutputType = {
+    id: number
+    name: number
+    email: number
+    message: number
+    createdAt: number
+    chapterId: number
+    _all: number
+  }
+
+
+  export type ContactMessageMinAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    message?: true
+    createdAt?: true
+    chapterId?: true
+  }
+
+  export type ContactMessageMaxAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    message?: true
+    createdAt?: true
+    chapterId?: true
+  }
+
+  export type ContactMessageCountAggregateInputType = {
+    id?: true
+    name?: true
+    email?: true
+    message?: true
+    createdAt?: true
+    chapterId?: true
+    _all?: true
+  }
+
+  export type ContactMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContactMessage to aggregate.
+     */
+    where?: ContactMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactMessages to fetch.
+     */
+    orderBy?: ContactMessageOrderByWithRelationInput | ContactMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ContactMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ContactMessages
+    **/
+    _count?: true | ContactMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ContactMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ContactMessageMaxAggregateInputType
+  }
+
+  export type GetContactMessageAggregateType<T extends ContactMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateContactMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateContactMessage[P]>
+      : GetScalarType<T[P], AggregateContactMessage[P]>
+  }
+
+
+
+
+  export type ContactMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ContactMessageWhereInput
+    orderBy?: ContactMessageOrderByWithAggregationInput | ContactMessageOrderByWithAggregationInput[]
+    by: ContactMessageScalarFieldEnum[] | ContactMessageScalarFieldEnum
+    having?: ContactMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ContactMessageCountAggregateInputType | true
+    _min?: ContactMessageMinAggregateInputType
+    _max?: ContactMessageMaxAggregateInputType
+  }
+
+  export type ContactMessageGroupByOutputType = {
+    id: string
+    name: string
+    email: string
+    message: string
+    createdAt: Date
+    chapterId: string
+    _count: ContactMessageCountAggregateOutputType | null
+    _min: ContactMessageMinAggregateOutputType | null
+    _max: ContactMessageMaxAggregateOutputType | null
+  }
+
+  type GetContactMessageGroupByPayload<T extends ContactMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ContactMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ContactMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ContactMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], ContactMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ContactMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    message?: boolean
+    createdAt?: boolean
+    chapterId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contactMessage"]>
+
+  export type ContactMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    message?: boolean
+    createdAt?: boolean
+    chapterId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contactMessage"]>
+
+  export type ContactMessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    message?: boolean
+    createdAt?: boolean
+    chapterId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["contactMessage"]>
+
+  export type ContactMessageSelectScalar = {
+    id?: boolean
+    name?: boolean
+    email?: boolean
+    message?: boolean
+    createdAt?: boolean
+    chapterId?: boolean
+  }
+
+  export type ContactMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "message" | "createdAt" | "chapterId", ExtArgs["result"]["contactMessage"]>
+  export type ContactMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type ContactMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type ContactMessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+
+  export type $ContactMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ContactMessage"
+    objects: {
+      chapter: Prisma.$ChapterPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      email: string
+      message: string
+      createdAt: Date
+      chapterId: string
+    }, ExtArgs["result"]["contactMessage"]>
+    composites: {}
+  }
+
+  type ContactMessageGetPayload<S extends boolean | null | undefined | ContactMessageDefaultArgs> = $Result.GetResult<Prisma.$ContactMessagePayload, S>
+
+  type ContactMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ContactMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ContactMessageCountAggregateInputType | true
+    }
+
+  export interface ContactMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ContactMessage'], meta: { name: 'ContactMessage' } }
+    /**
+     * Find zero or one ContactMessage that matches the filter.
+     * @param {ContactMessageFindUniqueArgs} args - Arguments to find a ContactMessage
+     * @example
+     * // Get one ContactMessage
+     * const contactMessage = await prisma.contactMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ContactMessageFindUniqueArgs>(args: SelectSubset<T, ContactMessageFindUniqueArgs<ExtArgs>>): Prisma__ContactMessageClient<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ContactMessage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ContactMessageFindUniqueOrThrowArgs} args - Arguments to find a ContactMessage
+     * @example
+     * // Get one ContactMessage
+     * const contactMessage = await prisma.contactMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ContactMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, ContactMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ContactMessageClient<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ContactMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactMessageFindFirstArgs} args - Arguments to find a ContactMessage
+     * @example
+     * // Get one ContactMessage
+     * const contactMessage = await prisma.contactMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ContactMessageFindFirstArgs>(args?: SelectSubset<T, ContactMessageFindFirstArgs<ExtArgs>>): Prisma__ContactMessageClient<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ContactMessage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactMessageFindFirstOrThrowArgs} args - Arguments to find a ContactMessage
+     * @example
+     * // Get one ContactMessage
+     * const contactMessage = await prisma.contactMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ContactMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, ContactMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__ContactMessageClient<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ContactMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactMessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ContactMessages
+     * const contactMessages = await prisma.contactMessage.findMany()
+     * 
+     * // Get first 10 ContactMessages
+     * const contactMessages = await prisma.contactMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const contactMessageWithIdOnly = await prisma.contactMessage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ContactMessageFindManyArgs>(args?: SelectSubset<T, ContactMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ContactMessage.
+     * @param {ContactMessageCreateArgs} args - Arguments to create a ContactMessage.
+     * @example
+     * // Create one ContactMessage
+     * const ContactMessage = await prisma.contactMessage.create({
+     *   data: {
+     *     // ... data to create a ContactMessage
+     *   }
+     * })
+     * 
+     */
+    create<T extends ContactMessageCreateArgs>(args: SelectSubset<T, ContactMessageCreateArgs<ExtArgs>>): Prisma__ContactMessageClient<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ContactMessages.
+     * @param {ContactMessageCreateManyArgs} args - Arguments to create many ContactMessages.
+     * @example
+     * // Create many ContactMessages
+     * const contactMessage = await prisma.contactMessage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ContactMessageCreateManyArgs>(args?: SelectSubset<T, ContactMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ContactMessages and returns the data saved in the database.
+     * @param {ContactMessageCreateManyAndReturnArgs} args - Arguments to create many ContactMessages.
+     * @example
+     * // Create many ContactMessages
+     * const contactMessage = await prisma.contactMessage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ContactMessages and only return the `id`
+     * const contactMessageWithIdOnly = await prisma.contactMessage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ContactMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, ContactMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ContactMessage.
+     * @param {ContactMessageDeleteArgs} args - Arguments to delete one ContactMessage.
+     * @example
+     * // Delete one ContactMessage
+     * const ContactMessage = await prisma.contactMessage.delete({
+     *   where: {
+     *     // ... filter to delete one ContactMessage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ContactMessageDeleteArgs>(args: SelectSubset<T, ContactMessageDeleteArgs<ExtArgs>>): Prisma__ContactMessageClient<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ContactMessage.
+     * @param {ContactMessageUpdateArgs} args - Arguments to update one ContactMessage.
+     * @example
+     * // Update one ContactMessage
+     * const contactMessage = await prisma.contactMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ContactMessageUpdateArgs>(args: SelectSubset<T, ContactMessageUpdateArgs<ExtArgs>>): Prisma__ContactMessageClient<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ContactMessages.
+     * @param {ContactMessageDeleteManyArgs} args - Arguments to filter ContactMessages to delete.
+     * @example
+     * // Delete a few ContactMessages
+     * const { count } = await prisma.contactMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ContactMessageDeleteManyArgs>(args?: SelectSubset<T, ContactMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContactMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ContactMessages
+     * const contactMessage = await prisma.contactMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ContactMessageUpdateManyArgs>(args: SelectSubset<T, ContactMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ContactMessages and returns the data updated in the database.
+     * @param {ContactMessageUpdateManyAndReturnArgs} args - Arguments to update many ContactMessages.
+     * @example
+     * // Update many ContactMessages
+     * const contactMessage = await prisma.contactMessage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ContactMessages and only return the `id`
+     * const contactMessageWithIdOnly = await prisma.contactMessage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ContactMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, ContactMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ContactMessage.
+     * @param {ContactMessageUpsertArgs} args - Arguments to update or create a ContactMessage.
+     * @example
+     * // Update or create a ContactMessage
+     * const contactMessage = await prisma.contactMessage.upsert({
+     *   create: {
+     *     // ... data to create a ContactMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ContactMessage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ContactMessageUpsertArgs>(args: SelectSubset<T, ContactMessageUpsertArgs<ExtArgs>>): Prisma__ContactMessageClient<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ContactMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactMessageCountArgs} args - Arguments to filter ContactMessages to count.
+     * @example
+     * // Count the number of ContactMessages
+     * const count = await prisma.contactMessage.count({
+     *   where: {
+     *     // ... the filter for the ContactMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends ContactMessageCountArgs>(
+      args?: Subset<T, ContactMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ContactMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ContactMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ContactMessageAggregateArgs>(args: Subset<T, ContactMessageAggregateArgs>): Prisma.PrismaPromise<GetContactMessageAggregateType<T>>
+
+    /**
+     * Group by ContactMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ContactMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ContactMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ContactMessageGroupByArgs['orderBy'] }
+        : { orderBy?: ContactMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ContactMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetContactMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ContactMessage model
+   */
+  readonly fields: ContactMessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ContactMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ContactMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ContactMessage model
+   */
+  interface ContactMessageFieldRefs {
+    readonly id: FieldRef<"ContactMessage", 'String'>
+    readonly name: FieldRef<"ContactMessage", 'String'>
+    readonly email: FieldRef<"ContactMessage", 'String'>
+    readonly message: FieldRef<"ContactMessage", 'String'>
+    readonly createdAt: FieldRef<"ContactMessage", 'DateTime'>
+    readonly chapterId: FieldRef<"ContactMessage", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ContactMessage findUnique
+   */
+  export type ContactMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactMessage to fetch.
+     */
+    where: ContactMessageWhereUniqueInput
+  }
+
+  /**
+   * ContactMessage findUniqueOrThrow
+   */
+  export type ContactMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactMessage to fetch.
+     */
+    where: ContactMessageWhereUniqueInput
+  }
+
+  /**
+   * ContactMessage findFirst
+   */
+  export type ContactMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactMessage to fetch.
+     */
+    where?: ContactMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactMessages to fetch.
+     */
+    orderBy?: ContactMessageOrderByWithRelationInput | ContactMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContactMessages.
+     */
+    cursor?: ContactMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContactMessages.
+     */
+    distinct?: ContactMessageScalarFieldEnum | ContactMessageScalarFieldEnum[]
+  }
+
+  /**
+   * ContactMessage findFirstOrThrow
+   */
+  export type ContactMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactMessage to fetch.
+     */
+    where?: ContactMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactMessages to fetch.
+     */
+    orderBy?: ContactMessageOrderByWithRelationInput | ContactMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ContactMessages.
+     */
+    cursor?: ContactMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ContactMessages.
+     */
+    distinct?: ContactMessageScalarFieldEnum | ContactMessageScalarFieldEnum[]
+  }
+
+  /**
+   * ContactMessage findMany
+   */
+  export type ContactMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which ContactMessages to fetch.
+     */
+    where?: ContactMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ContactMessages to fetch.
+     */
+    orderBy?: ContactMessageOrderByWithRelationInput | ContactMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ContactMessages.
+     */
+    cursor?: ContactMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ContactMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ContactMessages.
+     */
+    skip?: number
+    distinct?: ContactMessageScalarFieldEnum | ContactMessageScalarFieldEnum[]
+  }
+
+  /**
+   * ContactMessage create
+   */
+  export type ContactMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ContactMessage.
+     */
+    data: XOR<ContactMessageCreateInput, ContactMessageUncheckedCreateInput>
+  }
+
+  /**
+   * ContactMessage createMany
+   */
+  export type ContactMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ContactMessages.
+     */
+    data: ContactMessageCreateManyInput | ContactMessageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ContactMessage createManyAndReturn
+   */
+  export type ContactMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * The data used to create many ContactMessages.
+     */
+    data: ContactMessageCreateManyInput | ContactMessageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ContactMessage update
+   */
+  export type ContactMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ContactMessage.
+     */
+    data: XOR<ContactMessageUpdateInput, ContactMessageUncheckedUpdateInput>
+    /**
+     * Choose, which ContactMessage to update.
+     */
+    where: ContactMessageWhereUniqueInput
+  }
+
+  /**
+   * ContactMessage updateMany
+   */
+  export type ContactMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ContactMessages.
+     */
+    data: XOR<ContactMessageUpdateManyMutationInput, ContactMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which ContactMessages to update
+     */
+    where?: ContactMessageWhereInput
+    /**
+     * Limit how many ContactMessages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ContactMessage updateManyAndReturn
+   */
+  export type ContactMessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * The data used to update ContactMessages.
+     */
+    data: XOR<ContactMessageUpdateManyMutationInput, ContactMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which ContactMessages to update
+     */
+    where?: ContactMessageWhereInput
+    /**
+     * Limit how many ContactMessages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ContactMessage upsert
+   */
+  export type ContactMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ContactMessage to update in case it exists.
+     */
+    where: ContactMessageWhereUniqueInput
+    /**
+     * In case the ContactMessage found by the `where` argument doesn't exist, create a new ContactMessage with this data.
+     */
+    create: XOR<ContactMessageCreateInput, ContactMessageUncheckedCreateInput>
+    /**
+     * In case the ContactMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ContactMessageUpdateInput, ContactMessageUncheckedUpdateInput>
+  }
+
+  /**
+   * ContactMessage delete
+   */
+  export type ContactMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+    /**
+     * Filter which ContactMessage to delete.
+     */
+    where: ContactMessageWhereUniqueInput
+  }
+
+  /**
+   * ContactMessage deleteMany
+   */
+  export type ContactMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ContactMessages to delete
+     */
+    where?: ContactMessageWhereInput
+    /**
+     * Limit how many ContactMessages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ContactMessage without action
+   */
+  export type ContactMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ContactMessage
+     */
+    select?: ContactMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ContactMessage
+     */
+    omit?: ContactMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ContactMessageInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14526,6 +16950,8 @@ export namespace Prisma {
     name: 'name',
     slug: 'slug',
     joinCode: 'joinCode',
+    publicInfo: 'publicInfo',
+    primaryColor: 'primaryColor',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     stripeCustomerId: 'stripeCustomerId'
@@ -14670,6 +17096,30 @@ export namespace Prisma {
   };
 
   export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+  export const GalleryImageScalarFieldEnum: {
+    id: 'id',
+    url: 'url',
+    caption: 'caption',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    chapterId: 'chapterId'
+  };
+
+  export type GalleryImageScalarFieldEnum = (typeof GalleryImageScalarFieldEnum)[keyof typeof GalleryImageScalarFieldEnum]
+
+
+  export const ContactMessageScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    email: 'email',
+    message: 'message',
+    createdAt: 'createdAt',
+    chapterId: 'chapterId'
+  };
+
+  export type ContactMessageScalarFieldEnum = (typeof ContactMessageScalarFieldEnum)[keyof typeof ContactMessageScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -14876,6 +17326,8 @@ export namespace Prisma {
     name?: StringFilter<"Chapter"> | string
     slug?: StringFilter<"Chapter"> | string
     joinCode?: StringFilter<"Chapter"> | string
+    publicInfo?: StringNullableFilter<"Chapter"> | string | null
+    primaryColor?: StringNullableFilter<"Chapter"> | string | null
     createdAt?: DateTimeFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableFilter<"Chapter"> | string | null
@@ -14884,6 +17336,8 @@ export namespace Prisma {
     invites?: InviteListRelationFilter
     events?: EventListRelationFilter
     auditLogs?: AuditLogListRelationFilter
+    galleryImages?: GalleryImageListRelationFilter
+    contactMessages?: ContactMessageListRelationFilter
   }
 
   export type ChapterOrderByWithRelationInput = {
@@ -14891,6 +17345,8 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrder
     joinCode?: SortOrder
+    publicInfo?: SortOrderInput | SortOrder
+    primaryColor?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrderInput | SortOrder
@@ -14899,6 +17355,8 @@ export namespace Prisma {
     invites?: InviteOrderByRelationAggregateInput
     events?: EventOrderByRelationAggregateInput
     auditLogs?: AuditLogOrderByRelationAggregateInput
+    galleryImages?: GalleryImageOrderByRelationAggregateInput
+    contactMessages?: ContactMessageOrderByRelationAggregateInput
   }
 
   export type ChapterWhereUniqueInput = Prisma.AtLeast<{
@@ -14909,6 +17367,8 @@ export namespace Prisma {
     NOT?: ChapterWhereInput | ChapterWhereInput[]
     name?: StringFilter<"Chapter"> | string
     joinCode?: StringFilter<"Chapter"> | string
+    publicInfo?: StringNullableFilter<"Chapter"> | string | null
+    primaryColor?: StringNullableFilter<"Chapter"> | string | null
     createdAt?: DateTimeFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableFilter<"Chapter"> | string | null
@@ -14917,6 +17377,8 @@ export namespace Prisma {
     invites?: InviteListRelationFilter
     events?: EventListRelationFilter
     auditLogs?: AuditLogListRelationFilter
+    galleryImages?: GalleryImageListRelationFilter
+    contactMessages?: ContactMessageListRelationFilter
   }, "id" | "slug">
 
   export type ChapterOrderByWithAggregationInput = {
@@ -14924,6 +17386,8 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrder
     joinCode?: SortOrder
+    publicInfo?: SortOrderInput | SortOrder
+    primaryColor?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrderInput | SortOrder
@@ -14940,6 +17404,8 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Chapter"> | string
     slug?: StringWithAggregatesFilter<"Chapter"> | string
     joinCode?: StringWithAggregatesFilter<"Chapter"> | string
+    publicInfo?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
+    primaryColor?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
@@ -15682,11 +18148,133 @@ export namespace Prisma {
     chapterId?: StringWithAggregatesFilter<"AuditLog"> | string
   }
 
+  export type GalleryImageWhereInput = {
+    AND?: GalleryImageWhereInput | GalleryImageWhereInput[]
+    OR?: GalleryImageWhereInput[]
+    NOT?: GalleryImageWhereInput | GalleryImageWhereInput[]
+    id?: StringFilter<"GalleryImage"> | string
+    url?: StringFilter<"GalleryImage"> | string
+    caption?: StringNullableFilter<"GalleryImage"> | string | null
+    createdAt?: DateTimeFilter<"GalleryImage"> | Date | string
+    updatedAt?: DateTimeFilter<"GalleryImage"> | Date | string
+    chapterId?: StringFilter<"GalleryImage"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }
+
+  export type GalleryImageOrderByWithRelationInput = {
+    id?: SortOrder
+    url?: SortOrder
+    caption?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    chapter?: ChapterOrderByWithRelationInput
+  }
+
+  export type GalleryImageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: GalleryImageWhereInput | GalleryImageWhereInput[]
+    OR?: GalleryImageWhereInput[]
+    NOT?: GalleryImageWhereInput | GalleryImageWhereInput[]
+    url?: StringFilter<"GalleryImage"> | string
+    caption?: StringNullableFilter<"GalleryImage"> | string | null
+    createdAt?: DateTimeFilter<"GalleryImage"> | Date | string
+    updatedAt?: DateTimeFilter<"GalleryImage"> | Date | string
+    chapterId?: StringFilter<"GalleryImage"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }, "id">
+
+  export type GalleryImageOrderByWithAggregationInput = {
+    id?: SortOrder
+    url?: SortOrder
+    caption?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    _count?: GalleryImageCountOrderByAggregateInput
+    _max?: GalleryImageMaxOrderByAggregateInput
+    _min?: GalleryImageMinOrderByAggregateInput
+  }
+
+  export type GalleryImageScalarWhereWithAggregatesInput = {
+    AND?: GalleryImageScalarWhereWithAggregatesInput | GalleryImageScalarWhereWithAggregatesInput[]
+    OR?: GalleryImageScalarWhereWithAggregatesInput[]
+    NOT?: GalleryImageScalarWhereWithAggregatesInput | GalleryImageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"GalleryImage"> | string
+    url?: StringWithAggregatesFilter<"GalleryImage"> | string
+    caption?: StringNullableWithAggregatesFilter<"GalleryImage"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"GalleryImage"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"GalleryImage"> | Date | string
+    chapterId?: StringWithAggregatesFilter<"GalleryImage"> | string
+  }
+
+  export type ContactMessageWhereInput = {
+    AND?: ContactMessageWhereInput | ContactMessageWhereInput[]
+    OR?: ContactMessageWhereInput[]
+    NOT?: ContactMessageWhereInput | ContactMessageWhereInput[]
+    id?: StringFilter<"ContactMessage"> | string
+    name?: StringFilter<"ContactMessage"> | string
+    email?: StringFilter<"ContactMessage"> | string
+    message?: StringFilter<"ContactMessage"> | string
+    createdAt?: DateTimeFilter<"ContactMessage"> | Date | string
+    chapterId?: StringFilter<"ContactMessage"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }
+
+  export type ContactMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+    chapterId?: SortOrder
+    chapter?: ChapterOrderByWithRelationInput
+  }
+
+  export type ContactMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ContactMessageWhereInput | ContactMessageWhereInput[]
+    OR?: ContactMessageWhereInput[]
+    NOT?: ContactMessageWhereInput | ContactMessageWhereInput[]
+    name?: StringFilter<"ContactMessage"> | string
+    email?: StringFilter<"ContactMessage"> | string
+    message?: StringFilter<"ContactMessage"> | string
+    createdAt?: DateTimeFilter<"ContactMessage"> | Date | string
+    chapterId?: StringFilter<"ContactMessage"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }, "id">
+
+  export type ContactMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+    chapterId?: SortOrder
+    _count?: ContactMessageCountOrderByAggregateInput
+    _max?: ContactMessageMaxOrderByAggregateInput
+    _min?: ContactMessageMinOrderByAggregateInput
+  }
+
+  export type ContactMessageScalarWhereWithAggregatesInput = {
+    AND?: ContactMessageScalarWhereWithAggregatesInput | ContactMessageScalarWhereWithAggregatesInput[]
+    OR?: ContactMessageScalarWhereWithAggregatesInput[]
+    NOT?: ContactMessageScalarWhereWithAggregatesInput | ContactMessageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ContactMessage"> | string
+    name?: StringWithAggregatesFilter<"ContactMessage"> | string
+    email?: StringWithAggregatesFilter<"ContactMessage"> | string
+    message?: StringWithAggregatesFilter<"ContactMessage"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ContactMessage"> | Date | string
+    chapterId?: StringWithAggregatesFilter<"ContactMessage"> | string
+  }
+
   export type ChapterCreateInput = {
     id?: string
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -15695,6 +18283,8 @@ export namespace Prisma {
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateInput = {
@@ -15702,6 +18292,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -15710,6 +18302,8 @@ export namespace Prisma {
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUpdateInput = {
@@ -15717,6 +18311,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15725,6 +18321,8 @@ export namespace Prisma {
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateInput = {
@@ -15732,6 +18330,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15740,6 +18340,8 @@ export namespace Prisma {
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateManyInput = {
@@ -15747,6 +18349,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -15757,6 +18361,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15767,6 +18373,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -16550,6 +19158,130 @@ export namespace Prisma {
     chapterId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type GalleryImageCreateInput = {
+    id?: string
+    url: string
+    caption?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutGalleryImagesInput
+  }
+
+  export type GalleryImageUncheckedCreateInput = {
+    id?: string
+    url: string
+    caption?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+  }
+
+  export type GalleryImageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutGalleryImagesNestedInput
+  }
+
+  export type GalleryImageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GalleryImageCreateManyInput = {
+    id?: string
+    url: string
+    caption?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+  }
+
+  export type GalleryImageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GalleryImageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ContactMessageCreateInput = {
+    id?: string
+    name: string
+    email: string
+    message: string
+    createdAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutContactMessagesInput
+  }
+
+  export type ContactMessageUncheckedCreateInput = {
+    id?: string
+    name: string
+    email: string
+    message: string
+    createdAt?: Date | string
+    chapterId: string
+  }
+
+  export type ContactMessageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutContactMessagesNestedInput
+  }
+
+  export type ContactMessageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ContactMessageCreateManyInput = {
+    id?: string
+    name: string
+    email: string
+    message: string
+    createdAt?: Date | string
+    chapterId: string
+  }
+
+  export type ContactMessageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactMessageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -16565,17 +19297,6 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -16589,6 +19310,17 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type MembershipListRelationFilter = {
@@ -16620,6 +19352,18 @@ export namespace Prisma {
     none?: AuditLogWhereInput
   }
 
+  export type GalleryImageListRelationFilter = {
+    every?: GalleryImageWhereInput
+    some?: GalleryImageWhereInput
+    none?: GalleryImageWhereInput
+  }
+
+  export type ContactMessageListRelationFilter = {
+    every?: ContactMessageWhereInput
+    some?: ContactMessageWhereInput
+    none?: ContactMessageWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -16641,11 +19385,21 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type GalleryImageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ContactMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ChapterCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     slug?: SortOrder
     joinCode?: SortOrder
+    publicInfo?: SortOrder
+    primaryColor?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
@@ -16656,6 +19410,8 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrder
     joinCode?: SortOrder
+    publicInfo?: SortOrder
+    primaryColor?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
@@ -16666,6 +19422,8 @@ export namespace Prisma {
     name?: SortOrder
     slug?: SortOrder
     joinCode?: SortOrder
+    publicInfo?: SortOrder
+    primaryColor?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
@@ -16689,20 +19447,6 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -16719,6 +19463,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
@@ -17328,6 +20086,60 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
+  export type GalleryImageCountOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    caption?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type GalleryImageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    caption?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type GalleryImageMinOrderByAggregateInput = {
+    id?: SortOrder
+    url?: SortOrder
+    caption?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type ContactMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type ContactMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type ContactMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    email?: SortOrder
+    message?: SortOrder
+    createdAt?: SortOrder
+    chapterId?: SortOrder
+  }
+
   export type MembershipCreateNestedManyWithoutChapterInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -17360,6 +20172,20 @@ export namespace Prisma {
     connectOrCreate?: AuditLogCreateOrConnectWithoutChapterInput | AuditLogCreateOrConnectWithoutChapterInput[]
     createMany?: AuditLogCreateManyChapterInputEnvelope
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+  }
+
+  export type GalleryImageCreateNestedManyWithoutChapterInput = {
+    create?: XOR<GalleryImageCreateWithoutChapterInput, GalleryImageUncheckedCreateWithoutChapterInput> | GalleryImageCreateWithoutChapterInput[] | GalleryImageUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: GalleryImageCreateOrConnectWithoutChapterInput | GalleryImageCreateOrConnectWithoutChapterInput[]
+    createMany?: GalleryImageCreateManyChapterInputEnvelope
+    connect?: GalleryImageWhereUniqueInput | GalleryImageWhereUniqueInput[]
+  }
+
+  export type ContactMessageCreateNestedManyWithoutChapterInput = {
+    create?: XOR<ContactMessageCreateWithoutChapterInput, ContactMessageUncheckedCreateWithoutChapterInput> | ContactMessageCreateWithoutChapterInput[] | ContactMessageUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: ContactMessageCreateOrConnectWithoutChapterInput | ContactMessageCreateOrConnectWithoutChapterInput[]
+    createMany?: ContactMessageCreateManyChapterInputEnvelope
+    connect?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
   }
 
   export type MembershipUncheckedCreateNestedManyWithoutChapterInput = {
@@ -17396,16 +20222,30 @@ export namespace Prisma {
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
   }
 
+  export type GalleryImageUncheckedCreateNestedManyWithoutChapterInput = {
+    create?: XOR<GalleryImageCreateWithoutChapterInput, GalleryImageUncheckedCreateWithoutChapterInput> | GalleryImageCreateWithoutChapterInput[] | GalleryImageUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: GalleryImageCreateOrConnectWithoutChapterInput | GalleryImageCreateOrConnectWithoutChapterInput[]
+    createMany?: GalleryImageCreateManyChapterInputEnvelope
+    connect?: GalleryImageWhereUniqueInput | GalleryImageWhereUniqueInput[]
+  }
+
+  export type ContactMessageUncheckedCreateNestedManyWithoutChapterInput = {
+    create?: XOR<ContactMessageCreateWithoutChapterInput, ContactMessageUncheckedCreateWithoutChapterInput> | ContactMessageCreateWithoutChapterInput[] | ContactMessageUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: ContactMessageCreateOrConnectWithoutChapterInput | ContactMessageCreateOrConnectWithoutChapterInput[]
+    createMany?: ContactMessageCreateManyChapterInputEnvelope
+    connect?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type MembershipUpdateManyWithoutChapterNestedInput = {
@@ -17474,6 +20314,34 @@ export namespace Prisma {
     deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
   }
 
+  export type GalleryImageUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<GalleryImageCreateWithoutChapterInput, GalleryImageUncheckedCreateWithoutChapterInput> | GalleryImageCreateWithoutChapterInput[] | GalleryImageUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: GalleryImageCreateOrConnectWithoutChapterInput | GalleryImageCreateOrConnectWithoutChapterInput[]
+    upsert?: GalleryImageUpsertWithWhereUniqueWithoutChapterInput | GalleryImageUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: GalleryImageCreateManyChapterInputEnvelope
+    set?: GalleryImageWhereUniqueInput | GalleryImageWhereUniqueInput[]
+    disconnect?: GalleryImageWhereUniqueInput | GalleryImageWhereUniqueInput[]
+    delete?: GalleryImageWhereUniqueInput | GalleryImageWhereUniqueInput[]
+    connect?: GalleryImageWhereUniqueInput | GalleryImageWhereUniqueInput[]
+    update?: GalleryImageUpdateWithWhereUniqueWithoutChapterInput | GalleryImageUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: GalleryImageUpdateManyWithWhereWithoutChapterInput | GalleryImageUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: GalleryImageScalarWhereInput | GalleryImageScalarWhereInput[]
+  }
+
+  export type ContactMessageUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<ContactMessageCreateWithoutChapterInput, ContactMessageUncheckedCreateWithoutChapterInput> | ContactMessageCreateWithoutChapterInput[] | ContactMessageUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: ContactMessageCreateOrConnectWithoutChapterInput | ContactMessageCreateOrConnectWithoutChapterInput[]
+    upsert?: ContactMessageUpsertWithWhereUniqueWithoutChapterInput | ContactMessageUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: ContactMessageCreateManyChapterInputEnvelope
+    set?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+    disconnect?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+    delete?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+    connect?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+    update?: ContactMessageUpdateWithWhereUniqueWithoutChapterInput | ContactMessageUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: ContactMessageUpdateManyWithWhereWithoutChapterInput | ContactMessageUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: ContactMessageScalarWhereInput | ContactMessageScalarWhereInput[]
+  }
+
   export type MembershipUncheckedUpdateManyWithoutChapterNestedInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -17538,6 +20406,34 @@ export namespace Prisma {
     update?: AuditLogUpdateWithWhereUniqueWithoutChapterInput | AuditLogUpdateWithWhereUniqueWithoutChapterInput[]
     updateMany?: AuditLogUpdateManyWithWhereWithoutChapterInput | AuditLogUpdateManyWithWhereWithoutChapterInput[]
     deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  }
+
+  export type GalleryImageUncheckedUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<GalleryImageCreateWithoutChapterInput, GalleryImageUncheckedCreateWithoutChapterInput> | GalleryImageCreateWithoutChapterInput[] | GalleryImageUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: GalleryImageCreateOrConnectWithoutChapterInput | GalleryImageCreateOrConnectWithoutChapterInput[]
+    upsert?: GalleryImageUpsertWithWhereUniqueWithoutChapterInput | GalleryImageUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: GalleryImageCreateManyChapterInputEnvelope
+    set?: GalleryImageWhereUniqueInput | GalleryImageWhereUniqueInput[]
+    disconnect?: GalleryImageWhereUniqueInput | GalleryImageWhereUniqueInput[]
+    delete?: GalleryImageWhereUniqueInput | GalleryImageWhereUniqueInput[]
+    connect?: GalleryImageWhereUniqueInput | GalleryImageWhereUniqueInput[]
+    update?: GalleryImageUpdateWithWhereUniqueWithoutChapterInput | GalleryImageUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: GalleryImageUpdateManyWithWhereWithoutChapterInput | GalleryImageUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: GalleryImageScalarWhereInput | GalleryImageScalarWhereInput[]
+  }
+
+  export type ContactMessageUncheckedUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<ContactMessageCreateWithoutChapterInput, ContactMessageUncheckedCreateWithoutChapterInput> | ContactMessageCreateWithoutChapterInput[] | ContactMessageUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: ContactMessageCreateOrConnectWithoutChapterInput | ContactMessageCreateOrConnectWithoutChapterInput[]
+    upsert?: ContactMessageUpsertWithWhereUniqueWithoutChapterInput | ContactMessageUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: ContactMessageCreateManyChapterInputEnvelope
+    set?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+    disconnect?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+    delete?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+    connect?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+    update?: ContactMessageUpdateWithWhereUniqueWithoutChapterInput | ContactMessageUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: ContactMessageUpdateManyWithWhereWithoutChapterInput | ContactMessageUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: ContactMessageScalarWhereInput | ContactMessageScalarWhereInput[]
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -18154,6 +21050,34 @@ export namespace Prisma {
     update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutAuditLogsInput, ChapterUpdateWithoutAuditLogsInput>, ChapterUncheckedUpdateWithoutAuditLogsInput>
   }
 
+  export type ChapterCreateNestedOneWithoutGalleryImagesInput = {
+    create?: XOR<ChapterCreateWithoutGalleryImagesInput, ChapterUncheckedCreateWithoutGalleryImagesInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutGalleryImagesInput
+    connect?: ChapterWhereUniqueInput
+  }
+
+  export type ChapterUpdateOneRequiredWithoutGalleryImagesNestedInput = {
+    create?: XOR<ChapterCreateWithoutGalleryImagesInput, ChapterUncheckedCreateWithoutGalleryImagesInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutGalleryImagesInput
+    upsert?: ChapterUpsertWithoutGalleryImagesInput
+    connect?: ChapterWhereUniqueInput
+    update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutGalleryImagesInput, ChapterUpdateWithoutGalleryImagesInput>, ChapterUncheckedUpdateWithoutGalleryImagesInput>
+  }
+
+  export type ChapterCreateNestedOneWithoutContactMessagesInput = {
+    create?: XOR<ChapterCreateWithoutContactMessagesInput, ChapterUncheckedCreateWithoutContactMessagesInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutContactMessagesInput
+    connect?: ChapterWhereUniqueInput
+  }
+
+  export type ChapterUpdateOneRequiredWithoutContactMessagesNestedInput = {
+    create?: XOR<ChapterCreateWithoutContactMessagesInput, ChapterUncheckedCreateWithoutContactMessagesInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutContactMessagesInput
+    upsert?: ChapterUpsertWithoutContactMessagesInput
+    connect?: ChapterWhereUniqueInput
+    update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutContactMessagesInput, ChapterUpdateWithoutContactMessagesInput>, ChapterUncheckedUpdateWithoutContactMessagesInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -18168,17 +21092,6 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
-  export type NestedDateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -18191,6 +21104,17 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -18221,20 +21145,6 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -18261,6 +21171,20 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -18593,6 +21517,58 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type GalleryImageCreateWithoutChapterInput = {
+    id?: string
+    url: string
+    caption?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GalleryImageUncheckedCreateWithoutChapterInput = {
+    id?: string
+    url: string
+    caption?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type GalleryImageCreateOrConnectWithoutChapterInput = {
+    where: GalleryImageWhereUniqueInput
+    create: XOR<GalleryImageCreateWithoutChapterInput, GalleryImageUncheckedCreateWithoutChapterInput>
+  }
+
+  export type GalleryImageCreateManyChapterInputEnvelope = {
+    data: GalleryImageCreateManyChapterInput | GalleryImageCreateManyChapterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ContactMessageCreateWithoutChapterInput = {
+    id?: string
+    name: string
+    email: string
+    message: string
+    createdAt?: Date | string
+  }
+
+  export type ContactMessageUncheckedCreateWithoutChapterInput = {
+    id?: string
+    name: string
+    email: string
+    message: string
+    createdAt?: Date | string
+  }
+
+  export type ContactMessageCreateOrConnectWithoutChapterInput = {
+    where: ContactMessageWhereUniqueInput
+    create: XOR<ContactMessageCreateWithoutChapterInput, ContactMessageUncheckedCreateWithoutChapterInput>
+  }
+
+  export type ContactMessageCreateManyChapterInputEnvelope = {
+    data: ContactMessageCreateManyChapterInput | ContactMessageCreateManyChapterInput[]
+    skipDuplicates?: boolean
+  }
+
   export type MembershipUpsertWithWhereUniqueWithoutChapterInput = {
     where: MembershipWhereUniqueInput
     update: XOR<MembershipUpdateWithoutChapterInput, MembershipUncheckedUpdateWithoutChapterInput>
@@ -18746,6 +21722,62 @@ export namespace Prisma {
     metadata?: JsonNullableFilter<"AuditLog">
     userId?: StringFilter<"AuditLog"> | string
     chapterId?: StringFilter<"AuditLog"> | string
+  }
+
+  export type GalleryImageUpsertWithWhereUniqueWithoutChapterInput = {
+    where: GalleryImageWhereUniqueInput
+    update: XOR<GalleryImageUpdateWithoutChapterInput, GalleryImageUncheckedUpdateWithoutChapterInput>
+    create: XOR<GalleryImageCreateWithoutChapterInput, GalleryImageUncheckedCreateWithoutChapterInput>
+  }
+
+  export type GalleryImageUpdateWithWhereUniqueWithoutChapterInput = {
+    where: GalleryImageWhereUniqueInput
+    data: XOR<GalleryImageUpdateWithoutChapterInput, GalleryImageUncheckedUpdateWithoutChapterInput>
+  }
+
+  export type GalleryImageUpdateManyWithWhereWithoutChapterInput = {
+    where: GalleryImageScalarWhereInput
+    data: XOR<GalleryImageUpdateManyMutationInput, GalleryImageUncheckedUpdateManyWithoutChapterInput>
+  }
+
+  export type GalleryImageScalarWhereInput = {
+    AND?: GalleryImageScalarWhereInput | GalleryImageScalarWhereInput[]
+    OR?: GalleryImageScalarWhereInput[]
+    NOT?: GalleryImageScalarWhereInput | GalleryImageScalarWhereInput[]
+    id?: StringFilter<"GalleryImage"> | string
+    url?: StringFilter<"GalleryImage"> | string
+    caption?: StringNullableFilter<"GalleryImage"> | string | null
+    createdAt?: DateTimeFilter<"GalleryImage"> | Date | string
+    updatedAt?: DateTimeFilter<"GalleryImage"> | Date | string
+    chapterId?: StringFilter<"GalleryImage"> | string
+  }
+
+  export type ContactMessageUpsertWithWhereUniqueWithoutChapterInput = {
+    where: ContactMessageWhereUniqueInput
+    update: XOR<ContactMessageUpdateWithoutChapterInput, ContactMessageUncheckedUpdateWithoutChapterInput>
+    create: XOR<ContactMessageCreateWithoutChapterInput, ContactMessageUncheckedCreateWithoutChapterInput>
+  }
+
+  export type ContactMessageUpdateWithWhereUniqueWithoutChapterInput = {
+    where: ContactMessageWhereUniqueInput
+    data: XOR<ContactMessageUpdateWithoutChapterInput, ContactMessageUncheckedUpdateWithoutChapterInput>
+  }
+
+  export type ContactMessageUpdateManyWithWhereWithoutChapterInput = {
+    where: ContactMessageScalarWhereInput
+    data: XOR<ContactMessageUpdateManyMutationInput, ContactMessageUncheckedUpdateManyWithoutChapterInput>
+  }
+
+  export type ContactMessageScalarWhereInput = {
+    AND?: ContactMessageScalarWhereInput | ContactMessageScalarWhereInput[]
+    OR?: ContactMessageScalarWhereInput[]
+    NOT?: ContactMessageScalarWhereInput | ContactMessageScalarWhereInput[]
+    id?: StringFilter<"ContactMessage"> | string
+    name?: StringFilter<"ContactMessage"> | string
+    email?: StringFilter<"ContactMessage"> | string
+    message?: StringFilter<"ContactMessage"> | string
+    createdAt?: DateTimeFilter<"ContactMessage"> | Date | string
+    chapterId?: StringFilter<"ContactMessage"> | string
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -19218,6 +22250,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -19225,6 +22259,8 @@ export namespace Prisma {
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutMembershipsInput = {
@@ -19232,6 +22268,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -19239,6 +22277,8 @@ export namespace Prisma {
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutMembershipsInput = {
@@ -19309,6 +22349,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19316,6 +22358,8 @@ export namespace Prisma {
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutMembershipsInput = {
@@ -19323,6 +22367,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19330,6 +22376,8 @@ export namespace Prisma {
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutSubscriptionInput = {
@@ -19337,6 +22385,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -19344,6 +22394,8 @@ export namespace Prisma {
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutSubscriptionInput = {
@@ -19351,6 +22403,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -19358,6 +22412,8 @@ export namespace Prisma {
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutSubscriptionInput = {
@@ -19381,6 +22437,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19388,6 +22446,8 @@ export namespace Prisma {
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutSubscriptionInput = {
@@ -19395,6 +22455,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19402,6 +22464,8 @@ export namespace Prisma {
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -19585,6 +22649,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -19592,6 +22658,8 @@ export namespace Prisma {
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutInvitesInput = {
@@ -19599,6 +22667,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -19606,6 +22676,8 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutInvitesInput = {
@@ -19711,6 +22783,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19718,6 +22792,8 @@ export namespace Prisma {
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutInvitesInput = {
@@ -19725,6 +22801,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19732,6 +22810,8 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutAcceptedInvitesInput = {
@@ -19833,6 +22913,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -19840,6 +22922,8 @@ export namespace Prisma {
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutEventsInput = {
@@ -19847,6 +22931,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -19854,6 +22940,8 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutEventsInput = {
@@ -19944,6 +23032,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19951,6 +23041,8 @@ export namespace Prisma {
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutEventsInput = {
@@ -19958,6 +23050,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19965,6 +23059,8 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutCreatedEventsInput = {
@@ -20244,6 +23340,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -20251,6 +23349,8 @@ export namespace Prisma {
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutAuditLogsInput = {
@@ -20258,6 +23358,8 @@ export namespace Prisma {
     name: string
     slug: string
     joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -20265,6 +23367,8 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutAuditLogsInput = {
@@ -20335,6 +23439,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20342,6 +23448,8 @@ export namespace Prisma {
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutAuditLogsInput = {
@@ -20349,6 +23457,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     slug?: StringFieldUpdateOperationsInput | string
     joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20356,6 +23466,184 @@ export namespace Prisma {
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterCreateWithoutGalleryImagesInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionCreateNestedOneWithoutChapterInput
+    invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterUncheckedCreateWithoutGalleryImagesInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
+    invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterCreateOrConnectWithoutGalleryImagesInput = {
+    where: ChapterWhereUniqueInput
+    create: XOR<ChapterCreateWithoutGalleryImagesInput, ChapterUncheckedCreateWithoutGalleryImagesInput>
+  }
+
+  export type ChapterUpsertWithoutGalleryImagesInput = {
+    update: XOR<ChapterUpdateWithoutGalleryImagesInput, ChapterUncheckedUpdateWithoutGalleryImagesInput>
+    create: XOR<ChapterCreateWithoutGalleryImagesInput, ChapterUncheckedCreateWithoutGalleryImagesInput>
+    where?: ChapterWhereInput
+  }
+
+  export type ChapterUpdateToOneWithWhereWithoutGalleryImagesInput = {
+    where?: ChapterWhereInput
+    data: XOR<ChapterUpdateWithoutGalleryImagesInput, ChapterUncheckedUpdateWithoutGalleryImagesInput>
+  }
+
+  export type ChapterUpdateWithoutGalleryImagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
+    invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterUncheckedUpdateWithoutGalleryImagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterCreateWithoutContactMessagesInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionCreateNestedOneWithoutChapterInput
+    invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterUncheckedCreateWithoutContactMessagesInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
+    invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterCreateOrConnectWithoutContactMessagesInput = {
+    where: ChapterWhereUniqueInput
+    create: XOR<ChapterCreateWithoutContactMessagesInput, ChapterUncheckedCreateWithoutContactMessagesInput>
+  }
+
+  export type ChapterUpsertWithoutContactMessagesInput = {
+    update: XOR<ChapterUpdateWithoutContactMessagesInput, ChapterUncheckedUpdateWithoutContactMessagesInput>
+    create: XOR<ChapterCreateWithoutContactMessagesInput, ChapterUncheckedCreateWithoutContactMessagesInput>
+    where?: ChapterWhereInput
+  }
+
+  export type ChapterUpdateToOneWithWhereWithoutContactMessagesInput = {
+    where?: ChapterWhereInput
+    data: XOR<ChapterUpdateWithoutContactMessagesInput, ChapterUncheckedUpdateWithoutContactMessagesInput>
+  }
+
+  export type ChapterUpdateWithoutContactMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
+    invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterUncheckedUpdateWithoutContactMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type MembershipCreateManyChapterInput = {
@@ -20402,6 +23690,22 @@ export namespace Prisma {
     targetId?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     userId: string
+  }
+
+  export type GalleryImageCreateManyChapterInput = {
+    id?: string
+    url: string
+    caption?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ContactMessageCreateManyChapterInput = {
+    id?: string
+    name: string
+    email: string
+    message: string
+    createdAt?: Date | string
   }
 
   export type MembershipUpdateWithoutChapterInput = {
@@ -20542,6 +23846,54 @@ export namespace Prisma {
     targetId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GalleryImageUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GalleryImageUncheckedUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type GalleryImageUncheckedUpdateManyWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactMessageUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactMessageUncheckedUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ContactMessageUncheckedUpdateManyWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AccountCreateManyUserInput = {

@@ -68,14 +68,62 @@ export async function POST(request: NextRequest) {
     // });
     
     // Set up the Stripe price ID based on selected plan
-    let priceId: string;
+    let priceId: string = '';
+    
+    // Define fallback price data when environment variables are not set
+    const usePriceData = !process.env.STRIPE_BASIC_PRICE_ID || !process.env.STRIPE_PRO_PRICE_ID;
+    
+    // Type definition for Stripe price data that matches Stripe API requirements
+    type Interval = 'day' | 'week' | 'month' | 'year';
+    
+    interface StripePriceData {
+      currency: string;
+      product_data: {
+        name: string;
+        description: string;
+      };
+      unit_amount: number;
+      recurring: {
+        interval: Interval;
+      };
+    }
+    
+    let priceData: StripePriceData | null = null;
     
     switch (planId) {
       case 'basic':
-        priceId = process.env.STRIPE_BASIC_PRICE_ID as string;
+        if (usePriceData) {
+          priceData = {
+            currency: 'usd',
+            product_data: {
+              name: 'GreekDash Basic Plan',
+              description: 'Monthly subscription to GreekDash Basic features'
+            },
+            unit_amount: 2900, // $29.00 USD
+            recurring: {
+              interval: 'month' as Interval
+            }
+          };
+        } else {
+          priceId = process.env.STRIPE_BASIC_PRICE_ID as string;
+        }
         break;
       case 'pro':
-        priceId = process.env.STRIPE_PRO_PRICE_ID as string;
+        if (usePriceData) {
+          priceData = {
+            currency: 'usd',
+            product_data: {
+              name: 'GreekDash Pro Plan',
+              description: 'Monthly subscription to GreekDash Pro features'
+            },
+            unit_amount: 5900, // $59.00 USD
+            recurring: {
+              interval: 'month' as Interval
+            }
+          };
+        } else {
+          priceId = process.env.STRIPE_PRO_PRICE_ID as string;
+        }
         break;
       default:
         return NextResponse.json(
@@ -107,29 +155,61 @@ export async function POST(request: NextRequest) {
       });
     }
     
-    // Create the checkout session
-    const checkoutSession = await stripe.checkout.sessions.create({
-      customer: customerId,
-      line_items: [
-        {
-          price: priceId,
-          quantity: 1,
-        },
-      ],
-      mode: 'subscription',
-      success_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${chapterSlug}/settings?checkout=success`,
-      cancel_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${chapterSlug}/settings?checkout=canceled`,
-      subscription_data: {
-        metadata: {
-          chapterId: chapter.id,
-          chapterSlug: chapter.slug
-        },
-      },
-      metadata: {
-        chapterId: chapter.id,
-        chapterSlug: chapter.slug
-      }
-    });
+    // Create the checkout session with explicit handling for missing price IDs
+    let checkoutSession;
+    
+    try {
+      if (usePriceData && priceData) {
+        // If we're using dynamically generated price data
+        checkoutSession = await stripe.checkout.sessions.create({
+          customer: customerId,
+          line_items: [{
+            price_data: priceData,
+            quantity: 1,
+          }],
+          mode: 'subscription',
+          success_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${chapterSlug}/settings?checkout=success`,
+          cancel_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${chapterSlug}/settings?checkout=canceled`,
+          subscription_data: {
+            metadata: {
+              chapterId: chapter.id,
+              chapterSlug: chapter.slug
+            },
+          },
+          metadata: {
+            chapterId: chapter.id,
+            chapterSlug: chapter.slug
+          }
+        });
+      } else if (priceId) {
+        // If we're using predefined price IDs
+        checkoutSession = await stripe.checkout.sessions.create({
+          customer: customerId,
+          line_items: [{
+            price: priceId,
+            quantity: 1,
+          }],
+          mode: 'subscription',
+          success_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${chapterSlug}/settings?checkout=success`,
+          cancel_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${chapterSlug}/settings?checkout=canceled`,
+          subscription_data: {
+            metadata: {
+              chapterId: chapter.id,
+              chapterSlug: chapter.slug
+            },
+          },
+          metadata: {
+            chapterId: chapter.id,
+            chapterSlug: chapter.slug
+          }
+        });
+      } else {
+        throw new Error('Unable to create checkout session: missing price configuration');
+      }    
+    } catch (checkoutError) {
+      console.error('Error in Stripe checkout session creation:', checkoutError);
+      throw checkoutError;
+    }
     
     // Return the session URL
     return NextResponse.json({ url: checkoutSession.url });

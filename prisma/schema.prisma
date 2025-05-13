@@ -40,6 +40,8 @@ model Chapter {
   name           String
   slug           String         @unique
   joinCode       String         @default(uuid())
+  publicInfo     String?        @db.Text
+  primaryColor   String?        
   createdAt      DateTime       @default(now())
   updatedAt      DateTime       @updatedAt
   stripeCustomerId String?       
@@ -50,6 +52,8 @@ model Chapter {
   invites        Invite[]       // One chapter has many invites
   events         Event[]        // One chapter has many events
   auditLogs      AuditLog[]     // Audit logs for this chapter
+  galleryImages  GalleryImage[] // One chapter has many gallery images
+  contactMessages ContactMessage[] // One chapter has many contact messages
 }
 
 model User {
@@ -253,5 +257,38 @@ model AuditLog {
   @@index([userId])
   @@index([action])
   @@index([targetType])
+  @@index([createdAt])
+}
+
+model GalleryImage {
+  id          String    @id @default(cuid())
+  url         String
+  caption     String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Foreign key
+  chapterId   String
+  
+  // Relation
+  chapter     Chapter   @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  
+  @@index([chapterId])
+}
+
+model ContactMessage {
+  id          String    @id @default(cuid())
+  name        String
+  email       String
+  message     String    @db.Text
+  createdAt   DateTime  @default(now())
+  
+  // Foreign key
+  chapterId   String
+  
+  // Relation
+  chapter     Chapter   @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  
+  @@index([chapterId])
   @@index([createdAt])
 }

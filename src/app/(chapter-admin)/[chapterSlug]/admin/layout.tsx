@@ -5,7 +5,7 @@ import { MembershipRole } from '@/generated/prisma';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, CreditCard, FileText, Settings, Users } from 'lucide-react';
+import { Calendar, CreditCard, Settings, Users } from 'lucide-react';
 import { MobileSidebarToggle } from '@/components/ui/mobile-sidebar-toggle';
 import { UserDropdown } from '@/components/ui/user-dropdown';
 import { SidebarLink } from '@/components/ui/sidebar-link';
@@ -125,12 +125,12 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
             <span>Events</span>
           </SidebarLink>
           
-          <SidebarLink 
+          {/*<SidebarLink 
             href={`/${chapterSlug}/admin/files`}
           >
             <FileText size={18} className="flex-shrink-0" />
             <span>Documents</span>
-          </SidebarLink>
+          </SidebarLink>*/}
           
           <SidebarLink 
             href={`/${chapterSlug}/admin/audit-logs`}

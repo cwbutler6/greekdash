@@ -8,6 +8,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const name = formData.get('name') as string;
     const primaryColor = formData.get('primaryColor') as string;
+    const publicInfo = formData.get('publicInfo') as string;
     const chapterSlug = formData.get('chapterSlug') as string;
 
     if (!name || !chapterSlug) {
@@ -56,8 +57,9 @@ export async function POST(request: NextRequest) {
       where: { slug: chapterSlug },
       data: { 
         name,
-        // Add primaryColor to the data object if it's been updated in the client
-        ...(primaryColor && { primaryColor })
+        // Include fields if they are provided
+        ...(primaryColor && { primaryColor }),
+        ...(publicInfo !== undefined && { publicInfo })
       }
     });
 
