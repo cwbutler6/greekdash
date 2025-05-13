@@ -150,7 +150,7 @@ export function EventsClient({ chapterSlug }: EventsClientProps) {
         <CardHeader>
           <CardTitle>Upcoming Events</CardTitle>
           <CardDescription>
-            Manage your chapter's events and track attendance
+            Manage your chapter&apos;s events and track attendance
           </CardDescription>
         </CardHeader>
         <CardContent>

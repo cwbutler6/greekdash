@@ -88,8 +88,11 @@ export async function GET(
     // Get the user's RSVP status if they have one
     const userRsvp = event.rsvps.length > 0 ? event.rsvps[0] : null;
     
-    // Clean up response data
-    const { rsvps, ...eventData } = event;
+    // Clean up response data by only keeping what we need
+    const eventData = {
+      ...event,
+      rsvps: undefined // Exclude rsvps from the response
+    };
 
     return NextResponse.json({ 
       event: eventData, 
@@ -115,7 +118,7 @@ export async function PATCH(
     const { chapterSlug, eventId } = await params;
     
     // Authenticate user and check chapter access with admin privileges
-    const { user, membership } = await requireChapterAccess(chapterSlug);
+    const { membership } = await requireChapterAccess(chapterSlug);
     
     // Only admin or owner can update events
     if (membership.role !== MembershipRole.ADMIN && membership.role !== MembershipRole.OWNER) {

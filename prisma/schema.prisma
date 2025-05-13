@@ -49,6 +49,7 @@ model Chapter {
   subscription   Subscription?  // One chapter has one subscription
   invites        Invite[]       // One chapter has many invites
   events         Event[]        // One chapter has many events
+  auditLogs      AuditLog[]     // Audit logs for this chapter
 }
 
 model User {
@@ -69,6 +70,7 @@ model User {
   createdInvites  Invite[]    @relation("createdInvites")  // Invites created by this user
   createdEvents  Event[]      @relation("createdEvents")   // Events created by this user
   rsvps          EventRSVP[]   // RSVPs to events
+  auditLogs      AuditLog[]   // Audit logs created by this user
 }
 
 model Membership {
@@ -229,4 +231,27 @@ model EventRSVP {
   @@index([eventId])
   @@index([userId])
   @@index([status])
+}
+
+model AuditLog {
+  id         String    @id @default(cuid())
+  createdAt  DateTime  @default(now())
+  action     String
+  targetType String
+  targetId   String?
+  metadata   Json?
+  
+  // Foreign keys
+  userId     String
+  chapterId  String
+  
+  // Relations
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapter    Chapter   @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  
+  @@index([chapterId])
+  @@index([userId])
+  @@index([action])
+  @@index([targetType])
+  @@index([createdAt])
 }

@@ -227,9 +227,25 @@ exports.Prisma.EventRSVPScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  action: 'action',
+  targetType: 'targetType',
+  targetId: 'targetId',
+  metadata: 'metadata',
+  userId: 'userId',
+  chapterId: 'chapterId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -240,6 +256,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.MembershipRole = exports.$Enums.MembershipRole = {
   MEMBER: 'MEMBER',
@@ -285,7 +307,8 @@ exports.Prisma.ModelName = {
   VerificationToken: 'VerificationToken',
   Invite: 'Invite',
   Event: 'Event',
-  EventRSVP: 'EventRSVP'
+  EventRSVP: 'EventRSVP',
+  AuditLog: 'AuditLog'
 };
 
 /**

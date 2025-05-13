@@ -144,18 +144,23 @@ export async function GET(
 
     // Parse URL search params for filtering
     const { searchParams } = new URL(request.url);
-    const status = searchParams.get('status');
+    const statusParam = searchParams.get('status');
     const limit = searchParams.get('limit') ? parseInt(searchParams.get('limit') as string) : 50;
     const page = searchParams.get('page') ? parseInt(searchParams.get('page') as string) : 1;
     const skip = (page - 1) * limit;
 
     // Build filters
-    const filters: any = {
+    const filters: {
+      eventId: string;
+      status?: RSVPStatus;
+      userId?: string;
+    } = {
       eventId,
     };
 
-    if (status) {
-      filters.status = status;
+    // Only add status filter if it's a valid RSVPStatus value
+    if (statusParam && ['GOING', 'NOT_GOING', 'MAYBE'].includes(statusParam)) {
+      filters.status = statusParam as RSVPStatus;
     }
 
     // Get RSVPs with pagination

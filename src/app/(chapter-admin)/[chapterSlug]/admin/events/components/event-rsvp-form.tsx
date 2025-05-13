@@ -104,7 +104,7 @@ export function EventRsvpForm({
                       <RadioGroupItem value="GOING" />
                     </FormControl>
                     <FormLabel className="font-normal cursor-pointer">
-                      Yes, I'll be there
+                      Yes, I&apos;ll be there
                     </FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center space-x-3 space-y-0 cursor-pointer">
@@ -120,7 +120,7 @@ export function EventRsvpForm({
                       <RadioGroupItem value="NOT_GOING" />
                     </FormControl>
                     <FormLabel className="font-normal cursor-pointer">
-                      No, I can't make it
+                      No, I can&apos;t make it
                     </FormLabel>
                   </FormItem>
                 </RadioGroup>

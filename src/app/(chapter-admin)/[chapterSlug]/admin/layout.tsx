@@ -132,6 +132,13 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
             <span>Documents</span>
           </SidebarLink>
           
+          <SidebarLink 
+            href={`/${chapterSlug}/admin/audit-logs`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="M12 13V7"/><path d="M15.45 11h-8.9"/><path d="M7 19l1-4"/><path d="M17 5l-1 4"/><path d="M17 19l-1-4"/><path d="M7 5l1 4"/><path d="M17.28 3.5A10 10 0 0 0 7.72 3.5"/><path d="M20.5 16.28A10 10 0 0 0 20.5 6.72"/><path d="M3.5 16.28A10 10 0 0 0 3.5 6.72"/><path d="M7.72 20.5a10 10 0 0 0 9.56 0"/></svg>
+            <span>Audit Logs</span>
+          </SidebarLink>
+          
           {/* Admin Settings Section */}
           <div className="pt-2 pb-1">
             <p className="text-xs font-semibold text-slate-500 uppercase px-3 mb-2">Settings</p>

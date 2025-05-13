@@ -24,8 +24,6 @@ import {
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
@@ -142,7 +140,7 @@ interface EventDetailClientProps {
 
 export function EventDetailClient({ chapterSlug, eventId }: EventDetailClientProps) {
   const router = useRouter();
-  const { data: session } = useSession();
+  useSession(); // For authentication protection only
   const [event, setEvent] = useState<Event | null>(null);
   const [rsvps, setRsvps] = useState<EventRSVP[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -298,7 +296,7 @@ export function EventDetailClient({ chapterSlug, eventId }: EventDetailClientPro
     return (
       <div className="flex flex-col items-center justify-center py-12 space-y-4">
         <h2 className="text-xl font-medium">Event not found</h2>
-        <p className="text-muted-foreground">The event you're looking for doesn't exist or you don't have permission to view it.</p>
+        <p className="text-muted-foreground">The event you&apos;re looking for doesn&apos;t exist or you don&apos;t have permission to view it.</p>
         <Button onClick={() => router.push(`/${chapterSlug}/admin/events`)}>
           Back to Events
         </Button>
