@@ -1,7 +1,7 @@
 'use client';
 
 import { Event, EventStatus } from '@/generated/prisma';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CalendarIcon, MapPinIcon, ClockIcon } from 'lucide-react';
 import { format } from 'date-fns';

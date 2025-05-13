@@ -19,7 +19,7 @@ export function ChapterHeader({ chapter }: ChapterHeaderProps) {
             <p>{chapter.publicInfo}</p>
           </div>
         ) : (
-          <CardDescription>This chapter hasn't added any public information yet.</CardDescription>
+          <CardDescription>This chapter hasn&apos;t added any public information yet.</CardDescription>
         )}
       </CardContent>
     </Card>
