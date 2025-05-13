@@ -123,17 +123,17 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {/* Free Plan */}
-            <div className="rounded-xl border border-gray-200 overflow-hidden">
+            <div className="rounded-xl border border-gray-200 overflow-hidden flex flex-col h-full">
               <div className="bg-[#00b894] p-6 text-white text-center">
                 <h3 className="text-2xl font-bold">Free</h3>
                 <p className="mt-1">Get started with the basics</p>
               </div>
-              <div className="p-6 space-y-4">
+              <div className="p-6 flex flex-col flex-grow">
                 <div className="text-center pb-4">
                   <span className="text-4xl font-bold">$0</span>
                   <span className="text-gray-500">/month</span>
                 </div>
-                <ul className="space-y-3">
+                <ul className="space-y-3 flex-grow mb-6">
                   {["Up to 30 members", "Basic event management", "Member directory", "File sharing (100MB)"].map((feature, i) => (
                     <li key={i} className="flex items-center">
                       <span className="text-[#00b894] mr-2">✓</span>
@@ -141,7 +141,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <div className="pt-4">
+                <div className="mt-auto">
                   <Link 
                     href="/login" 
                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-[#00b894] text-base font-medium rounded-md text-[#00b894] bg-white hover:bg-[#00b894]/5 transition-colors"
@@ -153,17 +153,17 @@ export default function Home() {
             </div>
 
             {/* Basic Plan */}
-            <div className="rounded-xl border border-gray-200 overflow-hidden shadow-md">
+            <div className="rounded-xl border border-gray-200 overflow-hidden shadow-md flex flex-col h-full">
               <div className="bg-gray-100 p-6 text-center">
                 <h3 className="text-2xl font-bold">Basic</h3>
                 <p className="mt-1">For growing chapters</p>
               </div>
-              <div className="p-6 space-y-4">
+              <div className="p-6 flex flex-col flex-grow">
                 <div className="text-center pb-4">
                   <span className="text-4xl font-bold">$29</span>
                   <span className="text-gray-500">/month</span>
                 </div>
-                <ul className="space-y-3">
+                <ul className="space-y-3 flex-grow mb-6">
                   {[
                     "Unlimited members",
                     "Advanced event management",
@@ -177,7 +177,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <div className="pt-4">
+                <div className="mt-auto">
                   <Link 
                     href="/login" 
                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-[#00b894] hover:bg-[#00a382] transition-colors"
@@ -189,7 +189,7 @@ export default function Home() {
             </div>
 
             {/* Pro Plan */}
-            <div className="rounded-xl border border-gray-200 overflow-hidden shadow-lg relative">
+            <div className="rounded-xl border border-gray-200 overflow-hidden shadow-lg relative flex flex-col h-full">
               <div className="absolute top-0 right-0 bg-black text-white text-xs px-3 py-1 rounded-bl-lg font-medium">
                 Most Popular
               </div>
@@ -197,12 +197,12 @@ export default function Home() {
                 <h3 className="text-2xl font-bold">Pro</h3>
                 <p className="mt-1">For established chapters</p>
               </div>
-              <div className="p-6 space-y-4">
+              <div className="p-6 flex flex-col flex-grow">
                 <div className="text-center pb-4">
                   <span className="text-4xl font-bold">$79</span>
                   <span className="text-gray-500">/month</span>
                 </div>
-                <ul className="space-y-3">
+                <ul className="space-y-3 flex-grow mb-6">
                   {[
                     "Everything in Basic",
                     "Custom branding",
@@ -218,7 +218,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <div className="pt-4">
+                <div className="mt-auto">
                   <Link 
                     href="/login" 
                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-black hover:bg-gray-800 transition-colors"
