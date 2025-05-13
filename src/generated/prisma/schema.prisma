@@ -48,6 +48,7 @@ model Chapter {
   memberships  Membership[] // One chapter has many memberships
   subscription Subscription? // One chapter has one subscription
   invites      Invite[] // One chapter has many invites
+  events       Event[] // One chapter has many events
 }
 
 model User {
@@ -66,6 +67,8 @@ model User {
   memberships     Membership[] // One user can be a member of multiple chapters
   acceptedInvites Invite[]     @relation("acceptedInvites") // Invites that were accepted by this user
   createdInvites  Invite[]     @relation("createdInvites") // Invites created by this user
+  createdEvents   Event[]      @relation("createdEvents") // Events created by this user
+  rsvps           EventRSVP[] // RSVPs to events
 }
 
 model Membership {
@@ -165,4 +168,65 @@ model Invite {
   @@index([token])
   @@index([acceptedById])
   @@index([createdById])
+}
+
+enum EventStatus {
+  UPCOMING
+  ONGOING
+  COMPLETED
+  CANCELED
+}
+
+enum RSVPStatus {
+  GOING
+  NOT_GOING
+  MAYBE
+}
+
+model Event {
+  id          String      @id @default(cuid())
+  title       String
+  description String      @db.Text
+  location    String
+  startDate   DateTime
+  endDate     DateTime
+  capacity    Int?
+  isPublic    Boolean     @default(true)
+  status      EventStatus @default(UPCOMING)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Foreign keys
+  chapterId   String
+  createdById String
+
+  // Relations
+  chapter   Chapter     @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  createdBy User        @relation("createdEvents", fields: [createdById], references: [id])
+  rsvps     EventRSVP[] // All RSVPs for this event
+
+  @@index([chapterId])
+  @@index([createdById])
+  @@index([startDate])
+  @@index([status])
+}
+
+model EventRSVP {
+  id        String     @id @default(cuid())
+  status    RSVPStatus
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  // Foreign keys
+  eventId String
+  userId  String
+
+  // Relations
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId]) // A user can only have one RSVP per event
+  @@index([eventId])
+  @@index([userId])
+  @@index([status])
 }

@@ -11,5 +11,5 @@ trigger: always_on
 - Use 'prisma' script to run Prisma commands: 'prisma migrate dev', 'prisma generate'.
 - Use 'test' script to run tests: 'jest' or preferred testing framework.
 - Use pnpm and the -w flag
-- Use 'shadcn add' package to install shadcn ui components
+- Use 'pnpm dlx shadcn@latest add' package to install shadcn ui components
 </cli_tooling>

@@ -3,6 +3,11 @@ import { getCurrentUser } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { UpgradeButton } from '@/components/subscription/upgrade-button';
 import Link from 'next/link';
+import { format } from 'date-fns';
+import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 
 export default async function PortalPage(props: { params: Promise<{ chapterSlug: string }> }) {
   // In Next.js 15, params is now a Promise that needs to be awaited
@@ -38,6 +43,33 @@ export default async function PortalPage(props: { params: Promise<{ chapterSlug:
   const currentPlan = chapter.subscription?.plan || 'FREE';
   const availableFeatures = planFeatures[currentPlan as keyof typeof planFeatures];
 
+  // Fetch upcoming events (limited to 3)
+  const now = new Date();
+  const upcomingEvents = await prisma.event.findMany({
+    where: {
+      chapterId: chapter.id,
+      isPublic: true,
+      startDate: {
+        gte: now,
+      },
+      status: {
+        in: ['UPCOMING', 'ONGOING'],
+      },
+    },
+    include: {
+      rsvps: {
+        where: {
+          userId: currentUser?.id,
+        },
+        take: 1,
+      },
+    },
+    orderBy: {
+      startDate: 'asc',
+    },
+    take: 3,
+  });
+
   return (
     <div className="space-y-8">
       <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
@@ -53,6 +85,65 @@ export default async function PortalPage(props: { params: Promise<{ chapterSlug:
           <p className="text-gray-600">
             This is your chapter portal where you can access all resources and features available to your chapter.
           </p>
+        </div>
+        
+        {/* Upcoming Events Section */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold">Upcoming Events</h2>
+            <Link href={`/${chapterSlug}/portal/events`}>
+              <Button variant="ghost" className="text-blue-600 p-0 h-auto font-medium">
+                View all <ArrowRight className="h-4 w-4 ml-1" />
+              </Button>
+            </Link>
+          </div>
+          
+          {upcomingEvents.length === 0 ? (
+            <div className="text-center py-8 border rounded-lg">
+              <p className="text-gray-500">No upcoming events at this time.</p>
+              <p className="text-gray-500 text-sm mt-1">Check back later for new events.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {upcomingEvents.map((event) => (
+                <Card key={event.id} className="border">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-lg">{event.title}</CardTitle>
+                    <CardDescription>
+                      <div className="flex items-center mt-1">
+                        <CalendarDays className="h-3.5 w-3.5 mr-1" />
+                        <span>{format(new Date(event.startDate), 'EEE, MMM d, yyyy')}</span>
+                      </div>
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="pb-2">
+                    <div className="flex items-center text-sm text-gray-500">
+                      <MapPin className="h-3.5 w-3.5 mr-1" />
+                      <span className="truncate">{event.location}</span>
+                    </div>
+                    <div className="flex items-center mt-2">
+                      {event.rsvps.length > 0 && (
+                        <Badge variant="outline" className="mr-2">
+                          {event.rsvps[0].status === 'GOING' 
+                            ? 'You\'re going'
+                            : event.rsvps[0].status === 'MAYBE'
+                              ? 'You might go'
+                              : 'You declined'}
+                        </Badge>
+                      )}
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Link href={`/${chapterSlug}/portal/events`} className="w-full">
+                      <Button className="w-full" variant="outline">
+                        {event.rsvps.length > 0 ? 'Update RSVP' : 'RSVP Now'}
+                      </Button>
+                    </Link>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Display feature access based on subscription tier */}

@@ -1,0 +1,15 @@
+import { EventsClient } from "./events-client";
+
+interface PageProps {
+  params: Promise<{
+    chapterSlug: string;
+  }>;
+}
+
+// Server component for Next.js 15 App Router
+export default async function EventsPage({ params }: PageProps) {
+  // Next.js 15: params is a Promise that needs to be awaited
+  const { chapterSlug } = await params;
+  
+  return <EventsClient chapterSlug={chapterSlug} />;
+}

@@ -202,6 +202,31 @@ exports.Prisma.InviteScalarFieldEnum = {
   chapterId: 'chapterId'
 };
 
+exports.Prisma.EventScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  location: 'location',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  capacity: 'capacity',
+  isPublic: 'isPublic',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  chapterId: 'chapterId',
+  createdById: 'createdById'
+};
+
+exports.Prisma.EventRSVPScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  eventId: 'eventId',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -237,6 +262,19 @@ exports.SubscriptionStatus = exports.$Enums.SubscriptionStatus = {
   INCOMPLETE: 'INCOMPLETE'
 };
 
+exports.EventStatus = exports.$Enums.EventStatus = {
+  UPCOMING: 'UPCOMING',
+  ONGOING: 'ONGOING',
+  COMPLETED: 'COMPLETED',
+  CANCELED: 'CANCELED'
+};
+
+exports.RSVPStatus = exports.$Enums.RSVPStatus = {
+  GOING: 'GOING',
+  NOT_GOING: 'NOT_GOING',
+  MAYBE: 'MAYBE'
+};
+
 exports.Prisma.ModelName = {
   Chapter: 'Chapter',
   User: 'User',
@@ -245,7 +283,9 @@ exports.Prisma.ModelName = {
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
-  Invite: 'Invite'
+  Invite: 'Invite',
+  Event: 'Event',
+  EventRSVP: 'EventRSVP'
 };
 
 /**

@@ -52,23 +52,31 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
     m.role !== MembershipRole.PENDING_MEMBER
   ).length;
   
-  // Get upcoming "events" - this would be replaced with real events data
-  const upcomingEvents = [
-    {
-      id: 1,
-      title: 'Chapter Meeting',
-      date: new Date('2025-05-15T19:00:00'),
-      location: 'Student Union, Room 305',
-      attendees: 24
+  // Fetch upcoming events from the database
+  const upcomingEvents = await prisma.event.findMany({
+    where: {
+      chapterId: chapter.id,
+      status: 'UPCOMING',
+      startDate: {
+        gte: new Date(), // Events starting from now
+      },
     },
-    {
-      id: 2,
-      title: 'Philanthropy Event',
-      date: new Date('2025-05-22T10:00:00'),
-      location: 'City Park',
-      attendees: 48
-    }
-  ];
+    include: {
+      _count: {
+        select: {
+          rsvps: {
+            where: {
+              status: 'GOING',
+            },
+          },
+        },
+      },
+    },
+    orderBy: {
+      startDate: 'asc',
+    },
+    take: 4, // Limit to 4 upcoming events for the dashboard
+  });
   
   // Member activity (for demo purposes)
   const recentActivity = [
@@ -155,22 +163,37 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
             <Card className="bg-white shadow-sm border-slate-200">
               <CardHeader className="flex flex-row justify-between items-center pb-2">
                 <CardTitle className="text-xl font-bold text-slate-800">Upcoming Events</CardTitle>
-                <Button variant="link" className="text-emerald-600 font-medium p-0">View All →</Button>
+                <Button variant="link" className="text-emerald-600 font-medium p-0" asChild>
+                  <a href={`/${chapterSlug}/admin/events`}>View All →</a>
+                </Button>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-                  {upcomingEvents.map(event => (
-                    <Card key={event.id} className="overflow-hidden border border-slate-200">
-                      <CardHeader className="p-4 bg-emerald-50 border-b border-emerald-100">
-                        <CardTitle className="text-sm font-semibold text-emerald-600">{event.title}</CardTitle>
-                      </CardHeader>
-                      <CardContent className="p-4 space-y-3">
-                        <div className="text-sm text-slate-500">{formatEventDate(event.date)}</div>
-                        <div className="text-sm text-slate-500">{event.location}</div>
-                        <div className="text-sm text-slate-500">{event.attendees} attendees confirmed</div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                  {upcomingEvents.length > 0 ? (
+                    upcomingEvents.map(event => (
+                      <Card key={event.id} className="overflow-hidden border border-slate-200">
+                        <CardHeader className="p-4 bg-emerald-50 border-b border-emerald-100">
+                          <CardTitle className="text-sm font-semibold text-emerald-600">{event.title}</CardTitle>
+                        </CardHeader>
+                        <CardContent className="p-4 space-y-3">
+                          <div className="text-sm text-slate-500">{formatEventDate(event.startDate)}</div>
+                          <div className="text-sm text-slate-500">{event.location}</div>
+                          <div className="text-sm text-slate-500">{event._count.rsvps} attendees confirmed</div>
+                        </CardContent>
+                      </Card>
+                    ))
+                  ) : (
+                    <div className="col-span-2 p-6 text-center text-slate-500">
+                      <p>No upcoming events scheduled.</p>
+                      <Button 
+                        variant="link" 
+                        className="text-emerald-600 mt-2"
+                        asChild
+                      >
+                        <a href={`/${chapterSlug}/admin/events/new`}>Schedule your first event</a>
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

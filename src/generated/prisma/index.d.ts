@@ -53,6 +53,16 @@ export type VerificationToken = $Result.DefaultSelection<Prisma.$VerificationTok
  * 
  */
 export type Invite = $Result.DefaultSelection<Prisma.$InvitePayload>
+/**
+ * Model Event
+ * 
+ */
+export type Event = $Result.DefaultSelection<Prisma.$EventPayload>
+/**
+ * Model EventRSVP
+ * 
+ */
+export type EventRSVP = $Result.DefaultSelection<Prisma.$EventRSVPPayload>
 
 /**
  * Enums
@@ -87,6 +97,25 @@ export const MembershipRole: {
 
 export type MembershipRole = (typeof MembershipRole)[keyof typeof MembershipRole]
 
+
+export const EventStatus: {
+  UPCOMING: 'UPCOMING',
+  ONGOING: 'ONGOING',
+  COMPLETED: 'COMPLETED',
+  CANCELED: 'CANCELED'
+};
+
+export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
+
+
+export const RSVPStatus: {
+  GOING: 'GOING',
+  NOT_GOING: 'NOT_GOING',
+  MAYBE: 'MAYBE'
+};
+
+export type RSVPStatus = (typeof RSVPStatus)[keyof typeof RSVPStatus]
+
 }
 
 export type PlanType = $Enums.PlanType
@@ -100,6 +129,14 @@ export const SubscriptionStatus: typeof $Enums.SubscriptionStatus
 export type MembershipRole = $Enums.MembershipRole
 
 export const MembershipRole: typeof $Enums.MembershipRole
+
+export type EventStatus = $Enums.EventStatus
+
+export const EventStatus: typeof $Enums.EventStatus
+
+export type RSVPStatus = $Enums.RSVPStatus
+
+export const RSVPStatus: typeof $Enums.RSVPStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -305,6 +342,26 @@ export class PrismaClient<
     * ```
     */
   get invite(): Prisma.InviteDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.event`: Exposes CRUD operations for the **Event** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Events
+    * const events = await prisma.event.findMany()
+    * ```
+    */
+  get event(): Prisma.EventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.eventRSVP`: Exposes CRUD operations for the **EventRSVP** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more EventRSVPS
+    * const eventRSVPS = await prisma.eventRSVP.findMany()
+    * ```
+    */
+  get eventRSVP(): Prisma.EventRSVPDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -752,7 +809,9 @@ export namespace Prisma {
     Account: 'Account',
     Session: 'Session',
     VerificationToken: 'VerificationToken',
-    Invite: 'Invite'
+    Invite: 'Invite',
+    Event: 'Event',
+    EventRSVP: 'EventRSVP'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -771,7 +830,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite"
+      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1367,6 +1426,154 @@ export namespace Prisma {
           }
         }
       }
+      Event: {
+        payload: Prisma.$EventPayload<ExtArgs>
+        fields: Prisma.EventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          findFirst: {
+            args: Prisma.EventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          findMany: {
+            args: Prisma.EventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>[]
+          }
+          create: {
+            args: Prisma.EventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          createMany: {
+            args: Prisma.EventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>[]
+          }
+          delete: {
+            args: Prisma.EventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          update: {
+            args: Prisma.EventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          deleteMany: {
+            args: Prisma.EventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>[]
+          }
+          upsert: {
+            args: Prisma.EventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventPayload>
+          }
+          aggregate: {
+            args: Prisma.EventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEvent>
+          }
+          groupBy: {
+            args: Prisma.EventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EventCountArgs<ExtArgs>
+            result: $Utils.Optional<EventCountAggregateOutputType> | number
+          }
+        }
+      }
+      EventRSVP: {
+        payload: Prisma.$EventRSVPPayload<ExtArgs>
+        fields: Prisma.EventRSVPFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EventRSVPFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EventRSVPFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload>
+          }
+          findFirst: {
+            args: Prisma.EventRSVPFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EventRSVPFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload>
+          }
+          findMany: {
+            args: Prisma.EventRSVPFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload>[]
+          }
+          create: {
+            args: Prisma.EventRSVPCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload>
+          }
+          createMany: {
+            args: Prisma.EventRSVPCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EventRSVPCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload>[]
+          }
+          delete: {
+            args: Prisma.EventRSVPDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload>
+          }
+          update: {
+            args: Prisma.EventRSVPUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload>
+          }
+          deleteMany: {
+            args: Prisma.EventRSVPDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EventRSVPUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EventRSVPUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload>[]
+          }
+          upsert: {
+            args: Prisma.EventRSVPUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventRSVPPayload>
+          }
+          aggregate: {
+            args: Prisma.EventRSVPAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEventRSVP>
+          }
+          groupBy: {
+            args: Prisma.EventRSVPGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EventRSVPGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EventRSVPCountArgs<ExtArgs>
+            result: $Utils.Optional<EventRSVPCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1459,6 +1666,8 @@ export namespace Prisma {
     session?: SessionOmit
     verificationToken?: VerificationTokenOmit
     invite?: InviteOmit
+    event?: EventOmit
+    eventRSVP?: EventRSVPOmit
   }
 
   /* Types for Logging */
@@ -1555,11 +1764,13 @@ export namespace Prisma {
   export type ChapterCountOutputType = {
     memberships: number
     invites: number
+    events: number
   }
 
   export type ChapterCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     memberships?: boolean | ChapterCountOutputTypeCountMembershipsArgs
     invites?: boolean | ChapterCountOutputTypeCountInvitesArgs
+    events?: boolean | ChapterCountOutputTypeCountEventsArgs
   }
 
   // Custom InputTypes
@@ -1587,6 +1798,13 @@ export namespace Prisma {
     where?: InviteWhereInput
   }
 
+  /**
+   * ChapterCountOutputType without action
+   */
+  export type ChapterCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventWhereInput
+  }
+
 
   /**
    * Count Type UserCountOutputType
@@ -1598,6 +1816,8 @@ export namespace Prisma {
     memberships: number
     acceptedInvites: number
     createdInvites: number
+    createdEvents: number
+    rsvps: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1606,6 +1826,8 @@ export namespace Prisma {
     memberships?: boolean | UserCountOutputTypeCountMembershipsArgs
     acceptedInvites?: boolean | UserCountOutputTypeCountAcceptedInvitesArgs
     createdInvites?: boolean | UserCountOutputTypeCountCreatedInvitesArgs
+    createdEvents?: boolean | UserCountOutputTypeCountCreatedEventsArgs
+    rsvps?: boolean | UserCountOutputTypeCountRsvpsArgs
   }
 
   // Custom InputTypes
@@ -1652,6 +1874,51 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCreatedInvitesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: InviteWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCreatedEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountRsvpsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventRSVPWhereInput
+  }
+
+
+  /**
+   * Count Type EventCountOutputType
+   */
+
+  export type EventCountOutputType = {
+    rsvps: number
+  }
+
+  export type EventCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    rsvps?: boolean | EventCountOutputTypeCountRsvpsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventCountOutputType
+     */
+    select?: EventCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * EventCountOutputType without action
+   */
+  export type EventCountOutputTypeCountRsvpsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventRSVPWhereInput
   }
 
 
@@ -1842,6 +2109,7 @@ export namespace Prisma {
     memberships?: boolean | Chapter$membershipsArgs<ExtArgs>
     subscription?: boolean | Chapter$subscriptionArgs<ExtArgs>
     invites?: boolean | Chapter$invitesArgs<ExtArgs>
+    events?: boolean | Chapter$eventsArgs<ExtArgs>
     _count?: boolean | ChapterCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chapter"]>
 
@@ -1880,6 +2148,7 @@ export namespace Prisma {
     memberships?: boolean | Chapter$membershipsArgs<ExtArgs>
     subscription?: boolean | Chapter$subscriptionArgs<ExtArgs>
     invites?: boolean | Chapter$invitesArgs<ExtArgs>
+    events?: boolean | Chapter$eventsArgs<ExtArgs>
     _count?: boolean | ChapterCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ChapterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1891,6 +2160,7 @@ export namespace Prisma {
       memberships: Prisma.$MembershipPayload<ExtArgs>[]
       subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
       invites: Prisma.$InvitePayload<ExtArgs>[]
+      events: Prisma.$EventPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2297,6 +2567,7 @@ export namespace Prisma {
     memberships<T extends Chapter$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     subscription<T extends Chapter$subscriptionArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$subscriptionArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     invites<T extends Chapter$invitesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$invitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    events<T extends Chapter$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2788,6 +3059,30 @@ export namespace Prisma {
   }
 
   /**
+   * Chapter.events
+   */
+  export type Chapter$eventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    cursor?: EventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
    * Chapter without action
    */
   export type ChapterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2999,6 +3294,8 @@ export namespace Prisma {
     memberships?: boolean | User$membershipsArgs<ExtArgs>
     acceptedInvites?: boolean | User$acceptedInvitesArgs<ExtArgs>
     createdInvites?: boolean | User$createdInvitesArgs<ExtArgs>
+    createdEvents?: boolean | User$createdEventsArgs<ExtArgs>
+    rsvps?: boolean | User$rsvpsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3042,6 +3339,8 @@ export namespace Prisma {
     memberships?: boolean | User$membershipsArgs<ExtArgs>
     acceptedInvites?: boolean | User$acceptedInvitesArgs<ExtArgs>
     createdInvites?: boolean | User$createdInvitesArgs<ExtArgs>
+    createdEvents?: boolean | User$createdEventsArgs<ExtArgs>
+    rsvps?: boolean | User$rsvpsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3055,6 +3354,8 @@ export namespace Prisma {
       memberships: Prisma.$MembershipPayload<ExtArgs>[]
       acceptedInvites: Prisma.$InvitePayload<ExtArgs>[]
       createdInvites: Prisma.$InvitePayload<ExtArgs>[]
+      createdEvents: Prisma.$EventPayload<ExtArgs>[]
+      rsvps: Prisma.$EventRSVPPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3464,6 +3765,8 @@ export namespace Prisma {
     memberships<T extends User$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     acceptedInvites<T extends User$acceptedInvitesArgs<ExtArgs> = {}>(args?: Subset<T, User$acceptedInvitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     createdInvites<T extends User$createdInvitesArgs<ExtArgs> = {}>(args?: Subset<T, User$createdInvitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    createdEvents<T extends User$createdEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    rsvps<T extends User$rsvpsArgs<ExtArgs> = {}>(args?: Subset<T, User$rsvpsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4006,6 +4309,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: InviteScalarFieldEnum | InviteScalarFieldEnum[]
+  }
+
+  /**
+   * User.createdEvents
+   */
+  export type User$createdEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    where?: EventWhereInput
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    cursor?: EventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * User.rsvps
+   */
+  export type User$rsvpsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    where?: EventRSVPWhereInput
+    orderBy?: EventRSVPOrderByWithRelationInput | EventRSVPOrderByWithRelationInput[]
+    cursor?: EventRSVPWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventRSVPScalarFieldEnum | EventRSVPScalarFieldEnum[]
   }
 
   /**
@@ -10578,6 +10929,2319 @@ export namespace Prisma {
 
 
   /**
+   * Model Event
+   */
+
+  export type AggregateEvent = {
+    _count: EventCountAggregateOutputType | null
+    _avg: EventAvgAggregateOutputType | null
+    _sum: EventSumAggregateOutputType | null
+    _min: EventMinAggregateOutputType | null
+    _max: EventMaxAggregateOutputType | null
+  }
+
+  export type EventAvgAggregateOutputType = {
+    capacity: number | null
+  }
+
+  export type EventSumAggregateOutputType = {
+    capacity: number | null
+  }
+
+  export type EventMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    location: string | null
+    startDate: Date | null
+    endDate: Date | null
+    capacity: number | null
+    isPublic: boolean | null
+    status: $Enums.EventStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    chapterId: string | null
+    createdById: string | null
+  }
+
+  export type EventMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    location: string | null
+    startDate: Date | null
+    endDate: Date | null
+    capacity: number | null
+    isPublic: boolean | null
+    status: $Enums.EventStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    chapterId: string | null
+    createdById: string | null
+  }
+
+  export type EventCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    location: number
+    startDate: number
+    endDate: number
+    capacity: number
+    isPublic: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    chapterId: number
+    createdById: number
+    _all: number
+  }
+
+
+  export type EventAvgAggregateInputType = {
+    capacity?: true
+  }
+
+  export type EventSumAggregateInputType = {
+    capacity?: true
+  }
+
+  export type EventMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    location?: true
+    startDate?: true
+    endDate?: true
+    capacity?: true
+    isPublic?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    chapterId?: true
+    createdById?: true
+  }
+
+  export type EventMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    location?: true
+    startDate?: true
+    endDate?: true
+    capacity?: true
+    isPublic?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    chapterId?: true
+    createdById?: true
+  }
+
+  export type EventCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    location?: true
+    startDate?: true
+    endDate?: true
+    capacity?: true
+    isPublic?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    chapterId?: true
+    createdById?: true
+    _all?: true
+  }
+
+  export type EventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Event to aggregate.
+     */
+    where?: EventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Events
+    **/
+    _count?: true | EventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EventAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EventSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EventMaxAggregateInputType
+  }
+
+  export type GetEventAggregateType<T extends EventAggregateArgs> = {
+        [P in keyof T & keyof AggregateEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEvent[P]>
+      : GetScalarType<T[P], AggregateEvent[P]>
+  }
+
+
+
+
+  export type EventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventWhereInput
+    orderBy?: EventOrderByWithAggregationInput | EventOrderByWithAggregationInput[]
+    by: EventScalarFieldEnum[] | EventScalarFieldEnum
+    having?: EventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EventCountAggregateInputType | true
+    _avg?: EventAvgAggregateInputType
+    _sum?: EventSumAggregateInputType
+    _min?: EventMinAggregateInputType
+    _max?: EventMaxAggregateInputType
+  }
+
+  export type EventGroupByOutputType = {
+    id: string
+    title: string
+    description: string
+    location: string
+    startDate: Date
+    endDate: Date
+    capacity: number | null
+    isPublic: boolean
+    status: $Enums.EventStatus
+    createdAt: Date
+    updatedAt: Date
+    chapterId: string
+    createdById: string
+    _count: EventCountAggregateOutputType | null
+    _avg: EventAvgAggregateOutputType | null
+    _sum: EventSumAggregateOutputType | null
+    _min: EventMinAggregateOutputType | null
+    _max: EventMaxAggregateOutputType | null
+  }
+
+  type GetEventGroupByPayload<T extends EventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EventGroupByOutputType[P]>
+            : GetScalarType<T[P], EventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    location?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    capacity?: boolean
+    isPublic?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    createdById?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    rsvps?: boolean | Event$rsvpsArgs<ExtArgs>
+    _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["event"]>
+
+  export type EventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    location?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    capacity?: boolean
+    isPublic?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    createdById?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["event"]>
+
+  export type EventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    location?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    capacity?: boolean
+    isPublic?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    createdById?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["event"]>
+
+  export type EventSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    location?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    capacity?: boolean
+    isPublic?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    createdById?: boolean
+  }
+
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "location" | "startDate" | "endDate" | "capacity" | "isPublic" | "status" | "createdAt" | "updatedAt" | "chapterId" | "createdById", ExtArgs["result"]["event"]>
+  export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    rsvps?: boolean | Event$rsvpsArgs<ExtArgs>
+    _count?: boolean | EventCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type EventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type EventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $EventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Event"
+    objects: {
+      chapter: Prisma.$ChapterPayload<ExtArgs>
+      createdBy: Prisma.$UserPayload<ExtArgs>
+      rsvps: Prisma.$EventRSVPPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: string
+      location: string
+      startDate: Date
+      endDate: Date
+      capacity: number | null
+      isPublic: boolean
+      status: $Enums.EventStatus
+      createdAt: Date
+      updatedAt: Date
+      chapterId: string
+      createdById: string
+    }, ExtArgs["result"]["event"]>
+    composites: {}
+  }
+
+  type EventGetPayload<S extends boolean | null | undefined | EventDefaultArgs> = $Result.GetResult<Prisma.$EventPayload, S>
+
+  type EventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EventCountAggregateInputType | true
+    }
+
+  export interface EventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Event'], meta: { name: 'Event' } }
+    /**
+     * Find zero or one Event that matches the filter.
+     * @param {EventFindUniqueArgs} args - Arguments to find a Event
+     * @example
+     * // Get one Event
+     * const event = await prisma.event.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EventFindUniqueArgs>(args: SelectSubset<T, EventFindUniqueArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Event that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EventFindUniqueOrThrowArgs} args - Arguments to find a Event
+     * @example
+     * // Get one Event
+     * const event = await prisma.event.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EventFindUniqueOrThrowArgs>(args: SelectSubset<T, EventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Event that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventFindFirstArgs} args - Arguments to find a Event
+     * @example
+     * // Get one Event
+     * const event = await prisma.event.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EventFindFirstArgs>(args?: SelectSubset<T, EventFindFirstArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Event that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventFindFirstOrThrowArgs} args - Arguments to find a Event
+     * @example
+     * // Get one Event
+     * const event = await prisma.event.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EventFindFirstOrThrowArgs>(args?: SelectSubset<T, EventFindFirstOrThrowArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Events that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Events
+     * const events = await prisma.event.findMany()
+     * 
+     * // Get first 10 Events
+     * const events = await prisma.event.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const eventWithIdOnly = await prisma.event.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EventFindManyArgs>(args?: SelectSubset<T, EventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Event.
+     * @param {EventCreateArgs} args - Arguments to create a Event.
+     * @example
+     * // Create one Event
+     * const Event = await prisma.event.create({
+     *   data: {
+     *     // ... data to create a Event
+     *   }
+     * })
+     * 
+     */
+    create<T extends EventCreateArgs>(args: SelectSubset<T, EventCreateArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Events.
+     * @param {EventCreateManyArgs} args - Arguments to create many Events.
+     * @example
+     * // Create many Events
+     * const event = await prisma.event.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EventCreateManyArgs>(args?: SelectSubset<T, EventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Events and returns the data saved in the database.
+     * @param {EventCreateManyAndReturnArgs} args - Arguments to create many Events.
+     * @example
+     * // Create many Events
+     * const event = await prisma.event.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Events and only return the `id`
+     * const eventWithIdOnly = await prisma.event.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EventCreateManyAndReturnArgs>(args?: SelectSubset<T, EventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Event.
+     * @param {EventDeleteArgs} args - Arguments to delete one Event.
+     * @example
+     * // Delete one Event
+     * const Event = await prisma.event.delete({
+     *   where: {
+     *     // ... filter to delete one Event
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EventDeleteArgs>(args: SelectSubset<T, EventDeleteArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Event.
+     * @param {EventUpdateArgs} args - Arguments to update one Event.
+     * @example
+     * // Update one Event
+     * const event = await prisma.event.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EventUpdateArgs>(args: SelectSubset<T, EventUpdateArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Events.
+     * @param {EventDeleteManyArgs} args - Arguments to filter Events to delete.
+     * @example
+     * // Delete a few Events
+     * const { count } = await prisma.event.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EventDeleteManyArgs>(args?: SelectSubset<T, EventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Events.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Events
+     * const event = await prisma.event.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EventUpdateManyArgs>(args: SelectSubset<T, EventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Events and returns the data updated in the database.
+     * @param {EventUpdateManyAndReturnArgs} args - Arguments to update many Events.
+     * @example
+     * // Update many Events
+     * const event = await prisma.event.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Events and only return the `id`
+     * const eventWithIdOnly = await prisma.event.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EventUpdateManyAndReturnArgs>(args: SelectSubset<T, EventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Event.
+     * @param {EventUpsertArgs} args - Arguments to update or create a Event.
+     * @example
+     * // Update or create a Event
+     * const event = await prisma.event.upsert({
+     *   create: {
+     *     // ... data to create a Event
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Event we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EventUpsertArgs>(args: SelectSubset<T, EventUpsertArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Events.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventCountArgs} args - Arguments to filter Events to count.
+     * @example
+     * // Count the number of Events
+     * const count = await prisma.event.count({
+     *   where: {
+     *     // ... the filter for the Events we want to count
+     *   }
+     * })
+    **/
+    count<T extends EventCountArgs>(
+      args?: Subset<T, EventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Event.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EventAggregateArgs>(args: Subset<T, EventAggregateArgs>): Prisma.PrismaPromise<GetEventAggregateType<T>>
+
+    /**
+     * Group by Event.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EventGroupByArgs['orderBy'] }
+        : { orderBy?: EventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Event model
+   */
+  readonly fields: EventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Event.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    rsvps<T extends Event$rsvpsArgs<ExtArgs> = {}>(args?: Subset<T, Event$rsvpsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Event model
+   */
+  interface EventFieldRefs {
+    readonly id: FieldRef<"Event", 'String'>
+    readonly title: FieldRef<"Event", 'String'>
+    readonly description: FieldRef<"Event", 'String'>
+    readonly location: FieldRef<"Event", 'String'>
+    readonly startDate: FieldRef<"Event", 'DateTime'>
+    readonly endDate: FieldRef<"Event", 'DateTime'>
+    readonly capacity: FieldRef<"Event", 'Int'>
+    readonly isPublic: FieldRef<"Event", 'Boolean'>
+    readonly status: FieldRef<"Event", 'EventStatus'>
+    readonly createdAt: FieldRef<"Event", 'DateTime'>
+    readonly updatedAt: FieldRef<"Event", 'DateTime'>
+    readonly chapterId: FieldRef<"Event", 'String'>
+    readonly createdById: FieldRef<"Event", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Event findUnique
+   */
+  export type EventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter, which Event to fetch.
+     */
+    where: EventWhereUniqueInput
+  }
+
+  /**
+   * Event findUniqueOrThrow
+   */
+  export type EventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter, which Event to fetch.
+     */
+    where: EventWhereUniqueInput
+  }
+
+  /**
+   * Event findFirst
+   */
+  export type EventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter, which Event to fetch.
+     */
+    where?: EventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Events.
+     */
+    cursor?: EventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Events.
+     */
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * Event findFirstOrThrow
+   */
+  export type EventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter, which Event to fetch.
+     */
+    where?: EventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Events.
+     */
+    cursor?: EventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Events.
+     */
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * Event findMany
+   */
+  export type EventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter, which Events to fetch.
+     */
+    where?: EventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventOrderByWithRelationInput | EventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Events.
+     */
+    cursor?: EventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    distinct?: EventScalarFieldEnum | EventScalarFieldEnum[]
+  }
+
+  /**
+   * Event create
+   */
+  export type EventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Event.
+     */
+    data: XOR<EventCreateInput, EventUncheckedCreateInput>
+  }
+
+  /**
+   * Event createMany
+   */
+  export type EventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Events.
+     */
+    data: EventCreateManyInput | EventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Event createManyAndReturn
+   */
+  export type EventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * The data used to create many Events.
+     */
+    data: EventCreateManyInput | EventCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Event update
+   */
+  export type EventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Event.
+     */
+    data: XOR<EventUpdateInput, EventUncheckedUpdateInput>
+    /**
+     * Choose, which Event to update.
+     */
+    where: EventWhereUniqueInput
+  }
+
+  /**
+   * Event updateMany
+   */
+  export type EventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Events.
+     */
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyInput>
+    /**
+     * Filter which Events to update
+     */
+    where?: EventWhereInput
+    /**
+     * Limit how many Events to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Event updateManyAndReturn
+   */
+  export type EventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * The data used to update Events.
+     */
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyInput>
+    /**
+     * Filter which Events to update
+     */
+    where?: EventWhereInput
+    /**
+     * Limit how many Events to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Event upsert
+   */
+  export type EventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Event to update in case it exists.
+     */
+    where: EventWhereUniqueInput
+    /**
+     * In case the Event found by the `where` argument doesn't exist, create a new Event with this data.
+     */
+    create: XOR<EventCreateInput, EventUncheckedCreateInput>
+    /**
+     * In case the Event was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EventUpdateInput, EventUncheckedUpdateInput>
+  }
+
+  /**
+   * Event delete
+   */
+  export type EventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+    /**
+     * Filter which Event to delete.
+     */
+    where: EventWhereUniqueInput
+  }
+
+  /**
+   * Event deleteMany
+   */
+  export type EventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Events to delete
+     */
+    where?: EventWhereInput
+    /**
+     * Limit how many Events to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Event.rsvps
+   */
+  export type Event$rsvpsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    where?: EventRSVPWhereInput
+    orderBy?: EventRSVPOrderByWithRelationInput | EventRSVPOrderByWithRelationInput[]
+    cursor?: EventRSVPWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventRSVPScalarFieldEnum | EventRSVPScalarFieldEnum[]
+  }
+
+  /**
+   * Event without action
+   */
+  export type EventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Event
+     */
+    select?: EventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Event
+     */
+    omit?: EventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model EventRSVP
+   */
+
+  export type AggregateEventRSVP = {
+    _count: EventRSVPCountAggregateOutputType | null
+    _min: EventRSVPMinAggregateOutputType | null
+    _max: EventRSVPMaxAggregateOutputType | null
+  }
+
+  export type EventRSVPMinAggregateOutputType = {
+    id: string | null
+    status: $Enums.RSVPStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    eventId: string | null
+    userId: string | null
+  }
+
+  export type EventRSVPMaxAggregateOutputType = {
+    id: string | null
+    status: $Enums.RSVPStatus | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    eventId: string | null
+    userId: string | null
+  }
+
+  export type EventRSVPCountAggregateOutputType = {
+    id: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    eventId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type EventRSVPMinAggregateInputType = {
+    id?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    eventId?: true
+    userId?: true
+  }
+
+  export type EventRSVPMaxAggregateInputType = {
+    id?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    eventId?: true
+    userId?: true
+  }
+
+  export type EventRSVPCountAggregateInputType = {
+    id?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    eventId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type EventRSVPAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EventRSVP to aggregate.
+     */
+    where?: EventRSVPWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventRSVPS to fetch.
+     */
+    orderBy?: EventRSVPOrderByWithRelationInput | EventRSVPOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EventRSVPWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventRSVPS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventRSVPS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned EventRSVPS
+    **/
+    _count?: true | EventRSVPCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EventRSVPMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EventRSVPMaxAggregateInputType
+  }
+
+  export type GetEventRSVPAggregateType<T extends EventRSVPAggregateArgs> = {
+        [P in keyof T & keyof AggregateEventRSVP]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEventRSVP[P]>
+      : GetScalarType<T[P], AggregateEventRSVP[P]>
+  }
+
+
+
+
+  export type EventRSVPGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventRSVPWhereInput
+    orderBy?: EventRSVPOrderByWithAggregationInput | EventRSVPOrderByWithAggregationInput[]
+    by: EventRSVPScalarFieldEnum[] | EventRSVPScalarFieldEnum
+    having?: EventRSVPScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EventRSVPCountAggregateInputType | true
+    _min?: EventRSVPMinAggregateInputType
+    _max?: EventRSVPMaxAggregateInputType
+  }
+
+  export type EventRSVPGroupByOutputType = {
+    id: string
+    status: $Enums.RSVPStatus
+    createdAt: Date
+    updatedAt: Date
+    eventId: string
+    userId: string
+    _count: EventRSVPCountAggregateOutputType | null
+    _min: EventRSVPMinAggregateOutputType | null
+    _max: EventRSVPMaxAggregateOutputType | null
+  }
+
+  type GetEventRSVPGroupByPayload<T extends EventRSVPGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EventRSVPGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EventRSVPGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EventRSVPGroupByOutputType[P]>
+            : GetScalarType<T[P], EventRSVPGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EventRSVPSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    eventId?: boolean
+    userId?: boolean
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eventRSVP"]>
+
+  export type EventRSVPSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    eventId?: boolean
+    userId?: boolean
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eventRSVP"]>
+
+  export type EventRSVPSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    eventId?: boolean
+    userId?: boolean
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["eventRSVP"]>
+
+  export type EventRSVPSelectScalar = {
+    id?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    eventId?: boolean
+    userId?: boolean
+  }
+
+  export type EventRSVPOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "status" | "createdAt" | "updatedAt" | "eventId" | "userId", ExtArgs["result"]["eventRSVP"]>
+  export type EventRSVPInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type EventRSVPIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type EventRSVPIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    event?: boolean | EventDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $EventRSVPPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "EventRSVP"
+    objects: {
+      event: Prisma.$EventPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      status: $Enums.RSVPStatus
+      createdAt: Date
+      updatedAt: Date
+      eventId: string
+      userId: string
+    }, ExtArgs["result"]["eventRSVP"]>
+    composites: {}
+  }
+
+  type EventRSVPGetPayload<S extends boolean | null | undefined | EventRSVPDefaultArgs> = $Result.GetResult<Prisma.$EventRSVPPayload, S>
+
+  type EventRSVPCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EventRSVPFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: EventRSVPCountAggregateInputType | true
+    }
+
+  export interface EventRSVPDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['EventRSVP'], meta: { name: 'EventRSVP' } }
+    /**
+     * Find zero or one EventRSVP that matches the filter.
+     * @param {EventRSVPFindUniqueArgs} args - Arguments to find a EventRSVP
+     * @example
+     * // Get one EventRSVP
+     * const eventRSVP = await prisma.eventRSVP.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EventRSVPFindUniqueArgs>(args: SelectSubset<T, EventRSVPFindUniqueArgs<ExtArgs>>): Prisma__EventRSVPClient<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one EventRSVP that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EventRSVPFindUniqueOrThrowArgs} args - Arguments to find a EventRSVP
+     * @example
+     * // Get one EventRSVP
+     * const eventRSVP = await prisma.eventRSVP.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EventRSVPFindUniqueOrThrowArgs>(args: SelectSubset<T, EventRSVPFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EventRSVPClient<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first EventRSVP that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventRSVPFindFirstArgs} args - Arguments to find a EventRSVP
+     * @example
+     * // Get one EventRSVP
+     * const eventRSVP = await prisma.eventRSVP.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EventRSVPFindFirstArgs>(args?: SelectSubset<T, EventRSVPFindFirstArgs<ExtArgs>>): Prisma__EventRSVPClient<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first EventRSVP that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventRSVPFindFirstOrThrowArgs} args - Arguments to find a EventRSVP
+     * @example
+     * // Get one EventRSVP
+     * const eventRSVP = await prisma.eventRSVP.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EventRSVPFindFirstOrThrowArgs>(args?: SelectSubset<T, EventRSVPFindFirstOrThrowArgs<ExtArgs>>): Prisma__EventRSVPClient<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more EventRSVPS that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventRSVPFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all EventRSVPS
+     * const eventRSVPS = await prisma.eventRSVP.findMany()
+     * 
+     * // Get first 10 EventRSVPS
+     * const eventRSVPS = await prisma.eventRSVP.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const eventRSVPWithIdOnly = await prisma.eventRSVP.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends EventRSVPFindManyArgs>(args?: SelectSubset<T, EventRSVPFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a EventRSVP.
+     * @param {EventRSVPCreateArgs} args - Arguments to create a EventRSVP.
+     * @example
+     * // Create one EventRSVP
+     * const EventRSVP = await prisma.eventRSVP.create({
+     *   data: {
+     *     // ... data to create a EventRSVP
+     *   }
+     * })
+     * 
+     */
+    create<T extends EventRSVPCreateArgs>(args: SelectSubset<T, EventRSVPCreateArgs<ExtArgs>>): Prisma__EventRSVPClient<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many EventRSVPS.
+     * @param {EventRSVPCreateManyArgs} args - Arguments to create many EventRSVPS.
+     * @example
+     * // Create many EventRSVPS
+     * const eventRSVP = await prisma.eventRSVP.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EventRSVPCreateManyArgs>(args?: SelectSubset<T, EventRSVPCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many EventRSVPS and returns the data saved in the database.
+     * @param {EventRSVPCreateManyAndReturnArgs} args - Arguments to create many EventRSVPS.
+     * @example
+     * // Create many EventRSVPS
+     * const eventRSVP = await prisma.eventRSVP.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many EventRSVPS and only return the `id`
+     * const eventRSVPWithIdOnly = await prisma.eventRSVP.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EventRSVPCreateManyAndReturnArgs>(args?: SelectSubset<T, EventRSVPCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a EventRSVP.
+     * @param {EventRSVPDeleteArgs} args - Arguments to delete one EventRSVP.
+     * @example
+     * // Delete one EventRSVP
+     * const EventRSVP = await prisma.eventRSVP.delete({
+     *   where: {
+     *     // ... filter to delete one EventRSVP
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EventRSVPDeleteArgs>(args: SelectSubset<T, EventRSVPDeleteArgs<ExtArgs>>): Prisma__EventRSVPClient<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one EventRSVP.
+     * @param {EventRSVPUpdateArgs} args - Arguments to update one EventRSVP.
+     * @example
+     * // Update one EventRSVP
+     * const eventRSVP = await prisma.eventRSVP.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EventRSVPUpdateArgs>(args: SelectSubset<T, EventRSVPUpdateArgs<ExtArgs>>): Prisma__EventRSVPClient<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more EventRSVPS.
+     * @param {EventRSVPDeleteManyArgs} args - Arguments to filter EventRSVPS to delete.
+     * @example
+     * // Delete a few EventRSVPS
+     * const { count } = await prisma.eventRSVP.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EventRSVPDeleteManyArgs>(args?: SelectSubset<T, EventRSVPDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EventRSVPS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventRSVPUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many EventRSVPS
+     * const eventRSVP = await prisma.eventRSVP.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EventRSVPUpdateManyArgs>(args: SelectSubset<T, EventRSVPUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more EventRSVPS and returns the data updated in the database.
+     * @param {EventRSVPUpdateManyAndReturnArgs} args - Arguments to update many EventRSVPS.
+     * @example
+     * // Update many EventRSVPS
+     * const eventRSVP = await prisma.eventRSVP.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more EventRSVPS and only return the `id`
+     * const eventRSVPWithIdOnly = await prisma.eventRSVP.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EventRSVPUpdateManyAndReturnArgs>(args: SelectSubset<T, EventRSVPUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one EventRSVP.
+     * @param {EventRSVPUpsertArgs} args - Arguments to update or create a EventRSVP.
+     * @example
+     * // Update or create a EventRSVP
+     * const eventRSVP = await prisma.eventRSVP.upsert({
+     *   create: {
+     *     // ... data to create a EventRSVP
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the EventRSVP we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EventRSVPUpsertArgs>(args: SelectSubset<T, EventRSVPUpsertArgs<ExtArgs>>): Prisma__EventRSVPClient<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of EventRSVPS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventRSVPCountArgs} args - Arguments to filter EventRSVPS to count.
+     * @example
+     * // Count the number of EventRSVPS
+     * const count = await prisma.eventRSVP.count({
+     *   where: {
+     *     // ... the filter for the EventRSVPS we want to count
+     *   }
+     * })
+    **/
+    count<T extends EventRSVPCountArgs>(
+      args?: Subset<T, EventRSVPCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EventRSVPCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a EventRSVP.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventRSVPAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EventRSVPAggregateArgs>(args: Subset<T, EventRSVPAggregateArgs>): Prisma.PrismaPromise<GetEventRSVPAggregateType<T>>
+
+    /**
+     * Group by EventRSVP.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventRSVPGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EventRSVPGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EventRSVPGroupByArgs['orderBy'] }
+        : { orderBy?: EventRSVPGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EventRSVPGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEventRSVPGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the EventRSVP model
+   */
+  readonly fields: EventRSVPFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for EventRSVP.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EventRSVPClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    event<T extends EventDefaultArgs<ExtArgs> = {}>(args?: Subset<T, EventDefaultArgs<ExtArgs>>): Prisma__EventClient<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the EventRSVP model
+   */
+  interface EventRSVPFieldRefs {
+    readonly id: FieldRef<"EventRSVP", 'String'>
+    readonly status: FieldRef<"EventRSVP", 'RSVPStatus'>
+    readonly createdAt: FieldRef<"EventRSVP", 'DateTime'>
+    readonly updatedAt: FieldRef<"EventRSVP", 'DateTime'>
+    readonly eventId: FieldRef<"EventRSVP", 'String'>
+    readonly userId: FieldRef<"EventRSVP", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * EventRSVP findUnique
+   */
+  export type EventRSVPFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    /**
+     * Filter, which EventRSVP to fetch.
+     */
+    where: EventRSVPWhereUniqueInput
+  }
+
+  /**
+   * EventRSVP findUniqueOrThrow
+   */
+  export type EventRSVPFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    /**
+     * Filter, which EventRSVP to fetch.
+     */
+    where: EventRSVPWhereUniqueInput
+  }
+
+  /**
+   * EventRSVP findFirst
+   */
+  export type EventRSVPFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    /**
+     * Filter, which EventRSVP to fetch.
+     */
+    where?: EventRSVPWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventRSVPS to fetch.
+     */
+    orderBy?: EventRSVPOrderByWithRelationInput | EventRSVPOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EventRSVPS.
+     */
+    cursor?: EventRSVPWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventRSVPS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventRSVPS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EventRSVPS.
+     */
+    distinct?: EventRSVPScalarFieldEnum | EventRSVPScalarFieldEnum[]
+  }
+
+  /**
+   * EventRSVP findFirstOrThrow
+   */
+  export type EventRSVPFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    /**
+     * Filter, which EventRSVP to fetch.
+     */
+    where?: EventRSVPWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventRSVPS to fetch.
+     */
+    orderBy?: EventRSVPOrderByWithRelationInput | EventRSVPOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for EventRSVPS.
+     */
+    cursor?: EventRSVPWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventRSVPS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventRSVPS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of EventRSVPS.
+     */
+    distinct?: EventRSVPScalarFieldEnum | EventRSVPScalarFieldEnum[]
+  }
+
+  /**
+   * EventRSVP findMany
+   */
+  export type EventRSVPFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    /**
+     * Filter, which EventRSVPS to fetch.
+     */
+    where?: EventRSVPWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of EventRSVPS to fetch.
+     */
+    orderBy?: EventRSVPOrderByWithRelationInput | EventRSVPOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing EventRSVPS.
+     */
+    cursor?: EventRSVPWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` EventRSVPS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` EventRSVPS.
+     */
+    skip?: number
+    distinct?: EventRSVPScalarFieldEnum | EventRSVPScalarFieldEnum[]
+  }
+
+  /**
+   * EventRSVP create
+   */
+  export type EventRSVPCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    /**
+     * The data needed to create a EventRSVP.
+     */
+    data: XOR<EventRSVPCreateInput, EventRSVPUncheckedCreateInput>
+  }
+
+  /**
+   * EventRSVP createMany
+   */
+  export type EventRSVPCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many EventRSVPS.
+     */
+    data: EventRSVPCreateManyInput | EventRSVPCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * EventRSVP createManyAndReturn
+   */
+  export type EventRSVPCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * The data used to create many EventRSVPS.
+     */
+    data: EventRSVPCreateManyInput | EventRSVPCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EventRSVP update
+   */
+  export type EventRSVPUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    /**
+     * The data needed to update a EventRSVP.
+     */
+    data: XOR<EventRSVPUpdateInput, EventRSVPUncheckedUpdateInput>
+    /**
+     * Choose, which EventRSVP to update.
+     */
+    where: EventRSVPWhereUniqueInput
+  }
+
+  /**
+   * EventRSVP updateMany
+   */
+  export type EventRSVPUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update EventRSVPS.
+     */
+    data: XOR<EventRSVPUpdateManyMutationInput, EventRSVPUncheckedUpdateManyInput>
+    /**
+     * Filter which EventRSVPS to update
+     */
+    where?: EventRSVPWhereInput
+    /**
+     * Limit how many EventRSVPS to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * EventRSVP updateManyAndReturn
+   */
+  export type EventRSVPUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * The data used to update EventRSVPS.
+     */
+    data: XOR<EventRSVPUpdateManyMutationInput, EventRSVPUncheckedUpdateManyInput>
+    /**
+     * Filter which EventRSVPS to update
+     */
+    where?: EventRSVPWhereInput
+    /**
+     * Limit how many EventRSVPS to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * EventRSVP upsert
+   */
+  export type EventRSVPUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    /**
+     * The filter to search for the EventRSVP to update in case it exists.
+     */
+    where: EventRSVPWhereUniqueInput
+    /**
+     * In case the EventRSVP found by the `where` argument doesn't exist, create a new EventRSVP with this data.
+     */
+    create: XOR<EventRSVPCreateInput, EventRSVPUncheckedCreateInput>
+    /**
+     * In case the EventRSVP was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EventRSVPUpdateInput, EventRSVPUncheckedUpdateInput>
+  }
+
+  /**
+   * EventRSVP delete
+   */
+  export type EventRSVPDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+    /**
+     * Filter which EventRSVP to delete.
+     */
+    where: EventRSVPWhereUniqueInput
+  }
+
+  /**
+   * EventRSVP deleteMany
+   */
+  export type EventRSVPDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which EventRSVPS to delete
+     */
+    where?: EventRSVPWhereInput
+    /**
+     * Limit how many EventRSVPS to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * EventRSVP without action
+   */
+  export type EventRSVPDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the EventRSVP
+     */
+    select?: EventRSVPSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the EventRSVP
+     */
+    omit?: EventRSVPOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventRSVPInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -10695,6 +13359,37 @@ export namespace Prisma {
   };
 
   export type InviteScalarFieldEnum = (typeof InviteScalarFieldEnum)[keyof typeof InviteScalarFieldEnum]
+
+
+  export const EventScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    location: 'location',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    capacity: 'capacity',
+    isPublic: 'isPublic',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    chapterId: 'chapterId',
+    createdById: 'createdById'
+  };
+
+  export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+  export const EventRSVPScalarFieldEnum: {
+    id: 'id',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    eventId: 'eventId',
+    userId: 'userId'
+  };
+
+  export type EventRSVPScalarFieldEnum = (typeof EventRSVPScalarFieldEnum)[keyof typeof EventRSVPScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -10818,6 +13513,34 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'EventStatus'
+   */
+  export type EnumEventStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'EventStatus[]'
+   */
+  export type ListEnumEventStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'RSVPStatus'
+   */
+  export type EnumRSVPStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RSVPStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'RSVPStatus[]'
+   */
+  export type ListEnumRSVPStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RSVPStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -10848,6 +13571,7 @@ export namespace Prisma {
     memberships?: MembershipListRelationFilter
     subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
     invites?: InviteListRelationFilter
+    events?: EventListRelationFilter
   }
 
   export type ChapterOrderByWithRelationInput = {
@@ -10861,6 +13585,7 @@ export namespace Prisma {
     memberships?: MembershipOrderByRelationAggregateInput
     subscription?: SubscriptionOrderByWithRelationInput
     invites?: InviteOrderByRelationAggregateInput
+    events?: EventOrderByRelationAggregateInput
   }
 
   export type ChapterWhereUniqueInput = Prisma.AtLeast<{
@@ -10877,6 +13602,7 @@ export namespace Prisma {
     memberships?: MembershipListRelationFilter
     subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
     invites?: InviteListRelationFilter
+    events?: EventListRelationFilter
   }, "id" | "slug">
 
   export type ChapterOrderByWithAggregationInput = {
@@ -10922,6 +13648,8 @@ export namespace Prisma {
     memberships?: MembershipListRelationFilter
     acceptedInvites?: InviteListRelationFilter
     createdInvites?: InviteListRelationFilter
+    createdEvents?: EventListRelationFilter
+    rsvps?: EventRSVPListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -10938,6 +13666,8 @@ export namespace Prisma {
     memberships?: MembershipOrderByRelationAggregateInput
     acceptedInvites?: InviteOrderByRelationAggregateInput
     createdInvites?: InviteOrderByRelationAggregateInput
+    createdEvents?: EventOrderByRelationAggregateInput
+    rsvps?: EventRSVPOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -10957,6 +13687,8 @@ export namespace Prisma {
     memberships?: MembershipListRelationFilter
     acceptedInvites?: InviteListRelationFilter
     createdInvites?: InviteListRelationFilter
+    createdEvents?: EventListRelationFilter
+    rsvps?: EventRSVPListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -11393,6 +14125,173 @@ export namespace Prisma {
     chapterId?: StringWithAggregatesFilter<"Invite"> | string
   }
 
+  export type EventWhereInput = {
+    AND?: EventWhereInput | EventWhereInput[]
+    OR?: EventWhereInput[]
+    NOT?: EventWhereInput | EventWhereInput[]
+    id?: StringFilter<"Event"> | string
+    title?: StringFilter<"Event"> | string
+    description?: StringFilter<"Event"> | string
+    location?: StringFilter<"Event"> | string
+    startDate?: DateTimeFilter<"Event"> | Date | string
+    endDate?: DateTimeFilter<"Event"> | Date | string
+    capacity?: IntNullableFilter<"Event"> | number | null
+    isPublic?: BoolFilter<"Event"> | boolean
+    status?: EnumEventStatusFilter<"Event"> | $Enums.EventStatus
+    createdAt?: DateTimeFilter<"Event"> | Date | string
+    updatedAt?: DateTimeFilter<"Event"> | Date | string
+    chapterId?: StringFilter<"Event"> | string
+    createdById?: StringFilter<"Event"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    rsvps?: EventRSVPListRelationFilter
+  }
+
+  export type EventOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    location?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    capacity?: SortOrderInput | SortOrder
+    isPublic?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    createdById?: SortOrder
+    chapter?: ChapterOrderByWithRelationInput
+    createdBy?: UserOrderByWithRelationInput
+    rsvps?: EventRSVPOrderByRelationAggregateInput
+  }
+
+  export type EventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: EventWhereInput | EventWhereInput[]
+    OR?: EventWhereInput[]
+    NOT?: EventWhereInput | EventWhereInput[]
+    title?: StringFilter<"Event"> | string
+    description?: StringFilter<"Event"> | string
+    location?: StringFilter<"Event"> | string
+    startDate?: DateTimeFilter<"Event"> | Date | string
+    endDate?: DateTimeFilter<"Event"> | Date | string
+    capacity?: IntNullableFilter<"Event"> | number | null
+    isPublic?: BoolFilter<"Event"> | boolean
+    status?: EnumEventStatusFilter<"Event"> | $Enums.EventStatus
+    createdAt?: DateTimeFilter<"Event"> | Date | string
+    updatedAt?: DateTimeFilter<"Event"> | Date | string
+    chapterId?: StringFilter<"Event"> | string
+    createdById?: StringFilter<"Event"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    rsvps?: EventRSVPListRelationFilter
+  }, "id">
+
+  export type EventOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    location?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    capacity?: SortOrderInput | SortOrder
+    isPublic?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    createdById?: SortOrder
+    _count?: EventCountOrderByAggregateInput
+    _avg?: EventAvgOrderByAggregateInput
+    _max?: EventMaxOrderByAggregateInput
+    _min?: EventMinOrderByAggregateInput
+    _sum?: EventSumOrderByAggregateInput
+  }
+
+  export type EventScalarWhereWithAggregatesInput = {
+    AND?: EventScalarWhereWithAggregatesInput | EventScalarWhereWithAggregatesInput[]
+    OR?: EventScalarWhereWithAggregatesInput[]
+    NOT?: EventScalarWhereWithAggregatesInput | EventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Event"> | string
+    title?: StringWithAggregatesFilter<"Event"> | string
+    description?: StringWithAggregatesFilter<"Event"> | string
+    location?: StringWithAggregatesFilter<"Event"> | string
+    startDate?: DateTimeWithAggregatesFilter<"Event"> | Date | string
+    endDate?: DateTimeWithAggregatesFilter<"Event"> | Date | string
+    capacity?: IntNullableWithAggregatesFilter<"Event"> | number | null
+    isPublic?: BoolWithAggregatesFilter<"Event"> | boolean
+    status?: EnumEventStatusWithAggregatesFilter<"Event"> | $Enums.EventStatus
+    createdAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Event"> | Date | string
+    chapterId?: StringWithAggregatesFilter<"Event"> | string
+    createdById?: StringWithAggregatesFilter<"Event"> | string
+  }
+
+  export type EventRSVPWhereInput = {
+    AND?: EventRSVPWhereInput | EventRSVPWhereInput[]
+    OR?: EventRSVPWhereInput[]
+    NOT?: EventRSVPWhereInput | EventRSVPWhereInput[]
+    id?: StringFilter<"EventRSVP"> | string
+    status?: EnumRSVPStatusFilter<"EventRSVP"> | $Enums.RSVPStatus
+    createdAt?: DateTimeFilter<"EventRSVP"> | Date | string
+    updatedAt?: DateTimeFilter<"EventRSVP"> | Date | string
+    eventId?: StringFilter<"EventRSVP"> | string
+    userId?: StringFilter<"EventRSVP"> | string
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type EventRSVPOrderByWithRelationInput = {
+    id?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    eventId?: SortOrder
+    userId?: SortOrder
+    event?: EventOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type EventRSVPWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_eventId?: EventRSVPUserIdEventIdCompoundUniqueInput
+    AND?: EventRSVPWhereInput | EventRSVPWhereInput[]
+    OR?: EventRSVPWhereInput[]
+    NOT?: EventRSVPWhereInput | EventRSVPWhereInput[]
+    status?: EnumRSVPStatusFilter<"EventRSVP"> | $Enums.RSVPStatus
+    createdAt?: DateTimeFilter<"EventRSVP"> | Date | string
+    updatedAt?: DateTimeFilter<"EventRSVP"> | Date | string
+    eventId?: StringFilter<"EventRSVP"> | string
+    userId?: StringFilter<"EventRSVP"> | string
+    event?: XOR<EventScalarRelationFilter, EventWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_eventId">
+
+  export type EventRSVPOrderByWithAggregationInput = {
+    id?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    eventId?: SortOrder
+    userId?: SortOrder
+    _count?: EventRSVPCountOrderByAggregateInput
+    _max?: EventRSVPMaxOrderByAggregateInput
+    _min?: EventRSVPMinOrderByAggregateInput
+  }
+
+  export type EventRSVPScalarWhereWithAggregatesInput = {
+    AND?: EventRSVPScalarWhereWithAggregatesInput | EventRSVPScalarWhereWithAggregatesInput[]
+    OR?: EventRSVPScalarWhereWithAggregatesInput[]
+    NOT?: EventRSVPScalarWhereWithAggregatesInput | EventRSVPScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"EventRSVP"> | string
+    status?: EnumRSVPStatusWithAggregatesFilter<"EventRSVP"> | $Enums.RSVPStatus
+    createdAt?: DateTimeWithAggregatesFilter<"EventRSVP"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"EventRSVP"> | Date | string
+    eventId?: StringWithAggregatesFilter<"EventRSVP"> | string
+    userId?: StringWithAggregatesFilter<"EventRSVP"> | string
+  }
+
   export type ChapterCreateInput = {
     id?: string
     name: string
@@ -11404,6 +14303,7 @@ export namespace Prisma {
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateInput = {
@@ -11417,6 +14317,7 @@ export namespace Prisma {
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUpdateInput = {
@@ -11430,6 +14331,7 @@ export namespace Prisma {
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateInput = {
@@ -11443,6 +14345,7 @@ export namespace Prisma {
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateManyInput = {
@@ -11489,6 +14392,8 @@ export namespace Prisma {
     memberships?: MembershipCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -11505,6 +14410,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -11521,6 +14428,8 @@ export namespace Prisma {
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -11537,6 +14446,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -11991,6 +14902,181 @@ export namespace Prisma {
     chapterId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type EventCreateInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutEventsInput
+    createdBy: UserCreateNestedOneWithoutCreatedEventsInput
+    rsvps?: EventRSVPCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+    createdById: string
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutEventsNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutCreatedEventsNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventCreateManyInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+    createdById: string
+  }
+
+  export type EventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventRSVPCreateInput = {
+    id?: string
+    status: $Enums.RSVPStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    event: EventCreateNestedOneWithoutRsvpsInput
+    user: UserCreateNestedOneWithoutRsvpsInput
+  }
+
+  export type EventRSVPUncheckedCreateInput = {
+    id?: string
+    status: $Enums.RSVPStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventId: string
+    userId: string
+  }
+
+  export type EventRSVPUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumRSVPStatusFieldUpdateOperationsInput | $Enums.RSVPStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event?: EventUpdateOneRequiredWithoutRsvpsNestedInput
+    user?: UserUpdateOneRequiredWithoutRsvpsNestedInput
+  }
+
+  export type EventRSVPUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumRSVPStatusFieldUpdateOperationsInput | $Enums.RSVPStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventRSVPCreateManyInput = {
+    id?: string
+    status: $Enums.RSVPStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventId: string
+    userId: string
+  }
+
+  export type EventRSVPUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumRSVPStatusFieldUpdateOperationsInput | $Enums.RSVPStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventRSVPUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumRSVPStatusFieldUpdateOperationsInput | $Enums.RSVPStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -12049,6 +15135,12 @@ export namespace Prisma {
     none?: InviteWhereInput
   }
 
+  export type EventListRelationFilter = {
+    every?: EventWhereInput
+    some?: EventWhereInput
+    none?: EventWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -12059,6 +15151,10 @@ export namespace Prisma {
   }
 
   export type InviteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EventOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12165,11 +15261,21 @@ export namespace Prisma {
     none?: SessionWhereInput
   }
 
+  export type EventRSVPListRelationFilter = {
+    every?: EventRSVPWhereInput
+    some?: EventRSVPWhereInput
+    none?: EventRSVPWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type SessionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EventRSVPOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -12532,6 +15638,133 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type EnumEventStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventStatus | EnumEventStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.EventStatus[] | ListEnumEventStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventStatus[] | ListEnumEventStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventStatusFilter<$PrismaModel> | $Enums.EventStatus
+  }
+
+  export type EventCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    location?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    capacity?: SortOrder
+    isPublic?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type EventAvgOrderByAggregateInput = {
+    capacity?: SortOrder
+  }
+
+  export type EventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    location?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    capacity?: SortOrder
+    isPublic?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type EventMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    location?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    capacity?: SortOrder
+    isPublic?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type EventSumOrderByAggregateInput = {
+    capacity?: SortOrder
+  }
+
+  export type EnumEventStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventStatus | EnumEventStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.EventStatus[] | ListEnumEventStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventStatus[] | ListEnumEventStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventStatusWithAggregatesFilter<$PrismaModel> | $Enums.EventStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEventStatusFilter<$PrismaModel>
+    _max?: NestedEnumEventStatusFilter<$PrismaModel>
+  }
+
+  export type EnumRSVPStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RSVPStatus | EnumRSVPStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RSVPStatus[] | ListEnumRSVPStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RSVPStatus[] | ListEnumRSVPStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRSVPStatusFilter<$PrismaModel> | $Enums.RSVPStatus
+  }
+
+  export type EventScalarRelationFilter = {
+    is?: EventWhereInput
+    isNot?: EventWhereInput
+  }
+
+  export type EventRSVPUserIdEventIdCompoundUniqueInput = {
+    userId: string
+    eventId: string
+  }
+
+  export type EventRSVPCountOrderByAggregateInput = {
+    id?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    eventId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type EventRSVPMaxOrderByAggregateInput = {
+    id?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    eventId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type EventRSVPMinOrderByAggregateInput = {
+    id?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    eventId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type EnumRSVPStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RSVPStatus | EnumRSVPStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RSVPStatus[] | ListEnumRSVPStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RSVPStatus[] | ListEnumRSVPStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRSVPStatusWithAggregatesFilter<$PrismaModel> | $Enums.RSVPStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRSVPStatusFilter<$PrismaModel>
+    _max?: NestedEnumRSVPStatusFilter<$PrismaModel>
+  }
+
   export type MembershipCreateNestedManyWithoutChapterInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -12552,6 +15785,13 @@ export namespace Prisma {
     connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
   }
 
+  export type EventCreateNestedManyWithoutChapterInput = {
+    create?: XOR<EventCreateWithoutChapterInput, EventUncheckedCreateWithoutChapterInput> | EventCreateWithoutChapterInput[] | EventUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutChapterInput | EventCreateOrConnectWithoutChapterInput[]
+    createMany?: EventCreateManyChapterInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
   export type MembershipUncheckedCreateNestedManyWithoutChapterInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -12570,6 +15810,13 @@ export namespace Prisma {
     connectOrCreate?: InviteCreateOrConnectWithoutChapterInput | InviteCreateOrConnectWithoutChapterInput[]
     createMany?: InviteCreateManyChapterInputEnvelope
     connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+  }
+
+  export type EventUncheckedCreateNestedManyWithoutChapterInput = {
+    create?: XOR<EventCreateWithoutChapterInput, EventUncheckedCreateWithoutChapterInput> | EventCreateWithoutChapterInput[] | EventUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutChapterInput | EventCreateOrConnectWithoutChapterInput[]
+    createMany?: EventCreateManyChapterInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -12622,6 +15869,20 @@ export namespace Prisma {
     deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
   }
 
+  export type EventUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<EventCreateWithoutChapterInput, EventUncheckedCreateWithoutChapterInput> | EventCreateWithoutChapterInput[] | EventUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutChapterInput | EventCreateOrConnectWithoutChapterInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutChapterInput | EventUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: EventCreateManyChapterInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutChapterInput | EventUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutChapterInput | EventUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
   export type MembershipUncheckedUpdateManyWithoutChapterNestedInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -12660,6 +15921,20 @@ export namespace Prisma {
     deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
   }
 
+  export type EventUncheckedUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<EventCreateWithoutChapterInput, EventUncheckedCreateWithoutChapterInput> | EventCreateWithoutChapterInput[] | EventUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutChapterInput | EventCreateOrConnectWithoutChapterInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutChapterInput | EventUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: EventCreateManyChapterInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutChapterInput | EventUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutChapterInput | EventUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -12695,6 +15970,20 @@ export namespace Prisma {
     connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
   }
 
+  export type EventCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
+    createMany?: EventCreateManyCreatedByInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type EventRSVPCreateNestedManyWithoutUserInput = {
+    create?: XOR<EventRSVPCreateWithoutUserInput, EventRSVPUncheckedCreateWithoutUserInput> | EventRSVPCreateWithoutUserInput[] | EventRSVPUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: EventRSVPCreateOrConnectWithoutUserInput | EventRSVPCreateOrConnectWithoutUserInput[]
+    createMany?: EventRSVPCreateManyUserInputEnvelope
+    connect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -12728,6 +16017,20 @@ export namespace Prisma {
     connectOrCreate?: InviteCreateOrConnectWithoutCreatedByInput | InviteCreateOrConnectWithoutCreatedByInput[]
     createMany?: InviteCreateManyCreatedByInputEnvelope
     connect?: InviteWhereUniqueInput | InviteWhereUniqueInput[]
+  }
+
+  export type EventUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
+    createMany?: EventCreateManyCreatedByInputEnvelope
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+  }
+
+  export type EventRSVPUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<EventRSVPCreateWithoutUserInput, EventRSVPUncheckedCreateWithoutUserInput> | EventRSVPCreateWithoutUserInput[] | EventRSVPUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: EventRSVPCreateOrConnectWithoutUserInput | EventRSVPCreateOrConnectWithoutUserInput[]
+    createMany?: EventRSVPCreateManyUserInputEnvelope
+    connect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -12804,6 +16107,34 @@ export namespace Prisma {
     deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
   }
 
+  export type EventUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutCreatedByInput | EventUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: EventCreateManyCreatedByInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutCreatedByInput | EventUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutCreatedByInput | EventUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type EventRSVPUpdateManyWithoutUserNestedInput = {
+    create?: XOR<EventRSVPCreateWithoutUserInput, EventRSVPUncheckedCreateWithoutUserInput> | EventRSVPCreateWithoutUserInput[] | EventRSVPUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: EventRSVPCreateOrConnectWithoutUserInput | EventRSVPCreateOrConnectWithoutUserInput[]
+    upsert?: EventRSVPUpsertWithWhereUniqueWithoutUserInput | EventRSVPUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: EventRSVPCreateManyUserInputEnvelope
+    set?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    disconnect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    delete?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    connect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    update?: EventRSVPUpdateWithWhereUniqueWithoutUserInput | EventRSVPUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: EventRSVPUpdateManyWithWhereWithoutUserInput | EventRSVPUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: EventRSVPScalarWhereInput | EventRSVPScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -12872,6 +16203,34 @@ export namespace Prisma {
     update?: InviteUpdateWithWhereUniqueWithoutCreatedByInput | InviteUpdateWithWhereUniqueWithoutCreatedByInput[]
     updateMany?: InviteUpdateManyWithWhereWithoutCreatedByInput | InviteUpdateManyWithWhereWithoutCreatedByInput[]
     deleteMany?: InviteScalarWhereInput | InviteScalarWhereInput[]
+  }
+
+  export type EventUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput> | EventCreateWithoutCreatedByInput[] | EventUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: EventCreateOrConnectWithoutCreatedByInput | EventCreateOrConnectWithoutCreatedByInput[]
+    upsert?: EventUpsertWithWhereUniqueWithoutCreatedByInput | EventUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: EventCreateManyCreatedByInputEnvelope
+    set?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    disconnect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    delete?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    connect?: EventWhereUniqueInput | EventWhereUniqueInput[]
+    update?: EventUpdateWithWhereUniqueWithoutCreatedByInput | EventUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: EventUpdateManyWithWhereWithoutCreatedByInput | EventUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: EventScalarWhereInput | EventScalarWhereInput[]
+  }
+
+  export type EventRSVPUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<EventRSVPCreateWithoutUserInput, EventRSVPUncheckedCreateWithoutUserInput> | EventRSVPCreateWithoutUserInput[] | EventRSVPUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: EventRSVPCreateOrConnectWithoutUserInput | EventRSVPCreateOrConnectWithoutUserInput[]
+    upsert?: EventRSVPUpsertWithWhereUniqueWithoutUserInput | EventRSVPUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: EventRSVPCreateManyUserInputEnvelope
+    set?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    disconnect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    delete?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    connect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    update?: EventRSVPUpdateWithWhereUniqueWithoutUserInput | EventRSVPUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: EventRSVPUpdateManyWithWhereWithoutUserInput | EventRSVPUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: EventRSVPScalarWhereInput | EventRSVPScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutMembershipsInput = {
@@ -13012,6 +16371,112 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedInvitesInput, UserUpdateWithoutCreatedInvitesInput>, UserUncheckedUpdateWithoutCreatedInvitesInput>
+  }
+
+  export type ChapterCreateNestedOneWithoutEventsInput = {
+    create?: XOR<ChapterCreateWithoutEventsInput, ChapterUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutEventsInput
+    connect?: ChapterWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCreatedEventsInput = {
+    create?: XOR<UserCreateWithoutCreatedEventsInput, UserUncheckedCreateWithoutCreatedEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedEventsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EventRSVPCreateNestedManyWithoutEventInput = {
+    create?: XOR<EventRSVPCreateWithoutEventInput, EventRSVPUncheckedCreateWithoutEventInput> | EventRSVPCreateWithoutEventInput[] | EventRSVPUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventRSVPCreateOrConnectWithoutEventInput | EventRSVPCreateOrConnectWithoutEventInput[]
+    createMany?: EventRSVPCreateManyEventInputEnvelope
+    connect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+  }
+
+  export type EventRSVPUncheckedCreateNestedManyWithoutEventInput = {
+    create?: XOR<EventRSVPCreateWithoutEventInput, EventRSVPUncheckedCreateWithoutEventInput> | EventRSVPCreateWithoutEventInput[] | EventRSVPUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventRSVPCreateOrConnectWithoutEventInput | EventRSVPCreateOrConnectWithoutEventInput[]
+    createMany?: EventRSVPCreateManyEventInputEnvelope
+    connect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+  }
+
+  export type EnumEventStatusFieldUpdateOperationsInput = {
+    set?: $Enums.EventStatus
+  }
+
+  export type ChapterUpdateOneRequiredWithoutEventsNestedInput = {
+    create?: XOR<ChapterCreateWithoutEventsInput, ChapterUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutEventsInput
+    upsert?: ChapterUpsertWithoutEventsInput
+    connect?: ChapterWhereUniqueInput
+    update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutEventsInput, ChapterUpdateWithoutEventsInput>, ChapterUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCreatedEventsNestedInput = {
+    create?: XOR<UserCreateWithoutCreatedEventsInput, UserUncheckedCreateWithoutCreatedEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedEventsInput
+    upsert?: UserUpsertWithoutCreatedEventsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedEventsInput, UserUpdateWithoutCreatedEventsInput>, UserUncheckedUpdateWithoutCreatedEventsInput>
+  }
+
+  export type EventRSVPUpdateManyWithoutEventNestedInput = {
+    create?: XOR<EventRSVPCreateWithoutEventInput, EventRSVPUncheckedCreateWithoutEventInput> | EventRSVPCreateWithoutEventInput[] | EventRSVPUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventRSVPCreateOrConnectWithoutEventInput | EventRSVPCreateOrConnectWithoutEventInput[]
+    upsert?: EventRSVPUpsertWithWhereUniqueWithoutEventInput | EventRSVPUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: EventRSVPCreateManyEventInputEnvelope
+    set?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    disconnect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    delete?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    connect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    update?: EventRSVPUpdateWithWhereUniqueWithoutEventInput | EventRSVPUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: EventRSVPUpdateManyWithWhereWithoutEventInput | EventRSVPUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: EventRSVPScalarWhereInput | EventRSVPScalarWhereInput[]
+  }
+
+  export type EventRSVPUncheckedUpdateManyWithoutEventNestedInput = {
+    create?: XOR<EventRSVPCreateWithoutEventInput, EventRSVPUncheckedCreateWithoutEventInput> | EventRSVPCreateWithoutEventInput[] | EventRSVPUncheckedCreateWithoutEventInput[]
+    connectOrCreate?: EventRSVPCreateOrConnectWithoutEventInput | EventRSVPCreateOrConnectWithoutEventInput[]
+    upsert?: EventRSVPUpsertWithWhereUniqueWithoutEventInput | EventRSVPUpsertWithWhereUniqueWithoutEventInput[]
+    createMany?: EventRSVPCreateManyEventInputEnvelope
+    set?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    disconnect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    delete?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    connect?: EventRSVPWhereUniqueInput | EventRSVPWhereUniqueInput[]
+    update?: EventRSVPUpdateWithWhereUniqueWithoutEventInput | EventRSVPUpdateWithWhereUniqueWithoutEventInput[]
+    updateMany?: EventRSVPUpdateManyWithWhereWithoutEventInput | EventRSVPUpdateManyWithWhereWithoutEventInput[]
+    deleteMany?: EventRSVPScalarWhereInput | EventRSVPScalarWhereInput[]
+  }
+
+  export type EventCreateNestedOneWithoutRsvpsInput = {
+    create?: XOR<EventCreateWithoutRsvpsInput, EventUncheckedCreateWithoutRsvpsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutRsvpsInput
+    connect?: EventWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutRsvpsInput = {
+    create?: XOR<UserCreateWithoutRsvpsInput, UserUncheckedCreateWithoutRsvpsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRsvpsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumRSVPStatusFieldUpdateOperationsInput = {
+    set?: $Enums.RSVPStatus
+  }
+
+  export type EventUpdateOneRequiredWithoutRsvpsNestedInput = {
+    create?: XOR<EventCreateWithoutRsvpsInput, EventUncheckedCreateWithoutRsvpsInput>
+    connectOrCreate?: EventCreateOrConnectWithoutRsvpsInput
+    upsert?: EventUpsertWithoutRsvpsInput
+    connect?: EventWhereUniqueInput
+    update?: XOR<XOR<EventUpdateToOneWithWhereWithoutRsvpsInput, EventUpdateWithoutRsvpsInput>, EventUncheckedUpdateWithoutRsvpsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutRsvpsNestedInput = {
+    create?: XOR<UserCreateWithoutRsvpsInput, UserUncheckedCreateWithoutRsvpsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRsvpsInput
+    upsert?: UserUpsertWithoutRsvpsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRsvpsInput, UserUpdateWithoutRsvpsInput>, UserUncheckedUpdateWithoutRsvpsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -13239,6 +16704,40 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type NestedEnumEventStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventStatus | EnumEventStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.EventStatus[] | ListEnumEventStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventStatus[] | ListEnumEventStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventStatusFilter<$PrismaModel> | $Enums.EventStatus
+  }
+
+  export type NestedEnumEventStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventStatus | EnumEventStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.EventStatus[] | ListEnumEventStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventStatus[] | ListEnumEventStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventStatusWithAggregatesFilter<$PrismaModel> | $Enums.EventStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEventStatusFilter<$PrismaModel>
+    _max?: NestedEnumEventStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRSVPStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RSVPStatus | EnumRSVPStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RSVPStatus[] | ListEnumRSVPStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RSVPStatus[] | ListEnumRSVPStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRSVPStatusFilter<$PrismaModel> | $Enums.RSVPStatus
+  }
+
+  export type NestedEnumRSVPStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RSVPStatus | EnumRSVPStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RSVPStatus[] | ListEnumRSVPStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RSVPStatus[] | ListEnumRSVPStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRSVPStatusWithAggregatesFilter<$PrismaModel> | $Enums.RSVPStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRSVPStatusFilter<$PrismaModel>
+    _max?: NestedEnumRSVPStatusFilter<$PrismaModel>
+  }
+
   export type MembershipCreateWithoutChapterInput = {
     id?: string
     role?: $Enums.MembershipRole
@@ -13321,6 +16820,48 @@ export namespace Prisma {
 
   export type InviteCreateManyChapterInputEnvelope = {
     data: InviteCreateManyChapterInput | InviteCreateManyChapterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EventCreateWithoutChapterInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutCreatedEventsInput
+    rsvps?: EventRSVPCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutChapterInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdById: string
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutChapterInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutChapterInput, EventUncheckedCreateWithoutChapterInput>
+  }
+
+  export type EventCreateManyChapterInputEnvelope = {
+    data: EventCreateManyChapterInput | EventCreateManyChapterInput[]
     skipDuplicates?: boolean
   }
 
@@ -13412,6 +16953,41 @@ export namespace Prisma {
     acceptedById?: StringNullableFilter<"Invite"> | string | null
     createdById?: StringNullableFilter<"Invite"> | string | null
     chapterId?: StringFilter<"Invite"> | string
+  }
+
+  export type EventUpsertWithWhereUniqueWithoutChapterInput = {
+    where: EventWhereUniqueInput
+    update: XOR<EventUpdateWithoutChapterInput, EventUncheckedUpdateWithoutChapterInput>
+    create: XOR<EventCreateWithoutChapterInput, EventUncheckedCreateWithoutChapterInput>
+  }
+
+  export type EventUpdateWithWhereUniqueWithoutChapterInput = {
+    where: EventWhereUniqueInput
+    data: XOR<EventUpdateWithoutChapterInput, EventUncheckedUpdateWithoutChapterInput>
+  }
+
+  export type EventUpdateManyWithWhereWithoutChapterInput = {
+    where: EventScalarWhereInput
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutChapterInput>
+  }
+
+  export type EventScalarWhereInput = {
+    AND?: EventScalarWhereInput | EventScalarWhereInput[]
+    OR?: EventScalarWhereInput[]
+    NOT?: EventScalarWhereInput | EventScalarWhereInput[]
+    id?: StringFilter<"Event"> | string
+    title?: StringFilter<"Event"> | string
+    description?: StringFilter<"Event"> | string
+    location?: StringFilter<"Event"> | string
+    startDate?: DateTimeFilter<"Event"> | Date | string
+    endDate?: DateTimeFilter<"Event"> | Date | string
+    capacity?: IntNullableFilter<"Event"> | number | null
+    isPublic?: BoolFilter<"Event"> | boolean
+    status?: EnumEventStatusFilter<"Event"> | $Enums.EventStatus
+    createdAt?: DateTimeFilter<"Event"> | Date | string
+    updatedAt?: DateTimeFilter<"Event"> | Date | string
+    chapterId?: StringFilter<"Event"> | string
+    createdById?: StringFilter<"Event"> | string
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -13572,6 +17148,74 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type EventCreateWithoutCreatedByInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutEventsInput
+    rsvps?: EventRSVPCreateNestedManyWithoutEventInput
+  }
+
+  export type EventUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutEventInput
+  }
+
+  export type EventCreateOrConnectWithoutCreatedByInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type EventCreateManyCreatedByInputEnvelope = {
+    data: EventCreateManyCreatedByInput | EventCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type EventRSVPCreateWithoutUserInput = {
+    id?: string
+    status: $Enums.RSVPStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    event: EventCreateNestedOneWithoutRsvpsInput
+  }
+
+  export type EventRSVPUncheckedCreateWithoutUserInput = {
+    id?: string
+    status: $Enums.RSVPStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventId: string
+  }
+
+  export type EventRSVPCreateOrConnectWithoutUserInput = {
+    where: EventRSVPWhereUniqueInput
+    create: XOR<EventRSVPCreateWithoutUserInput, EventRSVPUncheckedCreateWithoutUserInput>
+  }
+
+  export type EventRSVPCreateManyUserInputEnvelope = {
+    data: EventRSVPCreateManyUserInput | EventRSVPCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -13680,6 +17324,50 @@ export namespace Prisma {
     data: XOR<InviteUpdateManyMutationInput, InviteUncheckedUpdateManyWithoutCreatedByInput>
   }
 
+  export type EventUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: EventWhereUniqueInput
+    update: XOR<EventUpdateWithoutCreatedByInput, EventUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<EventCreateWithoutCreatedByInput, EventUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type EventUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: EventWhereUniqueInput
+    data: XOR<EventUpdateWithoutCreatedByInput, EventUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type EventUpdateManyWithWhereWithoutCreatedByInput = {
+    where: EventScalarWhereInput
+    data: XOR<EventUpdateManyMutationInput, EventUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type EventRSVPUpsertWithWhereUniqueWithoutUserInput = {
+    where: EventRSVPWhereUniqueInput
+    update: XOR<EventRSVPUpdateWithoutUserInput, EventRSVPUncheckedUpdateWithoutUserInput>
+    create: XOR<EventRSVPCreateWithoutUserInput, EventRSVPUncheckedCreateWithoutUserInput>
+  }
+
+  export type EventRSVPUpdateWithWhereUniqueWithoutUserInput = {
+    where: EventRSVPWhereUniqueInput
+    data: XOR<EventRSVPUpdateWithoutUserInput, EventRSVPUncheckedUpdateWithoutUserInput>
+  }
+
+  export type EventRSVPUpdateManyWithWhereWithoutUserInput = {
+    where: EventRSVPScalarWhereInput
+    data: XOR<EventRSVPUpdateManyMutationInput, EventRSVPUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type EventRSVPScalarWhereInput = {
+    AND?: EventRSVPScalarWhereInput | EventRSVPScalarWhereInput[]
+    OR?: EventRSVPScalarWhereInput[]
+    NOT?: EventRSVPScalarWhereInput | EventRSVPScalarWhereInput[]
+    id?: StringFilter<"EventRSVP"> | string
+    status?: EnumRSVPStatusFilter<"EventRSVP"> | $Enums.RSVPStatus
+    createdAt?: DateTimeFilter<"EventRSVP"> | Date | string
+    updatedAt?: DateTimeFilter<"EventRSVP"> | Date | string
+    eventId?: StringFilter<"EventRSVP"> | string
+    userId?: StringFilter<"EventRSVP"> | string
+  }
+
   export type UserCreateWithoutMembershipsInput = {
     id?: string
     name?: string | null
@@ -13693,6 +17381,8 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -13708,6 +17398,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -13725,6 +17417,7 @@ export namespace Prisma {
     stripeCustomerId?: string | null
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutMembershipsInput = {
@@ -13737,6 +17430,7 @@ export namespace Prisma {
     stripeCustomerId?: string | null
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutMembershipsInput = {
@@ -13768,6 +17462,8 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -13783,6 +17479,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChapterUpsertWithoutMembershipsInput = {
@@ -13806,6 +17504,7 @@ export namespace Prisma {
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutMembershipsInput = {
@@ -13818,6 +17517,7 @@ export namespace Prisma {
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutSubscriptionInput = {
@@ -13830,6 +17530,7 @@ export namespace Prisma {
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutSubscriptionInput = {
@@ -13842,6 +17543,7 @@ export namespace Prisma {
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutSubscriptionInput = {
@@ -13870,6 +17572,7 @@ export namespace Prisma {
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutSubscriptionInput = {
@@ -13882,6 +17585,7 @@ export namespace Prisma {
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -13897,6 +17601,8 @@ export namespace Prisma {
     memberships?: MembershipCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -13912,6 +17618,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -13943,6 +17651,8 @@ export namespace Prisma {
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -13958,6 +17668,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -13973,6 +17685,8 @@ export namespace Prisma {
     memberships?: MembershipCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -13988,6 +17702,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -14019,6 +17735,8 @@ export namespace Prisma {
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -14034,6 +17752,8 @@ export namespace Prisma {
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChapterCreateWithoutInvitesInput = {
@@ -14046,6 +17766,7 @@ export namespace Prisma {
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutInvitesInput = {
@@ -14058,6 +17779,7 @@ export namespace Prisma {
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutInvitesInput = {
@@ -14078,6 +17800,8 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAcceptedInvitesInput = {
@@ -14093,6 +17817,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAcceptedInvitesInput = {
@@ -14113,6 +17839,8 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedInvitesInput = {
@@ -14128,6 +17856,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedInvitesInput = {
@@ -14156,6 +17886,7 @@ export namespace Prisma {
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutInvitesInput = {
@@ -14168,6 +17899,7 @@ export namespace Prisma {
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutAcceptedInvitesInput = {
@@ -14194,6 +17926,8 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAcceptedInvitesInput = {
@@ -14209,6 +17943,8 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutCreatedInvitesInput = {
@@ -14235,6 +17971,8 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedInvitesInput = {
@@ -14250,6 +17988,366 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ChapterCreateWithoutEventsInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionCreateNestedOneWithoutChapterInput
+    invites?: InviteCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterUncheckedCreateWithoutEventsInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
+    invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterCreateOrConnectWithoutEventsInput = {
+    where: ChapterWhereUniqueInput
+    create: XOR<ChapterCreateWithoutEventsInput, ChapterUncheckedCreateWithoutEventsInput>
+  }
+
+  export type UserCreateWithoutCreatedEventsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCreatedEventsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCreatedEventsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreatedEventsInput, UserUncheckedCreateWithoutCreatedEventsInput>
+  }
+
+  export type EventRSVPCreateWithoutEventInput = {
+    id?: string
+    status: $Enums.RSVPStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutRsvpsInput
+  }
+
+  export type EventRSVPUncheckedCreateWithoutEventInput = {
+    id?: string
+    status: $Enums.RSVPStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type EventRSVPCreateOrConnectWithoutEventInput = {
+    where: EventRSVPWhereUniqueInput
+    create: XOR<EventRSVPCreateWithoutEventInput, EventRSVPUncheckedCreateWithoutEventInput>
+  }
+
+  export type EventRSVPCreateManyEventInputEnvelope = {
+    data: EventRSVPCreateManyEventInput | EventRSVPCreateManyEventInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ChapterUpsertWithoutEventsInput = {
+    update: XOR<ChapterUpdateWithoutEventsInput, ChapterUncheckedUpdateWithoutEventsInput>
+    create: XOR<ChapterCreateWithoutEventsInput, ChapterUncheckedCreateWithoutEventsInput>
+    where?: ChapterWhereInput
+  }
+
+  export type ChapterUpdateToOneWithWhereWithoutEventsInput = {
+    where?: ChapterWhereInput
+    data: XOR<ChapterUpdateWithoutEventsInput, ChapterUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type ChapterUpdateWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
+    invites?: InviteUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterUncheckedUpdateWithoutEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+  }
+
+  export type UserUpsertWithoutCreatedEventsInput = {
+    update: XOR<UserUpdateWithoutCreatedEventsInput, UserUncheckedUpdateWithoutCreatedEventsInput>
+    create: XOR<UserCreateWithoutCreatedEventsInput, UserUncheckedCreateWithoutCreatedEventsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreatedEventsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreatedEventsInput, UserUncheckedUpdateWithoutCreatedEventsInput>
+  }
+
+  export type UserUpdateWithoutCreatedEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreatedEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type EventRSVPUpsertWithWhereUniqueWithoutEventInput = {
+    where: EventRSVPWhereUniqueInput
+    update: XOR<EventRSVPUpdateWithoutEventInput, EventRSVPUncheckedUpdateWithoutEventInput>
+    create: XOR<EventRSVPCreateWithoutEventInput, EventRSVPUncheckedCreateWithoutEventInput>
+  }
+
+  export type EventRSVPUpdateWithWhereUniqueWithoutEventInput = {
+    where: EventRSVPWhereUniqueInput
+    data: XOR<EventRSVPUpdateWithoutEventInput, EventRSVPUncheckedUpdateWithoutEventInput>
+  }
+
+  export type EventRSVPUpdateManyWithWhereWithoutEventInput = {
+    where: EventRSVPScalarWhereInput
+    data: XOR<EventRSVPUpdateManyMutationInput, EventRSVPUncheckedUpdateManyWithoutEventInput>
+  }
+
+  export type EventCreateWithoutRsvpsInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutEventsInput
+    createdBy: UserCreateNestedOneWithoutCreatedEventsInput
+  }
+
+  export type EventUncheckedCreateWithoutRsvpsInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+    createdById: string
+  }
+
+  export type EventCreateOrConnectWithoutRsvpsInput = {
+    where: EventWhereUniqueInput
+    create: XOR<EventCreateWithoutRsvpsInput, EventUncheckedCreateWithoutRsvpsInput>
+  }
+
+  export type UserCreateWithoutRsvpsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutRsvpsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutRsvpsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRsvpsInput, UserUncheckedCreateWithoutRsvpsInput>
+  }
+
+  export type EventUpsertWithoutRsvpsInput = {
+    update: XOR<EventUpdateWithoutRsvpsInput, EventUncheckedUpdateWithoutRsvpsInput>
+    create: XOR<EventCreateWithoutRsvpsInput, EventUncheckedCreateWithoutRsvpsInput>
+    where?: EventWhereInput
+  }
+
+  export type EventUpdateToOneWithWhereWithoutRsvpsInput = {
+    where?: EventWhereInput
+    data: XOR<EventUpdateWithoutRsvpsInput, EventUncheckedUpdateWithoutRsvpsInput>
+  }
+
+  export type EventUpdateWithoutRsvpsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutEventsNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutCreatedEventsNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutRsvpsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUpsertWithoutRsvpsInput = {
+    update: XOR<UserUpdateWithoutRsvpsInput, UserUncheckedUpdateWithoutRsvpsInput>
+    create: XOR<UserCreateWithoutRsvpsInput, UserUncheckedCreateWithoutRsvpsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRsvpsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRsvpsInput, UserUncheckedUpdateWithoutRsvpsInput>
+  }
+
+  export type UserUpdateWithoutRsvpsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRsvpsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type MembershipCreateManyChapterInput = {
@@ -14271,6 +18369,21 @@ export namespace Prisma {
     acceptedAt?: Date | string | null
     acceptedById?: string | null
     createdById?: string | null
+  }
+
+  export type EventCreateManyChapterInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdById: string
   }
 
   export type MembershipUpdateWithoutChapterInput = {
@@ -14336,6 +18449,53 @@ export namespace Prisma {
     createdById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type EventUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutCreatedEventsNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateManyWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
   export type AccountCreateManyUserInput = {
     id?: string
     type: string
@@ -14388,6 +18548,29 @@ export namespace Prisma {
     acceptedAt?: Date | string | null
     acceptedById?: string | null
     chapterId: string
+  }
+
+  export type EventCreateManyCreatedByInput = {
+    id?: string
+    title: string
+    description: string
+    location: string
+    startDate: Date | string
+    endDate: Date | string
+    capacity?: number | null
+    isPublic?: boolean
+    status?: $Enums.EventStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+  }
+
+  export type EventRSVPCreateManyUserInput = {
+    id?: string
+    status: $Enums.RSVPStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    eventId: string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -14550,6 +18733,109 @@ export namespace Prisma {
     acceptedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     acceptedById?: NullableStringFieldUpdateOperationsInput | string | null
     chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutEventsNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutEventNestedInput
+  }
+
+  export type EventUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    location?: StringFieldUpdateOperationsInput | string
+    startDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    endDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    capacity?: NullableIntFieldUpdateOperationsInput | number | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventRSVPUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumRSVPStatusFieldUpdateOperationsInput | $Enums.RSVPStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    event?: EventUpdateOneRequiredWithoutRsvpsNestedInput
+  }
+
+  export type EventRSVPUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumRSVPStatusFieldUpdateOperationsInput | $Enums.RSVPStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventRSVPUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumRSVPStatusFieldUpdateOperationsInput | $Enums.RSVPStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    eventId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventRSVPCreateManyEventInput = {
+    id?: string
+    status: $Enums.RSVPStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+  }
+
+  export type EventRSVPUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumRSVPStatusFieldUpdateOperationsInput | $Enums.RSVPStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutRsvpsNestedInput
+  }
+
+  export type EventRSVPUncheckedUpdateWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumRSVPStatusFieldUpdateOperationsInput | $Enums.RSVPStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type EventRSVPUncheckedUpdateManyWithoutEventInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumRSVPStatusFieldUpdateOperationsInput | $Enums.RSVPStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
   }
 
 
