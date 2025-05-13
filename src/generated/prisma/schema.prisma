@@ -65,6 +65,7 @@ model User {
   sessions        Session[] // One user has many sessions
   memberships     Membership[] // One user can be a member of multiple chapters
   acceptedInvites Invite[]     @relation("acceptedInvites") // Invites that were accepted by this user
+  createdInvites  Invite[]     @relation("createdInvites") // Invites created by this user
 }
 
 model Membership {
@@ -150,6 +151,7 @@ model Invite {
   accepted     Boolean        @default(false)
   acceptedAt   DateTime?
   acceptedById String?
+  createdById  String?
 
   // Foreign key
   chapterId String
@@ -157,8 +159,10 @@ model Invite {
   // Relation
   chapter    Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   acceptedBy User?   @relation("acceptedInvites", fields: [acceptedById], references: [id])
+  createdBy  User?   @relation("createdInvites", fields: [createdById], references: [id])
 
   @@index([chapterId])
   @@index([token])
   @@index([acceptedById])
+  @@index([createdById])
 }

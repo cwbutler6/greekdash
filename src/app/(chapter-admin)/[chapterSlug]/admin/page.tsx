@@ -1,11 +1,9 @@
 import { requireChapterAccess } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { redirect } from 'next/navigation';
-import Link from 'next/link';
 import { MembershipRole } from '@/generated/prisma';
 import { UpgradeButton } from '@/components/subscription/upgrade-button';
 import { ManageBillingButton } from '@/components/subscription/manage-billing-button';
-import { Calendar, CreditCard, FileText, Settings, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -16,7 +14,7 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
   const { chapterSlug } = await props.params;
   
   // This will redirect if user isn't authenticated or doesn't have access to this chapter
-  const { user, membership } = await requireChapterAccess(chapterSlug);
+  const { membership } = await requireChapterAccess(chapterSlug);
   
   // Check if user has admin privileges
   if (membership.role !== 'ADMIN' && membership.role !== 'OWNER') {
@@ -49,10 +47,10 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
     return <div>Chapter not found</div>;
   }
   
-  // Get pending members for quick access
-  const pendingMembers = chapter.memberships.filter(m => 
-    m.role === MembershipRole.PENDING_MEMBER
-  );
+  // Get membership counts
+  const memberCount = chapter.memberships.filter(m => 
+    m.role !== MembershipRole.PENDING_MEMBER
+  ).length;
   
   // Get upcoming "events" - this would be replaced with real events data
   const upcomingEvents = [
@@ -125,78 +123,34 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
-      {/* Top Navigation Header */}
-      <header className="sticky top-0 z-10 bg-emerald-600 text-white shadow-md">
-        <div className="flex h-16 items-center justify-between px-4 md:px-6">
-          <div className="flex items-center space-x-8">
-            <h1 className="text-xl font-bold">GreekDash</h1>
-            <nav className="hidden md:flex space-x-6">
-              <Link href={`/${chapterSlug}/admin`} className="font-medium">Dashboard</Link>
-              <Link href={`/${chapterSlug}/admin/events`} className="text-emerald-100 hover:text-white transition-colors">Events</Link>
-              <Link href={`/${chapterSlug}/admin/members`} className="text-emerald-100 hover:text-white transition-colors">Members</Link>
-              <Link href={`/${chapterSlug}/admin/finance`} className="text-emerald-100 hover:text-white transition-colors">Finance</Link>
-              <Link href={`/${chapterSlug}/admin/files`} className="text-emerald-100 hover:text-white transition-colors">Files</Link>
-            </nav>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Link 
-              href={`/${chapterSlug}/portal`} 
-              className="text-sm px-3 py-1 bg-emerald-700 hover:bg-emerald-800 rounded-md transition-colors">
-              Member Portal
-            </Link>
-            <Avatar className="h-8 w-8 bg-emerald-700">
-              <AvatarImage src={user?.image || undefined} alt={user?.name || 'User'} />
-              <AvatarFallback className="bg-white text-emerald-600">
-                {user?.name?.split(' ').map(n => n[0]).join('') || 'U'}
-              </AvatarFallback>
-            </Avatar>
-          </div>
-        </div>
-      </header>
+    <div className="space-y-6">
+            {/* Chapter Stats Section */}
+            <Card className="bg-white shadow-sm border-slate-200">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl font-bold text-slate-800">Chapter Statistics</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                  <div className="p-4 border border-slate-200 rounded-md">
+                    <h3 className="text-sm font-medium text-slate-500">Active Members</h3>
+                    <p className="text-2xl font-bold text-emerald-600 mt-1">{memberCount}</p>
+                  </div>
+                  <div className="p-4 border border-slate-200 rounded-md">
+                    <h3 className="text-sm font-medium text-slate-500">Subscription</h3>
+                    <p className="text-2xl font-bold text-emerald-600 mt-1">{
+                      chapter.subscription?.plan || "Free"
+                    }</p>
+                  </div>
+                  <div className="p-4 border border-slate-200 rounded-md">
+                    <h3 className="text-sm font-medium text-slate-500">Chapter Created</h3>
+                    <p className="text-2xl font-bold text-emerald-600 mt-1">{
+                      new Date(chapter.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+                    }</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
-      {/* Main Content with Sidebar */}
-      <div className="flex flex-1">
-        {/* Sidebar Navigation */}
-        <aside className="hidden md:block w-64 bg-slate-50 border-r border-slate-200 p-4 space-y-3">
-          <Link 
-            href={`/${chapterSlug}/admin`} 
-            className="flex items-center gap-3 rounded-md px-3 py-2 bg-white hover:bg-slate-100 text-slate-800 font-semibold">
-            <Settings size={18} />Chapter Overview
-          </Link>
-          <Link 
-            href={`/${chapterSlug}/admin/events`} 
-            className="flex items-center gap-3 rounded-md px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 font-semibold">
-            <Calendar size={18} />Events
-          </Link>
-          <Link 
-            href={`/${chapterSlug}/admin/members`} 
-            className="flex items-center gap-3 rounded-md px-3 py-2 bg-white hover:bg-slate-100 text-slate-800">
-            <Users size={18} />Members
-            {pendingMembers.length > 0 && (
-              <Badge variant="secondary" className="ml-auto">{pendingMembers.length}</Badge>
-            )}
-          </Link>
-          <Link 
-            href={`/${chapterSlug}/admin/finance`} 
-            className="flex items-center gap-3 rounded-md px-3 py-2 bg-white hover:bg-slate-100 text-slate-800">
-            <CreditCard size={18} />Finances
-          </Link>
-          <Link 
-            href={`/${chapterSlug}/admin/files`} 
-            className="flex items-center gap-3 rounded-md px-3 py-2 bg-white hover:bg-slate-100 text-slate-800">
-            <FileText size={18} />Documents
-          </Link>
-          <Link 
-            href={`/${chapterSlug}/admin/settings`} 
-            className="flex items-center gap-3 rounded-md px-3 py-2 bg-white hover:bg-slate-100 text-slate-800">
-            <Settings size={18} />Settings
-          </Link>
-        </aside>
-
-        {/* Main Content Area */}
-        <main className="flex-1 p-6 bg-slate-50">
-          <div className="space-y-6 max-w-5xl mx-auto">
             {/* Upcoming Events Section */}
             <Card className="bg-white shadow-sm border-slate-200">
               <CardHeader className="flex flex-row justify-between items-center pb-2">
@@ -355,9 +309,6 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
                 </CardContent>
               </Card>
             </div>
-          </div>
-        </main>
-      </div>
     </div>
   );
 }

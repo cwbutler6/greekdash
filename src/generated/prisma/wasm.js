@@ -198,6 +198,7 @@ exports.Prisma.InviteScalarFieldEnum = {
   accepted: 'accepted',
   acceptedAt: 'acceptedAt',
   acceptedById: 'acceptedById',
+  createdById: 'createdById',
   chapterId: 'chapterId'
 };
 
