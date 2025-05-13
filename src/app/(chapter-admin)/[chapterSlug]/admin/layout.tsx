@@ -55,7 +55,7 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
   return (
     <div className="flex min-h-screen flex-col">
       {/* Top Navigation Header - Simplified */}
-      <header className="sticky top-0 z-10 bg-emerald-600 text-white shadow-md">
+      <header className="sticky top-0 z-30 bg-emerald-600 text-white shadow-md">
         <div className="flex h-16 items-center justify-between px-4 md:px-6">
           <div className="flex items-center space-x-2">
             <MobileSidebarToggle chapterSlug={chapterSlug} />
@@ -75,7 +75,7 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
       {/* Main Content with Sidebar */}
       <div className="flex flex-1">
         {/* Sidebar Navigation - Hidden by default on mobile, visible on desktop */}
-        <aside id={`mobile-sidebar-${chapterSlug}`} className="hidden md:block w-64 bg-slate-50 border-r border-slate-200 p-4 space-y-3 absolute md:relative z-30 h-[calc(100vh-4rem)] md:h-auto overflow-y-auto">
+        <aside id={`mobile-sidebar-${chapterSlug}`} className="hidden md:block w-64 bg-slate-50 border-r border-slate-200 p-4 space-y-3 absolute md:relative z-20 top-16 md:top-0 h-[calc(100vh-4rem)] md:h-auto overflow-y-auto">
           <SidebarLink
             href={`/${chapterSlug}/admin`}
             exactMatch
