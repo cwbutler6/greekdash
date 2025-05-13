@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { getAuditLogs } from '@/lib/audit';
+import { formatDistanceToNow } from 'date-fns';
 
 export default async function AdminPage(props: { params: Promise<{ chapterSlug: string }> }) {
   // In Next.js 15, params is now a Promise that needs to be awaited
@@ -78,56 +80,58 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
     take: 4, // Limit to 4 upcoming events for the dashboard
   });
   
-  // Member activity (for demo purposes)
-  const recentActivity = [
-    {
-      id: 1,
-      user: {
-        name: 'John Doe',
-        image: '',
-        initials: 'JD'
-      },
-      action: 'Submitted dues payment ($250)',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000) // 2 hours ago
+  // Fetch recent audit logs for chapter activity
+  const recentLogsResult = await getAuditLogs({
+    chapterId: chapter.id,
+    page: 1,
+    limit: 5, // Limit to 5 most recent activities
+  });
+  
+  // Format the audit logs for display
+  const recentActivity = recentLogsResult.data.map(log => ({
+    id: log.id,
+    user: {
+      name: log.user.name || 'Unknown User',
+      image: log.user.image || '',
+      initials: log.user.name 
+        ? log.user.name.split(' ').map(n => n[0]).join('').toUpperCase()
+        : '??'
     },
-    {
-      id: 2,
-      user: {
-        name: 'Sarah Miller',
-        image: '',
-        initials: 'SM'
-      },
-      action: 'RSVP\'d to Philanthropy Event',
-      timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000) // 3 hours ago
-    },
-    {
-      id: 3,
-      user: {
-        name: 'Mike Johnson',
-        image: '',
-        initials: 'MJ'
-      },
-      action: 'Uploaded meeting minutes',
-      timestamp: new Date(Date.now() - 5 * 60 * 60 * 1000) // 5 hours ago
-    }
-  ];
+    action: formatAuditAction(log.action, log.targetType),
+    timestamp: log.createdAt
+  }));
 
   // Format a date in a nice way
   const formatEventDate = (date: Date) => {
     return `${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} • ${date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`;
   };
 
-  // Format a timestamp as relative time
+  // Format a timestamp as relative time using date-fns
   const formatRelativeTime = (date: Date) => {
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMins / 60);
-    const diffDays = Math.floor(diffHours / 24);
+    return formatDistanceToNow(date, { addSuffix: true });
+  };
+  
+  // Format audit action into readable text
+  const formatAuditAction = (action: string, targetType: string) => {
+    const actionMap: Record<string, string> = {
+      'user.login': 'Signed in',
+      'user.logout': 'Signed out',
+      'user.password_changed': 'Changed password',
+      'user.profile_updated': 'Updated profile',
+      'member.invited': 'Invited a new member',
+      'member.invitation_accepted': 'Joined the chapter',
+      'member.role_changed': 'Had role changed',
+      'member.removed': 'Was removed from chapter',
+      'chapter.settings_updated': 'Updated chapter settings',
+      'chapter.subscription_changed': 'Changed subscription',
+      'event.created': 'Created a new event',
+      'event.updated': 'Updated an event',
+      'event.deleted': 'Deleted an event',
+      'event.rsvp_created': 'RSVP\'d to an event',
+      'event.rsvp_updated': 'Updated event RSVP'
+    };
     
-    if (diffMins < 60) return `${diffMins} ${diffMins === 1 ? 'minute' : 'minutes'} ago`;
-    if (diffHours < 24) return `${diffHours} ${diffHours === 1 ? 'hour' : 'hours'} ago`;
-    return `${diffDays} ${diffDays === 1 ? 'day' : 'days'} ago`;
+    return actionMap[action] || `${action.split('.').pop()?.replace(/_/g, ' ')} ${targetType}`;
   };
 
   return (
@@ -200,25 +204,39 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
 
             {/* Recent Member Activity */}
             <Card className="bg-white shadow-sm border-slate-200">
-              <CardHeader className="pb-2">
+              <CardHeader className="pb-2 flex flex-row items-center justify-between">
                 <CardTitle className="text-xl font-bold text-slate-800">Recent Member Activity</CardTitle>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="text-sm text-emerald-600 hover:text-emerald-700"
+                  asChild
+                >
+                  <a href={`/${chapterSlug}/admin/audit-logs`}>View All</a>
+                </Button>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4 mt-2">
-                  {recentActivity.map(activity => (
-                    <div key={activity.id} className="flex items-center gap-4 p-4 border border-slate-200 rounded-md">
-                      <Avatar className="bg-emerald-100 text-emerald-600">
-                        <AvatarImage src={activity.user.image} />
-                        <AvatarFallback>{activity.user.initials}</AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1">
-                        <div className="font-semibold text-slate-800">{activity.user.name}</div>
-                        <div className="text-sm text-slate-500">
-                          {activity.action} - {formatRelativeTime(activity.timestamp)}
+                  {recentActivity.length > 0 ? (
+                    recentActivity.map(activity => (
+                      <div key={activity.id} className="flex items-center gap-4 p-4 border border-slate-200 rounded-md">
+                        <Avatar className="bg-emerald-100 text-emerald-600">
+                          <AvatarImage src={activity.user.image} />
+                          <AvatarFallback>{activity.user.initials}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1">
+                          <div className="font-semibold text-slate-800">{activity.user.name}</div>
+                          <div className="text-sm text-slate-500">
+                            {activity.action} - {formatRelativeTime(activity.timestamp)}
+                          </div>
                         </div>
                       </div>
+                    ))
+                  ) : (
+                    <div className="text-center p-6 text-slate-500">
+                      No recent activity recorded
                     </div>
-                  ))}
+                  )}
                 </div>
               </CardContent>
             </Card>
