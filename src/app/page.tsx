@@ -18,14 +18,14 @@ export default function Home() {
               <div>
                 <Link 
                   href="/login" 
-                  className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#00b894] hover:bg-[#00a382] transition-colors shadow-md"
+                  className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 transition-colors shadow-md"
                 >
                   Get Started Free
                 </Link>
               </div>
             </div>
             <div className="lg:w-1/2">
-              <div className="aspect-video bg-[#00b894]/10 rounded-xl border-2 border-[#00b894]/20 overflow-hidden relative">
+              <div className="aspect-video bg-emerald-600/10 rounded-xl border-2 border-emerald-200 overflow-hidden relative">
                 <Image 
                   src="/images/hero/dashboard-preview.svg" 
                   alt="GreekDash Dashboard Preview" 
@@ -39,12 +39,12 @@ export default function Home() {
         </div>
         
         {/* Decorative elements */}
-        <div className="absolute -bottom-1 left-0 right-0 h-8 bg-[#00b894]/5"></div>
-        <div className="absolute top-0 right-0 w-32 h-32 bg-[#00b894]/10 rounded-bl-full"></div>
+        <div className="absolute -bottom-1 left-0 right-0 h-8 bg-emerald-600/5"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-600/10 rounded-bl-full"></div>
       </section>
 
       {/* Features Section */}
-      <section className="bg-[#00b894]/5 px-6 py-16 md:py-24">
+      <section className="bg-emerald-600/5 px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-black">
@@ -124,7 +124,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {/* Free Plan */}
             <div className="rounded-xl border border-gray-200 overflow-hidden flex flex-col h-full">
-              <div className="bg-[#00b894] p-6 text-white text-center">
+              <div className="bg-emerald-600 p-6 text-white text-center">
                 <h3 className="text-2xl font-bold">Free</h3>
                 <p className="mt-1">Get started with the basics</p>
               </div>
@@ -136,7 +136,7 @@ export default function Home() {
                 <ul className="space-y-3 flex-grow mb-6">
                   {["Up to 30 members", "Basic event management", "Member directory", "File sharing (100MB)"].map((feature, i) => (
                     <li key={i} className="flex items-center">
-                      <span className="text-[#00b894] mr-2">✓</span>
+                      <span className="text-emerald-600 mr-2">✓</span>
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -144,7 +144,7 @@ export default function Home() {
                 <div className="mt-auto">
                   <Link 
                     href="/login" 
-                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-[#00b894] text-base font-medium rounded-md text-[#00b894] bg-white hover:bg-[#00b894]/5 transition-colors"
+                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-[#00b894] text-base font-medium rounded-md text-emerald-600 bg-white hover:bg-emerald-600/5 transition-colors"
                   >
                     Get Started
                   </Link>
@@ -172,7 +172,7 @@ export default function Home() {
                     "Dues collection tools"
                   ].map((feature, i) => (
                     <li key={i} className="flex items-center">
-                      <span className="text-[#00b894] mr-2">✓</span>
+                      <span className="text-emerald-600 mr-2">✓</span>
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -180,7 +180,7 @@ export default function Home() {
                 <div className="mt-auto">
                   <Link 
                     href="/login" 
-                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-[#00b894] hover:bg-[#00a382] transition-colors"
+                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 transition-colors"
                   >
                     Upgrade to Basic
                   </Link>
@@ -213,7 +213,7 @@ export default function Home() {
                     "Custom integrations"
                   ].map((feature, i) => (
                     <li key={i} className="flex items-center">
-                      <span className="text-[#00b894] mr-2">✓</span>
+                      <span className="text-emerald-600 mr-2">✓</span>
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -233,7 +233,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="bg-[#00b894]/5 px-6 py-16 md:py-24">
+      <section className="bg-emerald-600/5 px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-black">
@@ -263,7 +263,7 @@ export default function Home() {
               }
             ].map((testimonial, i) => (
               <blockquote key={i} className="bg-white p-6 rounded-xl shadow-sm">
-                <div className="text-[#00b894] text-4xl font-serif mb-4">&quot;</div>
+                <div className="text-emerald-600 text-4xl font-serif mb-4">&quot;</div>
                 <p className="text-gray-600 mb-6">{testimonial.quote}</p>
                 <footer>
                   <div className="font-medium text-black">{testimonial.name}</div>
@@ -320,7 +320,7 @@ export default function Home() {
       </section>
 
       {/* Footer CTA */}
-      <section className="bg-[#00b894] px-6 py-12">
+      <section className="bg-emerald-600 px-6 py-12">
         <div className="mx-auto max-w-5xl text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
             Ready to grow your chapter?
@@ -330,7 +330,7 @@ export default function Home() {
           </p>
           <Link 
             href="/auth/login" 
-            className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-[#00b894] bg-white hover:bg-gray-100 transition-colors shadow-md"
+            className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-emerald-600 bg-white hover:bg-gray-100 transition-colors shadow-md"
           >
             Get Started Free
           </Link>
@@ -396,7 +396,7 @@ export default function Home() {
                   placeholder="Your email"
                   className="px-4 py-2 w-full rounded-l-md text-black"
                 />
-                <button className="bg-[#00b894] px-4 py-2 rounded-r-md hover:bg-[#00a382] transition-colors">
+                <button className="bg-emerald-600 px-4 py-2 rounded-r-md hover:bg-emerald-700 transition-colors">
                   →
                 </button>
               </div>
