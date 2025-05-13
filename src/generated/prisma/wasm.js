@@ -124,6 +124,7 @@ exports.Prisma.ChapterScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
+  joinCode: 'joinCode',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   stripeCustomerId: 'stripeCustomerId'
@@ -187,6 +188,19 @@ exports.Prisma.VerificationTokenScalarFieldEnum = {
   expires: 'expires'
 };
 
+exports.Prisma.InviteScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  token: 'token',
+  role: 'role',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt',
+  accepted: 'accepted',
+  acceptedAt: 'acceptedAt',
+  acceptedById: 'acceptedById',
+  chapterId: 'chapterId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -204,7 +218,8 @@ exports.Prisma.NullsOrder = {
 exports.MembershipRole = exports.$Enums.MembershipRole = {
   MEMBER: 'MEMBER',
   ADMIN: 'ADMIN',
-  OWNER: 'OWNER'
+  OWNER: 'OWNER',
+  PENDING_MEMBER: 'PENDING_MEMBER'
 };
 
 exports.PlanType = exports.$Enums.PlanType = {
@@ -228,7 +243,8 @@ exports.Prisma.ModelName = {
   Subscription: 'Subscription',
   Account: 'Account',
   Session: 'Session',
-  VerificationToken: 'VerificationToken'
+  VerificationToken: 'VerificationToken',
+  Invite: 'Invite'
 };
 
 /**

@@ -32,12 +32,14 @@ enum MembershipRole {
   MEMBER
   ADMIN
   OWNER
+  PENDING_MEMBER
 }
 
 model Chapter {
   id               String   @id @default(cuid())
   name             String
   slug             String   @unique
+  joinCode         String   @default(uuid())
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   stripeCustomerId String?
@@ -45,6 +47,7 @@ model Chapter {
   // Relations
   memberships  Membership[] // One chapter has many memberships
   subscription Subscription? // One chapter has one subscription
+  invites      Invite[] // One chapter has many invites
 }
 
 model User {
@@ -58,9 +61,10 @@ model User {
   updatedAt     DateTime  @updatedAt
 
   // Relations
-  accounts    Account[] // One user has many auth accounts
-  sessions    Session[] // One user has many sessions
-  memberships Membership[] // One user can be a member of multiple chapters
+  accounts        Account[] // One user has many auth accounts
+  sessions        Session[] // One user has many sessions
+  memberships     Membership[] // One user can be a member of multiple chapters
+  acceptedInvites Invite[]     @relation("acceptedInvites") // Invites that were accepted by this user
 }
 
 model Membership {
@@ -134,4 +138,27 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Invite {
+  id           String         @id @default(cuid())
+  email        String
+  token        String         @unique @default(uuid())
+  role         MembershipRole @default(MEMBER)
+  createdAt    DateTime       @default(now())
+  expiresAt    DateTime       @default(dbgenerated("NOW() + interval '7 days'"))
+  accepted     Boolean        @default(false)
+  acceptedAt   DateTime?
+  acceptedById String?
+
+  // Foreign key
+  chapterId String
+
+  // Relation
+  chapter    Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  acceptedBy User?   @relation("acceptedInvites", fields: [acceptedById], references: [id])
+
+  @@index([chapterId])
+  @@index([token])
+  @@index([acceptedById])
 }

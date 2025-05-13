@@ -2,6 +2,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { redirect } from "next/navigation";
 
+// Re-export authOptions for use in API routes
+export { authOptions };
+
 // Get session on the server side
 export async function getSession() {
   return await getServerSession(authOptions);
