@@ -55,7 +55,13 @@ function LoginForm() {
         password: data.password,
       });
 
-      if (result?.error) {
+      console.log("Auth result:", result); // Debugging
+
+      // Check for errors - NextAuth sometimes returns ok:true AND an error
+      if (result?.error === "OAuthSignIn") {
+        // This is just the OAuth flow starting, not an actual error
+        // Continue with the flow
+      } else if (!result?.ok || result?.error) {
         setError("Invalid email or password");
         setIsLoading(false);
         return;
@@ -69,18 +75,24 @@ function LoginForm() {
 
       // Otherwise fetch the user's memberships to determine where to redirect
       try {
+        console.log('Fetching user memberships...');
         const membershipResponse = await fetch('/api/user/memberships');
+        console.log('Membership response status:', membershipResponse.status);
         
         if (!membershipResponse.ok) {
+          console.log('Membership response not OK:', membershipResponse.status);
           // If can't get memberships due to server error, redirect to signup
           router.push('/signup');
           return;
         }
         
         const data = await membershipResponse.json();
+        console.log('Membership data:', data);
         const memberships = data.memberships || [];
+        console.log('Parsed memberships:', memberships);
         
         if (memberships.length === 0) {
+          console.log('No memberships found, redirecting to signup');
           // If user has no memberships, send to the signup page to create or join a chapter
           router.push('/signup');
           return;
@@ -91,12 +103,22 @@ function LoginForm() {
           (m: { role: string }) => m.role !== 'PENDING_MEMBER'
         );
         
+        console.log('Active membership:', activeMembership);
+        
         if (activeMembership) {
-          // If user has an active membership, redirect to their chapter dashboard
-          router.push(`/${activeMembership.chapterSlug}/dashboard`);
+          // If user has an active membership and is an admin/owner, redirect to admin
+          if (activeMembership.role === 'ADMIN' || activeMembership.role === 'OWNER') {
+            console.log(`Redirecting admin to /${activeMembership.chapterSlug}/admin`);
+            window.location.href = `/${activeMembership.chapterSlug}/admin`;
+          } else {
+            // Regular members go to the portal
+            console.log(`Redirecting member to /${activeMembership.chapterSlug}/portal`);
+            window.location.href = `/${activeMembership.chapterSlug}/portal`;
+          }
         } else {
           // If user only has pending memberships, redirect to their pending page
-          router.push(`/${memberships[0].chapterSlug}/pending`);
+          console.log(`Redirecting pending member to /${memberships[0].chapterSlug}/pending`);
+          window.location.href = `/${memberships[0].chapterSlug}/pending`;
         }
       } catch (error) {
         console.error('Error fetching memberships:', error);

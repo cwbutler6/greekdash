@@ -20,10 +20,10 @@ async function isChapterAdmin(userId: string, chapterId: string) {
 // POST: Deny a pending membership request
 export async function POST(
   request: Request,
-  { params }: { params: { chapterSlug: string; membershipId: string } }
+  { params }: { params: Promise<{ chapterSlug: string; membershipId: string }> }
 ) {
   try {
-    const { chapterSlug, membershipId } = params;
+    const { chapterSlug, membershipId } = await params;
     
     // Get current authenticated user
     const session = await getServerSession(authOptions);

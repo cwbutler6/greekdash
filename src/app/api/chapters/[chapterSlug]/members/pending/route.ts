@@ -20,10 +20,10 @@ async function isChapterAdmin(userId: string, chapterId: string) {
 // GET: List all pending membership requests for a chapter
 export async function GET(
   request: Request,
-  { params }: { params: { chapterSlug: string } }
+  { params }: { params: Promise<{ chapterSlug: string }> }
 ) {
   try {
-    const { chapterSlug } = params;
+    const { chapterSlug } = await params;
     
     // Get current authenticated user
     const session = await getServerSession(authOptions);

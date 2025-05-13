@@ -67,8 +67,10 @@ export const config = {
   matcher: [
     // Match all paths that require authentication
     "/dashboard/:path*",
+    "/:chapterSlug/admin/:path*",
+    "/:chapterSlug/portal/:path*",
     "/settings/:path*",
     // Skip authentication check for public routes, API, and static files
-    "/((?!api/auth|_next/static|_next/image|images|favicon.ico).*)",
+    "/((?!login|signup|api/auth|_next/static|_next/image|images|favicon.ico).*)",
   ],
 };

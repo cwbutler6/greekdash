@@ -11,10 +11,26 @@ export default async function ChapterLayout({ children, params }: LayoutProps) {
   // In Next.js 15, params is now a Promise that needs to be awaited
   const { chapterSlug } = await params;
   
-  // This will redirect if user isn't authenticated or doesn't have access to this chapter
+  // Check if we're rendering an admin route
+  const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  const isAdminRoute = pathname.includes(`/${chapterSlug}/admin`) || 
+                      // For server-side detection, we can check segment names in a more dynamic way
+                      // This is a simplified check for this example
+                      false;
+
+  // If this is an admin route, we don't want to wrap it in the chapter layout UI
+  // but we still need the auth check to run
+  
+  // This will redirect if user isn't authenticated or doesn't have access to this chapter  
   const { membership } = await requireChapterAccess(chapterSlug);
   const isAdmin = membership.role === 'ADMIN' || membership.role === 'OWNER';
 
+  // For admin routes, skip rendering the layout UI
+  if (isAdminRoute) {
+    return <>{children}</>;
+  }
+  
+  // For non-admin routes, render the full chapter layout
   return (
     <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
       <header className="mb-8">

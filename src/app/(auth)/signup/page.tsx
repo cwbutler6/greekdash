@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -64,7 +64,7 @@ const joinChapterSchema = z.object({
 type CreateChapterFormValues = z.infer<typeof createChapterSchema>;
 type JoinChapterFormValues = z.infer<typeof joinChapterSchema>;
 
-export default function SignupPage() {
+function SignupContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<string>(searchParams.get('tab') === 'join' ? 'join' : 'create');
@@ -209,7 +209,7 @@ export default function SignupPage() {
           redirect: false,
           email: data.email,
           password: data.password,
-          callbackUrl: `/${data.chapterSlug}/dashboard`
+          callbackUrl: `/${data.chapterSlug}/admin`
         });
         
         console.log("Sign in result:", signInResult);
@@ -221,11 +221,11 @@ export default function SignupPage() {
           return;
         }
 
-        // Redirect to chapter dashboard - use signInResult.url if available, otherwise fallback
+        // Redirect to chapter admin - use signInResult.url if available, otherwise fallback
         if (signInResult?.url) {
           router.push(signInResult.url);
         } else {
-          router.push(`/${data.chapterSlug}/dashboard`);
+          router.push(`/${data.chapterSlug}/admin`);
         }
       } catch (signInError) {
         console.error("Exception during sign in after registration:", signInError);
@@ -282,8 +282,8 @@ export default function SignupPage() {
         return;
       }
 
-      // Redirect to pending page (as they'll start as pending_member)
-      router.push(`/${data.chapterSlug}/pending`);
+      // Redirect to portal page (as they'll start as pending_member)
+      router.push(`/${data.chapterSlug}/portal`);
     } catch (err) {
       console.error("Chapter join error:", err);
       setError("An unexpected error occurred. Please try again.");
@@ -579,5 +579,19 @@ export default function SignupPage() {
         </CardFooter>
       </Card>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex min-h-screen flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <Card className="w-full max-w-lg flex items-center justify-center p-8">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </Card>
+      </div>
+    }>
+      <SignupContent />
+    </Suspense>
   );
 }

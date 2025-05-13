@@ -14,10 +14,10 @@ const joinChapterSchema = z.object({
 
 export async function POST(
   request: Request,
-  { params }: { params: { chapterSlug: string } }
+  { params }: { params: Promise<{ chapterSlug: string }> }
 ) {
   try {
-    const { chapterSlug } = params;
+    const { chapterSlug } = await params;
     
     // Parse request body
     const body = await request.json();

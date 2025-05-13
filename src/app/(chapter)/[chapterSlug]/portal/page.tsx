@@ -2,6 +2,7 @@ import { requireChapterAccess } from '@/lib/auth';
 import { getCurrentUser } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { UpgradeButton } from '@/components/subscription/upgrade-button';
+import Link from 'next/link';
 
 export default async function PortalPage(props: { params: Promise<{ chapterSlug: string }> }) {
   // In Next.js 15, params is now a Promise that needs to be awaited
@@ -108,12 +109,12 @@ export default async function PortalPage(props: { params: Promise<{ chapterSlug:
                   You can manage your chapter&apos;s subscription settings from the admin dashboard.
                 </p>
                 <div className="mt-2">
-                  <a 
+                  <Link 
                     href={`/${chapterSlug}/admin`}
                     className="inline-flex items-center rounded-md border border-transparent bg-gray-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
                   >
                     Go to Admin Dashboard
-                  </a>
+                  </Link>
                 </div>
               </div>
             )}

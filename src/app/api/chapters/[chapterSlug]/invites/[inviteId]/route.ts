@@ -20,10 +20,11 @@ async function isChapterAdmin(userId: string, chapterId: string) {
 // DELETE: Delete an invite
 export async function DELETE(
   request: Request,
-  { params }: { params: { chapterSlug: string; inviteId: string } }
+  { params }: { params: Promise<{ chapterSlug: string; inviteId: string }> }
 ) {
   try {
-    const { chapterSlug, inviteId } = params;
+    // Extract params in Next.js 15
+    const { chapterSlug, inviteId } = await params;
     
     // Get current authenticated user
     const session = await getServerSession(authOptions);
@@ -47,21 +48,19 @@ export async function DELETE(
       );
     }
     
-    // Check if user is an admin of this chapter
+    // Check if user is an admin of the chapter
     const isAdmin = await isChapterAdmin(session.user.id, chapter.id);
     
     if (!isAdmin) {
       return NextResponse.json(
-        { message: "You do not have permission to delete invites" },
+        { message: "Not authorized to delete invites for this chapter" },
         { status: 403 }
       );
     }
     
-    // Find the invite
+    // Find the invite by ID
     const invite = await prisma.invite.findUnique({
-      where: { 
-        id: inviteId,
-      },
+      where: { id: inviteId },
     });
     
     if (!invite) {
@@ -71,11 +70,11 @@ export async function DELETE(
       );
     }
     
-    // Ensure the invite belongs to the specified chapter
+    // Check if invite belongs to the chapter
     if (invite.chapterId !== chapter.id) {
       return NextResponse.json(
-        { message: "Invite not found in this chapter" },
-        { status: 404 }
+        { message: "Invite does not belong to this chapter" },
+        { status: 403 }
       );
     }
     
@@ -87,11 +86,10 @@ export async function DELETE(
     return NextResponse.json({
       message: "Invite deleted successfully",
     });
-    
   } catch (error) {
     console.error("Error deleting invite:", error);
     return NextResponse.json(
-      { message: "An error occurred while deleting the invite" },
+      { message: "Error deleting invite" },
       { status: 500 }
     );
   }

@@ -4,10 +4,10 @@ import prisma from "@/lib/prisma";
 // Get chapter information by slug
 export async function GET(
   request: Request,
-  { params }: { params: { chapterSlug: string } }
+  { params }: { params: Promise<{ chapterSlug: string }> }
 ) {
   try {
-    const { chapterSlug } = params;
+    const { chapterSlug } = await params;
     
     const chapter = await prisma.chapter.findUnique({
       where: { slug: chapterSlug },

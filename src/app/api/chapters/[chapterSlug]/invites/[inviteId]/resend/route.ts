@@ -21,10 +21,10 @@ async function isChapterAdmin(userId: string, chapterId: string) {
 // POST: Resend an invite (refresh token and expiration date)
 export async function POST(
   request: Request,
-  { params }: { params: { chapterSlug: string; inviteId: string } }
+  { params }: { params: Promise<{ chapterSlug: string; inviteId: string }> }
 ) {
   try {
-    const { chapterSlug, inviteId } = params;
+    const { chapterSlug, inviteId } = await params;
     
     // Get current authenticated user
     const session = await getServerSession(authOptions);
@@ -48,21 +48,19 @@ export async function POST(
       );
     }
     
-    // Check if user is an admin of this chapter
+    // Check if user is an admin of the chapter
     const isAdmin = await isChapterAdmin(session.user.id, chapter.id);
     
     if (!isAdmin) {
       return NextResponse.json(
-        { message: "You do not have permission to resend invites" },
+        { message: "Not authorized to resend invites for this chapter" },
         { status: 403 }
       );
     }
     
-    // Find the invite
+    // Find the invite by ID
     const invite = await prisma.invite.findUnique({
-      where: { 
-        id: inviteId,
-      },
+      where: { id: inviteId },
     });
     
     if (!invite) {
@@ -72,44 +70,42 @@ export async function POST(
       );
     }
     
-    // Ensure the invite belongs to the specified chapter
+    // Check if invite belongs to the chapter
     if (invite.chapterId !== chapter.id) {
       return NextResponse.json(
-        { message: "Invite not found in this chapter" },
-        { status: 404 }
+        { message: "Invite does not belong to this chapter" },
+        { status: 403 }
       );
     }
     
-    // Check if invite is already accepted
+    // Check if the invite has already been accepted
     if (invite.accepted) {
       return NextResponse.json(
-        { message: "This invite has already been accepted and cannot be resent" },
+        { message: "This invite has already been accepted" },
         { status: 400 }
       );
     }
     
-    // Update the invite with a new token and expiration date
+    // Update invite with new expiration date
     const updatedInvite = await prisma.invite.update({
       where: { id: inviteId },
       data: {
-        token: undefined, // This will generate a new UUID token because of the @default(uuid()) in schema
-        expiresAt: addDays(new Date(), 7), // Reset to expire in 7 days from now
+        expiresAt: addDays(new Date(), 7), // Reset expiration to 7 days from now
       },
     });
     
-    // In a real implementation, you would send an email here
-    
     return NextResponse.json({
-      id: updatedInvite.id,
-      email: updatedInvite.email,
-      token: updatedInvite.token, // This would normally not be exposed directly
-      expiresAt: updatedInvite.expiresAt,
+      message: "Invite resent successfully",
+      invite: {
+        id: updatedInvite.id,
+        email: updatedInvite.email,
+        expiresAt: updatedInvite.expiresAt,
+      },
     });
-    
   } catch (error) {
     console.error("Error resending invite:", error);
     return NextResponse.json(
-      { message: "An error occurred while resending the invite" },
+      { message: "Error resending invite" },
       { status: 500 }
     );
   }

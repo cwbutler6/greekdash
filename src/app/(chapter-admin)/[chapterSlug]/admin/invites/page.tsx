@@ -1,4 +1,4 @@
-import JoinForm from './join-form';
+import AdminInvitesClient from "./invites-client";
 
 interface PageProps {
   params: Promise<{
@@ -11,6 +11,5 @@ export default async function Page({ params }: PageProps) {
   // Next.js 15: params is a Promise that needs to be awaited
   const { chapterSlug } = await params;
   
-  // Pass the chapter slug to the client component
-  return <JoinForm chapterSlug={chapterSlug} />;
+  return <AdminInvitesClient chapterSlug={chapterSlug} />;
 }

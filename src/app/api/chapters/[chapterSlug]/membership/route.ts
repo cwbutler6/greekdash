@@ -6,10 +6,10 @@ import prisma from "@/lib/prisma";
 // GET: Get current user's membership for the specified chapter
 export async function GET(
   request: Request,
-  { params }: { params: { chapterSlug: string } }
+  { params }: { params: Promise<{ chapterSlug: string }> }
 ) {
   try {
-    const { chapterSlug } = params;
+    const { chapterSlug } = await params;
     
     // Get current authenticated user
     const session = await getServerSession(authOptions);

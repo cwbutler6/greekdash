@@ -28,11 +28,11 @@ export async function GET() {
           }
         }
       },
-      orderBy: {
+      orderBy: [
         // Sort by role (to prioritize admin/owner roles) and then creation date
-        role: 'asc',
-        createdAt: 'desc'
-      }
+        { role: 'asc' },
+        { createdAt: 'desc' }
+      ]
     });
 
     // Format the memberships for the client

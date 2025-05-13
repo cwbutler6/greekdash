@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -16,7 +17,7 @@ export default function Home() {
               </p>
               <div>
                 <Link 
-                  href="/auth/login" 
+                  href="/login" 
                   className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#00b894] hover:bg-[#00a382] transition-colors shadow-md"
                 >
                   Get Started Free
@@ -24,8 +25,14 @@ export default function Home() {
               </div>
             </div>
             <div className="lg:w-1/2">
-              <div className="aspect-video bg-[#00b894]/10 rounded-xl border-2 border-[#00b894]/20 overflow-hidden">
-                <img src="/images/hero/dashboard-preview.svg" alt="GreekDash Dashboard Preview" className="w-full h-full object-cover" />
+              <div className="aspect-video bg-[#00b894]/10 rounded-xl border-2 border-[#00b894]/20 overflow-hidden relative">
+                <Image 
+                  src="/images/hero/dashboard-preview.svg" 
+                  alt="GreekDash Dashboard Preview" 
+                  fill 
+                  className="object-cover" 
+                  priority 
+                />
               </div>
             </div>
           </div>
@@ -82,15 +89,16 @@ export default function Home() {
               }
             ].map((feature, i) => (
               <div key={i} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 mb-4">
-                  <img 
+                <div className="w-12 h-12 mb-4 relative">
+                  <Image 
                     src={`/images/features/${feature.title === 'Event Management' ? 'event-management' : 
                           feature.title === 'Membership Directory' ? 'membership' : 
                           feature.title === 'Communication Tools' ? 'communication' : 
                           feature.title === 'Dues & Finances' ? 'finances' : 
                           feature.title === 'Points Tracking' ? 'points' : 'files'}.svg`} 
                     alt={feature.title} 
-                    className="w-full h-full" 
+                    width={48}
+                    height={48}
                   />
                 </div>
                 <h3 className="text-xl font-bold text-black mb-2">{feature.title}</h3>
@@ -135,7 +143,7 @@ export default function Home() {
                 </ul>
                 <div className="pt-4">
                   <Link 
-                    href="/auth/login" 
+                    href="/login" 
                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-[#00b894] text-base font-medium rounded-md text-[#00b894] bg-white hover:bg-[#00b894]/5 transition-colors"
                   >
                     Get Started
@@ -171,7 +179,7 @@ export default function Home() {
                 </ul>
                 <div className="pt-4">
                   <Link 
-                    href="/auth/login" 
+                    href="/login" 
                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-[#00b894] hover:bg-[#00a382] transition-colors"
                   >
                     Upgrade to Basic
@@ -212,7 +220,7 @@ export default function Home() {
                 </ul>
                 <div className="pt-4">
                   <Link 
-                    href="/auth/login" 
+                    href="/login" 
                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-black hover:bg-gray-800 transition-colors"
                   >
                     Upgrade to Pro
