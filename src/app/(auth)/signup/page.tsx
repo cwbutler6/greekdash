@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
 // UI Components
 import { Button } from "@/components/ui/button";
@@ -296,7 +297,17 @@ function SignupContent() {
     <div className="flex min-h-screen flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-lg">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-center text-2xl font-bold">GreekDash</CardTitle>
+          <CardTitle className="text-center text-2xl font-bold">
+            <div className="relative w-[150px] h-[150px] mx-auto">
+              <Image 
+                src="/greekdash-icon.svg" 
+                alt="GreekDash Logo" 
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </CardTitle>
           <CardDescription className="text-center">
             Join the premier platform for fraternity and sorority chapter management
           </CardDescription>

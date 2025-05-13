@@ -8,6 +8,7 @@ import { AlertCircle } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 
 // UI Components
 import { Button } from "@/components/ui/button";
@@ -132,10 +133,20 @@ function LoginForm() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="flex min-h-full flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-center text-2xl font-bold">GreekDash</CardTitle>
+          <CardTitle className="text-center text-2xl font-bold">
+            <div className="relative w-[150px] h-[150px] mx-auto">
+              <Image 
+                src="/greekdash-icon.svg" 
+                alt="GreekDash Logo" 
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+          </CardTitle>
           <CardDescription className="text-center">Sign in to your account</CardDescription>
         </CardHeader>
         
