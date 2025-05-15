@@ -5,6 +5,7 @@ import { authOptions } from "@/lib/auth";
 import { addDays } from "date-fns";
 import { MembershipRole } from "@/generated/prisma";
 import { prisma } from "@/lib/db";
+import { sendEmail } from "@/lib/mail";
 
 
 // Schema for creating invites
@@ -180,6 +181,12 @@ export async function POST(
       );
     }
     
+    // Get the current user's name for the invite email
+    const inviter = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { name: true },
+    });
+
     // Create a new invite
     const invite = await prisma.invite.create({
       data: {
@@ -189,16 +196,48 @@ export async function POST(
         chapter: {
           connect: { id: chapter.id },
         },
+        createdBy: {
+          connect: { id: session.user.id },
+        },
+      },
+    });
+    
+    // Generate the invite link
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const inviteLink = `${baseUrl}/invites/accept?token=${invite.token}`;
+    
+    // Send the invite email
+    await sendEmail(email, "chapterInvite", {
+      inviteLink,
+      chapterName: chapter.name,
+      inviterName: inviter?.name || "A chapter administrator",
+      roleName: role === "ADMIN" ? "Administrator" : "Member",
+    });
+    
+    // Create an audit log entry
+    await prisma.auditLog.create({
+      data: {
+        userId: session.user.id,
+        chapterId: chapter.id,
+        action: "INVITE_CREATED",
+        targetType: "INVITE",
+        targetId: invite.id,
+        metadata: {
+          email: invite.email,
+          role: invite.role,
+          timestamp: new Date().toISOString(),
+        },
       },
     });
     
     return NextResponse.json({
-      message: "Invite created successfully",
+      message: "Invite created and email sent successfully",
       invite: {
         id: invite.id,
         email: invite.email,
         role: invite.role,
         expiresAt: invite.expiresAt,
+        token: invite.token,
       },
     });
   } catch (error) {

@@ -100,19 +100,6 @@ interface ActivityItem {
   timestamp: Date;
 }
 
-const recentActivity = recentLogsResult.data.map((log: AuditLog & { user: { id: string; name: string | null; email: string | null; image: string | null; } }) => ({
-    id: log.id,
-    user: {
-      name: log.user.name || 'Unknown User',
-      image: log.user.image || '',
-      initials: log.user.name 
-        ? log.user.name.split(' ').map(n => n[0]).join('').toUpperCase()
-        : '??'
-    },
-    action: formatAuditAction(log.action, log.targetType),
-    timestamp: log.createdAt
-  }));
-
   // Format a date in a nice way
   const formatEventDate = (date: Date) => {
     return `${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} • ${date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}`;
@@ -123,7 +110,7 @@ const recentActivity = recentLogsResult.data.map((log: AuditLog & { user: { id: 
     return formatDistanceToNow(date, { addSuffix: true });
   };
   
-  // Format audit action into readable text
+  // Format audit action into readable text - define this BEFORE it's used
   const formatAuditAction = (action: string, targetType: string) => {
     const actionMap: Record<string, string> = {
       'user.login': 'Signed in',
@@ -136,6 +123,10 @@ const recentActivity = recentLogsResult.data.map((log: AuditLog & { user: { id: 
       'member.removed': 'Was removed from chapter',
       'chapter.settings_updated': 'Updated chapter settings',
       'chapter.subscription_changed': 'Changed subscription',
+      'CHAPTER_BROADCAST': 'Sent a broadcast message',
+      'PASSWORD_RESET_REQUESTED': 'Requested password reset',
+      'PASSWORD_RESET_COMPLETED': 'Reset password',
+      'INVITE_CREATED': 'Created invitation',
       'event.created': 'Created a new event',
       'event.updated': 'Updated an event',
       'event.deleted': 'Deleted an event',
@@ -145,6 +136,20 @@ const recentActivity = recentLogsResult.data.map((log: AuditLog & { user: { id: 
     
     return actionMap[action] || `${action.split('.').pop()?.replace(/_/g, ' ')} ${targetType}`;
   };
+  
+  // Now we can safely use formatAuditAction since it's defined above
+  const recentActivity = recentLogsResult.data.map((log: AuditLog & { user: { id: string; name: string | null; email: string | null; image: string | null; } }) => ({
+    id: log.id,
+    user: {
+      name: log.user.name || 'Unknown User',
+      image: log.user.image || '',
+      initials: log.user.name 
+        ? log.user.name.split(' ').map(n => n[0]).join('').toUpperCase()
+        : '??'
+    },
+    action: formatAuditAction(log.action, log.targetType),
+    timestamp: log.createdAt
+  }));
 
   return (
     <div className="space-y-6">
@@ -249,6 +254,58 @@ const recentActivity = recentLogsResult.data.map((log: AuditLog & { user: { id: 
                       No recent activity recorded
                     </div>
                   )}
+                </div>
+              </CardContent>
+            </Card>
+            
+            {/* Administrative Tools */}
+            <Card className="bg-white shadow-sm border-slate-200">
+              <CardHeader className="pb-2">
+                <CardTitle className="text-xl font-bold text-slate-800">Administrative Tools</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+                  <a 
+                    href={`/${chapterSlug}/admin/broadcasts`}
+                    className="flex flex-col items-center p-4 border border-slate-200 rounded-md hover:border-emerald-300 hover:bg-emerald-50 transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-emerald-600 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21.5 6.5c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2z"></path>
+                      <line x1="4" y1="6.5" x2="10" y2="6.5"></line>
+                      <line x1="4" y1="17.5" x2="16" y2="17.5"></line>
+                      <path d="M12 6.5v5s3.5 0 4 3v1"></path>
+                    </svg>
+                    <h3 className="font-medium text-slate-800">Send Broadcast</h3>
+                    <p className="text-xs text-slate-500 text-center">Email all chapter members</p>
+                  </a>
+                  
+                  <a 
+                    href={`/${chapterSlug}/admin/members`}
+                    className="flex flex-col items-center p-4 border border-slate-200 rounded-md hover:border-emerald-300 hover:bg-emerald-50 transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-emerald-600 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <h3 className="font-medium text-slate-800">Manage Members</h3>
+                    <p className="text-xs text-slate-500 text-center">Invite and manage members</p>
+                  </a>
+                  
+                  <a 
+                    href={`/${chapterSlug}/admin/events`}
+                    className="flex flex-col items-center p-4 border border-slate-200 rounded-md hover:border-emerald-300 hover:bg-emerald-50 transition-colors"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-emerald-600 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <h3 className="font-medium text-slate-800">Manage Events</h3>
+                    <p className="text-xs text-slate-500 text-center">Create and schedule events</p>
+                  </a>
                 </div>
               </CardContent>
             </Card>
