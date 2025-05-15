@@ -12,11 +12,17 @@ export default withAuth(
     const { pathname } = request.nextUrl;
 
     // Allow public routes
+    // Check if the path is just a chapterSlug (e.g., /alpha-beta-gamma) - this should be public
+    const isChapterPublicPage = /^\/[a-zA-Z0-9-]+$/.test(pathname) && !pathname.startsWith("/api/");
+    
     const isPublicRoute = 
       pathname === "/" || 
       pathname === "/login" || 
       pathname === "/signup" || 
-      pathname === "/api/auth";
+      pathname === "/forgot-password" ||
+      pathname === "/reset-password" ||
+      pathname === "/api/auth" ||
+      isChapterPublicPage;
     
     if (!isAuthenticated && !isPublicRoute) {
       // Redirect to login if trying to access protected route without authentication
@@ -69,8 +75,13 @@ export const config = {
     "/dashboard/:path*",
     "/:chapterSlug/admin/:path*",
     "/:chapterSlug/portal/:path*",
+    "/:chapterSlug/join/:path*", // Join workflow is protected
+    "/:chapterSlug/pending/:path*", // Pending approval workflow is protected
     "/settings/:path*",
-    // Skip authentication check for public routes, API, and static files
-    "/((?!login|signup|api/auth|_next/static|_next/image|images|favicon.ico).*)",
+    
+    // Skip authentication check for API routes, public routes, and static files
+    // Note: We explicitly exclude the base chapterSlug route (e.g., /alpha-beta-gamma)
+    // as these are public chapter pages accessible without authentication
+    "/((?!login|signup|forgot-password|reset-password|api/auth|api/chapters/check-slug|api/contact|_next/static|_next/image|images|favicon.ico|[a-zA-Z0-9-]+$).*)",
   ],
 };
