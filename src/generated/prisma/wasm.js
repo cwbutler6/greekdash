@@ -258,6 +258,61 @@ exports.Prisma.ContactMessageScalarFieldEnum = {
   chapterId: 'chapterId'
 };
 
+exports.Prisma.BudgetScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  amount: 'amount',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  chapterId: 'chapterId'
+};
+
+exports.Prisma.ExpenseScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  amount: 'amount',
+  receiptUrl: 'receiptUrl',
+  status: 'status',
+  submittedAt: 'submittedAt',
+  approvedAt: 'approvedAt',
+  paidAt: 'paidAt',
+  chapterId: 'chapterId',
+  budgetId: 'budgetId',
+  submittedById: 'submittedById',
+  approvedById: 'approvedById'
+};
+
+exports.Prisma.DuesPaymentScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  dueDate: 'dueDate',
+  paidAt: 'paidAt',
+  stripePaymentId: 'stripePaymentId',
+  stripeInvoiceId: 'stripeInvoiceId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  chapterId: 'chapterId',
+  userId: 'userId'
+};
+
+exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  type: 'type',
+  description: 'description',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  processedAt: 'processedAt',
+  chapterId: 'chapterId',
+  expenseId: 'expenseId',
+  duesPaymentId: 'duesPaymentId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -317,6 +372,29 @@ exports.RSVPStatus = exports.$Enums.RSVPStatus = {
   MAYBE: 'MAYBE'
 };
 
+exports.BudgetStatus = exports.$Enums.BudgetStatus = {
+  PLANNING: 'PLANNING',
+  ACTIVE: 'ACTIVE',
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
+};
+
+exports.ExpenseStatus = exports.$Enums.ExpenseStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  DENIED: 'DENIED',
+  PAID: 'PAID'
+};
+
+exports.TransactionType = exports.$Enums.TransactionType = {
+  DUES_PAYMENT: 'DUES_PAYMENT',
+  EXPENSE: 'EXPENSE',
+  INCOME: 'INCOME',
+  TRANSFER: 'TRANSFER',
+  REFUND: 'REFUND',
+  OTHER: 'OTHER'
+};
+
 exports.Prisma.ModelName = {
   Chapter: 'Chapter',
   User: 'User',
@@ -330,7 +408,11 @@ exports.Prisma.ModelName = {
   EventRSVP: 'EventRSVP',
   AuditLog: 'AuditLog',
   GalleryImage: 'GalleryImage',
-  ContactMessage: 'ContactMessage'
+  ContactMessage: 'ContactMessage',
+  Budget: 'Budget',
+  Expense: 'Expense',
+  DuesPayment: 'DuesPayment',
+  Transaction: 'Transaction'
 };
 
 /**

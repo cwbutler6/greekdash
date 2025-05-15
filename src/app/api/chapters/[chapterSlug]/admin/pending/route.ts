@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { MembershipRole } from "@/generated/prisma";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
 import { authOptions } from "@/lib/auth";
 
 // Helper function to check if user is an admin of the chapter

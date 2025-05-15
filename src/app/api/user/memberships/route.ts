@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth-options";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
+import type { Membership as MembershipType } from "@/generated/prisma";
 
 // GET: Retrieve the current user's memberships across all chapters
 export async function GET() {
@@ -36,7 +37,13 @@ export async function GET() {
     });
 
     // Format the memberships for the client
-    const formattedMemberships = memberships.map(membership => ({
+    const formattedMemberships = memberships.map((membership: MembershipType & {
+      chapter: {
+        id: string;
+        name: string;
+        slug: string;
+      }
+    }) => ({
       id: membership.id,
       role: membership.role,
       chapterId: membership.chapterId,

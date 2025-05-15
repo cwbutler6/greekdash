@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
 import { requireChapterAccess } from "@/lib/auth";
 import { RSVPStatus } from "@/generated/prisma";
 
@@ -206,7 +206,7 @@ export async function GET(
       maybe: 0,
     };
 
-    rsvpCounts.forEach((item) => {
+    rsvpCounts.forEach((item: { status: RSVPStatus; _count: { status: number } }) => {
       if (item.status === 'GOING') counts.going = item._count.status;
       if (item.status === 'NOT_GOING') counts.notGoing = item._count.status;
       if (item.status === 'MAYBE') counts.maybe = item._count.status;

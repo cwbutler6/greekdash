@@ -5,7 +5,7 @@ import { getAuditLogs } from '@/lib/audit';
 import { redirect } from 'next/navigation';
 import { getChapterFromSlug } from '@/lib/chapters';
 import { getCurrentMembership } from '@/lib/memberships';
-import { MembershipRole } from '@/generated/prisma';
+import { MembershipRole, AuditLog, User } from '@/generated/prisma';
 
 export const metadata: Metadata = {
   title: 'Audit Logs - GreekDash',
@@ -62,8 +62,12 @@ export default async function AuditLogsPage({
   });
   
   // Map the data to ensure type compatibility (especially for metadata)
+  type AuditLogWithUser = AuditLog & {
+    user: Pick<User, 'id' | 'name' | 'email' | 'image'>;
+  };
+
   const auditLogsData = {
-    data: logsResult.data.map(log => ({
+    data: logsResult.data.map((log: AuditLogWithUser) => ({
       ...log,
       // Ensure metadata is a Record<string, unknown> or null/undefined
       metadata: log.metadata ? log.metadata as Record<string, unknown> : {},

@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 import { ChapterHeader } from '@/components/chapters/ChapterHeader';
 import { EventsList } from '@/components/chapters/EventsList';
 import { Gallery } from '@/components/chapters/Gallery';

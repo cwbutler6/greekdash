@@ -13,4 +13,5 @@ trigger: always_on
 - Use camelCase for variables and functions.
 - Use UPPER_SNAKE_CASE for constants and environment variables.
 - Use Prettier for consistent code formatting.
+- Use Prisma generated types
 </code_style>

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
 import { z } from 'zod';
 import stripe from '@/lib/stripe';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 import { authOptions } from '@/lib/auth-options';
 
 // Define request schema for type safety

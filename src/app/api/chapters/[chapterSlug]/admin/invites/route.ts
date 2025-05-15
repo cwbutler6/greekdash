@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { addDays } from "date-fns";
 import { MembershipRole } from "@/generated/prisma";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
 
 // Schema for creating invites
 const createInviteSchema = z.object({

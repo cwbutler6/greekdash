@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
 import { MembershipRole, Prisma, EventStatus } from "@/generated/prisma";
 import { requireChapterAccess, authOptions } from "@/lib/auth";
 

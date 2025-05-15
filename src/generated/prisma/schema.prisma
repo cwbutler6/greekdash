@@ -54,6 +54,12 @@ model Chapter {
   auditLogs       AuditLog[] // Audit logs for this chapter
   galleryImages   GalleryImage[] // One chapter has many gallery images
   contactMessages ContactMessage[] // One chapter has many contact messages
+
+  // Finance relations
+  budgets      Budget[] // One chapter has many budgets
+  expenses     Expense[] // One chapter has many expenses
+  duesPayments DuesPayment[] // One chapter has many dues payments
+  transactions Transaction[] // One chapter has many transactions
 }
 
 model User {
@@ -75,6 +81,11 @@ model User {
   createdEvents   Event[]      @relation("createdEvents") // Events created by this user
   rsvps           EventRSVP[] // RSVPs to events
   auditLogs       AuditLog[] // Audit logs created by this user
+
+  // Finance relations
+  submittedExpenses Expense[]     @relation("submittedExpenses") // Expenses submitted by this user
+  approvedExpenses  Expense[]     @relation("approvedExpenses") // Expenses approved by this user
+  duesPayments      DuesPayment[] // Dues payments made by this user
 }
 
 model Membership {
@@ -290,5 +301,132 @@ model ContactMessage {
   chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
   @@index([chapterId])
+  @@index([createdAt])
+}
+
+// Finance-related enums
+enum BudgetStatus {
+  PLANNING
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+enum ExpenseStatus {
+  PENDING
+  APPROVED
+  DENIED
+  PAID
+}
+
+enum TransactionType {
+  DUES_PAYMENT
+  EXPENSE
+  INCOME
+  TRANSFER
+  REFUND
+  OTHER
+}
+
+model Budget {
+  id          String       @id @default(cuid())
+  name        String
+  description String?      @db.Text
+  startDate   DateTime
+  endDate     DateTime
+  amount      Float
+  status      BudgetStatus @default(PLANNING)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Foreign key
+  chapterId String
+
+  // Relations
+  chapter  Chapter   @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  expenses Expense[] // Expenses allocated to this budget
+
+  @@index([chapterId])
+  @@index([status])
+  @@index([startDate])
+}
+
+model Expense {
+  id          String        @id @default(cuid())
+  title       String
+  description String?       @db.Text
+  amount      Float
+  receiptUrl  String?
+  status      ExpenseStatus @default(PENDING)
+  submittedAt DateTime      @default(now())
+  approvedAt  DateTime?
+  paidAt      DateTime?
+
+  // Foreign keys
+  chapterId     String
+  budgetId      String?
+  submittedById String
+  approvedById  String?
+
+  // Relations
+  chapter     Chapter      @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  budget      Budget?      @relation(fields: [budgetId], references: [id])
+  submittedBy User         @relation("submittedExpenses", fields: [submittedById], references: [id])
+  approvedBy  User?        @relation("approvedExpenses", fields: [approvedById], references: [id])
+  transaction Transaction? @relation("expenseTransaction")
+
+  @@index([chapterId])
+  @@index([budgetId])
+  @@index([submittedById])
+  @@index([approvedById])
+  @@index([status])
+}
+
+model DuesPayment {
+  id              String    @id @default(cuid())
+  amount          Float
+  dueDate         DateTime
+  paidAt          DateTime?
+  stripePaymentId String?
+  stripeInvoiceId String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Foreign keys
+  chapterId String
+  userId    String
+
+  // Relations
+  chapter     Chapter      @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transaction Transaction? @relation("duesTransaction")
+
+  @@index([chapterId])
+  @@index([userId])
+  @@index([dueDate])
+  @@index([paidAt])
+}
+
+model Transaction {
+  id          String          @id @default(cuid())
+  amount      Float
+  type        TransactionType
+  description String?         @db.Text
+  metadata    Json?
+  createdAt   DateTime        @default(now())
+  processedAt DateTime?
+
+  // Foreign keys
+  chapterId     String
+  expenseId     String? @unique
+  duesPaymentId String? @unique
+
+  // Relations
+  chapter     Chapter      @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  expense     Expense?     @relation("expenseTransaction", fields: [expenseId], references: [id])
+  duesPayment DuesPayment? @relation("duesTransaction", fields: [duesPaymentId], references: [id])
+
+  @@index([chapterId])
+  @@index([type])
   @@index([createdAt])
 }

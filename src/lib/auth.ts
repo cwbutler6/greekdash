@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { redirect } from "next/navigation";
+import { prisma } from "@/lib/db";
 
 // Re-export authOptions for use in API routes
 export { authOptions };
@@ -53,7 +54,6 @@ export async function requireChapterAccess(chapterSlug: string) {
   }
   
   // Fetch the full membership details from the database
-  const prisma = (await import('@/lib/prisma')).default;
   const fullMembership = await prisma.membership.findUnique({
     where: {
       id: sessionMembership.id

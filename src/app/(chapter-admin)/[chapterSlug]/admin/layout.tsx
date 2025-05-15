@@ -3,7 +3,7 @@ import { requireChapterAccess } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { MembershipRole } from '@/generated/prisma';
 import Link from 'next/link';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 import { Badge } from '@/components/ui/badge';
 import { Calendar, CreditCard, Settings, Users } from 'lucide-react';
 import { MobileSidebarToggle } from '@/components/ui/mobile-sidebar-toggle';

@@ -1,6 +1,6 @@
 import { requireChapterAccess } from '@/lib/auth';
 import { getCurrentUser } from '@/lib/auth';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 import { UpgradeButton } from '@/components/subscription/upgrade-button';
 import Link from 'next/link';
 import { format } from 'date-fns';
@@ -8,6 +8,23 @@ import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+
+interface EventWithRSVP {
+  id: string;
+  title: string;
+  description?: string;
+  location?: string;
+  startDate: Date | string;
+  endDate?: Date | string;
+  status: string;
+  isPublic: boolean;
+  chapterId: string;
+  rsvps: Array<{
+    id: string;
+    status: string;
+    userId: string;
+  }>;
+}
 
 export default async function PortalPage(props: { params: Promise<{ chapterSlug: string }> }) {
   // In Next.js 15, params is now a Promise that needs to be awaited
@@ -105,7 +122,7 @@ export default async function PortalPage(props: { params: Promise<{ chapterSlug:
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {upcomingEvents.map((event) => (
+              {upcomingEvents.map((event: EventWithRSVP) => (
                 <Card key={event.id} className="border">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-lg">{event.title}</CardTitle>

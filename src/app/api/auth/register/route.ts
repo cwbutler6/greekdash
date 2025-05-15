@@ -1,10 +1,10 @@
 
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/generated/prisma";
 import { hash } from "bcrypt";
 import { z } from "zod";
 import { v4 as uuidv4 } from "uuid";
 import { MembershipRole } from "@/generated/prisma";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
 
 // Validation schema for registration
 const registerSchema = z.object({

@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import Stripe from "stripe";
 import stripe from "@/lib/stripe";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
+import { financeService } from "@/lib/services/finance-service";
 
 // Stripe webhook handler for subscription events
 export async function POST(request: NextRequest) {
@@ -40,6 +41,12 @@ export async function POST(request: NextRequest) {
         break;
       case "customer.subscription.deleted":
         await handleSubscriptionDeleted(event.data.object as Stripe.Subscription);
+        break;
+      case "checkout.session.completed":
+        await handleCheckoutSessionCompleted(event.data.object as Stripe.Checkout.Session);
+        break;
+      case "payment_intent.succeeded":
+        await handlePaymentIntentSucceeded(event.data.object as Stripe.PaymentIntent);
         break;
       default:
         console.log(`Unhandled event type: ${event.type}`);
@@ -158,6 +165,68 @@ async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {
     console.log(`Marked subscription as canceled for chapter: ${chapter.slug}`);
   } catch (error) {
     console.error("Error handling subscription deletion:", error);
+    throw error;
+  }
+}
+
+// Handle completed checkout sessions for dues payments
+async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) {
+  try {
+    // Only process checkout sessions with successful payments
+    if (session.payment_status !== "paid" || !session.metadata?.duesPaymentId) {
+      return;
+    }
+
+    console.log(`Processing dues payment for session: ${session.id}`);
+    
+    // Process the payment using our finance service
+    await financeService.processStripePayment(session.id);
+    
+    console.log(`Successfully processed dues payment for session: ${session.id}`);
+  } catch (error) {
+    console.error(`Error processing checkout session ${session.id}:`, error);
+    throw error;
+  }
+}
+
+// Handle successful payment intents (backup handler for webhooks)
+async function handlePaymentIntentSucceeded(paymentIntent: Stripe.PaymentIntent) {
+  try {
+    // Check if this payment intent is for a dues payment by looking at the metadata
+    if (!paymentIntent.metadata?.duesPaymentId || !paymentIntent.metadata?.chapterId) {
+      // Not a dues payment or doesn't have necessary metadata
+      return;
+    }
+
+    const { duesPaymentId, chapterId } = paymentIntent.metadata;
+    
+    // Update the dues payment record
+    await prisma.duesPayment.update({
+      where: {
+        id: duesPaymentId,
+        chapterId, // Ensure tenant isolation
+      },
+      data: {
+        paidAt: new Date(),
+        stripePaymentId: paymentIntent.id,
+      },
+    });
+
+    // Create a transaction record for this payment
+    await prisma.transaction.create({
+      data: {
+        amount: paymentIntent.amount / 100, // Convert from cents to dollars
+        type: "DUES_PAYMENT",
+        description: `Dues payment processed via Stripe`,
+        chapterId,
+        duesPaymentId,
+        processedAt: new Date(),
+      },
+    });
+    
+    console.log(`Successfully processed payment intent: ${paymentIntent.id}`);
+  } catch (error) {
+    console.error(`Error processing payment intent ${paymentIntent.id}:`, error);
     throw error;
   }
 }

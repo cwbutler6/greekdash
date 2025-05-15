@@ -1,7 +1,7 @@
 import { requireChapterAccess } from '@/lib/auth';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 import { redirect } from 'next/navigation';
-import { MembershipRole } from '@/generated/prisma';
+import { MembershipRole, type Membership, type AuditLog } from '@/generated/prisma';
 import { UpgradeButton } from '@/components/subscription/upgrade-button';
 import { ManageBillingButton } from '@/components/subscription/manage-billing-button';
 import { Button } from '@/components/ui/button';
@@ -50,7 +50,7 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
   }
   
   // Get membership counts
-  const memberCount = chapter.memberships.filter(m => 
+  const memberCount = chapter.memberships.filter((m: Membership) => 
     m.role !== MembershipRole.PENDING_MEMBER
   ).length;
   
@@ -88,7 +88,19 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
   });
   
   // Format the audit logs for display
-  const recentActivity = recentLogsResult.data.map(log => ({
+  // Define a type for the activity object to fix the TypeScript error
+interface ActivityItem {
+  id: string;
+  user: {
+    name: string;
+    image: string;
+    initials: string;
+  };
+  action: string;
+  timestamp: Date;
+}
+
+const recentActivity = recentLogsResult.data.map((log: AuditLog & { user: { id: string; name: string | null; email: string | null; image: string | null; } }) => ({
     id: log.id,
     user: {
       name: log.user.name || 'Unknown User',
@@ -174,7 +186,7 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
                   {upcomingEvents.length > 0 ? (
-                    upcomingEvents.map(event => (
+                    upcomingEvents.map((event: typeof upcomingEvents[number]) => (
                       <Card key={event.id} className="overflow-hidden border border-slate-200">
                         <CardHeader className="p-4 bg-emerald-50 border-b border-emerald-100">
                           <CardTitle className="text-sm font-semibold text-emerald-600">{event.title}</CardTitle>
@@ -218,7 +230,7 @@ export default async function AdminPage(props: { params: Promise<{ chapterSlug: 
               <CardContent>
                 <div className="space-y-4 mt-2">
                   {recentActivity.length > 0 ? (
-                    recentActivity.map(activity => (
+                    recentActivity.map((activity: ActivityItem) => (
                       <div key={activity.id} className="flex items-center gap-4 p-4 border border-slate-200 rounded-md">
                         <Avatar className="bg-emerald-100 text-emerald-600">
                           <AvatarImage src={activity.user.image} />

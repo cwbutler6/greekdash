@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
-import prisma from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma";
+import { prisma } from "@/lib/db";
 import { hash } from "bcrypt";
 import { z } from "zod";
 
@@ -92,13 +92,23 @@ export async function POST(request: Request) {
     const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // If user doesn't exist, create a new one
       if (!user) {
+        // Create user with included membership
         user = await tx.user.create({
           data: {
             name: fullName,
             email,
             password: hashedPassword,
           },
+          include: {
+            memberships: true,
+          },
         });
+        
+        // TypeScript workaround: ensure the user has memberships array
+        user = {
+          ...user,
+          memberships: [],
+        };
       } else {
         // Update existing user if they don't have a name or password
         if (!user.name || !user.password) {
@@ -107,6 +117,9 @@ export async function POST(request: Request) {
             data: {
               name: fullName || user.name,
               password: user.password || hashedPassword,
+            },
+            include: {
+              memberships: true,
             },
           });
         }

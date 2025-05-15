@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { addDays } from "date-fns";
 import { authOptions } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
 
 // Function to check if user is admin of the chapter
 async function isChapterAdmin(userId: string, chapterId: string) {

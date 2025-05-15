@@ -6,7 +6,7 @@ import { compare } from "bcrypt";
 
 import { MembershipRole } from "@/generated/prisma";
 
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
 
 type MembershipWithChapter = {
   id: string;

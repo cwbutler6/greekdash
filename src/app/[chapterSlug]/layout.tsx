@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
-import prisma from '@/lib/prisma';
+import { prisma } from '@/lib/db';
 
 type LayoutProps = {
   children: ReactNode;

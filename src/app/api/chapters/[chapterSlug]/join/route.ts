@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/generated/prisma";
 import { hash } from "bcrypt";
 import { z } from "zod";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
 
 // Validation schema for joining a chapter with join code
 const joinChapterSchema = z.object({
@@ -79,13 +79,23 @@ export async function POST(
     const result = await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
       // If user doesn't exist, create a new one
       if (!user) {
+        // Create user with included memberships
         user = await tx.user.create({
           data: {
             name: fullName,
             email,
             password: hashedPassword,
           },
+          include: {
+            memberships: true,
+          },
         });
+        
+        // TypeScript workaround: ensure the user has memberships array
+        user = {
+          ...user,
+          memberships: [],
+        };
       }
       
       // Create membership as PENDING_MEMBER

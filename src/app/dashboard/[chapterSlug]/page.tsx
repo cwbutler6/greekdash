@@ -1,5 +1,5 @@
 import { requireChapterAccess } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/db";
 
 export default async function ChapterDashboardPage(props: { params: Promise<{ chapterSlug: string }> }) {
   // In Next.js 15, params is now a Promise that needs to be awaited
