@@ -1,6 +1,50 @@
 import Link from "next/link";
 import Image from "next/image";
 
+// Feature icons components
+const FeatureIcons = {
+  ChapterCreation: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+    </svg>
+  ),
+  MemberInvites: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+    </svg>
+  ),
+  EventManagement: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+    </svg>
+  ),
+  PublicWebpage: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+    </svg>
+  ),
+  PaymentsDonations: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg>
+  ),
+  Communication: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+  ),
+  MemberPortal: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  FileSharing: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+  )
+};
+
 export default function Home() {
   return (
     <div className="min-h-screen font-sans">
@@ -10,22 +54,28 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-1/2 space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black tracking-tight">
-                All-in-One Chapter Management, Made Easy
+                Complete Greek Chapter Management Solution
               </h1>
               <p className="text-xl text-gray-600">
-                Streamline your chapter operations and grow your Greek community with ease.
+                Create your chapter, invite members, manage events, collect payments, and communicate seamlessly—all from one platform designed for Greek life.
               </p>
-              <div>
+              <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <Link 
-                  href="/login" 
+                  href="/signup" 
                   className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-emerald-600 hover:bg-emerald-700 transition-colors shadow-md"
                 >
-                  Get Started Free
+                  Create Your Chapter
+                </Link>
+                <Link 
+                  href="/login" 
+                  className="inline-flex items-center justify-center px-8 py-3 border border-emerald-600 text-base font-medium rounded-md text-emerald-600 bg-white hover:bg-emerald-50 transition-colors"
+                >
+                  Member Login
                 </Link>
               </div>
             </div>
             <div className="lg:w-1/2">
-              <div className="aspect-video bg-emerald-600/10 rounded-xl border-2 border-emerald-200 overflow-hidden relative">
+              <div className="aspect-video bg-emerald-600/10 rounded-xl border-2 border-emerald-200 overflow-hidden relative shadow-lg">
                 <Image 
                   src="/images/hero/dashboard-preview.svg" 
                   alt="GreekDash Dashboard Preview" 
@@ -33,8 +83,44 @@ export default function Home() {
                   className="object-cover" 
                   priority 
                 />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white/90 to-transparent p-4 text-sm text-emerald-800 font-medium text-center">
+                  Admin dashboard shown above — member portal also included
+                </div>
               </div>
             </div>
+          </div>
+        </div>
+        
+        {/* Chapter admin features in icon grid */}
+        <div className="mx-auto max-w-7xl mt-16">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-900">Everything Chapter Administrators Need</h2>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              { icon: "ChapterCreation", text: "Create Chapter" },
+              { icon: "MemberInvites", text: "Invite Members" },
+              { icon: "EventManagement", text: "Manage Events" },
+              { icon: "PublicWebpage", text: "Public Web Page" },
+              { icon: "PaymentsDonations", text: "Process Payments" },
+              { icon: "Communication", text: "Email Members" },
+              { icon: "MemberPortal", text: "Member Portal" },
+              { icon: "FileSharing", text: "Share Files" }
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col items-center p-2 text-center">
+                <div className="h-10 w-10 flex items-center justify-center text-emerald-600 mb-2">
+                  {item.icon === "ChapterCreation" && <FeatureIcons.ChapterCreation />}
+                  {item.icon === "MemberInvites" && <FeatureIcons.MemberInvites />}
+                  {item.icon === "EventManagement" && <FeatureIcons.EventManagement />}
+                  {item.icon === "PublicWebpage" && <FeatureIcons.PublicWebpage />}
+                  {item.icon === "PaymentsDonations" && <FeatureIcons.PaymentsDonations />}
+                  {item.icon === "Communication" && <FeatureIcons.Communication />}
+                  {item.icon === "MemberPortal" && <FeatureIcons.MemberPortal />}
+                  {item.icon === "FileSharing" && <FeatureIcons.FileSharing />}
+                </div>
+                <span className="text-sm font-medium">{item.text}</span>
+              </div>
+            ))}
           </div>
         </div>
         
@@ -44,65 +130,71 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="bg-emerald-600/5 px-6 py-16 md:py-24">
+      <section id="features" className="bg-emerald-600/5 px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-black">
-              Features Built for Greek Life
+              Powerful Features For Chapter Admins & Members
             </h2>
             <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-              Everything your chapter needs to thrive, all in one place.
+              Everything you need to run your chapter efficiently and engage your membership.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
+                title: "Create Your Chapter",
+                description: "Set up your chapter in minutes with a unique URL, branding, and customizable settings for your organization.",
+                icon: <FeatureIcons.ChapterCreation />
+              },
+              {
+                title: "Invite & Manage Members",
+                description: "Send invitations, approve applications, and maintain a complete membership directory with profiles and roles.",
+                icon: <FeatureIcons.MemberInvites />
+              },
+              {
                 title: "Event Management",
-                description: "Schedule, manage, and track attendance for all chapter events.",
-                icon: "event-management"
+                description: "Create, schedule, and promote chapter events. Track RSVPs, attendance, and collect event-specific payments.",
+                icon: <FeatureIcons.EventManagement />
               },
               {
-                title: "Membership Directory",
-                description: "Keep your member information organized and accessible.",
-                icon: "membership"
+                title: "Public Chapter Website",
+                description: "Every chapter gets a customizable public web page for recruiting new members and showcasing chapter activities.",
+                icon: <FeatureIcons.PublicWebpage />
               },
               {
-                title: "Communication Tools",
-                description: "Connect your chapter with announcements and messaging.",
-                icon: "communication"
+                title: "Payments & Donations",
+                description: "Collect dues, process event fees, and accept donations with secure integrated payment processing.",
+                icon: <FeatureIcons.PaymentsDonations />
               },
               {
-                title: "Dues & Finances",
-                description: "Collect dues, manage your budget, and track expenses.",
-                icon: "finances"
+                title: "Email Communication",
+                description: "Send targeted emails to your entire chapter or specific member groups. Create newsletters and announcements.",
+                icon: <FeatureIcons.Communication />
               },
               {
-                title: "Points Tracking",
-                description: "Award points for participation and track member engagement.",
-                icon: "points"
+                title: "Member Portal Access",
+                description: "Members get their own login to access events, pay dues, update profiles, and connect with other members.",
+                icon: <FeatureIcons.MemberPortal />
               },
               {
-                title: "File Sharing",
-                description: "Securely store and share important chapter documents.",
-                icon: "files"
+                title: "Financial Tracking",
+                description: "Track chapter finances, create budgets, record expenses, and generate financial reports.",
+                icon: <FeatureIcons.FileSharing />
+              },
+              {
+                title: "Document Sharing",
+                description: "Securely store and share important documents, bylaws, meeting minutes, and resources with your members.",
+                icon: <FeatureIcons.FileSharing />
               }
             ].map((feature, i) => (
-              <div key={i} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                <div className="w-12 h-12 mb-4 relative">
-                  <Image 
-                    src={`/images/features/${feature.title === 'Event Management' ? 'event-management' : 
-                          feature.title === 'Membership Directory' ? 'membership' : 
-                          feature.title === 'Communication Tools' ? 'communication' : 
-                          feature.title === 'Dues & Finances' ? 'finances' : 
-                          feature.title === 'Points Tracking' ? 'points' : 'files'}.svg`} 
-                    alt={feature.title} 
-                    width={48}
-                    height={48}
-                  />
+              <div key={i} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
+                <div className="w-12 h-12 mb-4 text-emerald-600">
+                  {feature.icon}
                 </div>
                 <h3 className="text-xl font-bold text-black mb-2">{feature.title}</h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <p className="text-gray-600 flex-grow">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -110,7 +202,7 @@ export default function Home() {
       </section>
 
       {/* Pricing Section */}
-      <section className="bg-white px-6 py-16 md:py-24">
+      <section id="pricing" className="bg-white px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-black">
@@ -233,7 +325,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section className="bg-emerald-600/5 px-6 py-16 md:py-24">
+      <section id="testimonials" className="bg-emerald-600/5 px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-black">
@@ -276,7 +368,7 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section className="bg-white px-6 py-16 md:py-24">
+      <section id="faq" className="bg-white px-6 py-16 md:py-24">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-black">
@@ -323,17 +415,25 @@ export default function Home() {
       <section className="bg-emerald-600 px-6 py-12">
         <div className="mx-auto max-w-5xl text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-            Ready to grow your chapter?
+            Ready to transform your chapter management?
           </h2>
           <p className="text-white/90 text-lg mb-6">
-            Get started with GreekDash today and see the difference.
+            Join thousands of fraternity and sorority chapters using GreekDash to streamline operations and engage members.
           </p>
-          <Link 
-            href="/auth/login" 
-            className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-emerald-600 bg-white hover:bg-gray-100 transition-colors shadow-md"
-          >
-            Get Started Free
-          </Link>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link 
+              href="/auth/signup" 
+              className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-emerald-600 bg-white hover:bg-gray-100 transition-colors shadow-md"
+            >
+              Create Your Chapter
+            </Link>
+            <Link 
+              href="/auth/login" 
+              className="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-emerald-700 transition-colors"
+            >
+              Member Login
+            </Link>
+          </div>
         </div>
       </section>
 
