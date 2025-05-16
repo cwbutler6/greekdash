@@ -6,7 +6,7 @@ import { logAuditEntry } from '@/lib/audit';
  */
 
 /**
- * Log user login
+ * Log user login (e.g. via credentials)
  */
 export async function logUserLogin(userId: string, chapterId: string) {
   await logAuditEntry({
