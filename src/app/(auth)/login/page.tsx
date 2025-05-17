@@ -109,16 +109,18 @@ function LoginForm() {
           // If user has an active membership and is an admin/owner, redirect to admin
           if (activeMembership.role === 'ADMIN' || activeMembership.role === 'OWNER') {
             console.log(`Redirecting admin to /${activeMembership.chapterSlug}/admin`);
-            window.location.href = `/${activeMembership.chapterSlug}/admin`;
+            // Use Next.js router for client-side navigation instead of window.location
+            // This works better with production environments and respects Next.js routing
+            router.push(`/${activeMembership.chapterSlug}/admin`);
           } else {
             // Regular members go to the portal
             console.log(`Redirecting member to /${activeMembership.chapterSlug}/portal`);
-            window.location.href = `/${activeMembership.chapterSlug}/portal`;
+            router.push(`/${activeMembership.chapterSlug}/portal`);
           }
         } else {
           // If user only has pending memberships, redirect to their pending page
           console.log(`Redirecting pending member to /${memberships[0].chapterSlug}/pending`);
-          window.location.href = `/${memberships[0].chapterSlug}/pending`;
+          router.push(`/${memberships[0].chapterSlug}/pending`);
         }
       } catch (error) {
         console.error('Error getting session data:', error);
