@@ -74,23 +74,22 @@ function LoginForm() {
         return;
       }
 
-      // Otherwise fetch the user's memberships to determine where to redirect
+      // After successful login, we need to get the session data which includes memberships
+      // NextAuth already populated the session with memberships data in the JWT callbacks
       try {
-        console.log('Fetching user memberships...');
-        const membershipResponse = await fetch('/api/user/memberships');
-        console.log('Membership response status:', membershipResponse.status);
-        
-        if (!membershipResponse.ok) {
-          console.log('Membership response not OK:', membershipResponse.status);
-          // If can't get memberships due to server error, redirect to signup
+        // Use a simple fetch to '/api/auth/session' to get the session data
+        // This is a built-in NextAuth endpoint that returns the session
+        const sessionResponse = await fetch('/api/auth/session');
+        if (!sessionResponse.ok) {
+          console.log('Session response not OK:', sessionResponse.status);
           router.push('/signup');
           return;
         }
-        
-        const data = await membershipResponse.json();
-        console.log('Membership data:', data);
-        const memberships = data.memberships || [];
-        console.log('Parsed memberships:', memberships);
+
+        const sessionData = await sessionResponse.json();
+
+        // The memberships are included in the session.user object
+        const memberships = sessionData.user?.memberships || [];
         
         if (memberships.length === 0) {
           console.log('No memberships found, redirecting to signup');
@@ -122,7 +121,7 @@ function LoginForm() {
           window.location.href = `/${memberships[0].chapterSlug}/pending`;
         }
       } catch (error) {
-        console.error('Error fetching memberships:', error);
+        console.error('Error getting session data:', error);
         // Fallback to signup if there's any error in the process
         router.push('/signup');
       }
