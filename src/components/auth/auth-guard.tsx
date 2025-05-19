@@ -24,9 +24,9 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     if (status === 'loading') return;
 
     const handleAuthRedirect = async () => {
-      // Skip redirections if we're trying to access the root path
-      // This ensures the homepage is accessible to everyone, even when authenticated
-      if (pathname === '/') {
+      // Allow access to the root path and login page for everyone
+      // This ensures both the homepage and login page are accessible to everyone, even when authenticated
+      if (pathname === '/' || pathname === '/login') {
         setIsLoading(false);
         return;
       }
