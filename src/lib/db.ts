@@ -1,10 +1,12 @@
 import { PrismaClient } from '@/generated/prisma';
 
 /**
- * PrismaClient setup for Next.js with direct database connections
+ * PrismaClient setup for Next.js with PostgreSQL
  * 
- * This implementation uses direct connections instead of pooling to avoid
- * the "prepared statement already exists" error in PostgreSQL.
+ * This implementation uses the official Prisma solution for the 
+ * "prepared statement already exists" error in PostgreSQL + Prisma + Serverless.
+ * 
+ * Reference: https://www.prisma.io/docs/orm/prisma-client/setup-and-configuration/databases-connections
  */
 
 // Add prisma to the NodeJS global type
@@ -13,32 +15,26 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-/**
- * Create a prisma client with direct connections
- * This approach minimizes connection pooling issues in serverless environments
- */
-function createPrismaClient() {
-  // Use DIRECT_URL for direct PostgreSQL connections
-  // This bypasses PgBouncer and connects directly to PostgreSQL
-  const connectionString = process.env.DIRECT_URL || process.env.DATABASE_URL || '';
+// This is the official pattern recommended by Prisma for serverless environments
+// with PostgreSQL to avoid the "prepared statement already exists" error
+
+// Step 1: Define the PrismaClient creation function with proper settings
+function getPrismaClient() {
+  // Critical: Use DIRECT_URL without pgbouncer for serverless environments
+  const directUrl = process.env.DIRECT_URL;
   
-  // No need to add connection_limit=1 to DIRECT_URL as it's already a direct connection
-  // but we'll handle both DIRECT_URL and fallback to DATABASE_URL with params
-  const url = connectionString.includes('pgbouncer=true')
-    ? `${connectionString}&connection_limit=1&pool_timeout=0` 
-    : connectionString;
-  
+  // Create the client with proper settings
   const client = new PrismaClient({
     log: process.env.NODE_ENV === 'development' 
       ? ['query', 'info', 'warn', 'error']
       : ['error'],
+    // Using DIRECT_URL is essential to avoid the prepared statement conflicts
     datasources: {
-      db: { url }
+      db: { url: directUrl }
     }
   });
 
-  // Simple retry logic for direct connections
-  // Even with direct connections, we still need to handle potential prepared statement conflicts
+  // Add retry logic specifically for the PostgreSQL prepared statement conflict
   client.$use(async (params, next) => {
     try {
       return await next(params);
@@ -60,18 +56,32 @@ function createPrismaClient() {
       throw error;
     }
   });
-
+  
   return client;
 }
 
-// PrismaClient is attached to the `global` object in development to prevent
-// exhausting your database connection limit during hot reloads
-const prisma = global.prisma || createPrismaClient();
+// This is key for avoiding issues in serverless environments like Vercel:
+// - In production: Each serverless function instance gets a new PrismaClient
+// - In development: We reuse the same instance to avoid connection limit problems
 
-// Important for Next.js: Set the global instance
-if (process.env.NODE_ENV !== 'production') global.prisma = prisma;
+// PrismaClient singleton pattern for Next.js
+const prismaGlobal = global as unknown as { prisma: PrismaClient };
 
-// Handle graceful shutdown
+// Assign the client based on environment
+let prisma: PrismaClient;
+
+// For development, reuse the client across hot reloads
+if (process.env.NODE_ENV === 'development') {
+  if (!prismaGlobal.prisma) {
+    prismaGlobal.prisma = getPrismaClient();
+  }
+  prisma = prismaGlobal.prisma;
+} else {
+  // For production, create a new instance per serverless function  
+  prisma = getPrismaClient();
+}
+
+// Handle clean disconnect
 process.on('beforeExit', async () => {
   await prisma.$disconnect();
 });
