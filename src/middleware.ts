@@ -64,7 +64,10 @@ export default withAuth(
       }
     }
     
-    // If user is accessing root path but has memberships, redirect to their first chapter's admin/portal
+    // We're removing the automatic redirect from the home page
+    // to allow all users to access it, even when authenticated
+    // Uncomment these lines if you want to redirect authenticated users away from the homepage
+    /*
     if (pathname === '/' && isAuthenticated && token.memberships && token.memberships.length > 0) {
       const membership = token.memberships[0];
       const redirectPath = membership.role === 'ADMIN' || membership.role === 'OWNER' 
@@ -73,6 +76,7 @@ export default withAuth(
       
       return NextResponse.redirect(new URL(redirectPath, request.url));
     }
+    */
 
     return NextResponse.next();
   },

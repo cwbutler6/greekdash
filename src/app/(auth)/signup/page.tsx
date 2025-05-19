@@ -1,13 +1,19 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+// Import next/image for proper image handling
 import Image from "next/image";
+// Import the logo as a static import
+import LogoImage from "../../greekdash-icon.svg";
+
+// Import server actions
+import { createChapterForGoogleUser } from "@/app/actions/auth";
 
 // UI Components
 import { Button } from "@/components/ui/button";
@@ -68,10 +74,13 @@ type JoinChapterFormValues = z.infer<typeof joinChapterSchema>;
 function SignupContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { data: session, status } = useSession();
+  const isGoogleRedirect = searchParams?.get('google') === 'true';
   const [activeTab, setActiveTab] = useState<string>(searchParams.get('tab') === 'join' ? 'join' : 'create');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [slugAvailable, setSlugAvailable] = useState<boolean | null>(null);
+  const [isGoogleUser, setIsGoogleUser] = useState(false);
 
   // Form for creating a new chapter (admin flow)
   const createChapterForm = useForm<CreateChapterFormValues>({
@@ -98,8 +107,72 @@ function SignupContent() {
     },
   });
 
+  // Reference to the Google signup form for server actions
+  const googleFormRef = useRef<HTMLFormElement>(null);
+  
   // Watch for chapter slug changes
   const chapterSlug = createChapterForm.watch("chapterSlug");
+
+  // Check if this is a Google user being redirected to signup
+  useEffect(() => {
+    // Only run this effect if session is loaded
+    if (status === 'loading') return;
+    
+    // If this is a user coming from Google sign-in
+    if (isGoogleRedirect && session?.user) {
+      setIsGoogleUser(true);
+      
+      // Pre-populate the form with data from session
+      createChapterForm.setValue('fullName', session.user.name || '');
+      createChapterForm.setValue('email', session.user.email || '');
+      
+      // Generate a suggested slug from the name if available
+      if (session.user.name) {
+        const suggestedSlug = session.user.name
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, '') // Remove special chars
+          .replace(/\s+/g, '-')        // Replace spaces with hyphens
+          .substring(0, 30);           // Limit length
+        
+        createChapterForm.setValue('chapterSlug', suggestedSlug);
+      }
+      
+      // Note: We no longer generate passwords on the client side
+      // The server will handle password generation securely
+    }
+  }, [session, status, isGoogleRedirect, createChapterForm]);
+  
+  // Check slug availability with the server
+  useEffect(() => {
+    // Only verify on Google redirect user with a valid slug
+    if (!isGoogleUser || !chapterSlug || chapterSlug.length < 3) {
+      return;
+    }
+    
+    // Use a timeout to avoid too many requests while typing
+    const timeoutId = setTimeout(async () => {
+      try {
+        // Fetch availability from server-side API
+        const response = await fetch(`/api/auth/google-signup?slug=${encodeURIComponent(chapterSlug)}`);
+        const data = await response.json();
+        
+        setSlugAvailable(data.available);
+        
+        if (!data.available) {
+          createChapterForm.setError('chapterSlug', { 
+            type: 'manual', 
+            message: data.message 
+          });
+        } else {
+          createChapterForm.clearErrors('chapterSlug');
+        }
+      } catch (error) {
+        console.error('Error checking slug availability:', error);
+      }
+    }, 500);
+    
+    return () => clearTimeout(timeoutId);
+  }, [chapterSlug, isGoogleUser, createChapterForm]);
   
   // Don't check availability in real-time - only validate client-side format
   useEffect(() => {
@@ -126,7 +199,32 @@ function SignupContent() {
   // We'll only verify slug availability during actual form submission
   // This avoids the JSON parsing errors during typing
 
-  // Handler for creating a new chapter
+  // Handler for Google users creating a new chapter using server actions
+  const handleGoogleCreateSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      // For Google users, we use server actions which handle all the logic server-side
+      // The form should be valid already from React Hook Form's validation
+      const formData = new FormData(e.currentTarget);
+      await createChapterForGoogleUser(formData);
+      
+      // Note: The server action handles the redirect, so we shouldn't reach this point
+      // If we do, we'll show a success message
+      setError(null);
+    } catch (err) {
+      console.error('Error in Google chapter creation:', err);
+      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      setIsLoading(false);
+    }
+  };
+
+  // Note: We're using server actions for Google sign-in users
+  // An API endpoint approach is also available at '/api/auth/google-signup'
+
+  // Handler for regular users creating a new chapter
   const onCreateSubmit = async (data: CreateChapterFormValues) => {
     setIsLoading(true);
     setError(null);
@@ -298,12 +396,13 @@ function SignupContent() {
       <Card className="w-full max-w-lg">
         <CardHeader className="space-y-1">
           <CardTitle className="text-center text-2xl font-bold">
-            <div className="relative w-[150px] h-[150px] mx-auto">
+            <div className="flex justify-center">
+              {/* Using statically imported image */}
               <Image 
-                src="/greekdash-icon.svg" 
-                alt="GreekDash Logo" 
-                fill
-                className="object-contain"
+                src={LogoImage} 
+                alt="GreekDash Logo"
+                width={150}
+                height={150}
                 priority
               />
             </div>
@@ -342,7 +441,12 @@ function SignupContent() {
                 </p>
               </div>
               
-              <form onSubmit={createChapterForm.handleSubmit(onCreateSubmit)} className="space-y-4">
+              <form 
+                ref={googleFormRef}
+                onSubmit={isGoogleUser 
+                  ? handleGoogleCreateSubmit 
+                  : createChapterForm.handleSubmit(onCreateSubmit)} 
+                className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="create-fullName">Full Name</Label>
                   <Input
@@ -406,51 +510,93 @@ function SignupContent() {
                   )}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="create-password">Password</Label>
-                    <Input
-                      id="create-password"
-                      type="password"
-                      {...createChapterForm.register("password")}
-                      aria-invalid={!!createChapterForm.formState.errors.password}
-                    />
-                    {createChapterForm.formState.errors.password && (
-                      <p className="text-sm text-destructive">{createChapterForm.formState.errors.password.message}</p>
-                    )}
-                  </div>
+                {!isGoogleUser && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="create-password">Password</Label>
+                      <Input
+                        id="create-password"
+                        type="password"
+                        {...createChapterForm.register("password")}
+                        aria-invalid={!!createChapterForm.formState.errors.password}
+                      />
+                      {createChapterForm.formState.errors.password && (
+                        <p className="text-sm text-destructive">{createChapterForm.formState.errors.password.message}</p>
+                      )}
+                    </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="create-confirmPassword">Confirm Password</Label>
-                    <Input
-                      id="create-confirmPassword"
-                      type="password"
-                      {...createChapterForm.register("confirmPassword")}
-                      aria-invalid={!!createChapterForm.formState.errors.confirmPassword}
-                    />
-                    {createChapterForm.formState.errors.confirmPassword && (
-                      <p className="text-sm text-destructive">{createChapterForm.formState.errors.confirmPassword.message}</p>
-                    )}
+                    <div className="space-y-2">
+                      <Label htmlFor="create-confirmPassword">Confirm Password</Label>
+                      <Input
+                        id="create-confirmPassword"
+                        type="password"
+                        {...createChapterForm.register("confirmPassword")}
+                        aria-invalid={!!createChapterForm.formState.errors.confirmPassword}
+                      />
+                      {createChapterForm.formState.errors.confirmPassword && (
+                        <p className="text-sm text-destructive">{createChapterForm.formState.errors.confirmPassword.message}</p>
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
+                
+                {isGoogleUser && (
+                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 rounded-lg mb-4">
+                    <h3 className="font-medium flex items-center gap-2 text-green-700 dark:text-green-400">
+                      Google Account Connected
+                    </h3>
+                    <p className="text-sm text-green-600 dark:text-green-500">
+                      You&apos;ve successfully signed in with Google. Create your chapter to continue.
+                    </p>
+                    
+                    {/* Hidden password fields */}
+                    <input type="hidden" {...createChapterForm.register("password")} />
+                    <input type="hidden" {...createChapterForm.register("confirmPassword")} />
+                  </div>
+                )}
 
-                <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={isLoading || slugAvailable === false}
-                >
-                  {isLoading && activeTab === 'create' ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Creating chapter...
-                    </>
-                  ) : (
-                    <>
-                      <Plus className="mr-2 h-4 w-4" />
-                      Create New Chapter
-                    </>
-                  )}
-                </Button>
+                {/* We have two approaches implemented for Google users */}
+                {/* 1. Server Action approach (default) */}
+                {isGoogleUser ? (
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isLoading || slugAvailable === false}
+                  >
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Creating chapter...
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="mr-2 h-4 w-4" />
+                        Create Chapter with Google Account
+                      </>
+                    )}
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    className="w-full"
+                    disabled={isLoading || slugAvailable === false}
+                  >
+                    {isLoading && activeTab === 'create' ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Creating chapter...
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="mr-2 h-4 w-4" />
+                        Create New Chapter
+                      </>
+                    )}
+                  </Button>
+                )}
+                
+                {/* Note: We're using the server action approach above */}
+                {/* API endpoint approach is also available at '/api/auth/google-signup' */}
               </form>
             </TabsContent>
             

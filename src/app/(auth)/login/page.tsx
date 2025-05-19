@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -8,7 +8,10 @@ import { AlertCircle } from "lucide-react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+// Import next/image again for proper image handling
 import Image from "next/image";
+// Import the logo as a static import
+import LogoImage from "../../greekdash-icon.svg";
 
 // UI Components
 import { Button } from "@/components/ui/button";
@@ -48,6 +51,67 @@ function LoginForm() {
     },
   });
 
+  const handleSessionRedirect = async () => {
+    // After successful login, we need to get the session data which includes memberships
+    // NextAuth already populated the session with memberships data in the JWT callbacks
+    try {
+      // Use a simple fetch to '/api/auth/session' to get the session data
+      // This is a built-in NextAuth endpoint that returns the session
+      const sessionResponse = await fetch('/api/auth/session');
+      if (!sessionResponse.ok) {
+        console.log('Session response not OK:', sessionResponse.status);
+        router.push('/signup');
+        return;
+      }
+
+      const sessionData = await sessionResponse.json();
+
+      // Check if this is a new Google user who needs to create a chapter
+      if (sessionData.user?.isNewGoogleUser) {
+        console.log('New Google user detected, redirecting to create chapter');
+        router.push('/signup?google=true');
+        return;
+      }
+
+      // The memberships are included in the session.user object
+      const memberships = sessionData.user?.memberships || [];
+      
+      if (memberships.length === 0) {
+        console.log('No memberships found, redirecting to signup');
+        // If user has no memberships, send to the signup page to create or join a chapter
+        router.push('/signup');
+        return;
+      }
+      
+      // Find the first active (non-pending) membership
+      const activeMembership = memberships.find(
+        (m: { role: string }) => m.role !== 'PENDING_MEMBER'
+      );
+      
+      console.log('Active membership:', activeMembership);
+      
+      if (activeMembership) {
+        // If user has an active membership and is an admin/owner, redirect to admin
+        if (activeMembership.role === 'ADMIN' || activeMembership.role === 'OWNER') {
+          console.log(`Redirecting admin to /${activeMembership.chapterSlug}/admin`);
+          router.push(`/${activeMembership.chapterSlug}/admin`);
+        } else {
+          // Regular members go to the portal
+          console.log(`Redirecting member to /${activeMembership.chapterSlug}/portal`);
+          router.push(`/${activeMembership.chapterSlug}/portal`);
+        }
+      } else {
+        // If user only has pending memberships, redirect to their pending page
+        console.log(`Redirecting pending member to /${memberships[0].chapterSlug}/pending`);
+        router.push(`/${memberships[0].chapterSlug}/pending`);
+      }
+    } catch (error) {
+      console.error('Error getting session data:', error);
+      // Fallback to signup if there's any error in the process
+      router.push('/signup');
+    }
+  };
+
   const onSubmit = async (data: LoginFormValues) => {
     setIsLoading(true);
     setError("");
@@ -78,98 +142,45 @@ function LoginForm() {
       // If there's a specific callback URL, respect it
       if (callbackUrl) {
         console.log(`Redirecting to callback URL: ${callbackUrl}`);
-        // Try both router.push and window.location for more reliable redirection
         router.push(callbackUrl);
         return;
       }
 
-      // After successful login, we need to get the session data which includes memberships
-      // NextAuth already populated the session with memberships data in the JWT callbacks
-      try {
-        // Use a simple fetch to '/api/auth/session' to get the session data
-        // This is a built-in NextAuth endpoint that returns the session
-        const sessionResponse = await fetch('/api/auth/session');
-        if (!sessionResponse.ok) {
-          console.log('Session response not OK:', sessionResponse.status);
-          router.push('/signup');
-          return;
-        }
-
-        const sessionData = await sessionResponse.json();
-
-        // The memberships are included in the session.user object
-        const memberships = sessionData.user?.memberships || [];
-        
-        if (memberships.length === 0) {
-          console.log('No memberships found, redirecting to signup');
-          // If user has no memberships, send to the signup page to create or join a chapter
-          router.push('/signup');
-          return;
-        }
-        
-        // Find the first active (non-pending) membership
-        const activeMembership = memberships.find(
-          (m: { role: string }) => m.role !== 'PENDING_MEMBER'
-        );
-        
-        console.log('Active membership:', activeMembership);
-        
-        if (activeMembership) {
-          // If user has an active membership and is an admin/owner, redirect to admin
-          if (activeMembership.role === 'ADMIN' || activeMembership.role === 'OWNER') {
-            console.log(`Redirecting admin to /${activeMembership.chapterSlug}/admin`);
-            // Use both router and window.location for more reliable redirection in production
-            console.log(`Redirecting admin to /${activeMembership.chapterSlug}/admin with window.location`);
-            router.push(`/${activeMembership.chapterSlug}/admin`);
-            // Fallback to window.location after a small delay if router.push doesn't work
-            setTimeout(() => {
-              window.location.href = `/${activeMembership.chapterSlug}/admin`;
-            }, 300);
-          } else {
-            // Regular members go to the portal
-            console.log(`Redirecting member to /${activeMembership.chapterSlug}/portal with window.location`);
-            router.push(`/${activeMembership.chapterSlug}/portal`);
-            // Fallback to window.location after a small delay if router.push doesn't work
-            setTimeout(() => {
-              window.location.href = `/${activeMembership.chapterSlug}/portal`;
-            }, 300);
-          }
-        } else {
-          // If user only has pending memberships, redirect to their pending page
-          console.log(`Redirecting pending member to /${memberships[0].chapterSlug}/pending with window.location`);
-          router.push(`/${memberships[0].chapterSlug}/pending`);
-          // Fallback to window.location after a small delay if router.push doesn't work
-          setTimeout(() => {
-            window.location.href = `/${memberships[0].chapterSlug}/pending`;
-          }, 300);
-        }
-      } catch (error) {
-        console.error('Error getting session data:', error);
-        // Fallback to signup if there's any error in the process
-        console.log('Redirecting to signup due to error with window.location');
-        router.push('/signup');
-        // Fallback to window.location as a more reliable alternative in production
-        setTimeout(() => {
-          window.location.href = '/signup';
-        }, 300);
-      }
+      // Handle redirects based on user session data
+      await handleSessionRedirect();
     } catch {
       setError("An unexpected error occurred. Please try again.");
       setIsLoading(false);
     }
   };
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const error = searchParams.get("error");
+    if (error) {
+      // Handle specific OAuth errors
+      if (error === "OAuthAccountNotLinked") {
+        setError(
+          "This email is already associated with a different login method. Please use your original login method."
+        );
+      } else {
+        setError("Authentication failed. Please try again.");
+      }
+    }
+  }, []);
+
   return (
     <div className="flex min-h-full flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-center text-2xl font-bold">
-            <div className="relative w-[150px] h-[150px] mx-auto">
+            <div className="flex justify-center">
+              {/* Using statically imported image */}
               <Image 
-                src="/greekdash-icon.svg" 
-                alt="GreekDash Logo" 
-                fill
-                className="object-contain"
+                src={LogoImage} 
+                alt="GreekDash Logo"
+                width={150}
+                height={150}
                 priority
               />
             </div>
@@ -245,7 +256,38 @@ function LoginForm() {
 
           <Button
             variant="outline"
-            onClick={() => signIn("google", callbackUrl ? { callbackUrl } : undefined)}
+            onClick={async () => {
+              setIsLoading(true);
+              try {
+                // First, sign out to clear any existing session
+                // This ensures we don't have session mixing between different accounts
+                console.log('Clearing existing session before Google sign-in');
+                await fetch('/api/auth/signout', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    redirect: false,
+                    callbackUrl: '/login',
+                  }),
+                });
+                
+                // Small delay to ensure session is cleared
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // Now proceed with Google sign-in
+                console.log('Starting fresh Google sign-in flow');
+                await signIn("google", {
+                  redirect: true,
+                  callbackUrl: callbackUrl || "/", // Let NextAuth redirect callback handle routing
+                });
+              } catch (error) {
+                console.error('Google sign-in error:', error);
+                setError("Failed to sign in with Google. Please try again.");
+                setIsLoading(false);
+              }
+            }}
             disabled={isLoading}
             className="w-full flex items-center justify-center gap-2"
           >
