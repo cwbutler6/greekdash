@@ -39,17 +39,10 @@ function getPrismaClient() {
 const prismaGlobal = global as unknown as { prisma: PrismaClient };
 
 // Assign the client based on environment
-let prisma: PrismaClient;
+const prisma: PrismaClient = prismaGlobal.prisma || getPrismaClient();
 
-// For development, reuse the client across hot reloads
-if (process.env.NODE_ENV === 'development') {
-  if (!prismaGlobal.prisma) {
-    prismaGlobal.prisma = getPrismaClient();
-  }
-  prisma = prismaGlobal.prisma;
-} else {
-  // For production, create a new instance per serverless function  
-  prisma = getPrismaClient();
+if (!prismaGlobal.prisma) {
+  prismaGlobal.prisma = prisma;
 }
 
 // Handle clean disconnect
