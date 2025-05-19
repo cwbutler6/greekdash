@@ -1,55 +1,91 @@
 import { PrismaClient } from '@/generated/prisma';
 
 /**
- * PrismaClient initialization with improved connection handling for production environments
- * to prevent the "prepared statement already exists" error in serverless environments.
+ * Enhanced PrismaClient for serverless environments
  * 
- * In production, each PrismaClient must properly connect and disconnect.
- * In development, we reuse the same instance across hot reloads.
+ * This implementation specifically addresses the "prepared statement already exists" error
+ * by utilizing connection pooling best practices specific to serverless environments.
  */
 
-// Extend global to include our prisma client
-// This is the proper way to add types to the global scope in TypeScript
 declare global {
   // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined;
 }
 
-// Initialize client with specific options based on environment
-function initPrismaClient() {
-  // Production configuration - optimized for serverless environments
-  if (process.env.NODE_ENV === 'production') {
-    return new PrismaClient({
-      log: ['error'],
-      // Clear the connection pool on initialization in production
-      // This helps prevent the "prepared statement already exists" error
+// PrismaClient singleton implementation for optimal connection management
+
+// Custom PrismaClient with enhanced error handling for prepared statements
+class PrismaClientSingleton extends PrismaClient {
+  constructor() {
+    // Pass environment-specific configuration options
+    super({
+      log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
       datasources: {
         db: {
           url: process.env.DATABASE_URL
         }
       }
+      // Note: We rely on connection middleware for handling prepared statement errors
+      // rather than engine configuration
     });
+
+    // Apply custom middleware to handle connection issues
+    if (process.env.NODE_ENV === 'production') {
+      this.$use(async (params, next) => {
+        try {
+          return await next(params);
+        } catch (error) {
+          // Type guard for error objects with message property
+          const isErrorWithMessage = (err: unknown): err is { message: string } => 
+            typeof err === 'object' && err !== null && 'message' in err && 
+            typeof (err as { message: unknown }).message === 'string';
+          
+          // Specifically handle the "prepared statement already exists" error
+          if (isErrorWithMessage(error) && 
+              (error.message.includes('prepared statement') || 
+              (error.message.includes('ConnectorError') && 
+               error.message.includes('42P05')))) {
+            // Log the error for debugging
+            console.error('Prepared statement error encountered, reconnecting...', error);
+            
+            // Attempt to disconnect and reconnect the client
+            await this.$disconnect();
+            
+            // Add small delay to ensure connection is properly terminated
+            await new Promise(resolve => setTimeout(resolve, 50));
+            
+            // Reconnect
+            await this.$connect();
+            
+            // Retry the query
+            return await next(params);
+          }
+          
+          // Re-throw other errors
+          throw error;
+        }
+      });
+    }
   }
-  
-  // Development configuration
-  return new PrismaClient({
-    log: ['query', 'error', 'warn'],
-  });
 }
 
-// PrismaClient is attached to the `global` object in development to prevent
-// exhausting your database connection limit during hot reloads.
-let prisma: PrismaClient;
-
-// Check if we already have a Prisma instance cached in development
-if (process.env.NODE_ENV === 'production') {
-  prisma = initPrismaClient();
-} else {
-  if (!global.prisma) {
-    global.prisma = initPrismaClient();
+// Factory function to ensure singleton instance
+function getPrismaClient(): PrismaClient {
+  if (process.env.NODE_ENV === 'production') {
+    // In production, create a new instance for each serverless function
+    // with custom error handling
+    return new PrismaClientSingleton();
+  } else {
+    // In development, reuse the same instance to avoid connection limit issues
+    if (!global.prisma) {
+      global.prisma = new PrismaClientSingleton();
+    }
+    return global.prisma;
   }
-  prisma = global.prisma;
 }
+
+// Initialize the Prisma client
+const prisma = getPrismaClient();
 
 // Handle graceful shutdown and connection pooling in production
 if (process.env.NODE_ENV === 'production') {
