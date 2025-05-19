@@ -33,29 +33,6 @@ function getPrismaClient() {
       db: { url: directUrl }
     }
   });
-
-  // Add retry logic specifically for the PostgreSQL prepared statement conflict
-  client.$use(async (params, next) => {
-    try {
-      return await next(params);
-    } catch (error: unknown) {
-      // Type guard for error objects with code property
-      interface PostgresError extends Error {
-        code?: string;
-      }
-      
-      // Cast error to our specific type
-      const pgError = error as PostgresError;
-      
-      // Only retry on prepared statement conflicts
-      if (pgError.code === '42P05') {
-        // Short delay before retry
-        await new Promise(resolve => setTimeout(resolve, 20));
-        return await next(params);
-      }
-      throw error;
-    }
-  });
   
   return client;
 }
