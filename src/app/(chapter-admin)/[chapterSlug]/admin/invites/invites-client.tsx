@@ -187,7 +187,7 @@ export default function AdminInvitesClient({ chapterSlug }: { chapterSlug: strin
     setSuccess(null);
     
     try {
-      const response = await fetch(`/api/chapters/${chapterSlug}/admin/invites/${inviteId}/resend`, {
+      const response = await fetch(`/api/chapters/${chapterSlug}/invites/${inviteId}/resend`, {
         method: "POST",
       });
       

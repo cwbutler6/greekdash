@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next";
 import { addDays } from "date-fns";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/db";
+import { sendEmail } from "@/lib/mail";
 
 // Function to check if user is admin of the chapter
 async function isChapterAdmin(userId: string, chapterId: string) {
@@ -61,6 +62,9 @@ export async function POST(
     // Find the invite by ID
     const invite = await prisma.invite.findUnique({
       where: { id: inviteId },
+      include: {
+        chapter: true,
+      },
     });
     
     if (!invite) {
@@ -86,6 +90,12 @@ export async function POST(
       );
     }
     
+    // Get the current user's name for the invite email
+    const inviter = await prisma.user.findUnique({
+      where: { id: session.user.id },
+      select: { name: true },
+    });
+
     // Update invite with new expiration date
     const updatedInvite = await prisma.invite.update({
       where: { id: inviteId },
@@ -94,14 +104,50 @@ export async function POST(
       },
     });
     
-    return NextResponse.json({
-      message: "Invite resent successfully",
-      invite: {
-        id: updatedInvite.id,
-        email: updatedInvite.email,
-        expiresAt: updatedInvite.expiresAt,
-      },
-    });
+    // Generate the invite link to the chapter join page
+    const baseUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
+    const inviteLink = `${baseUrl}/${invite.chapter.slug}/join?token=${invite.token}`;
+    
+    // Send the invite email
+    try {
+      await sendEmail(invite.email, "chapterInvite", {
+        inviteLink,
+        chapterName: invite.chapter.name,
+        inviterName: inviter?.name || "A chapter administrator",
+        roleName: invite.role === "ADMIN" ? "Administrator" : "Member",
+      });
+      
+      // Create an audit log entry
+      await prisma.auditLog.create({
+        data: {
+          userId: session.user.id,
+          chapterId: chapter.id,
+          action: "INVITE_RESENT",
+          targetType: "INVITE",
+          targetId: invite.id,
+          metadata: {
+            email: invite.email,
+            role: invite.role,
+            timestamp: new Date().toISOString(),
+          },
+        },
+      });
+      
+      return NextResponse.json({
+        message: "Invite resent successfully",
+        invite: {
+          id: updatedInvite.id,
+          email: updatedInvite.email,
+          expiresAt: updatedInvite.expiresAt,
+        },
+      });
+    } catch (emailError) {
+      console.error("Error sending invitation email:", emailError);
+      return NextResponse.json(
+        { message: "Invite updated but failed to send email" },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error("Error resending invite:", error);
     return NextResponse.json(
