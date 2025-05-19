@@ -20,26 +20,20 @@ declare global {
 
 // Step 1: Define the PrismaClient creation function with proper settings
 function getPrismaClient() {
-  // Critical: Use DIRECT_URL without pgbouncer for serverless environments
-  const directUrl = process.env.DIRECT_URL;
+  const databaseUrl = process.env.DATABASE_URL;
   
   // Create the client with proper settings
   const client = new PrismaClient({
     log: process.env.NODE_ENV === 'development' 
       ? ['query', 'info', 'warn', 'error']
       : ['error'],
-    // Using DIRECT_URL is essential to avoid the prepared statement conflicts
     datasources: {
-      db: { url: directUrl }
+      db: { url: databaseUrl }
     }
   });
   
   return client;
 }
-
-// This is key for avoiding issues in serverless environments like Vercel:
-// - In production: Each serverless function instance gets a new PrismaClient
-// - In development: We reuse the same instance to avoid connection limit problems
 
 // PrismaClient singleton pattern for Next.js
 const prismaGlobal = global as unknown as { prisma: PrismaClient };
