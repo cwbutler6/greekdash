@@ -1,10 +1,10 @@
 import { PrismaClient } from '@/generated/prisma';
 
 /**
- * PrismaClient setup for Next.js with Vercel serverless environments
+ * PrismaClient setup for Next.js with direct database connections
  * 
- * This implementation addresses the "prepared statement already exists" error
- * that commonly occurs with PostgreSQL in serverless environments.
+ * This implementation uses direct connections instead of pooling to avoid
+ * the "prepared statement already exists" error in PostgreSQL.
  */
 
 // Add prisma to the NodeJS global type
@@ -14,23 +14,31 @@ declare global {
 }
 
 /**
- * Create a prisma client with specific log settings based on environment
- * This approach follows Prisma's recommended pattern for Next.js
+ * Create a prisma client with direct connections
+ * This approach minimizes connection pooling issues in serverless environments
  */
 function createPrismaClient() {
+  // Use DIRECT_URL for direct PostgreSQL connections
+  // This bypasses PgBouncer and connects directly to PostgreSQL
+  const connectionString = process.env.DIRECT_URL || process.env.DATABASE_URL || '';
+  
+  // No need to add connection_limit=1 to DIRECT_URL as it's already a direct connection
+  // but we'll handle both DIRECT_URL and fallback to DATABASE_URL with params
+  const url = connectionString.includes('pgbouncer=true')
+    ? `${connectionString}&connection_limit=1&pool_timeout=0` 
+    : connectionString;
+  
   const client = new PrismaClient({
     log: process.env.NODE_ENV === 'development' 
       ? ['query', 'info', 'warn', 'error']
       : ['error'],
-    // Setting connection pool settings to minimize prepared statement conflicts
     datasources: {
-      db: {
-        url: process.env.DATABASE_URL
-      }
+      db: { url }
     }
   });
 
-  // Add PostgreSQL retry logic
+  // Simple retry logic for direct connections
+  // Even with direct connections, we still need to handle potential prepared statement conflicts
   client.$use(async (params, next) => {
     try {
       return await next(params);
@@ -43,11 +51,10 @@ function createPrismaClient() {
       // Cast error to our specific type
       const pgError = error as PostgresError;
       
-      // Retry on "prepared statement already exists" PostgreSQL error
-      if (pgError.code === '42P05' || pgError.message?.includes('prepared statement')) {
-        // Add a small delay to allow cleanup
-        await new Promise(resolve => setTimeout(resolve, 50 + Math.random() * 100));
-        // Try one more time
+      // Only retry on prepared statement conflicts
+      if (pgError.code === '42P05') {
+        // Short delay before retry
+        await new Promise(resolve => setTimeout(resolve, 20));
         return await next(params);
       }
       throw error;
