@@ -38,9 +38,14 @@ export async function requireChapterAccess(chapterSlug: string) {
   
   if (!hasAccess) {
     // If user doesn't have access to this specific chapter, redirect
-    // to dashboard if they have other chapters, or to home if none
+    // to their appropriate chapter/role page or home if none
     if (user.memberships.length > 0) {
-      redirect(`/dashboard/${user.memberships[0].chapterSlug}`);
+      const membership = user.memberships[0];
+      // Direct user to admin or portal based on their role
+      const redirectPath = membership.role === 'ADMIN' || membership.role === 'OWNER'
+        ? `/${membership.chapterSlug}/admin`
+        : `/${membership.chapterSlug}/portal`;
+      redirect(redirectPath);
     } else {
       redirect("/");
     }

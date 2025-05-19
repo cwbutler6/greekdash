@@ -25,13 +25,14 @@ export default async function AuditLogsPage({
   // Check if the chapter exists
   const chapter = await getChapterFromSlug(chapterSlug);
   if (!chapter) {
-    redirect('/dashboard');
+    // Redirect to home page if chapter doesn't exist
+    redirect('/');
   }
 
   // Get the current membership and check if user has admin privileges
   const membership = await getCurrentMembership(chapter.id);
   if (!membership || (membership.role !== MembershipRole.ADMIN && membership.role !== MembershipRole.OWNER)) {
-    redirect(`/${chapterSlug}/dashboard`);
+    redirect(`/${chapterSlug}/portal`);
   }
 
   // Parse query parameters

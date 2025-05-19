@@ -70,7 +70,9 @@ export default function UserMenu() {
                     {session.user.memberships.map((membership) => (
                       <Link
                         key={membership.id}
-                        href={`/dashboard/${membership.chapterSlug}`}
+                        href={membership.role === 'OWNER' || membership.role === 'ADMIN'
+                          ? `/${membership.chapterSlug}/admin`
+                          : `/${membership.chapterSlug}/portal`}
                         className="block rounded-md px-2 py-1 text-sm hover:bg-gray-100"
                         onClick={() => setIsOpen(false)}
                       >

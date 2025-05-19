@@ -60,7 +60,7 @@ export default function PendingApprovalClient({ chapterSlug }: { chapterSlug: st
           
           // If the membership is not pending, redirect to appropriate page
           if (data.membership.role !== "PENDING_MEMBER") {
-            router.push(`/${chapterSlug}/dashboard`);
+            router.push(`/${chapterSlug}/portal`);
             return;
           }
           

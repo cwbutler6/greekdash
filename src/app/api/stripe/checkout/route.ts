@@ -168,8 +168,8 @@ export async function POST(request: NextRequest) {
             quantity: 1,
           }],
           mode: 'subscription',
-          success_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${chapterSlug}/settings?checkout=success`,
-          cancel_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${chapterSlug}/settings?checkout=canceled`,
+          success_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/portal/${chapterSlug}/settings?checkout=success`,
+          cancel_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/portal/${chapterSlug}/settings?checkout=canceled`,
           subscription_data: {
             metadata: {
               chapterId: chapter.id,
@@ -190,8 +190,8 @@ export async function POST(request: NextRequest) {
             quantity: 1,
           }],
           mode: 'subscription',
-          success_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${chapterSlug}/settings?checkout=success`,
-          cancel_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/${chapterSlug}/settings?checkout=canceled`,
+          success_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/portal/${chapterSlug}/settings?checkout=success`,
+          cancel_url: returnUrl || `${process.env.NEXT_PUBLIC_APP_URL}/portal/${chapterSlug}/settings?checkout=canceled`,
           subscription_data: {
             metadata: {
               chapterId: chapter.id,

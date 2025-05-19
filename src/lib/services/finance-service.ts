@@ -413,8 +413,8 @@ export const financeService = {
         },
       ],
       mode: "payment",
-      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/finance/dues/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/dashboard/finance/dues`,
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/${duesPayment.chapter.slug}/admin/finance/dues/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/${duesPayment.chapter.slug}/admin/finance/dues`,
     });
 
     return { sessionId: session.id, url: session.url };

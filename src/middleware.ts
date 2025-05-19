@@ -29,30 +29,47 @@ export default withAuth(
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    // Check if user is accessing a chapter route
-    if (pathname.startsWith("/dashboard")) {
-      // Check if a chapterSlug is in the URL (e.g., /dashboard/somechapter/...)
-      const pathParts = pathname.split("/");
-      const chapterSlugFromUrl = pathParts.length > 2 ? pathParts[2] : null;
+    // Extract chapterSlug from URL for any chapter-specific routes
+    const chapterRouteRegex = /^\/([a-zA-Z0-9-]+)\/(admin|portal|join|pending)/;
+    
+    let chapterSlugFromUrl: string | null = null;
+    
+    // Check if path matches a chapter-specific route pattern (e.g., /theta-iota/admin)
+    const chapterRouteMatch = pathname.match(chapterRouteRegex);
+    if (chapterRouteMatch && chapterRouteMatch[1]) {
+      chapterSlugFromUrl = chapterRouteMatch[1];
+    }
+    
+    // If we have a chapter slug in the URL, verify user belongs to that chapter
+    if (chapterSlugFromUrl && isAuthenticated && token.memberships) {
+      console.log(`Middleware: Checking access to chapter ${chapterSlugFromUrl}`);
+      const hasAccess = token.memberships.some(
+        (m: { chapterSlug: string }) => m.chapterSlug === chapterSlugFromUrl
+      );
       
-      if (chapterSlugFromUrl) {
-        // If there's a chapterSlug in the URL, verify user belongs to that chapter
-        if (isAuthenticated && token.memberships) {
-          const hasAccess = token.memberships.some(
-            (m: { chapterSlug: string }) => m.chapterSlug === chapterSlugFromUrl
-          );
-          
-          if (!hasAccess) {
-            // Redirect to home if user doesn't belong to this chapter
-            return NextResponse.redirect(new URL("/dashboard", request.url));
-          }
+      if (!hasAccess) {
+        console.log(`Middleware: Access denied to chapter ${chapterSlugFromUrl}`);
+        // If user doesn't have access to this specific chapter, redirect to their first available chapter
+        if (token.memberships.length > 0) {
+          const availableChapter = token.memberships[0].chapterSlug;
+          // Maintain the same section (admin/portal) they were trying to access
+          const section = chapterRouteMatch ? chapterRouteMatch[2] : 'admin';
+          return NextResponse.redirect(new URL(`/${availableChapter}/${section}`, request.url));
+        } else {
+          // If user has no memberships, redirect to signup
+          return NextResponse.redirect(new URL("/signup", request.url));
         }
-      } else if (isAuthenticated && token.memberships && token.memberships.length > 0) {
-        // If authenticated but no chapter in URL, redirect to first available chapter
-        return NextResponse.redirect(
-          new URL(`/dashboard/${token.memberships[0].chapterSlug}`, request.url)
-        );
       }
+    }
+    
+    // If user is accessing root path but has memberships, redirect to their first chapter's admin/portal
+    if (pathname === '/' && isAuthenticated && token.memberships && token.memberships.length > 0) {
+      const membership = token.memberships[0];
+      const redirectPath = membership.role === 'ADMIN' || membership.role === 'OWNER' 
+        ? `/${membership.chapterSlug}/admin`
+        : `/${membership.chapterSlug}/portal`;
+      
+      return NextResponse.redirect(new URL(redirectPath, request.url));
     }
 
     return NextResponse.next();
@@ -72,7 +89,6 @@ export default withAuth(
 export const config = {
   matcher: [
     // Match all paths that require authentication
-    "/dashboard/:path*",
     "/:chapterSlug/admin/:path*",
     "/:chapterSlug/portal/:path*",
     "/:chapterSlug/join/:path*", // Join workflow is protected

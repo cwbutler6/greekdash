@@ -28,7 +28,7 @@ export default async function BroadcastPage({
           You need administrator privileges to access this page.
         </p>
         <Button asChild>
-          <Link href={`/${chapterSlug}/dashboard`}>
+          <Link href={`/${chapterSlug}/portal`}>
             Return to Dashboard
           </Link>
         </Button>

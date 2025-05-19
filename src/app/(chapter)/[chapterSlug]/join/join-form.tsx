@@ -164,7 +164,7 @@ export default function JoinForm({ chapterSlug }: { chapterSlug: string }) {
       
       // Redirect based on whether this was an invite (approved) or join code (pending approval)
       if (inviteToken) {
-        router.push(`/${chapterSlug}/dashboard`);
+        router.push(`/${chapterSlug}/portal`);
       } else {
         router.push(`/${chapterSlug}/pending`);
       }

@@ -46,7 +46,7 @@ export default function AdminPendingRequestsClient({ chapterSlug }: { chapterSlu
           router.push("/login");
         } else if (response.status === 403) {
           // User doesn't have admin access
-          router.push(`/${chapterSlug}/dashboard`);
+          router.push(`/${chapterSlug}/portal`);
         } else {
           throw new Error("Error checking admin access");
         }
