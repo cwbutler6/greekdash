@@ -3,6 +3,7 @@ import { getToken } from "next-auth/jwt";
 import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
 
 // This middleware handles chapter-based routing and authentication
+// IMPORTANT: Don't use Prisma or direct database access in Edge Middleware
 export default withAuth(
   async function middleware(request: NextRequestWithAuth) {
     const token = await getToken({ req: request });
@@ -41,14 +42,15 @@ export default withAuth(
     }
     
     // If we have a chapter slug in the URL, verify user belongs to that chapter
+    // All membership data should be included in the JWT token
     if (chapterSlugFromUrl && isAuthenticated && token.memberships) {
-      console.log(`Middleware: Checking access to chapter ${chapterSlugFromUrl}`);
+      // Check access using the memberships data from the token
+      // No database queries here - only use data from JWT token
       const hasAccess = token.memberships.some(
         (m: { chapterSlug: string }) => m.chapterSlug === chapterSlugFromUrl
       );
       
       if (!hasAccess) {
-        console.log(`Middleware: Access denied to chapter ${chapterSlugFromUrl}`);
         // If user doesn't have access to this specific chapter, redirect to their first available chapter
         if (token.memberships.length > 0) {
           const availableChapter = token.memberships[0].chapterSlug;

@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { redirect } from "next/navigation";
-import { prisma } from "@/lib/db";
 
 // Re-export authOptions for use in API routes
 export { authOptions };
@@ -58,21 +57,18 @@ export async function requireChapterAccess(chapterSlug: string) {
     redirect('/');
   }
   
-  // Fetch the full membership details from the database
-  const fullMembership = await prisma.membership.findUnique({
-    where: {
-      id: sessionMembership.id
-    }
-  });
-  
-  if (!fullMembership) {
-    redirect('/');
-  }
-
-  // Return both user and the full membership for convenience
+  // Return both user and the membership for convenience
+  // We'll use the session membership data directly instead of making a database query
+  // This avoids database connection issues in server components
   return {
     user,
-    membership: fullMembership,
+    membership: {
+      id: sessionMembership.id,
+      role: sessionMembership.role,
+      chapterId: sessionMembership.chapterId,
+      userId: user.id,
+      // Add any other required fields from the session data
+    },
   };
 }
 
