@@ -28,8 +28,11 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 // Wrap the component that uses useSearchParams in a Suspense boundary as required by Next.js 15
 function LoginForm() {
   const router = useRouter();
+  // In Next.js 15, searchParams are a promise that needs to be unwrapped
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl");
+  // Get callbackUrl safely - no need to use the 'use' hook in this case as useSearchParams
+  // in client components in Next.js 15 returns the params directly (not a promise)
+  const callbackUrl = searchParams?.get("callbackUrl") || null;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -67,9 +70,15 @@ function LoginForm() {
         setIsLoading(false);
         return;
       }
+      
+      // Add a small delay to ensure session is established
+      // This helps with production environment synchronization
+      await new Promise(resolve => setTimeout(resolve, 500));
 
       // If there's a specific callback URL, respect it
       if (callbackUrl) {
+        console.log(`Redirecting to callback URL: ${callbackUrl}`);
+        // Try both router.push and window.location for more reliable redirection
         router.push(callbackUrl);
         return;
       }
@@ -109,23 +118,40 @@ function LoginForm() {
           // If user has an active membership and is an admin/owner, redirect to admin
           if (activeMembership.role === 'ADMIN' || activeMembership.role === 'OWNER') {
             console.log(`Redirecting admin to /${activeMembership.chapterSlug}/admin`);
-            // Use Next.js router for client-side navigation instead of window.location
-            // This works better with production environments and respects Next.js routing
+            // Use both router and window.location for more reliable redirection in production
+            console.log(`Redirecting admin to /${activeMembership.chapterSlug}/admin with window.location`);
             router.push(`/${activeMembership.chapterSlug}/admin`);
+            // Fallback to window.location after a small delay if router.push doesn't work
+            setTimeout(() => {
+              window.location.href = `/${activeMembership.chapterSlug}/admin`;
+            }, 300);
           } else {
             // Regular members go to the portal
-            console.log(`Redirecting member to /${activeMembership.chapterSlug}/portal`);
+            console.log(`Redirecting member to /${activeMembership.chapterSlug}/portal with window.location`);
             router.push(`/${activeMembership.chapterSlug}/portal`);
+            // Fallback to window.location after a small delay if router.push doesn't work
+            setTimeout(() => {
+              window.location.href = `/${activeMembership.chapterSlug}/portal`;
+            }, 300);
           }
         } else {
           // If user only has pending memberships, redirect to their pending page
-          console.log(`Redirecting pending member to /${memberships[0].chapterSlug}/pending`);
+          console.log(`Redirecting pending member to /${memberships[0].chapterSlug}/pending with window.location`);
           router.push(`/${memberships[0].chapterSlug}/pending`);
+          // Fallback to window.location after a small delay if router.push doesn't work
+          setTimeout(() => {
+            window.location.href = `/${memberships[0].chapterSlug}/pending`;
+          }, 300);
         }
       } catch (error) {
         console.error('Error getting session data:', error);
         // Fallback to signup if there's any error in the process
+        console.log('Redirecting to signup due to error with window.location');
         router.push('/signup');
+        // Fallback to window.location as a more reliable alternative in production
+        setTimeout(() => {
+          window.location.href = '/signup';
+        }, 300);
       }
     } catch {
       setError("An unexpected error occurred. Please try again.");
