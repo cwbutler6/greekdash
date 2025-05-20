@@ -15,6 +15,12 @@ export default async function ProfilePage(props: { params: Promise<{ chapterSlug
   // Get current user data for the profile form
   const currentUser = await getCurrentUser();
   
+  if (!currentUser) {
+    // User isn't authenticated - this shouldn't happen if requireChapterAccess did its job,
+    // but we need to check for TypeScript type safety
+    return <div>Not authenticated</div>;
+  }
+  
   // Get chapter details for UI customization
   const chapter = await prisma.chapter.findUnique({
     where: {
