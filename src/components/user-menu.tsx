@@ -115,13 +115,15 @@ export default function UserMenu({
                 </div>
               )}
               
-              <Link
-                href="/settings/profile"
-                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                onClick={() => setIsOpen(false)}
-              >
-                Settings
-              </Link>
+              {session.user.memberships && session.user.memberships.length > 0 && (
+                <Link
+                  href={`/${session.user.memberships[0].chapterSlug}/profile`}
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Profile
+                </Link>
+              )}
               
               <button
                 onClick={() => signOut({ callbackUrl: "/" })}

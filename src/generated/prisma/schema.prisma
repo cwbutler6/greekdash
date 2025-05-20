@@ -49,6 +49,7 @@ model Chapter {
 
   // Relations
   memberships     Membership[] // One chapter has many memberships
+  profiles        Profile[] // One chapter has many profiles
   subscription    Subscription? // One chapter has one subscription
   invites         Invite[] // One chapter has many invites
   events          Event[] // One chapter has many events
@@ -77,6 +78,7 @@ model User {
   accounts        Account[] // One user has many auth accounts
   sessions        Session[] // One user has many sessions
   memberships     Membership[] // One user can be a member of multiple chapters
+  profiles        Profile[] // One user can have multiple profiles (one per chapter)
   acceptedInvites Invite[]     @relation("acceptedInvites") // Invites that were accepted by this user
   createdInvites  Invite[]     @relation("createdInvites") // Invites created by this user
   createdEvents   Event[]      @relation("createdEvents") // Events created by this user
@@ -100,8 +102,9 @@ model Membership {
   chapterId String
 
   // Relations
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  chapter Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapter Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  profile Profile? // One membership can have one profile
 
   @@unique([userId, chapterId]) // A user can only have one membership per chapter
   @@index([chapterId])
@@ -406,6 +409,29 @@ model DuesPayment {
   @@index([userId])
   @@index([dueDate])
   @@index([paidAt])
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  phone     String?
+  major     String?
+  gradYear  Int?
+  bio       String?  @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Foreign keys
+  membershipId String @unique
+  userId       String
+  chapterId    String
+
+  // Relations
+  membership Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id])
+  chapter    Chapter    @relation(fields: [chapterId], references: [id])
+
+  @@index([userId])
+  @@index([chapterId])
 }
 
 model Transaction {

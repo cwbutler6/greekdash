@@ -300,6 +300,19 @@ exports.Prisma.DuesPaymentScalarFieldEnum = {
   userId: 'userId'
 };
 
+exports.Prisma.ProfileScalarFieldEnum = {
+  id: 'id',
+  phone: 'phone',
+  major: 'major',
+  gradYear: 'gradYear',
+  bio: 'bio',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  membershipId: 'membershipId',
+  userId: 'userId',
+  chapterId: 'chapterId'
+};
+
 exports.Prisma.TransactionScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
@@ -412,6 +425,7 @@ exports.Prisma.ModelName = {
   Budget: 'Budget',
   Expense: 'Expense',
   DuesPayment: 'DuesPayment',
+  Profile: 'Profile',
   Transaction: 'Transaction'
 };
 

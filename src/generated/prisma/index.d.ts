@@ -94,6 +94,11 @@ export type Expense = $Result.DefaultSelection<Prisma.$ExpensePayload>
  */
 export type DuesPayment = $Result.DefaultSelection<Prisma.$DuesPaymentPayload>
 /**
+ * Model Profile
+ * 
+ */
+export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>
+/**
  * Model Transaction
  * 
  */
@@ -501,6 +506,16 @@ export class PrismaClient<
     * ```
     */
   get duesPayment(): Prisma.DuesPaymentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.profile`: Exposes CRUD operations for the **Profile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Profiles
+    * const profiles = await prisma.profile.findMany()
+    * ```
+    */
+  get profile(): Prisma.ProfileDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.transaction`: Exposes CRUD operations for the **Transaction** model.
@@ -967,6 +982,7 @@ export namespace Prisma {
     Budget: 'Budget',
     Expense: 'Expense',
     DuesPayment: 'DuesPayment',
+    Profile: 'Profile',
     Transaction: 'Transaction'
   };
 
@@ -986,7 +1002,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage" | "budget" | "expense" | "duesPayment" | "transaction"
+      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage" | "budget" | "expense" | "duesPayment" | "profile" | "transaction"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2174,6 +2190,80 @@ export namespace Prisma {
           }
         }
       }
+      Profile: {
+        payload: Prisma.$ProfilePayload<ExtArgs>
+        fields: Prisma.ProfileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProfileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProfileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          findFirst: {
+            args: Prisma.ProfileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProfileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          findMany: {
+            args: Prisma.ProfileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>[]
+          }
+          create: {
+            args: Prisma.ProfileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          createMany: {
+            args: Prisma.ProfileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProfileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>[]
+          }
+          delete: {
+            args: Prisma.ProfileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          update: {
+            args: Prisma.ProfileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          deleteMany: {
+            args: Prisma.ProfileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProfileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProfileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>[]
+          }
+          upsert: {
+            args: Prisma.ProfileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProfilePayload>
+          }
+          aggregate: {
+            args: Prisma.ProfileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProfile>
+          }
+          groupBy: {
+            args: Prisma.ProfileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProfileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProfileCountArgs<ExtArgs>
+            result: $Utils.Optional<ProfileCountAggregateOutputType> | number
+          }
+        }
+      }
       Transaction: {
         payload: Prisma.$TransactionPayload<ExtArgs>
         fields: Prisma.TransactionFieldRefs
@@ -2348,6 +2438,7 @@ export namespace Prisma {
     budget?: BudgetOmit
     expense?: ExpenseOmit
     duesPayment?: DuesPaymentOmit
+    profile?: ProfileOmit
     transaction?: TransactionOmit
   }
 
@@ -2444,6 +2535,7 @@ export namespace Prisma {
 
   export type ChapterCountOutputType = {
     memberships: number
+    profiles: number
     invites: number
     events: number
     auditLogs: number
@@ -2457,6 +2549,7 @@ export namespace Prisma {
 
   export type ChapterCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     memberships?: boolean | ChapterCountOutputTypeCountMembershipsArgs
+    profiles?: boolean | ChapterCountOutputTypeCountProfilesArgs
     invites?: boolean | ChapterCountOutputTypeCountInvitesArgs
     events?: boolean | ChapterCountOutputTypeCountEventsArgs
     auditLogs?: boolean | ChapterCountOutputTypeCountAuditLogsArgs
@@ -2484,6 +2577,13 @@ export namespace Prisma {
    */
   export type ChapterCountOutputTypeCountMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MembershipWhereInput
+  }
+
+  /**
+   * ChapterCountOutputType without action
+   */
+  export type ChapterCountOutputTypeCountProfilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfileWhereInput
   }
 
   /**
@@ -2558,6 +2658,7 @@ export namespace Prisma {
     accounts: number
     sessions: number
     memberships: number
+    profiles: number
     acceptedInvites: number
     createdInvites: number
     createdEvents: number
@@ -2572,6 +2673,7 @@ export namespace Prisma {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     memberships?: boolean | UserCountOutputTypeCountMembershipsArgs
+    profiles?: boolean | UserCountOutputTypeCountProfilesArgs
     acceptedInvites?: boolean | UserCountOutputTypeCountAcceptedInvitesArgs
     createdInvites?: boolean | UserCountOutputTypeCountCreatedInvitesArgs
     createdEvents?: boolean | UserCountOutputTypeCountCreatedEventsArgs
@@ -2612,6 +2714,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MembershipWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountProfilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfileWhereInput
   }
 
   /**
@@ -2934,6 +3043,7 @@ export namespace Prisma {
     updatedAt?: boolean
     stripeCustomerId?: boolean
     memberships?: boolean | Chapter$membershipsArgs<ExtArgs>
+    profiles?: boolean | Chapter$profilesArgs<ExtArgs>
     subscription?: boolean | Chapter$subscriptionArgs<ExtArgs>
     invites?: boolean | Chapter$invitesArgs<ExtArgs>
     events?: boolean | Chapter$eventsArgs<ExtArgs>
@@ -2986,6 +3096,7 @@ export namespace Prisma {
   export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "publicInfo" | "primaryColor" | "createdAt" | "updatedAt" | "stripeCustomerId", ExtArgs["result"]["chapter"]>
   export type ChapterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     memberships?: boolean | Chapter$membershipsArgs<ExtArgs>
+    profiles?: boolean | Chapter$profilesArgs<ExtArgs>
     subscription?: boolean | Chapter$subscriptionArgs<ExtArgs>
     invites?: boolean | Chapter$invitesArgs<ExtArgs>
     events?: boolean | Chapter$eventsArgs<ExtArgs>
@@ -3005,6 +3116,7 @@ export namespace Prisma {
     name: "Chapter"
     objects: {
       memberships: Prisma.$MembershipPayload<ExtArgs>[]
+      profiles: Prisma.$ProfilePayload<ExtArgs>[]
       subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
       invites: Prisma.$InvitePayload<ExtArgs>[]
       events: Prisma.$EventPayload<ExtArgs>[]
@@ -3421,6 +3533,7 @@ export namespace Prisma {
   export interface Prisma__ChapterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     memberships<T extends Chapter$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    profiles<T extends Chapter$profilesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$profilesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     subscription<T extends Chapter$subscriptionArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$subscriptionArgs<ExtArgs>>): Prisma__SubscriptionClient<$Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     invites<T extends Chapter$invitesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$invitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     events<T extends Chapter$eventsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -3881,6 +3994,30 @@ export namespace Prisma {
   }
 
   /**
+   * Chapter.profiles
+   */
+  export type Chapter$profilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    where?: ProfileWhereInput
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    cursor?: ProfileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
    * Chapter.subscription
    */
   export type Chapter$subscriptionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4325,6 +4462,7 @@ export namespace Prisma {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     memberships?: boolean | User$membershipsArgs<ExtArgs>
+    profiles?: boolean | User$profilesArgs<ExtArgs>
     acceptedInvites?: boolean | User$acceptedInvitesArgs<ExtArgs>
     createdInvites?: boolean | User$createdInvitesArgs<ExtArgs>
     createdEvents?: boolean | User$createdEventsArgs<ExtArgs>
@@ -4374,6 +4512,7 @@ export namespace Prisma {
     accounts?: boolean | User$accountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     memberships?: boolean | User$membershipsArgs<ExtArgs>
+    profiles?: boolean | User$profilesArgs<ExtArgs>
     acceptedInvites?: boolean | User$acceptedInvitesArgs<ExtArgs>
     createdInvites?: boolean | User$createdInvitesArgs<ExtArgs>
     createdEvents?: boolean | User$createdEventsArgs<ExtArgs>
@@ -4393,6 +4532,7 @@ export namespace Prisma {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
       sessions: Prisma.$SessionPayload<ExtArgs>[]
       memberships: Prisma.$MembershipPayload<ExtArgs>[]
+      profiles: Prisma.$ProfilePayload<ExtArgs>[]
       acceptedInvites: Prisma.$InvitePayload<ExtArgs>[]
       createdInvites: Prisma.$InvitePayload<ExtArgs>[]
       createdEvents: Prisma.$EventPayload<ExtArgs>[]
@@ -4808,6 +4948,7 @@ export namespace Prisma {
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     memberships<T extends User$membershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    profiles<T extends User$profilesArgs<ExtArgs> = {}>(args?: Subset<T, User$profilesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     acceptedInvites<T extends User$acceptedInvitesArgs<ExtArgs> = {}>(args?: Subset<T, User$acceptedInvitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     createdInvites<T extends User$createdInvitesArgs<ExtArgs> = {}>(args?: Subset<T, User$createdInvitesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InvitePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     createdEvents<T extends User$createdEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5313,6 +5454,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.profiles
+   */
+  export type User$profilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    where?: ProfileWhereInput
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    cursor?: ProfileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
    * User.acceptedInvites
    */
   export type User$acceptedInvitesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5697,6 +5862,7 @@ export namespace Prisma {
     chapterId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    profile?: boolean | Membership$profileArgs<ExtArgs>
   }, ExtArgs["result"]["membership"]>
 
   export type MembershipSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5734,6 +5900,7 @@ export namespace Prisma {
   export type MembershipInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    profile?: boolean | Membership$profileArgs<ExtArgs>
   }
   export type MembershipIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -5749,6 +5916,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       chapter: Prisma.$ChapterPayload<ExtArgs>
+      profile: Prisma.$ProfilePayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6153,6 +6321,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    profile<T extends Membership$profileArgs<ExtArgs> = {}>(args?: Subset<T, Membership$profileArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6581,6 +6750,25 @@ export namespace Prisma {
      * Limit how many Memberships to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Membership.profile
+   */
+  export type Membership$profileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    where?: ProfileWhereInput
   }
 
   /**
@@ -21286,6 +21474,1179 @@ export namespace Prisma {
 
 
   /**
+   * Model Profile
+   */
+
+  export type AggregateProfile = {
+    _count: ProfileCountAggregateOutputType | null
+    _avg: ProfileAvgAggregateOutputType | null
+    _sum: ProfileSumAggregateOutputType | null
+    _min: ProfileMinAggregateOutputType | null
+    _max: ProfileMaxAggregateOutputType | null
+  }
+
+  export type ProfileAvgAggregateOutputType = {
+    gradYear: number | null
+  }
+
+  export type ProfileSumAggregateOutputType = {
+    gradYear: number | null
+  }
+
+  export type ProfileMinAggregateOutputType = {
+    id: string | null
+    phone: string | null
+    major: string | null
+    gradYear: number | null
+    bio: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    membershipId: string | null
+    userId: string | null
+    chapterId: string | null
+  }
+
+  export type ProfileMaxAggregateOutputType = {
+    id: string | null
+    phone: string | null
+    major: string | null
+    gradYear: number | null
+    bio: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    membershipId: string | null
+    userId: string | null
+    chapterId: string | null
+  }
+
+  export type ProfileCountAggregateOutputType = {
+    id: number
+    phone: number
+    major: number
+    gradYear: number
+    bio: number
+    createdAt: number
+    updatedAt: number
+    membershipId: number
+    userId: number
+    chapterId: number
+    _all: number
+  }
+
+
+  export type ProfileAvgAggregateInputType = {
+    gradYear?: true
+  }
+
+  export type ProfileSumAggregateInputType = {
+    gradYear?: true
+  }
+
+  export type ProfileMinAggregateInputType = {
+    id?: true
+    phone?: true
+    major?: true
+    gradYear?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+    membershipId?: true
+    userId?: true
+    chapterId?: true
+  }
+
+  export type ProfileMaxAggregateInputType = {
+    id?: true
+    phone?: true
+    major?: true
+    gradYear?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+    membershipId?: true
+    userId?: true
+    chapterId?: true
+  }
+
+  export type ProfileCountAggregateInputType = {
+    id?: true
+    phone?: true
+    major?: true
+    gradYear?: true
+    bio?: true
+    createdAt?: true
+    updatedAt?: true
+    membershipId?: true
+    userId?: true
+    chapterId?: true
+    _all?: true
+  }
+
+  export type ProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Profile to aggregate.
+     */
+    where?: ProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Profiles to fetch.
+     */
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Profiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Profiles
+    **/
+    _count?: true | ProfileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProfileAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProfileSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProfileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProfileMaxAggregateInputType
+  }
+
+  export type GetProfileAggregateType<T extends ProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregateProfile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProfile[P]>
+      : GetScalarType<T[P], AggregateProfile[P]>
+  }
+
+
+
+
+  export type ProfileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProfileWhereInput
+    orderBy?: ProfileOrderByWithAggregationInput | ProfileOrderByWithAggregationInput[]
+    by: ProfileScalarFieldEnum[] | ProfileScalarFieldEnum
+    having?: ProfileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProfileCountAggregateInputType | true
+    _avg?: ProfileAvgAggregateInputType
+    _sum?: ProfileSumAggregateInputType
+    _min?: ProfileMinAggregateInputType
+    _max?: ProfileMaxAggregateInputType
+  }
+
+  export type ProfileGroupByOutputType = {
+    id: string
+    phone: string | null
+    major: string | null
+    gradYear: number | null
+    bio: string | null
+    createdAt: Date
+    updatedAt: Date
+    membershipId: string
+    userId: string
+    chapterId: string
+    _count: ProfileCountAggregateOutputType | null
+    _avg: ProfileAvgAggregateOutputType | null
+    _sum: ProfileSumAggregateOutputType | null
+    _min: ProfileMinAggregateOutputType | null
+    _max: ProfileMaxAggregateOutputType | null
+  }
+
+  type GetProfileGroupByPayload<T extends ProfileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProfileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProfileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], ProfileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    phone?: boolean
+    major?: boolean
+    gradYear?: boolean
+    bio?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    membershipId?: boolean
+    userId?: boolean
+    chapterId?: boolean
+    membership?: boolean | MembershipDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["profile"]>
+
+  export type ProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    phone?: boolean
+    major?: boolean
+    gradYear?: boolean
+    bio?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    membershipId?: boolean
+    userId?: boolean
+    chapterId?: boolean
+    membership?: boolean | MembershipDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["profile"]>
+
+  export type ProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    phone?: boolean
+    major?: boolean
+    gradYear?: boolean
+    bio?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    membershipId?: boolean
+    userId?: boolean
+    chapterId?: boolean
+    membership?: boolean | MembershipDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["profile"]>
+
+  export type ProfileSelectScalar = {
+    id?: boolean
+    phone?: boolean
+    major?: boolean
+    gradYear?: boolean
+    bio?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    membershipId?: boolean
+    userId?: boolean
+    chapterId?: boolean
+  }
+
+  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone" | "major" | "gradYear" | "bio" | "createdAt" | "updatedAt" | "membershipId" | "userId" | "chapterId", ExtArgs["result"]["profile"]>
+  export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    membership?: boolean | MembershipDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type ProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    membership?: boolean | MembershipDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type ProfileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    membership?: boolean | MembershipDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+
+  export type $ProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Profile"
+    objects: {
+      membership: Prisma.$MembershipPayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+      chapter: Prisma.$ChapterPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      phone: string | null
+      major: string | null
+      gradYear: number | null
+      bio: string | null
+      createdAt: Date
+      updatedAt: Date
+      membershipId: string
+      userId: string
+      chapterId: string
+    }, ExtArgs["result"]["profile"]>
+    composites: {}
+  }
+
+  type ProfileGetPayload<S extends boolean | null | undefined | ProfileDefaultArgs> = $Result.GetResult<Prisma.$ProfilePayload, S>
+
+  type ProfileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProfileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProfileCountAggregateInputType | true
+    }
+
+  export interface ProfileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Profile'], meta: { name: 'Profile' } }
+    /**
+     * Find zero or one Profile that matches the filter.
+     * @param {ProfileFindUniqueArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProfileFindUniqueArgs>(args: SelectSubset<T, ProfileFindUniqueArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Profile that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProfileFindUniqueOrThrowArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProfileFindUniqueOrThrowArgs>(args: SelectSubset<T, ProfileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Profile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileFindFirstArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProfileFindFirstArgs>(args?: SelectSubset<T, ProfileFindFirstArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Profile that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileFindFirstOrThrowArgs} args - Arguments to find a Profile
+     * @example
+     * // Get one Profile
+     * const profile = await prisma.profile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProfileFindFirstOrThrowArgs>(args?: SelectSubset<T, ProfileFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Profiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Profiles
+     * const profiles = await prisma.profile.findMany()
+     * 
+     * // Get first 10 Profiles
+     * const profiles = await prisma.profile.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const profileWithIdOnly = await prisma.profile.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProfileFindManyArgs>(args?: SelectSubset<T, ProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Profile.
+     * @param {ProfileCreateArgs} args - Arguments to create a Profile.
+     * @example
+     * // Create one Profile
+     * const Profile = await prisma.profile.create({
+     *   data: {
+     *     // ... data to create a Profile
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProfileCreateArgs>(args: SelectSubset<T, ProfileCreateArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Profiles.
+     * @param {ProfileCreateManyArgs} args - Arguments to create many Profiles.
+     * @example
+     * // Create many Profiles
+     * const profile = await prisma.profile.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProfileCreateManyArgs>(args?: SelectSubset<T, ProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Profiles and returns the data saved in the database.
+     * @param {ProfileCreateManyAndReturnArgs} args - Arguments to create many Profiles.
+     * @example
+     * // Create many Profiles
+     * const profile = await prisma.profile.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Profiles and only return the `id`
+     * const profileWithIdOnly = await prisma.profile.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProfileCreateManyAndReturnArgs>(args?: SelectSubset<T, ProfileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Profile.
+     * @param {ProfileDeleteArgs} args - Arguments to delete one Profile.
+     * @example
+     * // Delete one Profile
+     * const Profile = await prisma.profile.delete({
+     *   where: {
+     *     // ... filter to delete one Profile
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProfileDeleteArgs>(args: SelectSubset<T, ProfileDeleteArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Profile.
+     * @param {ProfileUpdateArgs} args - Arguments to update one Profile.
+     * @example
+     * // Update one Profile
+     * const profile = await prisma.profile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProfileUpdateArgs>(args: SelectSubset<T, ProfileUpdateArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Profiles.
+     * @param {ProfileDeleteManyArgs} args - Arguments to filter Profiles to delete.
+     * @example
+     * // Delete a few Profiles
+     * const { count } = await prisma.profile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProfileDeleteManyArgs>(args?: SelectSubset<T, ProfileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Profiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Profiles
+     * const profile = await prisma.profile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProfileUpdateManyArgs>(args: SelectSubset<T, ProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Profiles and returns the data updated in the database.
+     * @param {ProfileUpdateManyAndReturnArgs} args - Arguments to update many Profiles.
+     * @example
+     * // Update many Profiles
+     * const profile = await prisma.profile.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Profiles and only return the `id`
+     * const profileWithIdOnly = await prisma.profile.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProfileUpdateManyAndReturnArgs>(args: SelectSubset<T, ProfileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Profile.
+     * @param {ProfileUpsertArgs} args - Arguments to update or create a Profile.
+     * @example
+     * // Update or create a Profile
+     * const profile = await prisma.profile.upsert({
+     *   create: {
+     *     // ... data to create a Profile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Profile we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProfileUpsertArgs>(args: SelectSubset<T, ProfileUpsertArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Profiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileCountArgs} args - Arguments to filter Profiles to count.
+     * @example
+     * // Count the number of Profiles
+     * const count = await prisma.profile.count({
+     *   where: {
+     *     // ... the filter for the Profiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProfileCountArgs>(
+      args?: Subset<T, ProfileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProfileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Profile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProfileAggregateArgs>(args: Subset<T, ProfileAggregateArgs>): Prisma.PrismaPromise<GetProfileAggregateType<T>>
+
+    /**
+     * Group by Profile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProfileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProfileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProfileGroupByArgs['orderBy'] }
+        : { orderBy?: ProfileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Profile model
+   */
+  readonly fields: ProfileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Profile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    membership<T extends MembershipDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MembershipDefaultArgs<ExtArgs>>): Prisma__MembershipClient<$Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Profile model
+   */
+  interface ProfileFieldRefs {
+    readonly id: FieldRef<"Profile", 'String'>
+    readonly phone: FieldRef<"Profile", 'String'>
+    readonly major: FieldRef<"Profile", 'String'>
+    readonly gradYear: FieldRef<"Profile", 'Int'>
+    readonly bio: FieldRef<"Profile", 'String'>
+    readonly createdAt: FieldRef<"Profile", 'DateTime'>
+    readonly updatedAt: FieldRef<"Profile", 'DateTime'>
+    readonly membershipId: FieldRef<"Profile", 'String'>
+    readonly userId: FieldRef<"Profile", 'String'>
+    readonly chapterId: FieldRef<"Profile", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Profile findUnique
+   */
+  export type ProfileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which Profile to fetch.
+     */
+    where: ProfileWhereUniqueInput
+  }
+
+  /**
+   * Profile findUniqueOrThrow
+   */
+  export type ProfileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which Profile to fetch.
+     */
+    where: ProfileWhereUniqueInput
+  }
+
+  /**
+   * Profile findFirst
+   */
+  export type ProfileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which Profile to fetch.
+     */
+    where?: ProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Profiles to fetch.
+     */
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Profiles.
+     */
+    cursor?: ProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Profiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Profiles.
+     */
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
+   * Profile findFirstOrThrow
+   */
+  export type ProfileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which Profile to fetch.
+     */
+    where?: ProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Profiles to fetch.
+     */
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Profiles.
+     */
+    cursor?: ProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Profiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Profiles.
+     */
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
+   * Profile findMany
+   */
+  export type ProfileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which Profiles to fetch.
+     */
+    where?: ProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Profiles to fetch.
+     */
+    orderBy?: ProfileOrderByWithRelationInput | ProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Profiles.
+     */
+    cursor?: ProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Profiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Profiles.
+     */
+    skip?: number
+    distinct?: ProfileScalarFieldEnum | ProfileScalarFieldEnum[]
+  }
+
+  /**
+   * Profile create
+   */
+  export type ProfileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Profile.
+     */
+    data: XOR<ProfileCreateInput, ProfileUncheckedCreateInput>
+  }
+
+  /**
+   * Profile createMany
+   */
+  export type ProfileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Profiles.
+     */
+    data: ProfileCreateManyInput | ProfileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Profile createManyAndReturn
+   */
+  export type ProfileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * The data used to create many Profiles.
+     */
+    data: ProfileCreateManyInput | ProfileCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Profile update
+   */
+  export type ProfileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Profile.
+     */
+    data: XOR<ProfileUpdateInput, ProfileUncheckedUpdateInput>
+    /**
+     * Choose, which Profile to update.
+     */
+    where: ProfileWhereUniqueInput
+  }
+
+  /**
+   * Profile updateMany
+   */
+  export type ProfileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Profiles.
+     */
+    data: XOR<ProfileUpdateManyMutationInput, ProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which Profiles to update
+     */
+    where?: ProfileWhereInput
+    /**
+     * Limit how many Profiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Profile updateManyAndReturn
+   */
+  export type ProfileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * The data used to update Profiles.
+     */
+    data: XOR<ProfileUpdateManyMutationInput, ProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which Profiles to update
+     */
+    where?: ProfileWhereInput
+    /**
+     * Limit how many Profiles to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Profile upsert
+   */
+  export type ProfileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Profile to update in case it exists.
+     */
+    where: ProfileWhereUniqueInput
+    /**
+     * In case the Profile found by the `where` argument doesn't exist, create a new Profile with this data.
+     */
+    create: XOR<ProfileCreateInput, ProfileUncheckedCreateInput>
+    /**
+     * In case the Profile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProfileUpdateInput, ProfileUncheckedUpdateInput>
+  }
+
+  /**
+   * Profile delete
+   */
+  export type ProfileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+    /**
+     * Filter which Profile to delete.
+     */
+    where: ProfileWhereUniqueInput
+  }
+
+  /**
+   * Profile deleteMany
+   */
+  export type ProfileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Profiles to delete
+     */
+    where?: ProfileWhereInput
+    /**
+     * Limit how many Profiles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Profile without action
+   */
+  export type ProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Profile
+     */
+    select?: ProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Profile
+     */
+    omit?: ProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProfileInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Transaction
    */
 
@@ -22734,6 +24095,22 @@ export namespace Prisma {
   export type DuesPaymentScalarFieldEnum = (typeof DuesPaymentScalarFieldEnum)[keyof typeof DuesPaymentScalarFieldEnum]
 
 
+  export const ProfileScalarFieldEnum: {
+    id: 'id',
+    phone: 'phone',
+    major: 'major',
+    gradYear: 'gradYear',
+    bio: 'bio',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    membershipId: 'membershipId',
+    userId: 'userId',
+    chapterId: 'chapterId'
+  };
+
+  export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
   export const TransactionScalarFieldEnum: {
     id: 'id',
     amount: 'amount',
@@ -23002,6 +24379,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableFilter<"Chapter"> | string | null
     memberships?: MembershipListRelationFilter
+    profiles?: ProfileListRelationFilter
     subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
     invites?: InviteListRelationFilter
     events?: EventListRelationFilter
@@ -23025,6 +24403,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrderInput | SortOrder
     memberships?: MembershipOrderByRelationAggregateInput
+    profiles?: ProfileOrderByRelationAggregateInput
     subscription?: SubscriptionOrderByWithRelationInput
     invites?: InviteOrderByRelationAggregateInput
     events?: EventOrderByRelationAggregateInput
@@ -23051,6 +24430,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableFilter<"Chapter"> | string | null
     memberships?: MembershipListRelationFilter
+    profiles?: ProfileListRelationFilter
     subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
     invites?: InviteListRelationFilter
     events?: EventListRelationFilter
@@ -23108,6 +24488,7 @@ export namespace Prisma {
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     memberships?: MembershipListRelationFilter
+    profiles?: ProfileListRelationFilter
     acceptedInvites?: InviteListRelationFilter
     createdInvites?: InviteListRelationFilter
     createdEvents?: EventListRelationFilter
@@ -23130,6 +24511,7 @@ export namespace Prisma {
     accounts?: AccountOrderByRelationAggregateInput
     sessions?: SessionOrderByRelationAggregateInput
     memberships?: MembershipOrderByRelationAggregateInput
+    profiles?: ProfileOrderByRelationAggregateInput
     acceptedInvites?: InviteOrderByRelationAggregateInput
     createdInvites?: InviteOrderByRelationAggregateInput
     createdEvents?: EventOrderByRelationAggregateInput
@@ -23155,6 +24537,7 @@ export namespace Prisma {
     accounts?: AccountListRelationFilter
     sessions?: SessionListRelationFilter
     memberships?: MembershipListRelationFilter
+    profiles?: ProfileListRelationFilter
     acceptedInvites?: InviteListRelationFilter
     createdInvites?: InviteListRelationFilter
     createdEvents?: EventListRelationFilter
@@ -23205,6 +24588,7 @@ export namespace Prisma {
     chapterId?: StringFilter<"Membership"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+    profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
   }
 
   export type MembershipOrderByWithRelationInput = {
@@ -23216,6 +24600,7 @@ export namespace Prisma {
     chapterId?: SortOrder
     user?: UserOrderByWithRelationInput
     chapter?: ChapterOrderByWithRelationInput
+    profile?: ProfileOrderByWithRelationInput
   }
 
   export type MembershipWhereUniqueInput = Prisma.AtLeast<{
@@ -23231,6 +24616,7 @@ export namespace Prisma {
     chapterId?: StringFilter<"Membership"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+    profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
   }, "id" | "userId_chapterId">
 
   export type MembershipOrderByWithAggregationInput = {
@@ -24241,6 +25627,94 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"DuesPayment"> | string
   }
 
+  export type ProfileWhereInput = {
+    AND?: ProfileWhereInput | ProfileWhereInput[]
+    OR?: ProfileWhereInput[]
+    NOT?: ProfileWhereInput | ProfileWhereInput[]
+    id?: StringFilter<"Profile"> | string
+    phone?: StringNullableFilter<"Profile"> | string | null
+    major?: StringNullableFilter<"Profile"> | string | null
+    gradYear?: IntNullableFilter<"Profile"> | number | null
+    bio?: StringNullableFilter<"Profile"> | string | null
+    createdAt?: DateTimeFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeFilter<"Profile"> | Date | string
+    membershipId?: StringFilter<"Profile"> | string
+    userId?: StringFilter<"Profile"> | string
+    chapterId?: StringFilter<"Profile"> | string
+    membership?: XOR<MembershipScalarRelationFilter, MembershipWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }
+
+  export type ProfileOrderByWithRelationInput = {
+    id?: SortOrder
+    phone?: SortOrderInput | SortOrder
+    major?: SortOrderInput | SortOrder
+    gradYear?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    membershipId?: SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+    membership?: MembershipOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+    chapter?: ChapterOrderByWithRelationInput
+  }
+
+  export type ProfileWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    membershipId?: string
+    AND?: ProfileWhereInput | ProfileWhereInput[]
+    OR?: ProfileWhereInput[]
+    NOT?: ProfileWhereInput | ProfileWhereInput[]
+    phone?: StringNullableFilter<"Profile"> | string | null
+    major?: StringNullableFilter<"Profile"> | string | null
+    gradYear?: IntNullableFilter<"Profile"> | number | null
+    bio?: StringNullableFilter<"Profile"> | string | null
+    createdAt?: DateTimeFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeFilter<"Profile"> | Date | string
+    userId?: StringFilter<"Profile"> | string
+    chapterId?: StringFilter<"Profile"> | string
+    membership?: XOR<MembershipScalarRelationFilter, MembershipWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }, "id" | "membershipId">
+
+  export type ProfileOrderByWithAggregationInput = {
+    id?: SortOrder
+    phone?: SortOrderInput | SortOrder
+    major?: SortOrderInput | SortOrder
+    gradYear?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    membershipId?: SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+    _count?: ProfileCountOrderByAggregateInput
+    _avg?: ProfileAvgOrderByAggregateInput
+    _max?: ProfileMaxOrderByAggregateInput
+    _min?: ProfileMinOrderByAggregateInput
+    _sum?: ProfileSumOrderByAggregateInput
+  }
+
+  export type ProfileScalarWhereWithAggregatesInput = {
+    AND?: ProfileScalarWhereWithAggregatesInput | ProfileScalarWhereWithAggregatesInput[]
+    OR?: ProfileScalarWhereWithAggregatesInput[]
+    NOT?: ProfileScalarWhereWithAggregatesInput | ProfileScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Profile"> | string
+    phone?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    major?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    gradYear?: IntNullableWithAggregatesFilter<"Profile"> | number | null
+    bio?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
+    membershipId?: StringWithAggregatesFilter<"Profile"> | string
+    userId?: StringWithAggregatesFilter<"Profile"> | string
+    chapterId?: StringWithAggregatesFilter<"Profile"> | string
+  }
+
   export type TransactionWhereInput = {
     AND?: TransactionWhereInput | TransactionWhereInput[]
     OR?: TransactionWhereInput[]
@@ -24340,6 +25814,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
@@ -24363,6 +25838,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
@@ -24386,6 +25862,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
@@ -24409,6 +25886,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
@@ -24469,6 +25947,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
@@ -24491,6 +25970,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -24513,6 +25993,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
@@ -24535,6 +26016,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -24585,6 +26067,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutMembershipsInput
     chapter: ChapterCreateNestedOneWithoutMembershipsInput
+    profile?: ProfileCreateNestedOneWithoutMembershipInput
   }
 
   export type MembershipUncheckedCreateInput = {
@@ -24594,6 +26077,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     userId: string
     chapterId: string
+    profile?: ProfileUncheckedCreateNestedOneWithoutMembershipInput
   }
 
   export type MembershipUpdateInput = {
@@ -24603,6 +26087,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
     chapter?: ChapterUpdateOneRequiredWithoutMembershipsNestedInput
+    profile?: ProfileUpdateOneWithoutMembershipNestedInput
   }
 
   export type MembershipUncheckedUpdateInput = {
@@ -24612,6 +26097,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
     chapterId?: StringFieldUpdateOperationsInput | string
+    profile?: ProfileUncheckedUpdateOneWithoutMembershipNestedInput
   }
 
   export type MembershipCreateManyInput = {
@@ -25670,6 +27156,94 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type ProfileCreateInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membership: MembershipCreateNestedOneWithoutProfileInput
+    user: UserCreateNestedOneWithoutProfilesInput
+    chapter: ChapterCreateNestedOneWithoutProfilesInput
+  }
+
+  export type ProfileUncheckedCreateInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membershipId: string
+    userId: string
+    chapterId: string
+  }
+
+  export type ProfileUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membership?: MembershipUpdateOneRequiredWithoutProfileNestedInput
+    user?: UserUpdateOneRequiredWithoutProfilesNestedInput
+    chapter?: ChapterUpdateOneRequiredWithoutProfilesNestedInput
+  }
+
+  export type ProfileUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membershipId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProfileCreateManyInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membershipId: string
+    userId: string
+    chapterId: string
+  }
+
+  export type ProfileUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProfileUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membershipId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type TransactionCreateInput = {
     id?: string
     amount: number
@@ -25805,6 +27379,12 @@ export namespace Prisma {
     none?: MembershipWhereInput
   }
 
+  export type ProfileListRelationFilter = {
+    every?: ProfileWhereInput
+    some?: ProfileWhereInput
+    none?: ProfileWhereInput
+  }
+
   export type SubscriptionNullableScalarRelationFilter = {
     is?: SubscriptionWhereInput | null
     isNot?: SubscriptionWhereInput | null
@@ -25870,6 +27450,10 @@ export namespace Prisma {
   }
 
   export type MembershipOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProfileOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -26098,6 +27682,11 @@ export namespace Prisma {
   export type ChapterScalarRelationFilter = {
     is?: ChapterWhereInput
     isNot?: ChapterWhereInput
+  }
+
+  export type ProfileNullableScalarRelationFilter = {
+    is?: ProfileWhereInput | null
+    isNot?: ProfileWhereInput | null
   }
 
   export type MembershipUserIdChapterIdCompoundUniqueInput = {
@@ -26877,6 +28466,58 @@ export namespace Prisma {
     amount?: SortOrder
   }
 
+  export type MembershipScalarRelationFilter = {
+    is?: MembershipWhereInput
+    isNot?: MembershipWhereInput
+  }
+
+  export type ProfileCountOrderByAggregateInput = {
+    id?: SortOrder
+    phone?: SortOrder
+    major?: SortOrder
+    gradYear?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    membershipId?: SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type ProfileAvgOrderByAggregateInput = {
+    gradYear?: SortOrder
+  }
+
+  export type ProfileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    phone?: SortOrder
+    major?: SortOrder
+    gradYear?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    membershipId?: SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type ProfileMinOrderByAggregateInput = {
+    id?: SortOrder
+    phone?: SortOrder
+    major?: SortOrder
+    gradYear?: SortOrder
+    bio?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    membershipId?: SortOrder
+    userId?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type ProfileSumOrderByAggregateInput = {
+    gradYear?: SortOrder
+  }
+
   export type EnumTransactionTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.TransactionType | EnumTransactionTypeFieldRefInput<$PrismaModel>
     in?: $Enums.TransactionType[] | ListEnumTransactionTypeFieldRefInput<$PrismaModel>
@@ -26956,6 +28597,13 @@ export namespace Prisma {
     connect?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
   }
 
+  export type ProfileCreateNestedManyWithoutChapterInput = {
+    create?: XOR<ProfileCreateWithoutChapterInput, ProfileUncheckedCreateWithoutChapterInput> | ProfileCreateWithoutChapterInput[] | ProfileUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutChapterInput | ProfileCreateOrConnectWithoutChapterInput[]
+    createMany?: ProfileCreateManyChapterInputEnvelope
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+  }
+
   export type SubscriptionCreateNestedOneWithoutChapterInput = {
     create?: XOR<SubscriptionCreateWithoutChapterInput, SubscriptionUncheckedCreateWithoutChapterInput>
     connectOrCreate?: SubscriptionCreateOrConnectWithoutChapterInput
@@ -27030,6 +28678,13 @@ export namespace Prisma {
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
     createMany?: MembershipCreateManyChapterInputEnvelope
     connect?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+  }
+
+  export type ProfileUncheckedCreateNestedManyWithoutChapterInput = {
+    create?: XOR<ProfileCreateWithoutChapterInput, ProfileUncheckedCreateWithoutChapterInput> | ProfileCreateWithoutChapterInput[] | ProfileUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutChapterInput | ProfileCreateOrConnectWithoutChapterInput[]
+    createMany?: ProfileCreateManyChapterInputEnvelope
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
   }
 
   export type SubscriptionUncheckedCreateNestedOneWithoutChapterInput = {
@@ -27125,6 +28780,20 @@ export namespace Prisma {
     update?: MembershipUpdateWithWhereUniqueWithoutChapterInput | MembershipUpdateWithWhereUniqueWithoutChapterInput[]
     updateMany?: MembershipUpdateManyWithWhereWithoutChapterInput | MembershipUpdateManyWithWhereWithoutChapterInput[]
     deleteMany?: MembershipScalarWhereInput | MembershipScalarWhereInput[]
+  }
+
+  export type ProfileUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<ProfileCreateWithoutChapterInput, ProfileUncheckedCreateWithoutChapterInput> | ProfileCreateWithoutChapterInput[] | ProfileUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutChapterInput | ProfileCreateOrConnectWithoutChapterInput[]
+    upsert?: ProfileUpsertWithWhereUniqueWithoutChapterInput | ProfileUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: ProfileCreateManyChapterInputEnvelope
+    set?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    disconnect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    delete?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    update?: ProfileUpdateWithWhereUniqueWithoutChapterInput | ProfileUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: ProfileUpdateManyWithWhereWithoutChapterInput | ProfileUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
   }
 
   export type SubscriptionUpdateOneWithoutChapterNestedInput = {
@@ -27275,6 +28944,20 @@ export namespace Prisma {
     update?: MembershipUpdateWithWhereUniqueWithoutChapterInput | MembershipUpdateWithWhereUniqueWithoutChapterInput[]
     updateMany?: MembershipUpdateManyWithWhereWithoutChapterInput | MembershipUpdateManyWithWhereWithoutChapterInput[]
     deleteMany?: MembershipScalarWhereInput | MembershipScalarWhereInput[]
+  }
+
+  export type ProfileUncheckedUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<ProfileCreateWithoutChapterInput, ProfileUncheckedCreateWithoutChapterInput> | ProfileCreateWithoutChapterInput[] | ProfileUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutChapterInput | ProfileCreateOrConnectWithoutChapterInput[]
+    upsert?: ProfileUpsertWithWhereUniqueWithoutChapterInput | ProfileUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: ProfileCreateManyChapterInputEnvelope
+    set?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    disconnect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    delete?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    update?: ProfileUpdateWithWhereUniqueWithoutChapterInput | ProfileUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: ProfileUpdateManyWithWhereWithoutChapterInput | ProfileUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
   }
 
   export type SubscriptionUncheckedUpdateOneWithoutChapterNestedInput = {
@@ -27434,6 +29117,13 @@ export namespace Prisma {
     connect?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
   }
 
+  export type ProfileCreateNestedManyWithoutUserInput = {
+    create?: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput> | ProfileCreateWithoutUserInput[] | ProfileUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutUserInput | ProfileCreateOrConnectWithoutUserInput[]
+    createMany?: ProfileCreateManyUserInputEnvelope
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+  }
+
   export type InviteCreateNestedManyWithoutAcceptedByInput = {
     create?: XOR<InviteCreateWithoutAcceptedByInput, InviteUncheckedCreateWithoutAcceptedByInput> | InviteCreateWithoutAcceptedByInput[] | InviteUncheckedCreateWithoutAcceptedByInput[]
     connectOrCreate?: InviteCreateOrConnectWithoutAcceptedByInput | InviteCreateOrConnectWithoutAcceptedByInput[]
@@ -27509,6 +29199,13 @@ export namespace Prisma {
     connectOrCreate?: MembershipCreateOrConnectWithoutUserInput | MembershipCreateOrConnectWithoutUserInput[]
     createMany?: MembershipCreateManyUserInputEnvelope
     connect?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+  }
+
+  export type ProfileUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput> | ProfileCreateWithoutUserInput[] | ProfileUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutUserInput | ProfileCreateOrConnectWithoutUserInput[]
+    createMany?: ProfileCreateManyUserInputEnvelope
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
   }
 
   export type InviteUncheckedCreateNestedManyWithoutAcceptedByInput = {
@@ -27611,6 +29308,20 @@ export namespace Prisma {
     update?: MembershipUpdateWithWhereUniqueWithoutUserInput | MembershipUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: MembershipUpdateManyWithWhereWithoutUserInput | MembershipUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: MembershipScalarWhereInput | MembershipScalarWhereInput[]
+  }
+
+  export type ProfileUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput> | ProfileCreateWithoutUserInput[] | ProfileUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutUserInput | ProfileCreateOrConnectWithoutUserInput[]
+    upsert?: ProfileUpsertWithWhereUniqueWithoutUserInput | ProfileUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ProfileCreateManyUserInputEnvelope
+    set?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    disconnect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    delete?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    update?: ProfileUpdateWithWhereUniqueWithoutUserInput | ProfileUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ProfileUpdateManyWithWhereWithoutUserInput | ProfileUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
   }
 
   export type InviteUpdateManyWithoutAcceptedByNestedInput = {
@@ -27767,6 +29478,20 @@ export namespace Prisma {
     deleteMany?: MembershipScalarWhereInput | MembershipScalarWhereInput[]
   }
 
+  export type ProfileUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput> | ProfileCreateWithoutUserInput[] | ProfileUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProfileCreateOrConnectWithoutUserInput | ProfileCreateOrConnectWithoutUserInput[]
+    upsert?: ProfileUpsertWithWhereUniqueWithoutUserInput | ProfileUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ProfileCreateManyUserInputEnvelope
+    set?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    disconnect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    delete?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    connect?: ProfileWhereUniqueInput | ProfileWhereUniqueInput[]
+    update?: ProfileUpdateWithWhereUniqueWithoutUserInput | ProfileUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ProfileUpdateManyWithWhereWithoutUserInput | ProfileUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
+  }
+
   export type InviteUncheckedUpdateManyWithoutAcceptedByNestedInput = {
     create?: XOR<InviteCreateWithoutAcceptedByInput, InviteUncheckedCreateWithoutAcceptedByInput> | InviteCreateWithoutAcceptedByInput[] | InviteUncheckedCreateWithoutAcceptedByInput[]
     connectOrCreate?: InviteCreateOrConnectWithoutAcceptedByInput | InviteCreateOrConnectWithoutAcceptedByInput[]
@@ -27891,6 +29616,18 @@ export namespace Prisma {
     connect?: ChapterWhereUniqueInput
   }
 
+  export type ProfileCreateNestedOneWithoutMembershipInput = {
+    create?: XOR<ProfileCreateWithoutMembershipInput, ProfileUncheckedCreateWithoutMembershipInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutMembershipInput
+    connect?: ProfileWhereUniqueInput
+  }
+
+  export type ProfileUncheckedCreateNestedOneWithoutMembershipInput = {
+    create?: XOR<ProfileCreateWithoutMembershipInput, ProfileUncheckedCreateWithoutMembershipInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutMembershipInput
+    connect?: ProfileWhereUniqueInput
+  }
+
   export type EnumMembershipRoleFieldUpdateOperationsInput = {
     set?: $Enums.MembershipRole
   }
@@ -27909,6 +29646,26 @@ export namespace Prisma {
     upsert?: ChapterUpsertWithoutMembershipsInput
     connect?: ChapterWhereUniqueInput
     update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutMembershipsInput, ChapterUpdateWithoutMembershipsInput>, ChapterUncheckedUpdateWithoutMembershipsInput>
+  }
+
+  export type ProfileUpdateOneWithoutMembershipNestedInput = {
+    create?: XOR<ProfileCreateWithoutMembershipInput, ProfileUncheckedCreateWithoutMembershipInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutMembershipInput
+    upsert?: ProfileUpsertWithoutMembershipInput
+    disconnect?: ProfileWhereInput | boolean
+    delete?: ProfileWhereInput | boolean
+    connect?: ProfileWhereUniqueInput
+    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutMembershipInput, ProfileUpdateWithoutMembershipInput>, ProfileUncheckedUpdateWithoutMembershipInput>
+  }
+
+  export type ProfileUncheckedUpdateOneWithoutMembershipNestedInput = {
+    create?: XOR<ProfileCreateWithoutMembershipInput, ProfileUncheckedCreateWithoutMembershipInput>
+    connectOrCreate?: ProfileCreateOrConnectWithoutMembershipInput
+    upsert?: ProfileUpsertWithoutMembershipInput
+    disconnect?: ProfileWhereInput | boolean
+    delete?: ProfileWhereInput | boolean
+    connect?: ProfileWhereUniqueInput
+    update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutMembershipInput, ProfileUpdateWithoutMembershipInput>, ProfileUncheckedUpdateWithoutMembershipInput>
   }
 
   export type ChapterCreateNestedOneWithoutSubscriptionInput = {
@@ -28405,6 +30162,48 @@ export namespace Prisma {
     update?: XOR<XOR<TransactionUpdateToOneWithWhereWithoutDuesPaymentInput, TransactionUpdateWithoutDuesPaymentInput>, TransactionUncheckedUpdateWithoutDuesPaymentInput>
   }
 
+  export type MembershipCreateNestedOneWithoutProfileInput = {
+    create?: XOR<MembershipCreateWithoutProfileInput, MembershipUncheckedCreateWithoutProfileInput>
+    connectOrCreate?: MembershipCreateOrConnectWithoutProfileInput
+    connect?: MembershipWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutProfilesInput = {
+    create?: XOR<UserCreateWithoutProfilesInput, UserUncheckedCreateWithoutProfilesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProfilesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type ChapterCreateNestedOneWithoutProfilesInput = {
+    create?: XOR<ChapterCreateWithoutProfilesInput, ChapterUncheckedCreateWithoutProfilesInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutProfilesInput
+    connect?: ChapterWhereUniqueInput
+  }
+
+  export type MembershipUpdateOneRequiredWithoutProfileNestedInput = {
+    create?: XOR<MembershipCreateWithoutProfileInput, MembershipUncheckedCreateWithoutProfileInput>
+    connectOrCreate?: MembershipCreateOrConnectWithoutProfileInput
+    upsert?: MembershipUpsertWithoutProfileInput
+    connect?: MembershipWhereUniqueInput
+    update?: XOR<XOR<MembershipUpdateToOneWithWhereWithoutProfileInput, MembershipUpdateWithoutProfileInput>, MembershipUncheckedUpdateWithoutProfileInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutProfilesNestedInput = {
+    create?: XOR<UserCreateWithoutProfilesInput, UserUncheckedCreateWithoutProfilesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProfilesInput
+    upsert?: UserUpsertWithoutProfilesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProfilesInput, UserUpdateWithoutProfilesInput>, UserUncheckedUpdateWithoutProfilesInput>
+  }
+
+  export type ChapterUpdateOneRequiredWithoutProfilesNestedInput = {
+    create?: XOR<ChapterCreateWithoutProfilesInput, ChapterUncheckedCreateWithoutProfilesInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutProfilesInput
+    upsert?: ChapterUpsertWithoutProfilesInput
+    connect?: ChapterWhereUniqueInput
+    update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutProfilesInput, ChapterUpdateWithoutProfilesInput>, ChapterUncheckedUpdateWithoutProfilesInput>
+  }
+
   export type ChapterCreateNestedOneWithoutTransactionsInput = {
     create?: XOR<ChapterCreateWithoutTransactionsInput, ChapterUncheckedCreateWithoutTransactionsInput>
     connectOrCreate?: ChapterCreateOrConnectWithoutTransactionsInput
@@ -28821,6 +30620,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutMembershipsInput
+    profile?: ProfileCreateNestedOneWithoutMembershipInput
   }
 
   export type MembershipUncheckedCreateWithoutChapterInput = {
@@ -28829,6 +30629,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
+    profile?: ProfileUncheckedCreateNestedOneWithoutMembershipInput
   }
 
   export type MembershipCreateOrConnectWithoutChapterInput = {
@@ -28838,6 +30639,40 @@ export namespace Prisma {
 
   export type MembershipCreateManyChapterInputEnvelope = {
     data: MembershipCreateManyChapterInput | MembershipCreateManyChapterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProfileCreateWithoutChapterInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membership: MembershipCreateNestedOneWithoutProfileInput
+    user: UserCreateNestedOneWithoutProfilesInput
+  }
+
+  export type ProfileUncheckedCreateWithoutChapterInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membershipId: string
+    userId: string
+  }
+
+  export type ProfileCreateOrConnectWithoutChapterInput = {
+    where: ProfileWhereUniqueInput
+    create: XOR<ProfileCreateWithoutChapterInput, ProfileUncheckedCreateWithoutChapterInput>
+  }
+
+  export type ProfileCreateManyChapterInputEnvelope = {
+    data: ProfileCreateManyChapterInput | ProfileCreateManyChapterInput[]
     skipDuplicates?: boolean
   }
 
@@ -29198,6 +31033,38 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Membership"> | Date | string
     userId?: StringFilter<"Membership"> | string
     chapterId?: StringFilter<"Membership"> | string
+  }
+
+  export type ProfileUpsertWithWhereUniqueWithoutChapterInput = {
+    where: ProfileWhereUniqueInput
+    update: XOR<ProfileUpdateWithoutChapterInput, ProfileUncheckedUpdateWithoutChapterInput>
+    create: XOR<ProfileCreateWithoutChapterInput, ProfileUncheckedCreateWithoutChapterInput>
+  }
+
+  export type ProfileUpdateWithWhereUniqueWithoutChapterInput = {
+    where: ProfileWhereUniqueInput
+    data: XOR<ProfileUpdateWithoutChapterInput, ProfileUncheckedUpdateWithoutChapterInput>
+  }
+
+  export type ProfileUpdateManyWithWhereWithoutChapterInput = {
+    where: ProfileScalarWhereInput
+    data: XOR<ProfileUpdateManyMutationInput, ProfileUncheckedUpdateManyWithoutChapterInput>
+  }
+
+  export type ProfileScalarWhereInput = {
+    AND?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
+    OR?: ProfileScalarWhereInput[]
+    NOT?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
+    id?: StringFilter<"Profile"> | string
+    phone?: StringNullableFilter<"Profile"> | string | null
+    major?: StringNullableFilter<"Profile"> | string | null
+    gradYear?: IntNullableFilter<"Profile"> | number | null
+    bio?: StringNullableFilter<"Profile"> | string | null
+    createdAt?: DateTimeFilter<"Profile"> | Date | string
+    updatedAt?: DateTimeFilter<"Profile"> | Date | string
+    membershipId?: StringFilter<"Profile"> | string
+    userId?: StringFilter<"Profile"> | string
+    chapterId?: StringFilter<"Profile"> | string
   }
 
   export type SubscriptionUpsertWithoutChapterInput = {
@@ -29580,6 +31447,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chapter: ChapterCreateNestedOneWithoutMembershipsInput
+    profile?: ProfileCreateNestedOneWithoutMembershipInput
   }
 
   export type MembershipUncheckedCreateWithoutUserInput = {
@@ -29588,6 +31456,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     chapterId: string
+    profile?: ProfileUncheckedCreateNestedOneWithoutMembershipInput
   }
 
   export type MembershipCreateOrConnectWithoutUserInput = {
@@ -29597,6 +31466,40 @@ export namespace Prisma {
 
   export type MembershipCreateManyUserInputEnvelope = {
     data: MembershipCreateManyUserInput | MembershipCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ProfileCreateWithoutUserInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membership: MembershipCreateNestedOneWithoutProfileInput
+    chapter: ChapterCreateNestedOneWithoutProfilesInput
+  }
+
+  export type ProfileUncheckedCreateWithoutUserInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membershipId: string
+    chapterId: string
+  }
+
+  export type ProfileCreateOrConnectWithoutUserInput = {
+    where: ProfileWhereUniqueInput
+    create: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput>
+  }
+
+  export type ProfileCreateManyUserInputEnvelope = {
+    data: ProfileCreateManyUserInput | ProfileCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -29966,6 +31869,22 @@ export namespace Prisma {
     data: XOR<MembershipUpdateManyMutationInput, MembershipUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type ProfileUpsertWithWhereUniqueWithoutUserInput = {
+    where: ProfileWhereUniqueInput
+    update: XOR<ProfileUpdateWithoutUserInput, ProfileUncheckedUpdateWithoutUserInput>
+    create: XOR<ProfileCreateWithoutUserInput, ProfileUncheckedCreateWithoutUserInput>
+  }
+
+  export type ProfileUpdateWithWhereUniqueWithoutUserInput = {
+    where: ProfileWhereUniqueInput
+    data: XOR<ProfileUpdateWithoutUserInput, ProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ProfileUpdateManyWithWhereWithoutUserInput = {
+    where: ProfileScalarWhereInput
+    data: XOR<ProfileUpdateManyMutationInput, ProfileUncheckedUpdateManyWithoutUserInput>
+  }
+
   export type InviteUpsertWithWhereUniqueWithoutAcceptedByInput = {
     where: InviteWhereUniqueInput
     update: XOR<InviteUpdateWithoutAcceptedByInput, InviteUncheckedUpdateWithoutAcceptedByInput>
@@ -30117,6 +32036,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
@@ -30138,6 +32058,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30163,6 +32084,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
@@ -30185,6 +32107,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
@@ -30200,6 +32123,35 @@ export namespace Prisma {
   export type ChapterCreateOrConnectWithoutMembershipsInput = {
     where: ChapterWhereUniqueInput
     create: XOR<ChapterCreateWithoutMembershipsInput, ChapterUncheckedCreateWithoutMembershipsInput>
+  }
+
+  export type ProfileCreateWithoutMembershipInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutProfilesInput
+    chapter: ChapterCreateNestedOneWithoutProfilesInput
+  }
+
+  export type ProfileUncheckedCreateWithoutMembershipInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    chapterId: string
+  }
+
+  export type ProfileCreateOrConnectWithoutMembershipInput = {
+    where: ProfileWhereUniqueInput
+    create: XOR<ProfileCreateWithoutMembershipInput, ProfileUncheckedCreateWithoutMembershipInput>
   }
 
   export type UserUpsertWithoutMembershipsInput = {
@@ -30224,6 +32176,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
@@ -30245,6 +32198,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30276,6 +32230,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
@@ -30298,6 +32253,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
@@ -30308,6 +32264,41 @@ export namespace Prisma {
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ProfileUpsertWithoutMembershipInput = {
+    update: XOR<ProfileUpdateWithoutMembershipInput, ProfileUncheckedUpdateWithoutMembershipInput>
+    create: XOR<ProfileCreateWithoutMembershipInput, ProfileUncheckedCreateWithoutMembershipInput>
+    where?: ProfileWhereInput
+  }
+
+  export type ProfileUpdateToOneWithWhereWithoutMembershipInput = {
+    where?: ProfileWhereInput
+    data: XOR<ProfileUpdateWithoutMembershipInput, ProfileUncheckedUpdateWithoutMembershipInput>
+  }
+
+  export type ProfileUpdateWithoutMembershipInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutProfilesNestedInput
+    chapter?: ChapterUpdateOneRequiredWithoutProfilesNestedInput
+  }
+
+  export type ProfileUncheckedUpdateWithoutMembershipInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    chapterId?: StringFieldUpdateOperationsInput | string
   }
 
   export type ChapterCreateWithoutSubscriptionInput = {
@@ -30321,6 +32312,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
@@ -30343,6 +32335,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
@@ -30381,6 +32374,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
@@ -30403,6 +32397,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
@@ -30425,6 +32420,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
@@ -30446,6 +32442,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30483,6 +32480,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
@@ -30504,6 +32502,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30525,6 +32524,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
@@ -30546,6 +32546,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -30583,6 +32584,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
@@ -30604,6 +32606,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -30625,6 +32628,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
@@ -30647,6 +32651,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
@@ -30675,6 +32680,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
@@ -30696,6 +32702,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
@@ -30722,6 +32729,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
@@ -30743,6 +32751,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
@@ -30779,6 +32788,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
@@ -30801,6 +32811,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
@@ -30835,6 +32846,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
@@ -30856,6 +32868,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
@@ -30888,6 +32901,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
@@ -30909,6 +32923,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
@@ -30929,6 +32944,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
@@ -30951,6 +32967,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
@@ -30979,6 +32996,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
@@ -31000,6 +33018,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
@@ -31062,6 +33081,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
@@ -31084,6 +33104,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
@@ -31118,6 +33139,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
@@ -31139,6 +33161,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
@@ -31213,6 +33236,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
@@ -31234,6 +33258,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -31314,6 +33339,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
@@ -31335,6 +33361,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31356,6 +33383,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
@@ -31377,6 +33405,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -31402,6 +33431,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
@@ -31424,6 +33454,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
@@ -31463,6 +33494,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
@@ -31484,6 +33516,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -31515,6 +33548,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
@@ -31537,6 +33571,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
@@ -31559,6 +33594,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
@@ -31581,6 +33617,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
@@ -31619,6 +33656,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
@@ -31641,6 +33679,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
@@ -31663,6 +33702,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
@@ -31685,6 +33725,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
@@ -31723,6 +33764,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
@@ -31745,6 +33787,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
@@ -31767,6 +33810,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
@@ -31789,6 +33833,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
@@ -31869,6 +33914,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
@@ -31891,6 +33937,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
@@ -31929,6 +33976,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
@@ -31951,6 +33999,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
@@ -32010,6 +34059,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
@@ -32031,6 +34081,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32057,6 +34108,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
@@ -32078,6 +34130,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32143,6 +34196,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
@@ -32165,6 +34219,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
@@ -32236,6 +34291,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
@@ -32257,6 +34313,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32289,6 +34346,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
@@ -32310,6 +34368,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32365,6 +34424,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
@@ -32387,6 +34447,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
@@ -32415,6 +34476,7 @@ export namespace Prisma {
     accounts?: AccountCreateNestedManyWithoutUserInput
     sessions?: SessionCreateNestedManyWithoutUserInput
     memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
@@ -32436,6 +34498,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
     acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
@@ -32501,6 +34564,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
@@ -32523,6 +34587,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
@@ -32557,6 +34622,7 @@ export namespace Prisma {
     accounts?: AccountUpdateManyWithoutUserNestedInput
     sessions?: SessionUpdateManyWithoutUserNestedInput
     memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
@@ -32578,6 +34644,7 @@ export namespace Prisma {
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
     acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -32622,6 +34689,270 @@ export namespace Prisma {
     expenseId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type MembershipCreateWithoutProfileInput = {
+    id?: string
+    role?: $Enums.MembershipRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutMembershipsInput
+    chapter: ChapterCreateNestedOneWithoutMembershipsInput
+  }
+
+  export type MembershipUncheckedCreateWithoutProfileInput = {
+    id?: string
+    role?: $Enums.MembershipRole
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    chapterId: string
+  }
+
+  export type MembershipCreateOrConnectWithoutProfileInput = {
+    where: MembershipWhereUniqueInput
+    create: XOR<MembershipCreateWithoutProfileInput, MembershipUncheckedCreateWithoutProfileInput>
+  }
+
+  export type UserCreateWithoutProfilesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
+    approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutProfilesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutProfilesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutProfilesInput, UserUncheckedCreateWithoutProfilesInput>
+  }
+
+  export type ChapterCreateWithoutProfilesInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionCreateNestedOneWithoutChapterInput
+    invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    budgets?: BudgetCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
+    transactions?: TransactionCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterUncheckedCreateWithoutProfilesInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
+    invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterCreateOrConnectWithoutProfilesInput = {
+    where: ChapterWhereUniqueInput
+    create: XOR<ChapterCreateWithoutProfilesInput, ChapterUncheckedCreateWithoutProfilesInput>
+  }
+
+  export type MembershipUpsertWithoutProfileInput = {
+    update: XOR<MembershipUpdateWithoutProfileInput, MembershipUncheckedUpdateWithoutProfileInput>
+    create: XOR<MembershipCreateWithoutProfileInput, MembershipUncheckedCreateWithoutProfileInput>
+    where?: MembershipWhereInput
+  }
+
+  export type MembershipUpdateToOneWithWhereWithoutProfileInput = {
+    where?: MembershipWhereInput
+    data: XOR<MembershipUpdateWithoutProfileInput, MembershipUncheckedUpdateWithoutProfileInput>
+  }
+
+  export type MembershipUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
+    chapter?: ChapterUpdateOneRequiredWithoutMembershipsNestedInput
+  }
+
+  export type MembershipUncheckedUpdateWithoutProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUpsertWithoutProfilesInput = {
+    update: XOR<UserUpdateWithoutProfilesInput, UserUncheckedUpdateWithoutProfilesInput>
+    create: XOR<UserCreateWithoutProfilesInput, UserUncheckedCreateWithoutProfilesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutProfilesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutProfilesInput, UserUncheckedUpdateWithoutProfilesInput>
+  }
+
+  export type UserUpdateWithoutProfilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
+    approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutProfilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type ChapterUpsertWithoutProfilesInput = {
+    update: XOR<ChapterUpdateWithoutProfilesInput, ChapterUncheckedUpdateWithoutProfilesInput>
+    create: XOR<ChapterCreateWithoutProfilesInput, ChapterUncheckedCreateWithoutProfilesInput>
+    where?: ChapterWhereInput
+  }
+
+  export type ChapterUpdateToOneWithWhereWithoutProfilesInput = {
+    where?: ChapterWhereInput
+    data: XOR<ChapterUpdateWithoutProfilesInput, ChapterUncheckedUpdateWithoutProfilesInput>
+  }
+
+  export type ChapterUpdateWithoutProfilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
+    invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterUncheckedUpdateWithoutProfilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
+  }
+
   export type ChapterCreateWithoutTransactionsInput = {
     id?: string
     name: string
@@ -32633,6 +34964,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
     events?: EventCreateNestedManyWithoutChapterInput
@@ -32655,6 +34987,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     stripeCustomerId?: string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
@@ -32761,6 +35094,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
     events?: EventUpdateManyWithoutChapterNestedInput
@@ -32783,6 +35117,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
@@ -32879,6 +35214,18 @@ export namespace Prisma {
     role?: $Enums.MembershipRole
     createdAt?: Date | string
     updatedAt?: Date | string
+    userId: string
+  }
+
+  export type ProfileCreateManyChapterInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membershipId: string
     userId: string
   }
 
@@ -32993,6 +35340,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
+    profile?: ProfileUpdateOneWithoutMembershipNestedInput
   }
 
   export type MembershipUncheckedUpdateWithoutChapterInput = {
@@ -33001,6 +35349,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    profile?: ProfileUncheckedUpdateOneWithoutMembershipNestedInput
   }
 
   export type MembershipUncheckedUpdateManyWithoutChapterInput = {
@@ -33008,6 +35357,42 @@ export namespace Prisma {
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProfileUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membership?: MembershipUpdateOneRequiredWithoutProfileNestedInput
+    user?: UserUpdateOneRequiredWithoutProfilesNestedInput
+  }
+
+  export type ProfileUncheckedUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membershipId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProfileUncheckedUpdateManyWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membershipId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -33362,6 +35747,18 @@ export namespace Prisma {
     chapterId: string
   }
 
+  export type ProfileCreateManyUserInput = {
+    id?: string
+    phone?: string | null
+    major?: string | null
+    gradYear?: number | null
+    bio?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    membershipId: string
+    chapterId: string
+  }
+
   export type InviteCreateManyAcceptedByInput = {
     id?: string
     email: string
@@ -33529,6 +35926,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapter?: ChapterUpdateOneRequiredWithoutMembershipsNestedInput
+    profile?: ProfileUpdateOneWithoutMembershipNestedInput
   }
 
   export type MembershipUncheckedUpdateWithoutUserInput = {
@@ -33537,6 +35935,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapterId?: StringFieldUpdateOperationsInput | string
+    profile?: ProfileUncheckedUpdateOneWithoutMembershipNestedInput
   }
 
   export type MembershipUncheckedUpdateManyWithoutUserInput = {
@@ -33544,6 +35943,42 @@ export namespace Prisma {
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProfileUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membership?: MembershipUpdateOneRequiredWithoutProfileNestedInput
+    chapter?: ChapterUpdateOneRequiredWithoutProfilesNestedInput
+  }
+
+  export type ProfileUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membershipId?: StringFieldUpdateOperationsInput | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ProfileUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    major?: NullableStringFieldUpdateOperationsInput | string | null
+    gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    membershipId?: StringFieldUpdateOperationsInput | string
     chapterId?: StringFieldUpdateOperationsInput | string
   }
 
