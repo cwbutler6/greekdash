@@ -56,6 +56,7 @@ model Chapter {
   auditLogs       AuditLog[] // Audit logs for this chapter
   galleryImages   GalleryImage[] // One chapter has many gallery images
   contactMessages ContactMessage[] // One chapter has many contact messages
+  messageLogs     MessageLog[] // One chapter has many message logs
 
   // Finance relations
   budgets      Budget[] // One chapter has many budgets
@@ -412,13 +413,15 @@ model DuesPayment {
 }
 
 model Profile {
-  id        String   @id @default(cuid())
-  phone     String?
-  major     String?
-  gradYear  Int?
-  bio       String?  @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(cuid())
+  phone         String?
+  phoneVerified Boolean  @default(false)
+  smsEnabled    Boolean  @default(true)
+  major         String?
+  gradYear      Int?
+  bio           String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   // Foreign keys
   membershipId String @unique
@@ -455,5 +458,25 @@ model Transaction {
 
   @@index([chapterId])
   @@index([type])
+  @@index([createdAt])
+}
+
+model MessageLog {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  messageId String   @unique // External ID (Twilio SID or Resend ID)
+  type      String // "SMS" or "EMAIL"
+  recipient String // Phone number or email
+  content   String   @db.Text
+  status    String // Delivery status
+
+  // Multi-tenant relationship
+  chapter   Chapter @relation(fields: [chapterId], references: [id])
+  chapterId String
+
+  @@index([chapterId])
+  @@index([type])
+  @@index([status])
   @@index([createdAt])
 }

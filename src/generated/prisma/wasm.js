@@ -303,6 +303,8 @@ exports.Prisma.DuesPaymentScalarFieldEnum = {
 exports.Prisma.ProfileScalarFieldEnum = {
   id: 'id',
   phone: 'phone',
+  phoneVerified: 'phoneVerified',
+  smsEnabled: 'smsEnabled',
   major: 'major',
   gradYear: 'gradYear',
   bio: 'bio',
@@ -324,6 +326,18 @@ exports.Prisma.TransactionScalarFieldEnum = {
   chapterId: 'chapterId',
   expenseId: 'expenseId',
   duesPaymentId: 'duesPaymentId'
+};
+
+exports.Prisma.MessageLogScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  messageId: 'messageId',
+  type: 'type',
+  recipient: 'recipient',
+  content: 'content',
+  status: 'status',
+  chapterId: 'chapterId'
 };
 
 exports.Prisma.SortOrder = {
@@ -426,7 +440,8 @@ exports.Prisma.ModelName = {
   Expense: 'Expense',
   DuesPayment: 'DuesPayment',
   Profile: 'Profile',
-  Transaction: 'Transaction'
+  Transaction: 'Transaction',
+  MessageLog: 'MessageLog'
 };
 
 /**

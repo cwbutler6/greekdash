@@ -1,8 +1,9 @@
 import { requireChapterAccess } from '@/lib/auth';
 import { getCurrentUser } from '@/lib/auth';
 import { prisma } from '@/lib/db';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Phone } from 'lucide-react';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import ProfileForm from './profile-form';
 
 export default async function ProfilePage(props: { params: Promise<{ chapterSlug: string }> }) {
@@ -93,7 +94,19 @@ export default async function ProfilePage(props: { params: Promise<{ chapterSlug
           </p>
         </div>
         
-        <div className="p-6">
+        <div className="p-6 space-y-8">
+          <div className="flex justify-between items-center border-b pb-4 mb-4">
+            <h2 className="text-lg font-medium">Profile Information</h2>
+            <div className="flex gap-2">
+              <Link href={`/${chapterSlug}/profile/phone`}>
+                <Button variant="outline" size="sm" className="flex items-center gap-1">
+                  <Phone className="h-4 w-4" />
+                  <span>Phone Settings</span>
+                </Button>
+              </Link>
+            </div>
+          </div>
+          
           <ProfileForm 
             user={userMembership.user} 
             membership={membership}

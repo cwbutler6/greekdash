@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { sendEmail } from "@/lib/mail";
+import { sendSms } from "@/lib/sms";
 import { requireChapterAccess } from "@/lib/auth";
 import { MembershipRole } from "@/generated/prisma";
 
@@ -10,6 +11,8 @@ const broadcastSchema = z.object({
   subject: z.string().min(1, "Subject is required").max(100, "Subject cannot exceed 100 characters"),
   message: z.string().min(1, "Message content is required").max(5000, "Message cannot exceed 5000 characters"),
   recipientFilter: z.enum(["all", "admins", "members"]).optional().default("all"),
+  shouldSendEmail: z.boolean().optional().default(true),
+  shouldSendSms: z.boolean().optional().default(false),
 });
 
 export async function POST(
@@ -63,7 +66,15 @@ export async function POST(
       );
     }
     
-    const { subject, message, recipientFilter } = validationResult.data;
+    const { subject, message, recipientFilter, shouldSendEmail, shouldSendSms } = validationResult.data;
+    
+    // Ensure at least one delivery method is selected
+    if (!shouldSendEmail && !shouldSendSms) {
+      return NextResponse.json(
+        { message: "At least one delivery method (email or SMS) must be selected" },
+        { status: 400 }
+      );
+    }
     
     // Get the sender's information
     const sender = await prisma.user.findUnique({
@@ -103,6 +114,14 @@ export async function POST(
             name: true,
           },
         },
+        profile: {
+          select: {
+            id: true,
+            phone: true,
+            phoneVerified: true,
+            smsEnabled: true,
+          },
+        },
       },
     });
     
@@ -113,14 +132,27 @@ export async function POST(
       );
     }
     
-    // Prepare recipient list
-    const recipients = members
+    // Prepare recipient lists
+    const emailRecipients = shouldSendEmail ? members
       .filter(member => member.user.email) // Filter out any null emails
       .map(member => ({
         email: member.user.email as string,
         name: member.user.name || "",
         userId: member.user.id,
-      }));
+      })) : [];
+      
+    const smsRecipients = shouldSendSms ? members
+      .filter(member => 
+        member.profile?.phone && 
+        member.profile.phoneVerified && 
+        member.profile.smsEnabled
+      ) // Only include verified phones that have opted in
+      .map(member => ({
+        phone: member.profile?.phone as string,
+        name: member.user.name || "",
+        userId: member.user.id,
+        profileId: member.profile?.id,
+      })) : [];
     
     // Create an audit log entry for the broadcast
     await prisma.auditLog.create({
@@ -131,47 +163,121 @@ export async function POST(
         targetType: "CHAPTER",
         targetId: chapter.id,
         metadata: {
-          recipientCount: recipients.length,
+          emailRecipientCount: emailRecipients.length,
+          smsRecipientCount: smsRecipients.length,
           subject,
           recipientFilter,
+          deliveryMethods: {
+            email: shouldSendEmail,
+            sms: shouldSendSms,
+          },
           timestamp: new Date().toISOString(),
         },
       },
     });
     
-    // Send emails to all recipients in batches to avoid rate limits
-    const batchSize = 10;
-    const emailPromises = [];
+    // Process results tracking
+    let emailsSent = 0;
+    let smsSent = 0;
+    const errors: string[] = [];
     
-    for (let i = 0; i < recipients.length; i += batchSize) {
-      const batch = recipients.slice(i, i + batchSize);
+    // Send emails to recipients in batches to avoid rate limits
+    if (shouldSendEmail && emailRecipients.length > 0) {
+      const batchSize = 10;
+      // Define a specific type for email promise results instead of using 'any'
+      type EmailPromiseResult = { messageLog: { id: string } | null, success: boolean };
+      const emailPromises: Promise<EmailPromiseResult>[] = [];
       
-      for (const recipient of batch) {
-        emailPromises.push(
-          sendEmail(recipient.email, "chapterBroadcast", {
-            chapterName: chapter.name,
-            subject,
-            message,
-            senderName: sender.name || "Chapter Admin",
-          })
-        );
+      for (let i = 0; i < emailRecipients.length; i += batchSize) {
+        const batch = emailRecipients.slice(i, i + batchSize);
+        
+        for (const recipient of batch) {
+          emailPromises.push(
+            sendEmail(recipient.email, 'chapterBroadcast', {
+              chapterName: chapter.name,
+              subject,
+              message,
+              senderName: sender.name || 'Chapter Admin',
+            }).then(() => {
+              // Log the email in the database
+              return { success: true, messageLog: null } as EmailPromiseResult;
+            }).then(() => {
+              return prisma.messageLog.create({
+                data: {
+                  messageId: `email-${Date.now()}-${recipient.userId}`, // Generate a unique ID
+                  type: 'EMAIL',
+                  recipient: recipient.email,
+                  content: message,
+                  status: 'sent',
+                  chapterId: chapter.id,
+                },
+              }).then((messageLog) => {
+                emailsSent++;
+                return { success: true, messageLog };
+              });
+            }).catch((error: Error) => {
+              errors.push(`Failed to send email to ${recipient.email}: ${error.message}`);
+              return { success: false, messageLog: null } as EmailPromiseResult;
+            })
+          );
+        }
+        
+        // Wait for each batch to complete before starting the next one
+        if (emailPromises.length >= batchSize) {
+          await Promise.all(emailPromises);
+          emailPromises.length = 0;
+        }
       }
       
-      // Wait for each batch to complete before starting the next one
-      if (emailPromises.length >= batchSize) {
+      // Process any remaining emails in the final batch
+      if (emailPromises.length > 0) {
         await Promise.all(emailPromises);
-        emailPromises.length = 0;
       }
     }
     
-    // Process any remaining emails in the final batch
-    if (emailPromises.length > 0) {
-      await Promise.all(emailPromises);
+    // Send SMS to recipients
+    if (shouldSendSms && smsRecipients.length > 0) {
+      // Define type for SMS operation result to match the sendSms function return type
+      type SmsResult = { 
+        success: boolean; 
+        messageId?: string; 
+        status?: string; 
+        error?: string 
+      };
+      
+      const smsPromises = smsRecipients.map(recipient => {
+        // Format the SMS message (shorter and without HTML)
+        const smsBody = `${subject}: ${message.slice(0, 1500)}`; // Limit SMS length
+        
+        return sendSms({
+          to: recipient.phone,
+          body: smsBody,
+          chapterSlug,
+        }).then((result: SmsResult) => {
+          if (result.success) {
+            smsSent++;
+          } else {
+            errors.push(`Failed to send SMS to ${recipient.phone}: ${result.error || 'Unknown error'}`);
+          }
+          return result; // Return the result to maintain the proper type
+        }).catch((error: Error) => {
+          errors.push(`Error sending SMS to ${recipient.phone}: ${error.message}`);
+          // Return a failed result to maintain the Promise type
+          return {
+            success: false,
+            error: error.message
+          } as SmsResult;
+        });
+      });
+      
+      await Promise.all(smsPromises);
     }
     
     return NextResponse.json({
-      message: `Broadcast email sent to ${recipients.length} recipients`,
-      recipientCount: recipients.length,
+      message: `Broadcast sent to ${emailsSent + smsSent} recipients (${emailsSent} emails, ${smsSent} SMS)`,
+      emailsSent,
+      smsSent,
+      errors: errors.length > 0 ? errors : undefined,
     });
   } catch (error) {
     console.error("Error sending broadcast:", error);

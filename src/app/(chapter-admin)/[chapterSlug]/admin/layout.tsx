@@ -125,6 +125,13 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
             <span>Events</span>
           </SidebarLink>
           
+          <SidebarLink 
+            href={`/${chapterSlug}/admin/broadcasts`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="flex-shrink-0"><path d="m9.82 2.79 9.63 9.63c.97.97 1.41 2.2 1.27 3.34-.14 1.15-.92 2.1-1.91 2.83l-8.78-8.78-4.85 4.85a2.15 2.15 0 0 1-3.03-3.04l5.5-5.5c.58-.58 1.52-.58 2.1 0h.07Z"/><path d="m9.85 8.79-1.34 3.1a5 5 0 0 0 4.76 7.71c1.13 0 2.2-.38 3.05-1.1l-6.47-9.7Z"/><path d="M9.82 2.79 2.2 9.78l4.85 4.85 8.5-8.5-5.73-3.34Z"/></svg>
+            <span>Broadcasts</span>
+          </SidebarLink>
+          
           {/*<SidebarLink 
             href={`/${chapterSlug}/admin/files`}
           >

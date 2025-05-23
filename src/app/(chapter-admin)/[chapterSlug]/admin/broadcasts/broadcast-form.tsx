@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Switch } from '@/components/ui/switch';
 import {
   Select,
   SelectContent,
@@ -26,7 +27,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
+import { AlertCircle, CheckCircle, Loader2, Mail, MessageSquare } from 'lucide-react';
 
 // Schema for broadcast form
 const formSchema = z.object({
@@ -37,6 +44,8 @@ const formSchema = z.object({
     .min(1, 'Message content is required')
     .max(5000, 'Message cannot exceed 5000 characters'),
   recipientFilter: z.enum(['all', 'admins', 'members']),
+  sendEmail: z.boolean(),
+  sendSms: z.boolean(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -63,6 +72,8 @@ export function BroadcastForm({ chapterSlug, memberCount }: BroadcastFormProps) 
       subject: '',
       message: '',
       recipientFilter: 'all',
+      sendEmail: true,
+      sendSms: false,
     },
   });
 
@@ -155,9 +166,14 @@ export function BroadcastForm({ chapterSlug, memberCount }: BroadcastFormProps) 
               <div className="mt-2 text-sm text-gray-700 dark:text-gray-300 whitespace-pre-line">
                 {form.getValues('message')}
               </div>
-              <p className="mt-4 text-xs text-gray-500">
-                Recipients: {getRecipientCountText(form.getValues('recipientFilter'))}
-              </p>
+              <div className="mt-4 space-y-2">
+                <p className="text-xs text-gray-500">
+                  Recipients: {getRecipientCountText(form.getValues('recipientFilter'))}
+                </p>
+                <p className="text-xs text-gray-500">
+                  Delivery methods: {[form.getValues('sendEmail') ? 'Email' : '', form.getValues('sendSms') ? 'SMS' : ''].filter(Boolean).join(' and ')}
+                </p>
+              </div>
             </div>
             
             <div className="flex space-x-4 pt-2">
@@ -211,13 +227,13 @@ export function BroadcastForm({ chapterSlug, memberCount }: BroadcastFormProps) 
                   <FormLabel>Message</FormLabel>
                   <FormControl>
                     <Textarea 
-                      placeholder="Enter your message content here..." 
+                      placeholder="Enter your message here..." 
                       className="min-h-[200px]" 
                       {...field} 
                     />
                   </FormControl>
                   <FormDescription>
-                    Your message will be sent as an email to chapter members
+                    Write the content of your message. Simple formatting is supported.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -255,9 +271,102 @@ export function BroadcastForm({ chapterSlug, memberCount }: BroadcastFormProps) 
               )}
             />
             
-            <Button type="submit" className="w-full">
-              Preview Message
-            </Button>
+            <div className="border-t pt-4 mt-6">
+              <h3 className="text-sm font-medium mb-3">Delivery Methods</h3>
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="sendEmail"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between space-x-2 rounded-md border p-4">
+                      <div className="space-y-0.5">
+                        <div className="flex items-center">
+                          <Mail className="w-4 h-4 mr-2" />
+                          <FormLabel className="text-base">Email</FormLabel>
+                        </div>
+                        <FormDescription>
+                          Send via email to members with email addresses
+                        </FormDescription>
+                      </div>
+                      <FormControl>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div>
+                                <Switch
+                                  checked={field.value}
+                                  onCheckedChange={(checked) => {
+                                    // Only allow unchecking if SMS is checked
+                                    if (!checked && !form.watch('sendSms')) {
+                                      return;
+                                    }
+                                    field.onChange(checked);
+                                  }}
+                                />
+                              </div>
+                            </TooltipTrigger>
+                            {!form.watch('sendSms') && (
+                              <TooltipContent side="right">
+                                <p>At least one delivery method must be selected</p>
+                              </TooltipContent>
+                            )}
+                          </Tooltip>
+                        </TooltipProvider>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="sendSms"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between space-x-2 rounded-md border p-4">
+                      <div className="space-y-0.5">
+                        <div className="flex items-center">
+                          <MessageSquare className="w-4 h-4 mr-2" />
+                          <FormLabel className="text-base">SMS</FormLabel>
+                        </div>
+                        <FormDescription>
+                          Send via SMS to members with verified phone numbers who have opted in
+                        </FormDescription>
+                      </div>
+                      <FormControl>
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div>
+                                <Switch
+                                  checked={field.value}
+                                  onCheckedChange={(checked) => {
+                                    // Only allow unchecking if Email is checked
+                                    if (!checked && !form.watch('sendEmail')) {
+                                      return;
+                                    }
+                                    field.onChange(checked);
+                                  }}
+                                />
+                              </div>
+                            </TooltipTrigger>
+                            {!form.watch('sendEmail') && (
+                              <TooltipContent side="right">
+                                <p>At least one delivery method must be selected</p>
+                              </TooltipContent>
+                            )}
+                          </Tooltip>
+                        </TooltipProvider>
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            
+            <div className="flex justify-end pt-4">
+              <Button type="submit">
+                Preview Message
+              </Button>
+            </div>
           </>
         )}
       </form>

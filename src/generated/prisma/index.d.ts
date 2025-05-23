@@ -103,6 +103,11 @@ export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>
  * 
  */
 export type Transaction = $Result.DefaultSelection<Prisma.$TransactionPayload>
+/**
+ * Model MessageLog
+ * 
+ */
+export type MessageLog = $Result.DefaultSelection<Prisma.$MessageLogPayload>
 
 /**
  * Enums
@@ -526,6 +531,16 @@ export class PrismaClient<
     * ```
     */
   get transaction(): Prisma.TransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.messageLog`: Exposes CRUD operations for the **MessageLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MessageLogs
+    * const messageLogs = await prisma.messageLog.findMany()
+    * ```
+    */
+  get messageLog(): Prisma.MessageLogDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -983,7 +998,8 @@ export namespace Prisma {
     Expense: 'Expense',
     DuesPayment: 'DuesPayment',
     Profile: 'Profile',
-    Transaction: 'Transaction'
+    Transaction: 'Transaction',
+    MessageLog: 'MessageLog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1002,7 +1018,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage" | "budget" | "expense" | "duesPayment" | "profile" | "transaction"
+      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage" | "budget" | "expense" | "duesPayment" | "profile" | "transaction" | "messageLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2338,6 +2354,80 @@ export namespace Prisma {
           }
         }
       }
+      MessageLog: {
+        payload: Prisma.$MessageLogPayload<ExtArgs>
+        fields: Prisma.MessageLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MessageLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MessageLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload>
+          }
+          findFirst: {
+            args: Prisma.MessageLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MessageLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload>
+          }
+          findMany: {
+            args: Prisma.MessageLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload>[]
+          }
+          create: {
+            args: Prisma.MessageLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload>
+          }
+          createMany: {
+            args: Prisma.MessageLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MessageLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload>[]
+          }
+          delete: {
+            args: Prisma.MessageLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload>
+          }
+          update: {
+            args: Prisma.MessageLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.MessageLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MessageLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MessageLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload>[]
+          }
+          upsert: {
+            args: Prisma.MessageLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MessageLogPayload>
+          }
+          aggregate: {
+            args: Prisma.MessageLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMessageLog>
+          }
+          groupBy: {
+            args: Prisma.MessageLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MessageLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MessageLogCountArgs<ExtArgs>
+            result: $Utils.Optional<MessageLogCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2440,6 +2530,7 @@ export namespace Prisma {
     duesPayment?: DuesPaymentOmit
     profile?: ProfileOmit
     transaction?: TransactionOmit
+    messageLog?: MessageLogOmit
   }
 
   /* Types for Logging */
@@ -2541,6 +2632,7 @@ export namespace Prisma {
     auditLogs: number
     galleryImages: number
     contactMessages: number
+    messageLogs: number
     budgets: number
     expenses: number
     duesPayments: number
@@ -2555,6 +2647,7 @@ export namespace Prisma {
     auditLogs?: boolean | ChapterCountOutputTypeCountAuditLogsArgs
     galleryImages?: boolean | ChapterCountOutputTypeCountGalleryImagesArgs
     contactMessages?: boolean | ChapterCountOutputTypeCountContactMessagesArgs
+    messageLogs?: boolean | ChapterCountOutputTypeCountMessageLogsArgs
     budgets?: boolean | ChapterCountOutputTypeCountBudgetsArgs
     expenses?: boolean | ChapterCountOutputTypeCountExpensesArgs
     duesPayments?: boolean | ChapterCountOutputTypeCountDuesPaymentsArgs
@@ -2619,6 +2712,13 @@ export namespace Prisma {
    */
   export type ChapterCountOutputTypeCountContactMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ContactMessageWhereInput
+  }
+
+  /**
+   * ChapterCountOutputType without action
+   */
+  export type ChapterCountOutputTypeCountMessageLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MessageLogWhereInput
   }
 
   /**
@@ -3050,6 +3150,7 @@ export namespace Prisma {
     auditLogs?: boolean | Chapter$auditLogsArgs<ExtArgs>
     galleryImages?: boolean | Chapter$galleryImagesArgs<ExtArgs>
     contactMessages?: boolean | Chapter$contactMessagesArgs<ExtArgs>
+    messageLogs?: boolean | Chapter$messageLogsArgs<ExtArgs>
     budgets?: boolean | Chapter$budgetsArgs<ExtArgs>
     expenses?: boolean | Chapter$expensesArgs<ExtArgs>
     duesPayments?: boolean | Chapter$duesPaymentsArgs<ExtArgs>
@@ -3103,6 +3204,7 @@ export namespace Prisma {
     auditLogs?: boolean | Chapter$auditLogsArgs<ExtArgs>
     galleryImages?: boolean | Chapter$galleryImagesArgs<ExtArgs>
     contactMessages?: boolean | Chapter$contactMessagesArgs<ExtArgs>
+    messageLogs?: boolean | Chapter$messageLogsArgs<ExtArgs>
     budgets?: boolean | Chapter$budgetsArgs<ExtArgs>
     expenses?: boolean | Chapter$expensesArgs<ExtArgs>
     duesPayments?: boolean | Chapter$duesPaymentsArgs<ExtArgs>
@@ -3123,6 +3225,7 @@ export namespace Prisma {
       auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
       galleryImages: Prisma.$GalleryImagePayload<ExtArgs>[]
       contactMessages: Prisma.$ContactMessagePayload<ExtArgs>[]
+      messageLogs: Prisma.$MessageLogPayload<ExtArgs>[]
       budgets: Prisma.$BudgetPayload<ExtArgs>[]
       expenses: Prisma.$ExpensePayload<ExtArgs>[]
       duesPayments: Prisma.$DuesPaymentPayload<ExtArgs>[]
@@ -3540,6 +3643,7 @@ export namespace Prisma {
     auditLogs<T extends Chapter$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     galleryImages<T extends Chapter$galleryImagesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$galleryImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     contactMessages<T extends Chapter$contactMessagesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$contactMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    messageLogs<T extends Chapter$messageLogsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$messageLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     budgets<T extends Chapter$budgetsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     expenses<T extends Chapter$expensesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     duesPayments<T extends Chapter$duesPaymentsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$duesPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DuesPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4154,6 +4258,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ContactMessageScalarFieldEnum | ContactMessageScalarFieldEnum[]
+  }
+
+  /**
+   * Chapter.messageLogs
+   */
+  export type Chapter$messageLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+    where?: MessageLogWhereInput
+    orderBy?: MessageLogOrderByWithRelationInput | MessageLogOrderByWithRelationInput[]
+    cursor?: MessageLogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MessageLogScalarFieldEnum | MessageLogScalarFieldEnum[]
   }
 
   /**
@@ -21496,6 +21624,8 @@ export namespace Prisma {
   export type ProfileMinAggregateOutputType = {
     id: string | null
     phone: string | null
+    phoneVerified: boolean | null
+    smsEnabled: boolean | null
     major: string | null
     gradYear: number | null
     bio: string | null
@@ -21509,6 +21639,8 @@ export namespace Prisma {
   export type ProfileMaxAggregateOutputType = {
     id: string | null
     phone: string | null
+    phoneVerified: boolean | null
+    smsEnabled: boolean | null
     major: string | null
     gradYear: number | null
     bio: string | null
@@ -21522,6 +21654,8 @@ export namespace Prisma {
   export type ProfileCountAggregateOutputType = {
     id: number
     phone: number
+    phoneVerified: number
+    smsEnabled: number
     major: number
     gradYear: number
     bio: number
@@ -21545,6 +21679,8 @@ export namespace Prisma {
   export type ProfileMinAggregateInputType = {
     id?: true
     phone?: true
+    phoneVerified?: true
+    smsEnabled?: true
     major?: true
     gradYear?: true
     bio?: true
@@ -21558,6 +21694,8 @@ export namespace Prisma {
   export type ProfileMaxAggregateInputType = {
     id?: true
     phone?: true
+    phoneVerified?: true
+    smsEnabled?: true
     major?: true
     gradYear?: true
     bio?: true
@@ -21571,6 +21709,8 @@ export namespace Prisma {
   export type ProfileCountAggregateInputType = {
     id?: true
     phone?: true
+    phoneVerified?: true
+    smsEnabled?: true
     major?: true
     gradYear?: true
     bio?: true
@@ -21671,6 +21811,8 @@ export namespace Prisma {
   export type ProfileGroupByOutputType = {
     id: string
     phone: string | null
+    phoneVerified: boolean
+    smsEnabled: boolean
     major: string | null
     gradYear: number | null
     bio: string | null
@@ -21703,6 +21845,8 @@ export namespace Prisma {
   export type ProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     phone?: boolean
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: boolean
     gradYear?: boolean
     bio?: boolean
@@ -21719,6 +21863,8 @@ export namespace Prisma {
   export type ProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     phone?: boolean
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: boolean
     gradYear?: boolean
     bio?: boolean
@@ -21735,6 +21881,8 @@ export namespace Prisma {
   export type ProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     phone?: boolean
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: boolean
     gradYear?: boolean
     bio?: boolean
@@ -21751,6 +21899,8 @@ export namespace Prisma {
   export type ProfileSelectScalar = {
     id?: boolean
     phone?: boolean
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: boolean
     gradYear?: boolean
     bio?: boolean
@@ -21761,7 +21911,7 @@ export namespace Prisma {
     chapterId?: boolean
   }
 
-  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone" | "major" | "gradYear" | "bio" | "createdAt" | "updatedAt" | "membershipId" | "userId" | "chapterId", ExtArgs["result"]["profile"]>
+  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone" | "phoneVerified" | "smsEnabled" | "major" | "gradYear" | "bio" | "createdAt" | "updatedAt" | "membershipId" | "userId" | "chapterId", ExtArgs["result"]["profile"]>
   export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     membership?: boolean | MembershipDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -21788,6 +21938,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       phone: string | null
+      phoneVerified: boolean
+      smsEnabled: boolean
       major: string | null
       gradYear: number | null
       bio: string | null
@@ -22224,6 +22376,8 @@ export namespace Prisma {
   interface ProfileFieldRefs {
     readonly id: FieldRef<"Profile", 'String'>
     readonly phone: FieldRef<"Profile", 'String'>
+    readonly phoneVerified: FieldRef<"Profile", 'Boolean'>
+    readonly smsEnabled: FieldRef<"Profile", 'Boolean'>
     readonly major: FieldRef<"Profile", 'String'>
     readonly gradYear: FieldRef<"Profile", 'Int'>
     readonly bio: FieldRef<"Profile", 'String'>
@@ -23854,6 +24008,1116 @@ export namespace Prisma {
 
 
   /**
+   * Model MessageLog
+   */
+
+  export type AggregateMessageLog = {
+    _count: MessageLogCountAggregateOutputType | null
+    _min: MessageLogMinAggregateOutputType | null
+    _max: MessageLogMaxAggregateOutputType | null
+  }
+
+  export type MessageLogMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    messageId: string | null
+    type: string | null
+    recipient: string | null
+    content: string | null
+    status: string | null
+    chapterId: string | null
+  }
+
+  export type MessageLogMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    messageId: string | null
+    type: string | null
+    recipient: string | null
+    content: string | null
+    status: string | null
+    chapterId: string | null
+  }
+
+  export type MessageLogCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    updatedAt: number
+    messageId: number
+    type: number
+    recipient: number
+    content: number
+    status: number
+    chapterId: number
+    _all: number
+  }
+
+
+  export type MessageLogMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    messageId?: true
+    type?: true
+    recipient?: true
+    content?: true
+    status?: true
+    chapterId?: true
+  }
+
+  export type MessageLogMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    messageId?: true
+    type?: true
+    recipient?: true
+    content?: true
+    status?: true
+    chapterId?: true
+  }
+
+  export type MessageLogCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    updatedAt?: true
+    messageId?: true
+    type?: true
+    recipient?: true
+    content?: true
+    status?: true
+    chapterId?: true
+    _all?: true
+  }
+
+  export type MessageLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MessageLog to aggregate.
+     */
+    where?: MessageLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MessageLogs to fetch.
+     */
+    orderBy?: MessageLogOrderByWithRelationInput | MessageLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MessageLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MessageLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MessageLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MessageLogs
+    **/
+    _count?: true | MessageLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MessageLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MessageLogMaxAggregateInputType
+  }
+
+  export type GetMessageLogAggregateType<T extends MessageLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateMessageLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMessageLog[P]>
+      : GetScalarType<T[P], AggregateMessageLog[P]>
+  }
+
+
+
+
+  export type MessageLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MessageLogWhereInput
+    orderBy?: MessageLogOrderByWithAggregationInput | MessageLogOrderByWithAggregationInput[]
+    by: MessageLogScalarFieldEnum[] | MessageLogScalarFieldEnum
+    having?: MessageLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MessageLogCountAggregateInputType | true
+    _min?: MessageLogMinAggregateInputType
+    _max?: MessageLogMaxAggregateInputType
+  }
+
+  export type MessageLogGroupByOutputType = {
+    id: string
+    createdAt: Date
+    updatedAt: Date
+    messageId: string
+    type: string
+    recipient: string
+    content: string
+    status: string
+    chapterId: string
+    _count: MessageLogCountAggregateOutputType | null
+    _min: MessageLogMinAggregateOutputType | null
+    _max: MessageLogMaxAggregateOutputType | null
+  }
+
+  type GetMessageLogGroupByPayload<T extends MessageLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MessageLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MessageLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MessageLogGroupByOutputType[P]>
+            : GetScalarType<T[P], MessageLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MessageLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    messageId?: boolean
+    type?: boolean
+    recipient?: boolean
+    content?: boolean
+    status?: boolean
+    chapterId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["messageLog"]>
+
+  export type MessageLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    messageId?: boolean
+    type?: boolean
+    recipient?: boolean
+    content?: boolean
+    status?: boolean
+    chapterId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["messageLog"]>
+
+  export type MessageLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    messageId?: boolean
+    type?: boolean
+    recipient?: boolean
+    content?: boolean
+    status?: boolean
+    chapterId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["messageLog"]>
+
+  export type MessageLogSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    messageId?: boolean
+    type?: boolean
+    recipient?: boolean
+    content?: boolean
+    status?: boolean
+    chapterId?: boolean
+  }
+
+  export type MessageLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "updatedAt" | "messageId" | "type" | "recipient" | "content" | "status" | "chapterId", ExtArgs["result"]["messageLog"]>
+  export type MessageLogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type MessageLogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type MessageLogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+
+  export type $MessageLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MessageLog"
+    objects: {
+      chapter: Prisma.$ChapterPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      updatedAt: Date
+      messageId: string
+      type: string
+      recipient: string
+      content: string
+      status: string
+      chapterId: string
+    }, ExtArgs["result"]["messageLog"]>
+    composites: {}
+  }
+
+  type MessageLogGetPayload<S extends boolean | null | undefined | MessageLogDefaultArgs> = $Result.GetResult<Prisma.$MessageLogPayload, S>
+
+  type MessageLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MessageLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MessageLogCountAggregateInputType | true
+    }
+
+  export interface MessageLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MessageLog'], meta: { name: 'MessageLog' } }
+    /**
+     * Find zero or one MessageLog that matches the filter.
+     * @param {MessageLogFindUniqueArgs} args - Arguments to find a MessageLog
+     * @example
+     * // Get one MessageLog
+     * const messageLog = await prisma.messageLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MessageLogFindUniqueArgs>(args: SelectSubset<T, MessageLogFindUniqueArgs<ExtArgs>>): Prisma__MessageLogClient<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MessageLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MessageLogFindUniqueOrThrowArgs} args - Arguments to find a MessageLog
+     * @example
+     * // Get one MessageLog
+     * const messageLog = await prisma.messageLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MessageLogFindUniqueOrThrowArgs>(args: SelectSubset<T, MessageLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MessageLogClient<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MessageLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageLogFindFirstArgs} args - Arguments to find a MessageLog
+     * @example
+     * // Get one MessageLog
+     * const messageLog = await prisma.messageLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MessageLogFindFirstArgs>(args?: SelectSubset<T, MessageLogFindFirstArgs<ExtArgs>>): Prisma__MessageLogClient<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MessageLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageLogFindFirstOrThrowArgs} args - Arguments to find a MessageLog
+     * @example
+     * // Get one MessageLog
+     * const messageLog = await prisma.messageLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MessageLogFindFirstOrThrowArgs>(args?: SelectSubset<T, MessageLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__MessageLogClient<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MessageLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MessageLogs
+     * const messageLogs = await prisma.messageLog.findMany()
+     * 
+     * // Get first 10 MessageLogs
+     * const messageLogs = await prisma.messageLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const messageLogWithIdOnly = await prisma.messageLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MessageLogFindManyArgs>(args?: SelectSubset<T, MessageLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MessageLog.
+     * @param {MessageLogCreateArgs} args - Arguments to create a MessageLog.
+     * @example
+     * // Create one MessageLog
+     * const MessageLog = await prisma.messageLog.create({
+     *   data: {
+     *     // ... data to create a MessageLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends MessageLogCreateArgs>(args: SelectSubset<T, MessageLogCreateArgs<ExtArgs>>): Prisma__MessageLogClient<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MessageLogs.
+     * @param {MessageLogCreateManyArgs} args - Arguments to create many MessageLogs.
+     * @example
+     * // Create many MessageLogs
+     * const messageLog = await prisma.messageLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MessageLogCreateManyArgs>(args?: SelectSubset<T, MessageLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MessageLogs and returns the data saved in the database.
+     * @param {MessageLogCreateManyAndReturnArgs} args - Arguments to create many MessageLogs.
+     * @example
+     * // Create many MessageLogs
+     * const messageLog = await prisma.messageLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MessageLogs and only return the `id`
+     * const messageLogWithIdOnly = await prisma.messageLog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MessageLogCreateManyAndReturnArgs>(args?: SelectSubset<T, MessageLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MessageLog.
+     * @param {MessageLogDeleteArgs} args - Arguments to delete one MessageLog.
+     * @example
+     * // Delete one MessageLog
+     * const MessageLog = await prisma.messageLog.delete({
+     *   where: {
+     *     // ... filter to delete one MessageLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MessageLogDeleteArgs>(args: SelectSubset<T, MessageLogDeleteArgs<ExtArgs>>): Prisma__MessageLogClient<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MessageLog.
+     * @param {MessageLogUpdateArgs} args - Arguments to update one MessageLog.
+     * @example
+     * // Update one MessageLog
+     * const messageLog = await prisma.messageLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MessageLogUpdateArgs>(args: SelectSubset<T, MessageLogUpdateArgs<ExtArgs>>): Prisma__MessageLogClient<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MessageLogs.
+     * @param {MessageLogDeleteManyArgs} args - Arguments to filter MessageLogs to delete.
+     * @example
+     * // Delete a few MessageLogs
+     * const { count } = await prisma.messageLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MessageLogDeleteManyArgs>(args?: SelectSubset<T, MessageLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MessageLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MessageLogs
+     * const messageLog = await prisma.messageLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MessageLogUpdateManyArgs>(args: SelectSubset<T, MessageLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MessageLogs and returns the data updated in the database.
+     * @param {MessageLogUpdateManyAndReturnArgs} args - Arguments to update many MessageLogs.
+     * @example
+     * // Update many MessageLogs
+     * const messageLog = await prisma.messageLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MessageLogs and only return the `id`
+     * const messageLogWithIdOnly = await prisma.messageLog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MessageLogUpdateManyAndReturnArgs>(args: SelectSubset<T, MessageLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MessageLog.
+     * @param {MessageLogUpsertArgs} args - Arguments to update or create a MessageLog.
+     * @example
+     * // Update or create a MessageLog
+     * const messageLog = await prisma.messageLog.upsert({
+     *   create: {
+     *     // ... data to create a MessageLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MessageLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MessageLogUpsertArgs>(args: SelectSubset<T, MessageLogUpsertArgs<ExtArgs>>): Prisma__MessageLogClient<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MessageLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageLogCountArgs} args - Arguments to filter MessageLogs to count.
+     * @example
+     * // Count the number of MessageLogs
+     * const count = await prisma.messageLog.count({
+     *   where: {
+     *     // ... the filter for the MessageLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends MessageLogCountArgs>(
+      args?: Subset<T, MessageLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MessageLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MessageLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MessageLogAggregateArgs>(args: Subset<T, MessageLogAggregateArgs>): Prisma.PrismaPromise<GetMessageLogAggregateType<T>>
+
+    /**
+     * Group by MessageLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MessageLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MessageLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MessageLogGroupByArgs['orderBy'] }
+        : { orderBy?: MessageLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MessageLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMessageLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MessageLog model
+   */
+  readonly fields: MessageLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MessageLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MessageLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MessageLog model
+   */
+  interface MessageLogFieldRefs {
+    readonly id: FieldRef<"MessageLog", 'String'>
+    readonly createdAt: FieldRef<"MessageLog", 'DateTime'>
+    readonly updatedAt: FieldRef<"MessageLog", 'DateTime'>
+    readonly messageId: FieldRef<"MessageLog", 'String'>
+    readonly type: FieldRef<"MessageLog", 'String'>
+    readonly recipient: FieldRef<"MessageLog", 'String'>
+    readonly content: FieldRef<"MessageLog", 'String'>
+    readonly status: FieldRef<"MessageLog", 'String'>
+    readonly chapterId: FieldRef<"MessageLog", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MessageLog findUnique
+   */
+  export type MessageLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+    /**
+     * Filter, which MessageLog to fetch.
+     */
+    where: MessageLogWhereUniqueInput
+  }
+
+  /**
+   * MessageLog findUniqueOrThrow
+   */
+  export type MessageLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+    /**
+     * Filter, which MessageLog to fetch.
+     */
+    where: MessageLogWhereUniqueInput
+  }
+
+  /**
+   * MessageLog findFirst
+   */
+  export type MessageLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+    /**
+     * Filter, which MessageLog to fetch.
+     */
+    where?: MessageLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MessageLogs to fetch.
+     */
+    orderBy?: MessageLogOrderByWithRelationInput | MessageLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MessageLogs.
+     */
+    cursor?: MessageLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MessageLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MessageLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MessageLogs.
+     */
+    distinct?: MessageLogScalarFieldEnum | MessageLogScalarFieldEnum[]
+  }
+
+  /**
+   * MessageLog findFirstOrThrow
+   */
+  export type MessageLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+    /**
+     * Filter, which MessageLog to fetch.
+     */
+    where?: MessageLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MessageLogs to fetch.
+     */
+    orderBy?: MessageLogOrderByWithRelationInput | MessageLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MessageLogs.
+     */
+    cursor?: MessageLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MessageLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MessageLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MessageLogs.
+     */
+    distinct?: MessageLogScalarFieldEnum | MessageLogScalarFieldEnum[]
+  }
+
+  /**
+   * MessageLog findMany
+   */
+  export type MessageLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+    /**
+     * Filter, which MessageLogs to fetch.
+     */
+    where?: MessageLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MessageLogs to fetch.
+     */
+    orderBy?: MessageLogOrderByWithRelationInput | MessageLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MessageLogs.
+     */
+    cursor?: MessageLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MessageLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MessageLogs.
+     */
+    skip?: number
+    distinct?: MessageLogScalarFieldEnum | MessageLogScalarFieldEnum[]
+  }
+
+  /**
+   * MessageLog create
+   */
+  export type MessageLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MessageLog.
+     */
+    data: XOR<MessageLogCreateInput, MessageLogUncheckedCreateInput>
+  }
+
+  /**
+   * MessageLog createMany
+   */
+  export type MessageLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MessageLogs.
+     */
+    data: MessageLogCreateManyInput | MessageLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MessageLog createManyAndReturn
+   */
+  export type MessageLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many MessageLogs.
+     */
+    data: MessageLogCreateManyInput | MessageLogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MessageLog update
+   */
+  export type MessageLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MessageLog.
+     */
+    data: XOR<MessageLogUpdateInput, MessageLogUncheckedUpdateInput>
+    /**
+     * Choose, which MessageLog to update.
+     */
+    where: MessageLogWhereUniqueInput
+  }
+
+  /**
+   * MessageLog updateMany
+   */
+  export type MessageLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MessageLogs.
+     */
+    data: XOR<MessageLogUpdateManyMutationInput, MessageLogUncheckedUpdateManyInput>
+    /**
+     * Filter which MessageLogs to update
+     */
+    where?: MessageLogWhereInput
+    /**
+     * Limit how many MessageLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MessageLog updateManyAndReturn
+   */
+  export type MessageLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * The data used to update MessageLogs.
+     */
+    data: XOR<MessageLogUpdateManyMutationInput, MessageLogUncheckedUpdateManyInput>
+    /**
+     * Filter which MessageLogs to update
+     */
+    where?: MessageLogWhereInput
+    /**
+     * Limit how many MessageLogs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MessageLog upsert
+   */
+  export type MessageLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MessageLog to update in case it exists.
+     */
+    where: MessageLogWhereUniqueInput
+    /**
+     * In case the MessageLog found by the `where` argument doesn't exist, create a new MessageLog with this data.
+     */
+    create: XOR<MessageLogCreateInput, MessageLogUncheckedCreateInput>
+    /**
+     * In case the MessageLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MessageLogUpdateInput, MessageLogUncheckedUpdateInput>
+  }
+
+  /**
+   * MessageLog delete
+   */
+  export type MessageLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+    /**
+     * Filter which MessageLog to delete.
+     */
+    where: MessageLogWhereUniqueInput
+  }
+
+  /**
+   * MessageLog deleteMany
+   */
+  export type MessageLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MessageLogs to delete
+     */
+    where?: MessageLogWhereInput
+    /**
+     * Limit how many MessageLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MessageLog without action
+   */
+  export type MessageLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MessageLog
+     */
+    select?: MessageLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MessageLog
+     */
+    omit?: MessageLogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MessageLogInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -24098,6 +25362,8 @@ export namespace Prisma {
   export const ProfileScalarFieldEnum: {
     id: 'id',
     phone: 'phone',
+    phoneVerified: 'phoneVerified',
+    smsEnabled: 'smsEnabled',
     major: 'major',
     gradYear: 'gradYear',
     bio: 'bio',
@@ -24125,6 +25391,21 @@ export namespace Prisma {
   };
 
   export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
+
+
+  export const MessageLogScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    messageId: 'messageId',
+    type: 'type',
+    recipient: 'recipient',
+    content: 'content',
+    status: 'status',
+    chapterId: 'chapterId'
+  };
+
+  export type MessageLogScalarFieldEnum = (typeof MessageLogScalarFieldEnum)[keyof typeof MessageLogScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -24386,6 +25667,7 @@ export namespace Prisma {
     auditLogs?: AuditLogListRelationFilter
     galleryImages?: GalleryImageListRelationFilter
     contactMessages?: ContactMessageListRelationFilter
+    messageLogs?: MessageLogListRelationFilter
     budgets?: BudgetListRelationFilter
     expenses?: ExpenseListRelationFilter
     duesPayments?: DuesPaymentListRelationFilter
@@ -24410,6 +25692,7 @@ export namespace Prisma {
     auditLogs?: AuditLogOrderByRelationAggregateInput
     galleryImages?: GalleryImageOrderByRelationAggregateInput
     contactMessages?: ContactMessageOrderByRelationAggregateInput
+    messageLogs?: MessageLogOrderByRelationAggregateInput
     budgets?: BudgetOrderByRelationAggregateInput
     expenses?: ExpenseOrderByRelationAggregateInput
     duesPayments?: DuesPaymentOrderByRelationAggregateInput
@@ -24437,6 +25720,7 @@ export namespace Prisma {
     auditLogs?: AuditLogListRelationFilter
     galleryImages?: GalleryImageListRelationFilter
     contactMessages?: ContactMessageListRelationFilter
+    messageLogs?: MessageLogListRelationFilter
     budgets?: BudgetListRelationFilter
     expenses?: ExpenseListRelationFilter
     duesPayments?: DuesPaymentListRelationFilter
@@ -25633,6 +26917,8 @@ export namespace Prisma {
     NOT?: ProfileWhereInput | ProfileWhereInput[]
     id?: StringFilter<"Profile"> | string
     phone?: StringNullableFilter<"Profile"> | string | null
+    phoneVerified?: BoolFilter<"Profile"> | boolean
+    smsEnabled?: BoolFilter<"Profile"> | boolean
     major?: StringNullableFilter<"Profile"> | string | null
     gradYear?: IntNullableFilter<"Profile"> | number | null
     bio?: StringNullableFilter<"Profile"> | string | null
@@ -25649,6 +26935,8 @@ export namespace Prisma {
   export type ProfileOrderByWithRelationInput = {
     id?: SortOrder
     phone?: SortOrderInput | SortOrder
+    phoneVerified?: SortOrder
+    smsEnabled?: SortOrder
     major?: SortOrderInput | SortOrder
     gradYear?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
@@ -25669,6 +26957,8 @@ export namespace Prisma {
     OR?: ProfileWhereInput[]
     NOT?: ProfileWhereInput | ProfileWhereInput[]
     phone?: StringNullableFilter<"Profile"> | string | null
+    phoneVerified?: BoolFilter<"Profile"> | boolean
+    smsEnabled?: BoolFilter<"Profile"> | boolean
     major?: StringNullableFilter<"Profile"> | string | null
     gradYear?: IntNullableFilter<"Profile"> | number | null
     bio?: StringNullableFilter<"Profile"> | string | null
@@ -25684,6 +26974,8 @@ export namespace Prisma {
   export type ProfileOrderByWithAggregationInput = {
     id?: SortOrder
     phone?: SortOrderInput | SortOrder
+    phoneVerified?: SortOrder
+    smsEnabled?: SortOrder
     major?: SortOrderInput | SortOrder
     gradYear?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
@@ -25705,6 +26997,8 @@ export namespace Prisma {
     NOT?: ProfileScalarWhereWithAggregatesInput | ProfileScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Profile"> | string
     phone?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    phoneVerified?: BoolWithAggregatesFilter<"Profile"> | boolean
+    smsEnabled?: BoolWithAggregatesFilter<"Profile"> | boolean
     major?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     gradYear?: IntNullableWithAggregatesFilter<"Profile"> | number | null
     bio?: StringNullableWithAggregatesFilter<"Profile"> | string | null
@@ -25803,6 +27097,81 @@ export namespace Prisma {
     duesPaymentId?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
   }
 
+  export type MessageLogWhereInput = {
+    AND?: MessageLogWhereInput | MessageLogWhereInput[]
+    OR?: MessageLogWhereInput[]
+    NOT?: MessageLogWhereInput | MessageLogWhereInput[]
+    id?: StringFilter<"MessageLog"> | string
+    createdAt?: DateTimeFilter<"MessageLog"> | Date | string
+    updatedAt?: DateTimeFilter<"MessageLog"> | Date | string
+    messageId?: StringFilter<"MessageLog"> | string
+    type?: StringFilter<"MessageLog"> | string
+    recipient?: StringFilter<"MessageLog"> | string
+    content?: StringFilter<"MessageLog"> | string
+    status?: StringFilter<"MessageLog"> | string
+    chapterId?: StringFilter<"MessageLog"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }
+
+  export type MessageLogOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    messageId?: SortOrder
+    type?: SortOrder
+    recipient?: SortOrder
+    content?: SortOrder
+    status?: SortOrder
+    chapterId?: SortOrder
+    chapter?: ChapterOrderByWithRelationInput
+  }
+
+  export type MessageLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    messageId?: string
+    AND?: MessageLogWhereInput | MessageLogWhereInput[]
+    OR?: MessageLogWhereInput[]
+    NOT?: MessageLogWhereInput | MessageLogWhereInput[]
+    createdAt?: DateTimeFilter<"MessageLog"> | Date | string
+    updatedAt?: DateTimeFilter<"MessageLog"> | Date | string
+    type?: StringFilter<"MessageLog"> | string
+    recipient?: StringFilter<"MessageLog"> | string
+    content?: StringFilter<"MessageLog"> | string
+    status?: StringFilter<"MessageLog"> | string
+    chapterId?: StringFilter<"MessageLog"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }, "id" | "messageId">
+
+  export type MessageLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    messageId?: SortOrder
+    type?: SortOrder
+    recipient?: SortOrder
+    content?: SortOrder
+    status?: SortOrder
+    chapterId?: SortOrder
+    _count?: MessageLogCountOrderByAggregateInput
+    _max?: MessageLogMaxOrderByAggregateInput
+    _min?: MessageLogMinOrderByAggregateInput
+  }
+
+  export type MessageLogScalarWhereWithAggregatesInput = {
+    AND?: MessageLogScalarWhereWithAggregatesInput | MessageLogScalarWhereWithAggregatesInput[]
+    OR?: MessageLogScalarWhereWithAggregatesInput[]
+    NOT?: MessageLogScalarWhereWithAggregatesInput | MessageLogScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MessageLog"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"MessageLog"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MessageLog"> | Date | string
+    messageId?: StringWithAggregatesFilter<"MessageLog"> | string
+    type?: StringWithAggregatesFilter<"MessageLog"> | string
+    recipient?: StringWithAggregatesFilter<"MessageLog"> | string
+    content?: StringWithAggregatesFilter<"MessageLog"> | string
+    status?: StringWithAggregatesFilter<"MessageLog"> | string
+    chapterId?: StringWithAggregatesFilter<"MessageLog"> | string
+  }
+
   export type ChapterCreateInput = {
     id?: string
     name: string
@@ -25821,6 +27190,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -25845,6 +27215,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -25869,6 +27240,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -25893,6 +27265,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -27159,6 +28532,8 @@ export namespace Prisma {
   export type ProfileCreateInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -27172,6 +28547,8 @@ export namespace Prisma {
   export type ProfileUncheckedCreateInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -27185,6 +28562,8 @@ export namespace Prisma {
   export type ProfileUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27198,6 +28577,8 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27211,6 +28592,8 @@ export namespace Prisma {
   export type ProfileCreateManyInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -27224,6 +28607,8 @@ export namespace Prisma {
   export type ProfileUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27234,6 +28619,8 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -27332,6 +28719,89 @@ export namespace Prisma {
     duesPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type MessageLogCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messageId: string
+    type: string
+    recipient: string
+    content: string
+    status: string
+    chapter: ChapterCreateNestedOneWithoutMessageLogsInput
+  }
+
+  export type MessageLogUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messageId: string
+    type: string
+    recipient: string
+    content: string
+    status: string
+    chapterId: string
+  }
+
+  export type MessageLogUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messageId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    chapter?: ChapterUpdateOneRequiredWithoutMessageLogsNestedInput
+  }
+
+  export type MessageLogUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messageId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MessageLogCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messageId: string
+    type: string
+    recipient: string
+    content: string
+    status: string
+    chapterId: string
+  }
+
+  export type MessageLogUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messageId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MessageLogUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messageId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -27420,6 +28890,12 @@ export namespace Prisma {
     none?: ContactMessageWhereInput
   }
 
+  export type MessageLogListRelationFilter = {
+    every?: MessageLogWhereInput
+    some?: MessageLogWhereInput
+    none?: MessageLogWhereInput
+  }
+
   export type BudgetListRelationFilter = {
     every?: BudgetWhereInput
     some?: BudgetWhereInput
@@ -27474,6 +28950,10 @@ export namespace Prisma {
   }
 
   export type ContactMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MessageLogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -28474,6 +29954,8 @@ export namespace Prisma {
   export type ProfileCountOrderByAggregateInput = {
     id?: SortOrder
     phone?: SortOrder
+    phoneVerified?: SortOrder
+    smsEnabled?: SortOrder
     major?: SortOrder
     gradYear?: SortOrder
     bio?: SortOrder
@@ -28491,6 +29973,8 @@ export namespace Prisma {
   export type ProfileMaxOrderByAggregateInput = {
     id?: SortOrder
     phone?: SortOrder
+    phoneVerified?: SortOrder
+    smsEnabled?: SortOrder
     major?: SortOrder
     gradYear?: SortOrder
     bio?: SortOrder
@@ -28504,6 +29988,8 @@ export namespace Prisma {
   export type ProfileMinOrderByAggregateInput = {
     id?: SortOrder
     phone?: SortOrder
+    phoneVerified?: SortOrder
+    smsEnabled?: SortOrder
     major?: SortOrder
     gradYear?: SortOrder
     bio?: SortOrder
@@ -28590,6 +30076,42 @@ export namespace Prisma {
     _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
   }
 
+  export type MessageLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    messageId?: SortOrder
+    type?: SortOrder
+    recipient?: SortOrder
+    content?: SortOrder
+    status?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type MessageLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    messageId?: SortOrder
+    type?: SortOrder
+    recipient?: SortOrder
+    content?: SortOrder
+    status?: SortOrder
+    chapterId?: SortOrder
+  }
+
+  export type MessageLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    messageId?: SortOrder
+    type?: SortOrder
+    recipient?: SortOrder
+    content?: SortOrder
+    status?: SortOrder
+    chapterId?: SortOrder
+  }
+
   export type MembershipCreateNestedManyWithoutChapterInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -28643,6 +30165,13 @@ export namespace Prisma {
     connectOrCreate?: ContactMessageCreateOrConnectWithoutChapterInput | ContactMessageCreateOrConnectWithoutChapterInput[]
     createMany?: ContactMessageCreateManyChapterInputEnvelope
     connect?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+  }
+
+  export type MessageLogCreateNestedManyWithoutChapterInput = {
+    create?: XOR<MessageLogCreateWithoutChapterInput, MessageLogUncheckedCreateWithoutChapterInput> | MessageLogCreateWithoutChapterInput[] | MessageLogUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: MessageLogCreateOrConnectWithoutChapterInput | MessageLogCreateOrConnectWithoutChapterInput[]
+    createMany?: MessageLogCreateManyChapterInputEnvelope
+    connect?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
   }
 
   export type BudgetCreateNestedManyWithoutChapterInput = {
@@ -28726,6 +30255,13 @@ export namespace Prisma {
     connectOrCreate?: ContactMessageCreateOrConnectWithoutChapterInput | ContactMessageCreateOrConnectWithoutChapterInput[]
     createMany?: ContactMessageCreateManyChapterInputEnvelope
     connect?: ContactMessageWhereUniqueInput | ContactMessageWhereUniqueInput[]
+  }
+
+  export type MessageLogUncheckedCreateNestedManyWithoutChapterInput = {
+    create?: XOR<MessageLogCreateWithoutChapterInput, MessageLogUncheckedCreateWithoutChapterInput> | MessageLogCreateWithoutChapterInput[] | MessageLogUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: MessageLogCreateOrConnectWithoutChapterInput | MessageLogCreateOrConnectWithoutChapterInput[]
+    createMany?: MessageLogCreateManyChapterInputEnvelope
+    connect?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
   }
 
   export type BudgetUncheckedCreateNestedManyWithoutChapterInput = {
@@ -28874,6 +30410,20 @@ export namespace Prisma {
     update?: ContactMessageUpdateWithWhereUniqueWithoutChapterInput | ContactMessageUpdateWithWhereUniqueWithoutChapterInput[]
     updateMany?: ContactMessageUpdateManyWithWhereWithoutChapterInput | ContactMessageUpdateManyWithWhereWithoutChapterInput[]
     deleteMany?: ContactMessageScalarWhereInput | ContactMessageScalarWhereInput[]
+  }
+
+  export type MessageLogUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<MessageLogCreateWithoutChapterInput, MessageLogUncheckedCreateWithoutChapterInput> | MessageLogCreateWithoutChapterInput[] | MessageLogUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: MessageLogCreateOrConnectWithoutChapterInput | MessageLogCreateOrConnectWithoutChapterInput[]
+    upsert?: MessageLogUpsertWithWhereUniqueWithoutChapterInput | MessageLogUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: MessageLogCreateManyChapterInputEnvelope
+    set?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
+    disconnect?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
+    delete?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
+    connect?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
+    update?: MessageLogUpdateWithWhereUniqueWithoutChapterInput | MessageLogUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: MessageLogUpdateManyWithWhereWithoutChapterInput | MessageLogUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: MessageLogScalarWhereInput | MessageLogScalarWhereInput[]
   }
 
   export type BudgetUpdateManyWithoutChapterNestedInput = {
@@ -29038,6 +30588,20 @@ export namespace Prisma {
     update?: ContactMessageUpdateWithWhereUniqueWithoutChapterInput | ContactMessageUpdateWithWhereUniqueWithoutChapterInput[]
     updateMany?: ContactMessageUpdateManyWithWhereWithoutChapterInput | ContactMessageUpdateManyWithWhereWithoutChapterInput[]
     deleteMany?: ContactMessageScalarWhereInput | ContactMessageScalarWhereInput[]
+  }
+
+  export type MessageLogUncheckedUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<MessageLogCreateWithoutChapterInput, MessageLogUncheckedCreateWithoutChapterInput> | MessageLogCreateWithoutChapterInput[] | MessageLogUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: MessageLogCreateOrConnectWithoutChapterInput | MessageLogCreateOrConnectWithoutChapterInput[]
+    upsert?: MessageLogUpsertWithWhereUniqueWithoutChapterInput | MessageLogUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: MessageLogCreateManyChapterInputEnvelope
+    set?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
+    disconnect?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
+    delete?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
+    connect?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
+    update?: MessageLogUpdateWithWhereUniqueWithoutChapterInput | MessageLogUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: MessageLogUpdateManyWithWhereWithoutChapterInput | MessageLogUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: MessageLogScalarWhereInput | MessageLogScalarWhereInput[]
   }
 
   export type BudgetUncheckedUpdateManyWithoutChapterNestedInput = {
@@ -30254,6 +31818,20 @@ export namespace Prisma {
     update?: XOR<XOR<DuesPaymentUpdateToOneWithWhereWithoutTransactionInput, DuesPaymentUpdateWithoutTransactionInput>, DuesPaymentUncheckedUpdateWithoutTransactionInput>
   }
 
+  export type ChapterCreateNestedOneWithoutMessageLogsInput = {
+    create?: XOR<ChapterCreateWithoutMessageLogsInput, ChapterUncheckedCreateWithoutMessageLogsInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutMessageLogsInput
+    connect?: ChapterWhereUniqueInput
+  }
+
+  export type ChapterUpdateOneRequiredWithoutMessageLogsNestedInput = {
+    create?: XOR<ChapterCreateWithoutMessageLogsInput, ChapterUncheckedCreateWithoutMessageLogsInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutMessageLogsInput
+    upsert?: ChapterUpsertWithoutMessageLogsInput
+    connect?: ChapterWhereUniqueInput
+    update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutMessageLogsInput, ChapterUpdateWithoutMessageLogsInput>, ChapterUncheckedUpdateWithoutMessageLogsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -30645,6 +32223,8 @@ export namespace Prisma {
   export type ProfileCreateWithoutChapterInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -30657,6 +32237,8 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutChapterInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -30859,6 +32441,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MessageLogCreateWithoutChapterInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messageId: string
+    type: string
+    recipient: string
+    content: string
+    status: string
+  }
+
+  export type MessageLogUncheckedCreateWithoutChapterInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messageId: string
+    type: string
+    recipient: string
+    content: string
+    status: string
+  }
+
+  export type MessageLogCreateOrConnectWithoutChapterInput = {
+    where: MessageLogWhereUniqueInput
+    create: XOR<MessageLogCreateWithoutChapterInput, MessageLogUncheckedCreateWithoutChapterInput>
+  }
+
+  export type MessageLogCreateManyChapterInputEnvelope = {
+    data: MessageLogCreateManyChapterInput | MessageLogCreateManyChapterInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BudgetCreateWithoutChapterInput = {
     id?: string
     name: string
@@ -31057,6 +32671,8 @@ export namespace Prisma {
     NOT?: ProfileScalarWhereInput | ProfileScalarWhereInput[]
     id?: StringFilter<"Profile"> | string
     phone?: StringNullableFilter<"Profile"> | string | null
+    phoneVerified?: BoolFilter<"Profile"> | boolean
+    smsEnabled?: BoolFilter<"Profile"> | boolean
     major?: StringNullableFilter<"Profile"> | string | null
     gradYear?: IntNullableFilter<"Profile"> | number | null
     bio?: StringNullableFilter<"Profile"> | string | null
@@ -31248,6 +32864,37 @@ export namespace Prisma {
     message?: StringFilter<"ContactMessage"> | string
     createdAt?: DateTimeFilter<"ContactMessage"> | Date | string
     chapterId?: StringFilter<"ContactMessage"> | string
+  }
+
+  export type MessageLogUpsertWithWhereUniqueWithoutChapterInput = {
+    where: MessageLogWhereUniqueInput
+    update: XOR<MessageLogUpdateWithoutChapterInput, MessageLogUncheckedUpdateWithoutChapterInput>
+    create: XOR<MessageLogCreateWithoutChapterInput, MessageLogUncheckedCreateWithoutChapterInput>
+  }
+
+  export type MessageLogUpdateWithWhereUniqueWithoutChapterInput = {
+    where: MessageLogWhereUniqueInput
+    data: XOR<MessageLogUpdateWithoutChapterInput, MessageLogUncheckedUpdateWithoutChapterInput>
+  }
+
+  export type MessageLogUpdateManyWithWhereWithoutChapterInput = {
+    where: MessageLogScalarWhereInput
+    data: XOR<MessageLogUpdateManyMutationInput, MessageLogUncheckedUpdateManyWithoutChapterInput>
+  }
+
+  export type MessageLogScalarWhereInput = {
+    AND?: MessageLogScalarWhereInput | MessageLogScalarWhereInput[]
+    OR?: MessageLogScalarWhereInput[]
+    NOT?: MessageLogScalarWhereInput | MessageLogScalarWhereInput[]
+    id?: StringFilter<"MessageLog"> | string
+    createdAt?: DateTimeFilter<"MessageLog"> | Date | string
+    updatedAt?: DateTimeFilter<"MessageLog"> | Date | string
+    messageId?: StringFilter<"MessageLog"> | string
+    type?: StringFilter<"MessageLog"> | string
+    recipient?: StringFilter<"MessageLog"> | string
+    content?: StringFilter<"MessageLog"> | string
+    status?: StringFilter<"MessageLog"> | string
+    chapterId?: StringFilter<"MessageLog"> | string
   }
 
   export type BudgetUpsertWithWhereUniqueWithoutChapterInput = {
@@ -31472,6 +33119,8 @@ export namespace Prisma {
   export type ProfileCreateWithoutUserInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -31484,6 +33133,8 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutUserInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -32091,6 +33742,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -32114,6 +33766,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -32128,6 +33781,8 @@ export namespace Prisma {
   export type ProfileCreateWithoutMembershipInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -32140,6 +33795,8 @@ export namespace Prisma {
   export type ProfileUncheckedCreateWithoutMembershipInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -32237,6 +33894,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -32260,6 +33918,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -32280,6 +33939,8 @@ export namespace Prisma {
   export type ProfileUpdateWithoutMembershipInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32292,6 +33953,8 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutMembershipInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -32318,6 +33981,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -32341,6 +34005,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -32380,6 +34045,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -32403,6 +34069,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -32634,6 +34301,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -32657,6 +34325,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -32794,6 +34463,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -32817,6 +34487,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -32950,6 +34621,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -32973,6 +34645,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -33087,6 +34760,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -33110,6 +34784,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -33437,6 +35112,7 @@ export namespace Prisma {
     events?: EventCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -33460,6 +35136,7 @@ export namespace Prisma {
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -33554,6 +35231,7 @@ export namespace Prisma {
     events?: EventUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -33577,6 +35255,7 @@ export namespace Prisma {
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -33600,6 +35279,7 @@ export namespace Prisma {
     events?: EventCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -33623,6 +35303,7 @@ export namespace Prisma {
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -33662,6 +35343,7 @@ export namespace Prisma {
     events?: EventUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -33685,6 +35367,7 @@ export namespace Prisma {
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -33708,6 +35391,7 @@ export namespace Prisma {
     events?: EventCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -33731,6 +35415,7 @@ export namespace Prisma {
     events?: EventUncheckedCreateNestedManyWithoutChapterInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -33770,6 +35455,7 @@ export namespace Prisma {
     events?: EventUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -33793,6 +35479,7 @@ export namespace Prisma {
     events?: EventUncheckedUpdateManyWithoutChapterNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -33817,6 +35504,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
@@ -33840,6 +35528,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
@@ -33921,6 +35610,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
@@ -33944,6 +35634,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
@@ -33983,6 +35674,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
@@ -34006,6 +35698,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
@@ -34203,6 +35896,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
@@ -34226,6 +35920,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
@@ -34431,6 +36126,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
@@ -34454,6 +36150,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
@@ -34571,6 +36268,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
@@ -34594,6 +36292,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
@@ -34778,6 +36477,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -34801,6 +36501,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -34924,6 +36625,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -34947,6 +36649,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -34971,6 +36674,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -34994,6 +36698,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -35101,6 +36806,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -35124,6 +36830,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -35209,6 +36916,118 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type ChapterCreateWithoutMessageLogsInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionCreateNestedOneWithoutChapterInput
+    invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    budgets?: BudgetCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
+    transactions?: TransactionCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterUncheckedCreateWithoutMessageLogsInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
+    invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterCreateOrConnectWithoutMessageLogsInput = {
+    where: ChapterWhereUniqueInput
+    create: XOR<ChapterCreateWithoutMessageLogsInput, ChapterUncheckedCreateWithoutMessageLogsInput>
+  }
+
+  export type ChapterUpsertWithoutMessageLogsInput = {
+    update: XOR<ChapterUpdateWithoutMessageLogsInput, ChapterUncheckedUpdateWithoutMessageLogsInput>
+    create: XOR<ChapterCreateWithoutMessageLogsInput, ChapterUncheckedCreateWithoutMessageLogsInput>
+    where?: ChapterWhereInput
+  }
+
+  export type ChapterUpdateToOneWithWhereWithoutMessageLogsInput = {
+    where?: ChapterWhereInput
+    data: XOR<ChapterUpdateWithoutMessageLogsInput, ChapterUncheckedUpdateWithoutMessageLogsInput>
+  }
+
+  export type ChapterUpdateWithoutMessageLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
+    invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterUncheckedUpdateWithoutMessageLogsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
+  }
+
   export type MembershipCreateManyChapterInput = {
     id?: string
     role?: $Enums.MembershipRole
@@ -35220,6 +37039,8 @@ export namespace Prisma {
   export type ProfileCreateManyChapterInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -35281,6 +37102,17 @@ export namespace Prisma {
     email: string
     message: string
     createdAt?: Date | string
+  }
+
+  export type MessageLogCreateManyChapterInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messageId: string
+    type: string
+    recipient: string
+    content: string
+    status: string
   }
 
   export type BudgetCreateManyChapterInput = {
@@ -35363,6 +37195,8 @@ export namespace Prisma {
   export type ProfileUpdateWithoutChapterInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35375,6 +37209,8 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutChapterInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35387,6 +37223,8 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyWithoutChapterInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35558,6 +37396,39 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     message?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MessageLogUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messageId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MessageLogUncheckedUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messageId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MessageLogUncheckedUpdateManyWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messageId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    recipient?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
   }
 
   export type BudgetUpdateWithoutChapterInput = {
@@ -35750,6 +37621,8 @@ export namespace Prisma {
   export type ProfileCreateManyUserInput = {
     id?: string
     phone?: string | null
+    phoneVerified?: boolean
+    smsEnabled?: boolean
     major?: string | null
     gradYear?: number | null
     bio?: string | null
@@ -35949,6 +37822,8 @@ export namespace Prisma {
   export type ProfileUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35961,6 +37836,8 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
@@ -35973,6 +37850,8 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     phone?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneVerified?: BoolFieldUpdateOperationsInput | boolean
+    smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
