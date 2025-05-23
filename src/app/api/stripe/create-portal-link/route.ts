@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { db } from "@/lib/db";
 import { requireChapterAccess } from "@/lib/auth";
 import { MembershipRole } from "@/generated/prisma";
 import stripe from "@/lib/stripe";
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get the chapter with its Stripe customer ID
-    const chapter = await prisma.chapter.findUnique({
+    const chapter = await db.chapter.findUnique({
       where: { slug: chapterSlug }
     });
 
@@ -51,10 +51,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Create a billing portal session
-    const session = await stripe.billingPortal.sessions.create({
+    const sessionParams = {
       customer: chapter.stripeCustomerId,
       return_url: `${request.headers.get('origin')}/${chapterSlug}/admin/billing`,
-    });
+      ...(process.env.STRIPE_PORTAL_CONFIG_ID ? { configuration: process.env.STRIPE_PORTAL_CONFIG_ID } : {})
+    };
+    
+    const session = await stripe.billingPortal.sessions.create(sessionParams);
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
