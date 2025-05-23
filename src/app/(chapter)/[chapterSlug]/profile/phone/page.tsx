@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { redirect } from 'next/navigation';
 import { PhoneSettingsForm } from '@/components/user/phone-form';
@@ -10,7 +10,7 @@ export default async function PhoneSettingsPage({
   params: Promise<{ chapterSlug: string }>;
 }) {
   const { chapterSlug } = await params;
-  const session = await auth();
+  const session = await getSession();
   
   if (!session?.user?.id) {
     return redirect(`/${chapterSlug}/login?callbackUrl=/${chapterSlug}/profile/phone`);

@@ -10,12 +10,18 @@ import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { BroadcastFormData, sendBroadcast } from '@/app/actions/broadcast';
-import { useToast } from '@/components/ui/use-toast';
+import { sendBroadcast } from '@/app/actions/broadcast';
+
+interface BroadcastResult {
+  emailsSent: number;
+  smsSent: number;
+  errors: string[];
+}
+import { toast } from '@/components/ui/use-toast';
 import { Checkbox } from '@/components/ui/checkbox';
-import { MembershipRole } from '@prisma/client';
+import { MembershipRole } from '@/generated/prisma';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { CheckCircle, AlertCircle, Info } from 'lucide-react';
+import { InfoIcon } from 'lucide-react';
 
 const roles = [
   {
@@ -32,24 +38,27 @@ const roles = [
   },
 ];
 
+// Match the schema defined in the server action
 const BroadcastSchema = z.object({
   subject: z.string().min(1, { message: 'Subject is required' }),
   message: z.string().min(1, { message: 'Message is required' }),
-  sendSms: z.boolean().default(false),
-  sendEmail: z.boolean().default(true),
+  sendSms: z.boolean(),
+  sendEmail: z.boolean(),
   targetRoles: z.array(z.nativeEnum(MembershipRole)).min(1, { message: 'Select at least one role' }),
 });
+
+// For validating the form inputs
+type BroadcastFormValues = z.infer<typeof BroadcastSchema>;
 
 interface BroadcastFormProps {
   chapterSlug: string;
 }
 
 export function BroadcastForm({ chapterSlug }: BroadcastFormProps) {
-  const { toast } = useToast();
   const [isPending, setIsPending] = useState(false);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<BroadcastResult | null>(null);
   
-  const form = useForm<BroadcastFormData>({
+  const form = useForm<BroadcastFormValues>({
     resolver: zodResolver(BroadcastSchema),
     defaultValues: {
       subject: '',
@@ -60,7 +69,7 @@ export function BroadcastForm({ chapterSlug }: BroadcastFormProps) {
     },
   });
 
-  async function onSubmit(data: BroadcastFormData) {
+  async function onSubmit(data: BroadcastFormValues) {
     setIsPending(true);
     setResult(null);
     
@@ -68,24 +77,20 @@ export function BroadcastForm({ chapterSlug }: BroadcastFormProps) {
       const response = await sendBroadcast(data, chapterSlug);
       
       if (response.success) {
-        toast({
-          title: 'Broadcast sent',
-          description: `Your message has been sent to the selected members.`,
+        toast.success('Your message has been sent to the selected members.', {
+          description: 'Broadcast sent successfully',
         });
-        setResult(response.result);
+        setResult(response.result || null);
         form.reset();
       } else {
-        toast({
-          title: 'Error',
-          description: response.error || 'Failed to send broadcast',
-          variant: 'destructive',
+        toast.error(response.error || 'Failed to send broadcast', {
+          description: 'Error sending broadcast',
         });
       }
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Something went wrong sending the broadcast',
-        variant: 'destructive',
+      console.error('Broadcast error:', error);
+      toast.error(`Something went wrong: ${error instanceof Error ? error.message : 'Unknown error'}`, {
+        description: 'Error sending broadcast',
       });
     } finally {
       setIsPending(false);
@@ -95,7 +100,10 @@ export function BroadcastForm({ chapterSlug }: BroadcastFormProps) {
   return (
     <div className="space-y-6">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit((data) => {
+            // Pass the form data directly to onSubmit
+            return onSubmit(data);
+          })} className="space-y-6">
           <Card>
             <CardHeader>
               <CardTitle>Send Broadcast</CardTitle>
@@ -238,8 +246,8 @@ export function BroadcastForm({ chapterSlug }: BroadcastFormProps) {
       </Form>
 
       {result && (
-        <Alert variant={result.errors.length > 0 ? "warning" : "success"}>
-          <Info className="h-4 w-4" />
+        <Alert variant={result.errors.length > 0 ? "destructive" : "default"}>
+          <InfoIcon className="h-4 w-4" />
           <AlertTitle>Broadcast Summary</AlertTitle>
           <AlertDescription>
             <div className="space-y-2 mt-2">

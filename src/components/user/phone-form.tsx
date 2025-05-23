@@ -8,10 +8,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
-import { PhoneSettingsFormData, updatePhoneSettings } from '@/app/actions/user-phone';
-import { useToast } from '@/components/ui/use-toast';
-import { isValidPhoneNumber } from '@/lib/sms';
+import { toast } from '@/components/ui/use-toast';
+import { isValidPhoneNumber } from '@/lib/validation';
+import { updatePhoneSettings } from '@/app/actions/user-phone';
 
+// Define a form schema that's compatible with the PhoneSettingsFormData type
 const PhoneFormSchema = z.object({
   phone: z.string()
     .min(10, { message: 'Phone number must be at least 10 digits' })
@@ -19,8 +20,15 @@ const PhoneFormSchema = z.object({
     .refine(val => isValidPhoneNumber(val), {
       message: 'Phone number must be in E.164 format (e.g. +12125551234)',
     }),
-  smsEnabled: z.boolean().default(true),
+  // Define smsEnabled as a required boolean without a default value to match the expected type
+  smsEnabled: z.boolean(),
 });
+
+// Define this explicitly to ensure type compatibility with React Hook Form
+type FormValues = {
+  phone: string;
+  smsEnabled: boolean;
+};
 
 interface PhoneSettingsFormProps {
   initialData: {
@@ -31,10 +39,10 @@ interface PhoneSettingsFormProps {
 }
 
 export function PhoneSettingsForm({ initialData, chapterSlug }: PhoneSettingsFormProps) {
-  const { toast } = useToast();
   const [isPending, setIsPending] = useState(false);
   
-  const form = useForm<PhoneSettingsFormData>({
+  // Use the FormValues type to ensure compatibility with the zodResolver
+  const form = useForm<FormValues>({
     resolver: zodResolver(PhoneFormSchema),
     defaultValues: {
       phone: initialData.phone || '',
@@ -42,28 +50,25 @@ export function PhoneSettingsForm({ initialData, chapterSlug }: PhoneSettingsFor
     },
   });
 
-  async function onSubmit(data: PhoneSettingsFormData) {
+  async function onSubmit(data: FormValues) {
     setIsPending(true);
     try {
       const result = await updatePhoneSettings(data, chapterSlug);
       
       if (result.success) {
-        toast({
-          title: 'Phone settings updated',
+        toast('Phone settings updated', {
           description: 'Your phone settings have been successfully updated.',
         });
       } else {
-        toast({
-          title: 'Error',
+        toast('Error', {
           description: result.error || 'Failed to update phone settings',
-          variant: 'destructive',
+          className: 'bg-destructive',
         });
       }
-    } catch (error) {
-      toast({
-        title: 'Error',
+    } catch {
+      toast('Error', {
         description: 'Something went wrong updating your phone settings',
-        variant: 'destructive',
+        className: 'bg-destructive',
       });
     } finally {
       setIsPending(false);

@@ -2,8 +2,8 @@
 
 import { z } from 'zod';
 import { prisma } from '@/lib/db';
-import { isValidPhoneNumber } from '@/lib/sms';
-import { auth } from '@/lib/auth';
+import { isValidPhoneNumber } from '@/lib/validation';
+import { getSession } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
 
 const PhoneSettingsSchema = z.object({
@@ -19,7 +19,7 @@ const PhoneSettingsSchema = z.object({
 export type PhoneSettingsFormData = z.infer<typeof PhoneSettingsSchema>;
 
 export async function updatePhoneSettings(formData: PhoneSettingsFormData, chapterSlug: string) {
-  const session = await auth();
+  const session = await getSession();
   
   if (!session?.user?.id) {
     return {

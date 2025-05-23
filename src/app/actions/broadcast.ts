@@ -3,9 +3,9 @@
 import { z } from 'zod';
 import { prisma } from '@/lib/db';
 import { sendSms } from '@/lib/sms';
-import { auth } from '@/lib/auth';
+import { getSession } from '@/lib/auth';
 import { sendEmail } from '@/lib/mail';
-import { MembershipRole } from '@prisma/client';
+import { MembershipRole } from '@/generated/prisma';
 import { revalidatePath } from 'next/cache';
 
 const BroadcastSchema = z.object({
@@ -25,7 +25,7 @@ interface BroadcastResult {
 }
 
 export async function sendBroadcast(formData: BroadcastFormData, chapterSlug: string): Promise<{ success: boolean; result?: BroadcastResult; error?: string }> {
-  const session = await auth();
+  const session = await getSession();
   
   if (!session?.user?.id) {
     return {
@@ -90,12 +90,16 @@ export async function sendBroadcast(formData: BroadcastFormData, chapterSlug: st
       // Send email if enabled and user has email
       if (validatedData.sendEmail && memberInfo.user.email) {
         try {
-          await sendEmail({
-            to: memberInfo.user.email,
-            subject: validatedData.subject,
-            html: validatedData.message,
-            from: `${membership.chapter.name} <noreply@greekdash.com>`,
-          });
+          await sendEmail(
+            memberInfo.user.email,
+            'chapterBroadcast',
+            {
+              chapterName: membership.chapter.name,
+              subject: validatedData.subject,
+              message: validatedData.message,
+              senderName: session.user.name || 'Chapter Admin'
+            }
+          );
           
           // Log the email in the database
           await prisma.messageLog.create({

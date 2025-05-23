@@ -60,9 +60,5 @@ export async function sendSms({ to, body, chapterSlug }: SendSmsParams) {
   }
 }
 
-// Function to validate phone number format
-export function isValidPhoneNumber(phoneNumber: string): boolean {
-  // Basic validation - can be enhanced with library like libphonenumber-js
-  const phoneRegex = /^\+[1-9]\d{1,14}$/;
-  return phoneRegex.test(phoneNumber);
-}
+// We moved the isValidPhoneNumber function to validation.ts
+// to avoid importing Twilio in client components
