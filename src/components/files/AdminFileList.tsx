@@ -353,14 +353,14 @@ export function AdminFileList({ chapterSlug, userId, initialFolderPath = '/' }: 
           <div className="mb-4 flex flex-col sm:flex-row gap-4 justify-between">
             <div className="flex flex-col sm:flex-row gap-2">
               <Select 
-                value={filterUploader || ''} 
-                onValueChange={(value) => setFilterUploader(value || null)}
+                value={filterUploader || 'all'} 
+                onValueChange={(value) => setFilterUploader(value === 'all' ? null : value)}
               >
                 <SelectTrigger className="w-[200px]">
                   <SelectValue placeholder="Filter by uploader" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All uploaders</SelectItem>
+                  <SelectItem value="all">All uploaders</SelectItem>
                   {data.uploaders?.map((uploader: {id: string, name: string}) => (
                     <SelectItem key={uploader.id} value={uploader.id}>
                       {uploader.name}

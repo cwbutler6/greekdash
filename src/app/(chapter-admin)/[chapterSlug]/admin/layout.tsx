@@ -9,7 +9,6 @@ import { Calendar, CreditCard, FileText, Settings, Users } from 'lucide-react';
 import { MobileSidebarToggle } from '@/components/ui/mobile-sidebar-toggle';
 import { UserDropdown } from '@/components/ui/user-dropdown';
 import { SidebarLink } from '@/components/ui/sidebar-link';
-import Image from 'next/image';
 
 export const metadata = {
   title: 'Admin Dashboard',
@@ -60,7 +59,6 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
         <div className="flex h-16 items-center justify-between px-4 md:px-6">
           <div className="flex items-center space-x-2">
             <MobileSidebarToggle chapterSlug={chapterSlug} />
-            <Image src="/logo.svg" alt="GreekDash" width={32} height={32} />
             <Link href={`/${chapterSlug}/admin`} className="text-xl font-bold">GreekDash</Link>
           </div>
           <div className="flex items-center space-x-4">
