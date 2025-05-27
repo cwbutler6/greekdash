@@ -104,6 +104,11 @@ export type Profile = $Result.DefaultSelection<Prisma.$ProfilePayload>
  */
 export type Transaction = $Result.DefaultSelection<Prisma.$TransactionPayload>
 /**
+ * Model File
+ * 
+ */
+export type File = $Result.DefaultSelection<Prisma.$FilePayload>
+/**
  * Model MessageLog
  * 
  */
@@ -531,6 +536,16 @@ export class PrismaClient<
     * ```
     */
   get transaction(): Prisma.TransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.file`: Exposes CRUD operations for the **File** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Files
+    * const files = await prisma.file.findMany()
+    * ```
+    */
+  get file(): Prisma.FileDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.messageLog`: Exposes CRUD operations for the **MessageLog** model.
@@ -999,6 +1014,7 @@ export namespace Prisma {
     DuesPayment: 'DuesPayment',
     Profile: 'Profile',
     Transaction: 'Transaction',
+    File: 'File',
     MessageLog: 'MessageLog'
   };
 
@@ -1018,7 +1034,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage" | "budget" | "expense" | "duesPayment" | "profile" | "transaction" | "messageLog"
+      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage" | "budget" | "expense" | "duesPayment" | "profile" | "transaction" | "file" | "messageLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2354,6 +2370,80 @@ export namespace Prisma {
           }
         }
       }
+      File: {
+        payload: Prisma.$FilePayload<ExtArgs>
+        fields: Prisma.FileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          findFirst: {
+            args: Prisma.FileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          findMany: {
+            args: Prisma.FileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>[]
+          }
+          create: {
+            args: Prisma.FileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          createMany: {
+            args: Prisma.FileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>[]
+          }
+          delete: {
+            args: Prisma.FileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          update: {
+            args: Prisma.FileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          deleteMany: {
+            args: Prisma.FileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.FileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>[]
+          }
+          upsert: {
+            args: Prisma.FileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FilePayload>
+          }
+          aggregate: {
+            args: Prisma.FileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFile>
+          }
+          groupBy: {
+            args: Prisma.FileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FileCountArgs<ExtArgs>
+            result: $Utils.Optional<FileCountAggregateOutputType> | number
+          }
+        }
+      }
       MessageLog: {
         payload: Prisma.$MessageLogPayload<ExtArgs>
         fields: Prisma.MessageLogFieldRefs
@@ -2530,6 +2620,7 @@ export namespace Prisma {
     duesPayment?: DuesPaymentOmit
     profile?: ProfileOmit
     transaction?: TransactionOmit
+    file?: FileOmit
     messageLog?: MessageLogOmit
   }
 
@@ -2633,6 +2724,7 @@ export namespace Prisma {
     galleryImages: number
     contactMessages: number
     messageLogs: number
+    files: number
     budgets: number
     expenses: number
     duesPayments: number
@@ -2648,6 +2740,7 @@ export namespace Prisma {
     galleryImages?: boolean | ChapterCountOutputTypeCountGalleryImagesArgs
     contactMessages?: boolean | ChapterCountOutputTypeCountContactMessagesArgs
     messageLogs?: boolean | ChapterCountOutputTypeCountMessageLogsArgs
+    files?: boolean | ChapterCountOutputTypeCountFilesArgs
     budgets?: boolean | ChapterCountOutputTypeCountBudgetsArgs
     expenses?: boolean | ChapterCountOutputTypeCountExpensesArgs
     duesPayments?: boolean | ChapterCountOutputTypeCountDuesPaymentsArgs
@@ -2724,6 +2817,13 @@ export namespace Prisma {
   /**
    * ChapterCountOutputType without action
    */
+  export type ChapterCountOutputTypeCountFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileWhereInput
+  }
+
+  /**
+   * ChapterCountOutputType without action
+   */
   export type ChapterCountOutputTypeCountBudgetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BudgetWhereInput
   }
@@ -2767,6 +2867,7 @@ export namespace Prisma {
     submittedExpenses: number
     approvedExpenses: number
     duesPayments: number
+    uploadedFiles: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2782,6 +2883,7 @@ export namespace Prisma {
     submittedExpenses?: boolean | UserCountOutputTypeCountSubmittedExpensesArgs
     approvedExpenses?: boolean | UserCountOutputTypeCountApprovedExpensesArgs
     duesPayments?: boolean | UserCountOutputTypeCountDuesPaymentsArgs
+    uploadedFiles?: boolean | UserCountOutputTypeCountUploadedFilesArgs
   }
 
   // Custom InputTypes
@@ -2877,6 +2979,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountDuesPaymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DuesPaymentWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountUploadedFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileWhereInput
   }
 
 
@@ -3151,6 +3260,7 @@ export namespace Prisma {
     galleryImages?: boolean | Chapter$galleryImagesArgs<ExtArgs>
     contactMessages?: boolean | Chapter$contactMessagesArgs<ExtArgs>
     messageLogs?: boolean | Chapter$messageLogsArgs<ExtArgs>
+    files?: boolean | Chapter$filesArgs<ExtArgs>
     budgets?: boolean | Chapter$budgetsArgs<ExtArgs>
     expenses?: boolean | Chapter$expensesArgs<ExtArgs>
     duesPayments?: boolean | Chapter$duesPaymentsArgs<ExtArgs>
@@ -3205,6 +3315,7 @@ export namespace Prisma {
     galleryImages?: boolean | Chapter$galleryImagesArgs<ExtArgs>
     contactMessages?: boolean | Chapter$contactMessagesArgs<ExtArgs>
     messageLogs?: boolean | Chapter$messageLogsArgs<ExtArgs>
+    files?: boolean | Chapter$filesArgs<ExtArgs>
     budgets?: boolean | Chapter$budgetsArgs<ExtArgs>
     expenses?: boolean | Chapter$expensesArgs<ExtArgs>
     duesPayments?: boolean | Chapter$duesPaymentsArgs<ExtArgs>
@@ -3226,6 +3337,7 @@ export namespace Prisma {
       galleryImages: Prisma.$GalleryImagePayload<ExtArgs>[]
       contactMessages: Prisma.$ContactMessagePayload<ExtArgs>[]
       messageLogs: Prisma.$MessageLogPayload<ExtArgs>[]
+      files: Prisma.$FilePayload<ExtArgs>[]
       budgets: Prisma.$BudgetPayload<ExtArgs>[]
       expenses: Prisma.$ExpensePayload<ExtArgs>[]
       duesPayments: Prisma.$DuesPaymentPayload<ExtArgs>[]
@@ -3644,6 +3756,7 @@ export namespace Prisma {
     galleryImages<T extends Chapter$galleryImagesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$galleryImagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GalleryImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     contactMessages<T extends Chapter$contactMessagesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$contactMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ContactMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     messageLogs<T extends Chapter$messageLogsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$messageLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessageLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    files<T extends Chapter$filesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$filesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     budgets<T extends Chapter$budgetsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$budgetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BudgetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     expenses<T extends Chapter$expensesArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$expensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     duesPayments<T extends Chapter$duesPaymentsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$duesPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DuesPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4285,6 +4398,30 @@ export namespace Prisma {
   }
 
   /**
+   * Chapter.files
+   */
+  export type Chapter$filesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    where?: FileWhereInput
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    cursor?: FileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
    * Chapter.budgets
    */
   export type Chapter$budgetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4599,6 +4736,7 @@ export namespace Prisma {
     submittedExpenses?: boolean | User$submittedExpensesArgs<ExtArgs>
     approvedExpenses?: boolean | User$approvedExpensesArgs<ExtArgs>
     duesPayments?: boolean | User$duesPaymentsArgs<ExtArgs>
+    uploadedFiles?: boolean | User$uploadedFilesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4649,6 +4787,7 @@ export namespace Prisma {
     submittedExpenses?: boolean | User$submittedExpensesArgs<ExtArgs>
     approvedExpenses?: boolean | User$approvedExpensesArgs<ExtArgs>
     duesPayments?: boolean | User$duesPaymentsArgs<ExtArgs>
+    uploadedFiles?: boolean | User$uploadedFilesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4669,6 +4808,7 @@ export namespace Prisma {
       submittedExpenses: Prisma.$ExpensePayload<ExtArgs>[]
       approvedExpenses: Prisma.$ExpensePayload<ExtArgs>[]
       duesPayments: Prisma.$DuesPaymentPayload<ExtArgs>[]
+      uploadedFiles: Prisma.$FilePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5085,6 +5225,7 @@ export namespace Prisma {
     submittedExpenses<T extends User$submittedExpensesArgs<ExtArgs> = {}>(args?: Subset<T, User$submittedExpensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     approvedExpenses<T extends User$approvedExpensesArgs<ExtArgs> = {}>(args?: Subset<T, User$approvedExpensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     duesPayments<T extends User$duesPaymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$duesPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DuesPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    uploadedFiles<T extends User$uploadedFilesArgs<ExtArgs> = {}>(args?: Subset<T, User$uploadedFilesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5795,6 +5936,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DuesPaymentScalarFieldEnum | DuesPaymentScalarFieldEnum[]
+  }
+
+  /**
+   * User.uploadedFiles
+   */
+  export type User$uploadedFilesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    where?: FileWhereInput
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    cursor?: FileWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
   }
 
   /**
@@ -24008,6 +24173,1145 @@ export namespace Prisma {
 
 
   /**
+   * Model File
+   */
+
+  export type AggregateFile = {
+    _count: FileCountAggregateOutputType | null
+    _avg: FileAvgAggregateOutputType | null
+    _sum: FileSumAggregateOutputType | null
+    _min: FileMinAggregateOutputType | null
+    _max: FileMaxAggregateOutputType | null
+  }
+
+  export type FileAvgAggregateOutputType = {
+    size: number | null
+  }
+
+  export type FileSumAggregateOutputType = {
+    size: number | null
+  }
+
+  export type FileMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    path: string | null
+    mimeType: string | null
+    size: number | null
+    createdAt: Date | null
+    chapterId: string | null
+    uploaderId: string | null
+  }
+
+  export type FileMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    path: string | null
+    mimeType: string | null
+    size: number | null
+    createdAt: Date | null
+    chapterId: string | null
+    uploaderId: string | null
+  }
+
+  export type FileCountAggregateOutputType = {
+    id: number
+    name: number
+    path: number
+    mimeType: number
+    size: number
+    createdAt: number
+    chapterId: number
+    uploaderId: number
+    _all: number
+  }
+
+
+  export type FileAvgAggregateInputType = {
+    size?: true
+  }
+
+  export type FileSumAggregateInputType = {
+    size?: true
+  }
+
+  export type FileMinAggregateInputType = {
+    id?: true
+    name?: true
+    path?: true
+    mimeType?: true
+    size?: true
+    createdAt?: true
+    chapterId?: true
+    uploaderId?: true
+  }
+
+  export type FileMaxAggregateInputType = {
+    id?: true
+    name?: true
+    path?: true
+    mimeType?: true
+    size?: true
+    createdAt?: true
+    chapterId?: true
+    uploaderId?: true
+  }
+
+  export type FileCountAggregateInputType = {
+    id?: true
+    name?: true
+    path?: true
+    mimeType?: true
+    size?: true
+    createdAt?: true
+    chapterId?: true
+    uploaderId?: true
+    _all?: true
+  }
+
+  export type FileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which File to aggregate.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Files
+    **/
+    _count?: true | FileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: FileAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: FileSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FileMaxAggregateInputType
+  }
+
+  export type GetFileAggregateType<T extends FileAggregateArgs> = {
+        [P in keyof T & keyof AggregateFile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFile[P]>
+      : GetScalarType<T[P], AggregateFile[P]>
+  }
+
+
+
+
+  export type FileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FileWhereInput
+    orderBy?: FileOrderByWithAggregationInput | FileOrderByWithAggregationInput[]
+    by: FileScalarFieldEnum[] | FileScalarFieldEnum
+    having?: FileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FileCountAggregateInputType | true
+    _avg?: FileAvgAggregateInputType
+    _sum?: FileSumAggregateInputType
+    _min?: FileMinAggregateInputType
+    _max?: FileMaxAggregateInputType
+  }
+
+  export type FileGroupByOutputType = {
+    id: string
+    name: string
+    path: string
+    mimeType: string
+    size: number
+    createdAt: Date
+    chapterId: string
+    uploaderId: string
+    _count: FileCountAggregateOutputType | null
+    _avg: FileAvgAggregateOutputType | null
+    _sum: FileSumAggregateOutputType | null
+    _min: FileMinAggregateOutputType | null
+    _max: FileMaxAggregateOutputType | null
+  }
+
+  type GetFileGroupByPayload<T extends FileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FileGroupByOutputType[P]>
+            : GetScalarType<T[P], FileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    path?: boolean
+    mimeType?: boolean
+    size?: boolean
+    createdAt?: boolean
+    chapterId?: boolean
+    uploaderId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    uploader?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["file"]>
+
+  export type FileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    path?: boolean
+    mimeType?: boolean
+    size?: boolean
+    createdAt?: boolean
+    chapterId?: boolean
+    uploaderId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    uploader?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["file"]>
+
+  export type FileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    path?: boolean
+    mimeType?: boolean
+    size?: boolean
+    createdAt?: boolean
+    chapterId?: boolean
+    uploaderId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    uploader?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["file"]>
+
+  export type FileSelectScalar = {
+    id?: boolean
+    name?: boolean
+    path?: boolean
+    mimeType?: boolean
+    size?: boolean
+    createdAt?: boolean
+    chapterId?: boolean
+    uploaderId?: boolean
+  }
+
+  export type FileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "path" | "mimeType" | "size" | "createdAt" | "chapterId" | "uploaderId", ExtArgs["result"]["file"]>
+  export type FileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    uploader?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type FileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    uploader?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type FileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    uploader?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $FilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "File"
+    objects: {
+      chapter: Prisma.$ChapterPayload<ExtArgs>
+      uploader: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      path: string
+      mimeType: string
+      size: number
+      createdAt: Date
+      chapterId: string
+      uploaderId: string
+    }, ExtArgs["result"]["file"]>
+    composites: {}
+  }
+
+  type FileGetPayload<S extends boolean | null | undefined | FileDefaultArgs> = $Result.GetResult<Prisma.$FilePayload, S>
+
+  type FileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<FileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: FileCountAggregateInputType | true
+    }
+
+  export interface FileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['File'], meta: { name: 'File' } }
+    /**
+     * Find zero or one File that matches the filter.
+     * @param {FileFindUniqueArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FileFindUniqueArgs>(args: SelectSubset<T, FileFindUniqueArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one File that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {FileFindUniqueOrThrowArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FileFindUniqueOrThrowArgs>(args: SelectSubset<T, FileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first File that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileFindFirstArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FileFindFirstArgs>(args?: SelectSubset<T, FileFindFirstArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first File that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileFindFirstOrThrowArgs} args - Arguments to find a File
+     * @example
+     * // Get one File
+     * const file = await prisma.file.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FileFindFirstOrThrowArgs>(args?: SelectSubset<T, FileFindFirstOrThrowArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Files that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Files
+     * const files = await prisma.file.findMany()
+     * 
+     * // Get first 10 Files
+     * const files = await prisma.file.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const fileWithIdOnly = await prisma.file.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FileFindManyArgs>(args?: SelectSubset<T, FileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a File.
+     * @param {FileCreateArgs} args - Arguments to create a File.
+     * @example
+     * // Create one File
+     * const File = await prisma.file.create({
+     *   data: {
+     *     // ... data to create a File
+     *   }
+     * })
+     * 
+     */
+    create<T extends FileCreateArgs>(args: SelectSubset<T, FileCreateArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Files.
+     * @param {FileCreateManyArgs} args - Arguments to create many Files.
+     * @example
+     * // Create many Files
+     * const file = await prisma.file.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FileCreateManyArgs>(args?: SelectSubset<T, FileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Files and returns the data saved in the database.
+     * @param {FileCreateManyAndReturnArgs} args - Arguments to create many Files.
+     * @example
+     * // Create many Files
+     * const file = await prisma.file.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Files and only return the `id`
+     * const fileWithIdOnly = await prisma.file.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FileCreateManyAndReturnArgs>(args?: SelectSubset<T, FileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a File.
+     * @param {FileDeleteArgs} args - Arguments to delete one File.
+     * @example
+     * // Delete one File
+     * const File = await prisma.file.delete({
+     *   where: {
+     *     // ... filter to delete one File
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FileDeleteArgs>(args: SelectSubset<T, FileDeleteArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one File.
+     * @param {FileUpdateArgs} args - Arguments to update one File.
+     * @example
+     * // Update one File
+     * const file = await prisma.file.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FileUpdateArgs>(args: SelectSubset<T, FileUpdateArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Files.
+     * @param {FileDeleteManyArgs} args - Arguments to filter Files to delete.
+     * @example
+     * // Delete a few Files
+     * const { count } = await prisma.file.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FileDeleteManyArgs>(args?: SelectSubset<T, FileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Files.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Files
+     * const file = await prisma.file.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FileUpdateManyArgs>(args: SelectSubset<T, FileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Files and returns the data updated in the database.
+     * @param {FileUpdateManyAndReturnArgs} args - Arguments to update many Files.
+     * @example
+     * // Update many Files
+     * const file = await prisma.file.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Files and only return the `id`
+     * const fileWithIdOnly = await prisma.file.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FileUpdateManyAndReturnArgs>(args: SelectSubset<T, FileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one File.
+     * @param {FileUpsertArgs} args - Arguments to update or create a File.
+     * @example
+     * // Update or create a File
+     * const file = await prisma.file.upsert({
+     *   create: {
+     *     // ... data to create a File
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the File we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FileUpsertArgs>(args: SelectSubset<T, FileUpsertArgs<ExtArgs>>): Prisma__FileClient<$Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Files.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileCountArgs} args - Arguments to filter Files to count.
+     * @example
+     * // Count the number of Files
+     * const count = await prisma.file.count({
+     *   where: {
+     *     // ... the filter for the Files we want to count
+     *   }
+     * })
+    **/
+    count<T extends FileCountArgs>(
+      args?: Subset<T, FileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a File.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FileAggregateArgs>(args: Subset<T, FileAggregateArgs>): Prisma.PrismaPromise<GetFileAggregateType<T>>
+
+    /**
+     * Group by File.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FileGroupByArgs['orderBy'] }
+        : { orderBy?: FileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the File model
+   */
+  readonly fields: FileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for File.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    uploader<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the File model
+   */
+  interface FileFieldRefs {
+    readonly id: FieldRef<"File", 'String'>
+    readonly name: FieldRef<"File", 'String'>
+    readonly path: FieldRef<"File", 'String'>
+    readonly mimeType: FieldRef<"File", 'String'>
+    readonly size: FieldRef<"File", 'Int'>
+    readonly createdAt: FieldRef<"File", 'DateTime'>
+    readonly chapterId: FieldRef<"File", 'String'>
+    readonly uploaderId: FieldRef<"File", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * File findUnique
+   */
+  export type FileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File findUniqueOrThrow
+   */
+  export type FileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File findFirst
+   */
+  export type FileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Files.
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Files.
+     */
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * File findFirstOrThrow
+   */
+  export type FileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which File to fetch.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Files.
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Files.
+     */
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * File findMany
+   */
+  export type FileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter, which Files to fetch.
+     */
+    where?: FileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Files to fetch.
+     */
+    orderBy?: FileOrderByWithRelationInput | FileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Files.
+     */
+    cursor?: FileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Files from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Files.
+     */
+    skip?: number
+    distinct?: FileScalarFieldEnum | FileScalarFieldEnum[]
+  }
+
+  /**
+   * File create
+   */
+  export type FileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a File.
+     */
+    data: XOR<FileCreateInput, FileUncheckedCreateInput>
+  }
+
+  /**
+   * File createMany
+   */
+  export type FileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Files.
+     */
+    data: FileCreateManyInput | FileCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * File createManyAndReturn
+   */
+  export type FileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * The data used to create many Files.
+     */
+    data: FileCreateManyInput | FileCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * File update
+   */
+  export type FileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a File.
+     */
+    data: XOR<FileUpdateInput, FileUncheckedUpdateInput>
+    /**
+     * Choose, which File to update.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File updateMany
+   */
+  export type FileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Files.
+     */
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyInput>
+    /**
+     * Filter which Files to update
+     */
+    where?: FileWhereInput
+    /**
+     * Limit how many Files to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * File updateManyAndReturn
+   */
+  export type FileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * The data used to update Files.
+     */
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyInput>
+    /**
+     * Filter which Files to update
+     */
+    where?: FileWhereInput
+    /**
+     * Limit how many Files to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * File upsert
+   */
+  export type FileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the File to update in case it exists.
+     */
+    where: FileWhereUniqueInput
+    /**
+     * In case the File found by the `where` argument doesn't exist, create a new File with this data.
+     */
+    create: XOR<FileCreateInput, FileUncheckedCreateInput>
+    /**
+     * In case the File was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FileUpdateInput, FileUncheckedUpdateInput>
+  }
+
+  /**
+   * File delete
+   */
+  export type FileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+    /**
+     * Filter which File to delete.
+     */
+    where: FileWhereUniqueInput
+  }
+
+  /**
+   * File deleteMany
+   */
+  export type FileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Files to delete
+     */
+    where?: FileWhereInput
+    /**
+     * Limit how many Files to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * File without action
+   */
+  export type FileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the File
+     */
+    select?: FileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the File
+     */
+    omit?: FileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FileInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model MessageLog
    */
 
@@ -25393,6 +26697,20 @@ export namespace Prisma {
   export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
 
 
+  export const FileScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    path: 'path',
+    mimeType: 'mimeType',
+    size: 'size',
+    createdAt: 'createdAt',
+    chapterId: 'chapterId',
+    uploaderId: 'uploaderId'
+  };
+
+  export type FileScalarFieldEnum = (typeof FileScalarFieldEnum)[keyof typeof FileScalarFieldEnum]
+
+
   export const MessageLogScalarFieldEnum: {
     id: 'id',
     createdAt: 'createdAt',
@@ -25668,6 +26986,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageListRelationFilter
     contactMessages?: ContactMessageListRelationFilter
     messageLogs?: MessageLogListRelationFilter
+    files?: FileListRelationFilter
     budgets?: BudgetListRelationFilter
     expenses?: ExpenseListRelationFilter
     duesPayments?: DuesPaymentListRelationFilter
@@ -25693,6 +27012,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageOrderByRelationAggregateInput
     contactMessages?: ContactMessageOrderByRelationAggregateInput
     messageLogs?: MessageLogOrderByRelationAggregateInput
+    files?: FileOrderByRelationAggregateInput
     budgets?: BudgetOrderByRelationAggregateInput
     expenses?: ExpenseOrderByRelationAggregateInput
     duesPayments?: DuesPaymentOrderByRelationAggregateInput
@@ -25721,6 +27041,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageListRelationFilter
     contactMessages?: ContactMessageListRelationFilter
     messageLogs?: MessageLogListRelationFilter
+    files?: FileListRelationFilter
     budgets?: BudgetListRelationFilter
     expenses?: ExpenseListRelationFilter
     duesPayments?: DuesPaymentListRelationFilter
@@ -25781,6 +27102,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseListRelationFilter
     approvedExpenses?: ExpenseListRelationFilter
     duesPayments?: DuesPaymentListRelationFilter
+    uploadedFiles?: FileListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -25804,6 +27126,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseOrderByRelationAggregateInput
     approvedExpenses?: ExpenseOrderByRelationAggregateInput
     duesPayments?: DuesPaymentOrderByRelationAggregateInput
+    uploadedFiles?: FileOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -25830,6 +27153,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseListRelationFilter
     approvedExpenses?: ExpenseListRelationFilter
     duesPayments?: DuesPaymentListRelationFilter
+    uploadedFiles?: FileListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -27097,6 +28421,81 @@ export namespace Prisma {
     duesPaymentId?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
   }
 
+  export type FileWhereInput = {
+    AND?: FileWhereInput | FileWhereInput[]
+    OR?: FileWhereInput[]
+    NOT?: FileWhereInput | FileWhereInput[]
+    id?: StringFilter<"File"> | string
+    name?: StringFilter<"File"> | string
+    path?: StringFilter<"File"> | string
+    mimeType?: StringFilter<"File"> | string
+    size?: IntFilter<"File"> | number
+    createdAt?: DateTimeFilter<"File"> | Date | string
+    chapterId?: StringFilter<"File"> | string
+    uploaderId?: StringFilter<"File"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+    uploader?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type FileOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    path?: SortOrder
+    mimeType?: SortOrder
+    size?: SortOrder
+    createdAt?: SortOrder
+    chapterId?: SortOrder
+    uploaderId?: SortOrder
+    chapter?: ChapterOrderByWithRelationInput
+    uploader?: UserOrderByWithRelationInput
+  }
+
+  export type FileWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    path?: string
+    AND?: FileWhereInput | FileWhereInput[]
+    OR?: FileWhereInput[]
+    NOT?: FileWhereInput | FileWhereInput[]
+    name?: StringFilter<"File"> | string
+    mimeType?: StringFilter<"File"> | string
+    size?: IntFilter<"File"> | number
+    createdAt?: DateTimeFilter<"File"> | Date | string
+    chapterId?: StringFilter<"File"> | string
+    uploaderId?: StringFilter<"File"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+    uploader?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "path">
+
+  export type FileOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    path?: SortOrder
+    mimeType?: SortOrder
+    size?: SortOrder
+    createdAt?: SortOrder
+    chapterId?: SortOrder
+    uploaderId?: SortOrder
+    _count?: FileCountOrderByAggregateInput
+    _avg?: FileAvgOrderByAggregateInput
+    _max?: FileMaxOrderByAggregateInput
+    _min?: FileMinOrderByAggregateInput
+    _sum?: FileSumOrderByAggregateInput
+  }
+
+  export type FileScalarWhereWithAggregatesInput = {
+    AND?: FileScalarWhereWithAggregatesInput | FileScalarWhereWithAggregatesInput[]
+    OR?: FileScalarWhereWithAggregatesInput[]
+    NOT?: FileScalarWhereWithAggregatesInput | FileScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"File"> | string
+    name?: StringWithAggregatesFilter<"File"> | string
+    path?: StringWithAggregatesFilter<"File"> | string
+    mimeType?: StringWithAggregatesFilter<"File"> | string
+    size?: IntWithAggregatesFilter<"File"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
+    chapterId?: StringWithAggregatesFilter<"File"> | string
+    uploaderId?: StringWithAggregatesFilter<"File"> | string
+  }
+
   export type MessageLogWhereInput = {
     AND?: MessageLogWhereInput | MessageLogWhereInput[]
     OR?: MessageLogWhereInput[]
@@ -27191,6 +28590,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -27216,6 +28616,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -27241,6 +28642,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -27266,6 +28668,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -27329,6 +28732,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -27352,6 +28756,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUpdateInput = {
@@ -27375,6 +28780,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -27398,6 +28804,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -28719,6 +30126,81 @@ export namespace Prisma {
     duesPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type FileCreateInput = {
+    id?: string
+    name: string
+    path: string
+    mimeType: string
+    size: number
+    createdAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutFilesInput
+    uploader: UserCreateNestedOneWithoutUploadedFilesInput
+  }
+
+  export type FileUncheckedCreateInput = {
+    id?: string
+    name: string
+    path: string
+    mimeType: string
+    size: number
+    createdAt?: Date | string
+    chapterId: string
+    uploaderId: string
+  }
+
+  export type FileUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutFilesNestedInput
+    uploader?: UserUpdateOneRequiredWithoutUploadedFilesNestedInput
+  }
+
+  export type FileUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    uploaderId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FileCreateManyInput = {
+    id?: string
+    name: string
+    path: string
+    mimeType: string
+    size: number
+    createdAt?: Date | string
+    chapterId: string
+    uploaderId: string
+  }
+
+  export type FileUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FileUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    uploaderId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type MessageLogCreateInput = {
     id?: string
     createdAt?: Date | string
@@ -28896,6 +30378,12 @@ export namespace Prisma {
     none?: MessageLogWhereInput
   }
 
+  export type FileListRelationFilter = {
+    every?: FileWhereInput
+    some?: FileWhereInput
+    none?: FileWhereInput
+  }
+
   export type BudgetListRelationFilter = {
     every?: BudgetWhereInput
     some?: BudgetWhereInput
@@ -28954,6 +30442,10 @@ export namespace Prisma {
   }
 
   export type MessageLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FileOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -30076,6 +31568,74 @@ export namespace Prisma {
     _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type FileCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    path?: SortOrder
+    mimeType?: SortOrder
+    size?: SortOrder
+    createdAt?: SortOrder
+    chapterId?: SortOrder
+    uploaderId?: SortOrder
+  }
+
+  export type FileAvgOrderByAggregateInput = {
+    size?: SortOrder
+  }
+
+  export type FileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    path?: SortOrder
+    mimeType?: SortOrder
+    size?: SortOrder
+    createdAt?: SortOrder
+    chapterId?: SortOrder
+    uploaderId?: SortOrder
+  }
+
+  export type FileMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    path?: SortOrder
+    mimeType?: SortOrder
+    size?: SortOrder
+    createdAt?: SortOrder
+    chapterId?: SortOrder
+    uploaderId?: SortOrder
+  }
+
+  export type FileSumOrderByAggregateInput = {
+    size?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type MessageLogCountOrderByAggregateInput = {
     id?: SortOrder
     createdAt?: SortOrder
@@ -30174,6 +31734,13 @@ export namespace Prisma {
     connect?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
   }
 
+  export type FileCreateNestedManyWithoutChapterInput = {
+    create?: XOR<FileCreateWithoutChapterInput, FileUncheckedCreateWithoutChapterInput> | FileCreateWithoutChapterInput[] | FileUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutChapterInput | FileCreateOrConnectWithoutChapterInput[]
+    createMany?: FileCreateManyChapterInputEnvelope
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+  }
+
   export type BudgetCreateNestedManyWithoutChapterInput = {
     create?: XOR<BudgetCreateWithoutChapterInput, BudgetUncheckedCreateWithoutChapterInput> | BudgetCreateWithoutChapterInput[] | BudgetUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: BudgetCreateOrConnectWithoutChapterInput | BudgetCreateOrConnectWithoutChapterInput[]
@@ -30262,6 +31829,13 @@ export namespace Prisma {
     connectOrCreate?: MessageLogCreateOrConnectWithoutChapterInput | MessageLogCreateOrConnectWithoutChapterInput[]
     createMany?: MessageLogCreateManyChapterInputEnvelope
     connect?: MessageLogWhereUniqueInput | MessageLogWhereUniqueInput[]
+  }
+
+  export type FileUncheckedCreateNestedManyWithoutChapterInput = {
+    create?: XOR<FileCreateWithoutChapterInput, FileUncheckedCreateWithoutChapterInput> | FileCreateWithoutChapterInput[] | FileUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutChapterInput | FileCreateOrConnectWithoutChapterInput[]
+    createMany?: FileCreateManyChapterInputEnvelope
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
   }
 
   export type BudgetUncheckedCreateNestedManyWithoutChapterInput = {
@@ -30424,6 +31998,20 @@ export namespace Prisma {
     update?: MessageLogUpdateWithWhereUniqueWithoutChapterInput | MessageLogUpdateWithWhereUniqueWithoutChapterInput[]
     updateMany?: MessageLogUpdateManyWithWhereWithoutChapterInput | MessageLogUpdateManyWithWhereWithoutChapterInput[]
     deleteMany?: MessageLogScalarWhereInput | MessageLogScalarWhereInput[]
+  }
+
+  export type FileUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<FileCreateWithoutChapterInput, FileUncheckedCreateWithoutChapterInput> | FileCreateWithoutChapterInput[] | FileUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutChapterInput | FileCreateOrConnectWithoutChapterInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutChapterInput | FileUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: FileCreateManyChapterInputEnvelope
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutChapterInput | FileUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutChapterInput | FileUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
   }
 
   export type BudgetUpdateManyWithoutChapterNestedInput = {
@@ -30604,6 +32192,20 @@ export namespace Prisma {
     deleteMany?: MessageLogScalarWhereInput | MessageLogScalarWhereInput[]
   }
 
+  export type FileUncheckedUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<FileCreateWithoutChapterInput, FileUncheckedCreateWithoutChapterInput> | FileCreateWithoutChapterInput[] | FileUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutChapterInput | FileCreateOrConnectWithoutChapterInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutChapterInput | FileUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: FileCreateManyChapterInputEnvelope
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutChapterInput | FileUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutChapterInput | FileUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
+  }
+
   export type BudgetUncheckedUpdateManyWithoutChapterNestedInput = {
     create?: XOR<BudgetCreateWithoutChapterInput, BudgetUncheckedCreateWithoutChapterInput> | BudgetCreateWithoutChapterInput[] | BudgetUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: BudgetCreateOrConnectWithoutChapterInput | BudgetCreateOrConnectWithoutChapterInput[]
@@ -30744,6 +32346,13 @@ export namespace Prisma {
     connect?: DuesPaymentWhereUniqueInput | DuesPaymentWhereUniqueInput[]
   }
 
+  export type FileCreateNestedManyWithoutUploaderInput = {
+    create?: XOR<FileCreateWithoutUploaderInput, FileUncheckedCreateWithoutUploaderInput> | FileCreateWithoutUploaderInput[] | FileUncheckedCreateWithoutUploaderInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutUploaderInput | FileCreateOrConnectWithoutUploaderInput[]
+    createMany?: FileCreateManyUploaderInputEnvelope
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -30826,6 +32435,13 @@ export namespace Prisma {
     connectOrCreate?: DuesPaymentCreateOrConnectWithoutUserInput | DuesPaymentCreateOrConnectWithoutUserInput[]
     createMany?: DuesPaymentCreateManyUserInputEnvelope
     connect?: DuesPaymentWhereUniqueInput | DuesPaymentWhereUniqueInput[]
+  }
+
+  export type FileUncheckedCreateNestedManyWithoutUploaderInput = {
+    create?: XOR<FileCreateWithoutUploaderInput, FileUncheckedCreateWithoutUploaderInput> | FileCreateWithoutUploaderInput[] | FileUncheckedCreateWithoutUploaderInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutUploaderInput | FileCreateOrConnectWithoutUploaderInput[]
+    createMany?: FileCreateManyUploaderInputEnvelope
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -31000,6 +32616,20 @@ export namespace Prisma {
     deleteMany?: DuesPaymentScalarWhereInput | DuesPaymentScalarWhereInput[]
   }
 
+  export type FileUpdateManyWithoutUploaderNestedInput = {
+    create?: XOR<FileCreateWithoutUploaderInput, FileUncheckedCreateWithoutUploaderInput> | FileCreateWithoutUploaderInput[] | FileUncheckedCreateWithoutUploaderInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutUploaderInput | FileCreateOrConnectWithoutUploaderInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutUploaderInput | FileUpsertWithWhereUniqueWithoutUploaderInput[]
+    createMany?: FileCreateManyUploaderInputEnvelope
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutUploaderInput | FileUpdateWithWhereUniqueWithoutUploaderInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutUploaderInput | FileUpdateManyWithWhereWithoutUploaderInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -31166,6 +32796,20 @@ export namespace Prisma {
     update?: DuesPaymentUpdateWithWhereUniqueWithoutUserInput | DuesPaymentUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: DuesPaymentUpdateManyWithWhereWithoutUserInput | DuesPaymentUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: DuesPaymentScalarWhereInput | DuesPaymentScalarWhereInput[]
+  }
+
+  export type FileUncheckedUpdateManyWithoutUploaderNestedInput = {
+    create?: XOR<FileCreateWithoutUploaderInput, FileUncheckedCreateWithoutUploaderInput> | FileCreateWithoutUploaderInput[] | FileUncheckedCreateWithoutUploaderInput[]
+    connectOrCreate?: FileCreateOrConnectWithoutUploaderInput | FileCreateOrConnectWithoutUploaderInput[]
+    upsert?: FileUpsertWithWhereUniqueWithoutUploaderInput | FileUpsertWithWhereUniqueWithoutUploaderInput[]
+    createMany?: FileCreateManyUploaderInputEnvelope
+    set?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    disconnect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    delete?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    connect?: FileWhereUniqueInput | FileWhereUniqueInput[]
+    update?: FileUpdateWithWhereUniqueWithoutUploaderInput | FileUpdateWithWhereUniqueWithoutUploaderInput[]
+    updateMany?: FileUpdateManyWithWhereWithoutUploaderInput | FileUpdateManyWithWhereWithoutUploaderInput[]
+    deleteMany?: FileScalarWhereInput | FileScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutMembershipsInput = {
@@ -31818,6 +33462,42 @@ export namespace Prisma {
     update?: XOR<XOR<DuesPaymentUpdateToOneWithWhereWithoutTransactionInput, DuesPaymentUpdateWithoutTransactionInput>, DuesPaymentUncheckedUpdateWithoutTransactionInput>
   }
 
+  export type ChapterCreateNestedOneWithoutFilesInput = {
+    create?: XOR<ChapterCreateWithoutFilesInput, ChapterUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutFilesInput
+    connect?: ChapterWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutUploadedFilesInput = {
+    create?: XOR<UserCreateWithoutUploadedFilesInput, UserUncheckedCreateWithoutUploadedFilesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUploadedFilesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type ChapterUpdateOneRequiredWithoutFilesNestedInput = {
+    create?: XOR<ChapterCreateWithoutFilesInput, ChapterUncheckedCreateWithoutFilesInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutFilesInput
+    upsert?: ChapterUpsertWithoutFilesInput
+    connect?: ChapterWhereUniqueInput
+    update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutFilesInput, ChapterUpdateWithoutFilesInput>, ChapterUncheckedUpdateWithoutFilesInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutUploadedFilesNestedInput = {
+    create?: XOR<UserCreateWithoutUploadedFilesInput, UserUncheckedCreateWithoutUploadedFilesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutUploadedFilesInput
+    upsert?: UserUpsertWithoutUploadedFilesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutUploadedFilesInput, UserUpdateWithoutUploadedFilesInput>, UserUncheckedUpdateWithoutUploadedFilesInput>
+  }
+
   export type ChapterCreateNestedOneWithoutMessageLogsInput = {
     create?: XOR<ChapterCreateWithoutMessageLogsInput, ChapterUncheckedCreateWithoutMessageLogsInput>
     connectOrCreate?: ChapterCreateOrConnectWithoutMessageLogsInput
@@ -32192,6 +33872,22 @@ export namespace Prisma {
     _max?: NestedEnumTransactionTypeFilter<$PrismaModel>
   }
 
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
   export type MembershipCreateWithoutChapterInput = {
     id?: string
     role?: $Enums.MembershipRole
@@ -32470,6 +34166,36 @@ export namespace Prisma {
 
   export type MessageLogCreateManyChapterInputEnvelope = {
     data: MessageLogCreateManyChapterInput | MessageLogCreateManyChapterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FileCreateWithoutChapterInput = {
+    id?: string
+    name: string
+    path: string
+    mimeType: string
+    size: number
+    createdAt?: Date | string
+    uploader: UserCreateNestedOneWithoutUploadedFilesInput
+  }
+
+  export type FileUncheckedCreateWithoutChapterInput = {
+    id?: string
+    name: string
+    path: string
+    mimeType: string
+    size: number
+    createdAt?: Date | string
+    uploaderId: string
+  }
+
+  export type FileCreateOrConnectWithoutChapterInput = {
+    where: FileWhereUniqueInput
+    create: XOR<FileCreateWithoutChapterInput, FileUncheckedCreateWithoutChapterInput>
+  }
+
+  export type FileCreateManyChapterInputEnvelope = {
+    data: FileCreateManyChapterInput | FileCreateManyChapterInput[]
     skipDuplicates?: boolean
   }
 
@@ -32895,6 +34621,36 @@ export namespace Prisma {
     content?: StringFilter<"MessageLog"> | string
     status?: StringFilter<"MessageLog"> | string
     chapterId?: StringFilter<"MessageLog"> | string
+  }
+
+  export type FileUpsertWithWhereUniqueWithoutChapterInput = {
+    where: FileWhereUniqueInput
+    update: XOR<FileUpdateWithoutChapterInput, FileUncheckedUpdateWithoutChapterInput>
+    create: XOR<FileCreateWithoutChapterInput, FileUncheckedCreateWithoutChapterInput>
+  }
+
+  export type FileUpdateWithWhereUniqueWithoutChapterInput = {
+    where: FileWhereUniqueInput
+    data: XOR<FileUpdateWithoutChapterInput, FileUncheckedUpdateWithoutChapterInput>
+  }
+
+  export type FileUpdateManyWithWhereWithoutChapterInput = {
+    where: FileScalarWhereInput
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyWithoutChapterInput>
+  }
+
+  export type FileScalarWhereInput = {
+    AND?: FileScalarWhereInput | FileScalarWhereInput[]
+    OR?: FileScalarWhereInput[]
+    NOT?: FileScalarWhereInput | FileScalarWhereInput[]
+    id?: StringFilter<"File"> | string
+    name?: StringFilter<"File"> | string
+    path?: StringFilter<"File"> | string
+    mimeType?: StringFilter<"File"> | string
+    size?: IntFilter<"File"> | number
+    createdAt?: DateTimeFilter<"File"> | Date | string
+    chapterId?: StringFilter<"File"> | string
+    uploaderId?: StringFilter<"File"> | string
   }
 
   export type BudgetUpsertWithWhereUniqueWithoutChapterInput = {
@@ -33444,6 +35200,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FileCreateWithoutUploaderInput = {
+    id?: string
+    name: string
+    path: string
+    mimeType: string
+    size: number
+    createdAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutFilesInput
+  }
+
+  export type FileUncheckedCreateWithoutUploaderInput = {
+    id?: string
+    name: string
+    path: string
+    mimeType: string
+    size: number
+    createdAt?: Date | string
+    chapterId: string
+  }
+
+  export type FileCreateOrConnectWithoutUploaderInput = {
+    where: FileWhereUniqueInput
+    create: XOR<FileCreateWithoutUploaderInput, FileUncheckedCreateWithoutUploaderInput>
+  }
+
+  export type FileCreateManyUploaderInputEnvelope = {
+    data: FileCreateManyUploaderInput | FileCreateManyUploaderInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -33676,6 +35462,22 @@ export namespace Prisma {
     data: XOR<DuesPaymentUpdateManyMutationInput, DuesPaymentUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type FileUpsertWithWhereUniqueWithoutUploaderInput = {
+    where: FileWhereUniqueInput
+    update: XOR<FileUpdateWithoutUploaderInput, FileUncheckedUpdateWithoutUploaderInput>
+    create: XOR<FileCreateWithoutUploaderInput, FileUncheckedCreateWithoutUploaderInput>
+  }
+
+  export type FileUpdateWithWhereUniqueWithoutUploaderInput = {
+    where: FileWhereUniqueInput
+    data: XOR<FileUpdateWithoutUploaderInput, FileUncheckedUpdateWithoutUploaderInput>
+  }
+
+  export type FileUpdateManyWithWhereWithoutUploaderInput = {
+    where: FileScalarWhereInput
+    data: XOR<FileUpdateManyMutationInput, FileUncheckedUpdateManyWithoutUploaderInput>
+  }
+
   export type UserCreateWithoutMembershipsInput = {
     id?: string
     name?: string | null
@@ -33696,6 +35498,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -33718,6 +35521,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -33743,6 +35547,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -33767,6 +35572,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -33842,6 +35648,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -33864,6 +35671,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type ChapterUpsertWithoutMembershipsInput = {
@@ -33895,6 +35703,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -33919,6 +35728,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -33982,6 +35792,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -34006,6 +35817,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -34046,6 +35858,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -34070,6 +35883,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -34096,6 +35910,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -34118,6 +35933,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -34156,6 +35972,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -34178,6 +35995,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -34200,6 +36018,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -34222,6 +36041,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -34260,6 +36080,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -34282,6 +36103,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type ChapterCreateWithoutInvitesInput = {
@@ -34302,6 +36124,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -34326,6 +36149,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -34357,6 +36181,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutAcceptedInvitesInput = {
@@ -34379,6 +36204,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutAcceptedInvitesInput = {
@@ -34406,6 +36232,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutCreatedInvitesInput = {
@@ -34428,6 +36255,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutCreatedInvitesInput = {
@@ -34464,6 +36292,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -34488,6 +36317,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -34525,6 +36355,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAcceptedInvitesInput = {
@@ -34547,6 +36378,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUpsertWithoutCreatedInvitesInput = {
@@ -34580,6 +36412,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedInvitesInput = {
@@ -34602,6 +36435,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type ChapterCreateWithoutEventsInput = {
@@ -34622,6 +36456,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -34646,6 +36481,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -34677,6 +36513,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutCreatedEventsInput = {
@@ -34699,6 +36536,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutCreatedEventsInput = {
@@ -34761,6 +36599,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -34785,6 +36624,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -34822,6 +36662,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedEventsInput = {
@@ -34844,6 +36685,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type EventRSVPUpsertWithWhereUniqueWithoutEventInput = {
@@ -34919,6 +36761,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutRsvpsInput = {
@@ -34941,6 +36784,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutRsvpsInput = {
@@ -35022,6 +36866,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRsvpsInput = {
@@ -35044,6 +36889,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserCreateWithoutAuditLogsInput = {
@@ -35066,6 +36912,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -35088,6 +36935,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -35113,6 +36961,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -35137,6 +36986,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -35179,6 +37029,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -35201,6 +37052,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type ChapterUpsertWithoutAuditLogsInput = {
@@ -35232,6 +37084,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -35256,6 +37109,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -35280,6 +37134,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -35304,6 +37159,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -35344,6 +37200,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -35368,6 +37225,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -35392,6 +37250,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -35416,6 +37275,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -35456,6 +37316,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -35480,6 +37341,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -35505,6 +37367,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
@@ -35529,6 +37392,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
@@ -35611,6 +37475,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
@@ -35635,6 +37500,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
@@ -35675,6 +37541,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
@@ -35699,6 +37566,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
@@ -35760,6 +37628,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutSubmittedExpensesInput = {
@@ -35782,6 +37651,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutSubmittedExpensesInput = {
@@ -35809,6 +37679,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutApprovedExpensesInput = {
@@ -35831,6 +37702,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutApprovedExpensesInput = {
@@ -35897,6 +37769,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
@@ -35921,6 +37794,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
@@ -35994,6 +37868,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubmittedExpensesInput = {
@@ -36016,6 +37891,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUpsertWithoutApprovedExpensesInput = {
@@ -36049,6 +37925,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutApprovedExpensesInput = {
@@ -36071,6 +37948,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type TransactionUpsertWithoutExpenseInput = {
@@ -36127,6 +38005,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
@@ -36151,6 +38030,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
@@ -36181,6 +38061,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutDuesPaymentsInput = {
@@ -36203,6 +38084,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutDuesPaymentsInput = {
@@ -36269,6 +38151,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
@@ -36293,6 +38176,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
@@ -36329,6 +38213,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDuesPaymentsInput = {
@@ -36351,6 +38236,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type TransactionUpsertWithoutDuesPaymentInput = {
@@ -36431,6 +38317,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
   }
 
   export type UserUncheckedCreateWithoutProfilesInput = {
@@ -36453,6 +38340,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
   }
 
   export type UserCreateOrConnectWithoutProfilesInput = {
@@ -36478,6 +38366,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -36502,6 +38391,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -36573,6 +38463,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfilesInput = {
@@ -36595,6 +38486,7 @@ export namespace Prisma {
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
   }
 
   export type ChapterUpsertWithoutProfilesInput = {
@@ -36626,6 +38518,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -36650,6 +38543,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -36675,6 +38569,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -36699,6 +38594,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
     messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -36807,6 +38703,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -36831,6 +38728,7 @@ export namespace Prisma {
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
     messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -36916,6 +38814,230 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type ChapterCreateWithoutFilesInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionCreateNestedOneWithoutChapterInput
+    invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    budgets?: BudgetCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
+    transactions?: TransactionCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterUncheckedCreateWithoutFilesInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
+    invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterCreateOrConnectWithoutFilesInput = {
+    where: ChapterWhereUniqueInput
+    create: XOR<ChapterCreateWithoutFilesInput, ChapterUncheckedCreateWithoutFilesInput>
+  }
+
+  export type UserCreateWithoutUploadedFilesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
+    approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutUploadedFilesInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutUploadedFilesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutUploadedFilesInput, UserUncheckedCreateWithoutUploadedFilesInput>
+  }
+
+  export type ChapterUpsertWithoutFilesInput = {
+    update: XOR<ChapterUpdateWithoutFilesInput, ChapterUncheckedUpdateWithoutFilesInput>
+    create: XOR<ChapterCreateWithoutFilesInput, ChapterUncheckedCreateWithoutFilesInput>
+    where?: ChapterWhereInput
+  }
+
+  export type ChapterUpdateToOneWithWhereWithoutFilesInput = {
+    where?: ChapterWhereInput
+    data: XOR<ChapterUpdateWithoutFilesInput, ChapterUncheckedUpdateWithoutFilesInput>
+  }
+
+  export type ChapterUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
+    invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterUncheckedUpdateWithoutFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
+  }
+
+  export type UserUpsertWithoutUploadedFilesInput = {
+    update: XOR<UserUpdateWithoutUploadedFilesInput, UserUncheckedUpdateWithoutUploadedFilesInput>
+    create: XOR<UserCreateWithoutUploadedFilesInput, UserUncheckedCreateWithoutUploadedFilesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutUploadedFilesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutUploadedFilesInput, UserUncheckedUpdateWithoutUploadedFilesInput>
+  }
+
+  export type UserUpdateWithoutUploadedFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
+    approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutUploadedFilesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type ChapterCreateWithoutMessageLogsInput = {
     id?: string
     name: string
@@ -36934,6 +39056,7 @@ export namespace Prisma {
     auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
     budgets?: BudgetCreateNestedManyWithoutChapterInput
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
@@ -36958,6 +39081,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
     galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
     contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
     budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
@@ -36998,6 +39122,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
@@ -37022,6 +39147,7 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
@@ -37113,6 +39239,16 @@ export namespace Prisma {
     recipient: string
     content: string
     status: string
+  }
+
+  export type FileCreateManyChapterInput = {
+    id?: string
+    name: string
+    path: string
+    mimeType: string
+    size: number
+    createdAt?: Date | string
+    uploaderId: string
   }
 
   export type BudgetCreateManyChapterInput = {
@@ -37431,6 +39567,36 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
   }
 
+  export type FileUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploader?: UserUpdateOneRequiredWithoutUploadedFilesNestedInput
+  }
+
+  export type FileUncheckedUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploaderId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FileUncheckedUpdateManyWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    uploaderId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type BudgetUpdateWithoutChapterInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
@@ -37730,6 +39896,16 @@ export namespace Prisma {
     stripeInvoiceId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    chapterId: string
+  }
+
+  export type FileCreateManyUploaderInput = {
+    id?: string
+    name: string
+    path: string
+    mimeType: string
+    size: number
+    createdAt?: Date | string
     chapterId: string
   }
 
@@ -38169,6 +40345,36 @@ export namespace Prisma {
     stripeInvoiceId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FileUpdateWithoutUploaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutFilesNestedInput
+  }
+
+  export type FileUncheckedUpdateWithoutUploaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FileUncheckedUpdateManyWithoutUploaderInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    path?: StringFieldUpdateOperationsInput | string
+    mimeType?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapterId?: StringFieldUpdateOperationsInput | string
   }
 

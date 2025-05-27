@@ -57,6 +57,7 @@ model Chapter {
   galleryImages   GalleryImage[] // One chapter has many gallery images
   contactMessages ContactMessage[] // One chapter has many contact messages
   messageLogs     MessageLog[] // One chapter has many message logs
+  files           File[] // One chapter has many files
 
   // Finance relations
   budgets      Budget[] // One chapter has many budgets
@@ -90,6 +91,9 @@ model User {
   submittedExpenses Expense[]     @relation("submittedExpenses") // Expenses submitted by this user
   approvedExpenses  Expense[]     @relation("approvedExpenses") // Expenses approved by this user
   duesPayments      DuesPayment[] // Dues payments made by this user
+
+  // File sharing relation
+  uploadedFiles File[] // Files uploaded by this user
 }
 
 model Membership {
@@ -459,6 +463,26 @@ model Transaction {
   @@index([chapterId])
   @@index([type])
   @@index([createdAt])
+}
+
+model File {
+  id        String   @id @default(cuid())
+  name      String
+  path      String   @unique
+  mimeType  String
+  size      Int
+  createdAt DateTime @default(now())
+
+  // Foreign keys - multi-tenant support
+  chapterId  String
+  uploaderId String
+
+  // Relations
+  chapter  Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  uploader User    @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
+
+  @@index([chapterId])
+  @@index([uploaderId])
 }
 
 model MessageLog {

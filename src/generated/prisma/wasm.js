@@ -328,6 +328,17 @@ exports.Prisma.TransactionScalarFieldEnum = {
   duesPaymentId: 'duesPaymentId'
 };
 
+exports.Prisma.FileScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  path: 'path',
+  mimeType: 'mimeType',
+  size: 'size',
+  createdAt: 'createdAt',
+  chapterId: 'chapterId',
+  uploaderId: 'uploaderId'
+};
+
 exports.Prisma.MessageLogScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -441,6 +452,7 @@ exports.Prisma.ModelName = {
   DuesPayment: 'DuesPayment',
   Profile: 'Profile',
   Transaction: 'Transaction',
+  File: 'File',
   MessageLog: 'MessageLog'
 };
 
