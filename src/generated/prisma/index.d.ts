@@ -24195,10 +24195,12 @@ export namespace Prisma {
   export type FileMinAggregateOutputType = {
     id: string | null
     name: string | null
+    displayPath: string | null
     path: string | null
     mimeType: string | null
     size: number | null
     createdAt: Date | null
+    updatedAt: Date | null
     chapterId: string | null
     uploaderId: string | null
   }
@@ -24206,10 +24208,12 @@ export namespace Prisma {
   export type FileMaxAggregateOutputType = {
     id: string | null
     name: string | null
+    displayPath: string | null
     path: string | null
     mimeType: string | null
     size: number | null
     createdAt: Date | null
+    updatedAt: Date | null
     chapterId: string | null
     uploaderId: string | null
   }
@@ -24217,10 +24221,12 @@ export namespace Prisma {
   export type FileCountAggregateOutputType = {
     id: number
     name: number
+    displayPath: number
     path: number
     mimeType: number
     size: number
     createdAt: number
+    updatedAt: number
     chapterId: number
     uploaderId: number
     _all: number
@@ -24238,10 +24244,12 @@ export namespace Prisma {
   export type FileMinAggregateInputType = {
     id?: true
     name?: true
+    displayPath?: true
     path?: true
     mimeType?: true
     size?: true
     createdAt?: true
+    updatedAt?: true
     chapterId?: true
     uploaderId?: true
   }
@@ -24249,10 +24257,12 @@ export namespace Prisma {
   export type FileMaxAggregateInputType = {
     id?: true
     name?: true
+    displayPath?: true
     path?: true
     mimeType?: true
     size?: true
     createdAt?: true
+    updatedAt?: true
     chapterId?: true
     uploaderId?: true
   }
@@ -24260,10 +24270,12 @@ export namespace Prisma {
   export type FileCountAggregateInputType = {
     id?: true
     name?: true
+    displayPath?: true
     path?: true
     mimeType?: true
     size?: true
     createdAt?: true
+    updatedAt?: true
     chapterId?: true
     uploaderId?: true
     _all?: true
@@ -24358,10 +24370,12 @@ export namespace Prisma {
   export type FileGroupByOutputType = {
     id: string
     name: string
+    displayPath: string
     path: string
     mimeType: string
     size: number
     createdAt: Date
+    updatedAt: Date
     chapterId: string
     uploaderId: string
     _count: FileCountAggregateOutputType | null
@@ -24388,10 +24402,12 @@ export namespace Prisma {
   export type FileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    displayPath?: boolean
     path?: boolean
     mimeType?: boolean
     size?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     chapterId?: boolean
     uploaderId?: boolean
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
@@ -24401,10 +24417,12 @@ export namespace Prisma {
   export type FileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    displayPath?: boolean
     path?: boolean
     mimeType?: boolean
     size?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     chapterId?: boolean
     uploaderId?: boolean
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
@@ -24414,10 +24432,12 @@ export namespace Prisma {
   export type FileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
+    displayPath?: boolean
     path?: boolean
     mimeType?: boolean
     size?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     chapterId?: boolean
     uploaderId?: boolean
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
@@ -24427,15 +24447,17 @@ export namespace Prisma {
   export type FileSelectScalar = {
     id?: boolean
     name?: boolean
+    displayPath?: boolean
     path?: boolean
     mimeType?: boolean
     size?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     chapterId?: boolean
     uploaderId?: boolean
   }
 
-  export type FileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "path" | "mimeType" | "size" | "createdAt" | "chapterId" | "uploaderId", ExtArgs["result"]["file"]>
+  export type FileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "displayPath" | "path" | "mimeType" | "size" | "createdAt" | "updatedAt" | "chapterId" | "uploaderId", ExtArgs["result"]["file"]>
   export type FileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
     uploader?: boolean | UserDefaultArgs<ExtArgs>
@@ -24458,10 +24480,12 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
+      displayPath: string
       path: string
       mimeType: string
       size: number
       createdAt: Date
+      updatedAt: Date
       chapterId: string
       uploaderId: string
     }, ExtArgs["result"]["file"]>
@@ -24891,10 +24915,12 @@ export namespace Prisma {
   interface FileFieldRefs {
     readonly id: FieldRef<"File", 'String'>
     readonly name: FieldRef<"File", 'String'>
+    readonly displayPath: FieldRef<"File", 'String'>
     readonly path: FieldRef<"File", 'String'>
     readonly mimeType: FieldRef<"File", 'String'>
     readonly size: FieldRef<"File", 'Int'>
     readonly createdAt: FieldRef<"File", 'DateTime'>
+    readonly updatedAt: FieldRef<"File", 'DateTime'>
     readonly chapterId: FieldRef<"File", 'String'>
     readonly uploaderId: FieldRef<"File", 'String'>
   }
@@ -26700,10 +26726,12 @@ export namespace Prisma {
   export const FileScalarFieldEnum: {
     id: 'id',
     name: 'name',
+    displayPath: 'displayPath',
     path: 'path',
     mimeType: 'mimeType',
     size: 'size',
     createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
     chapterId: 'chapterId',
     uploaderId: 'uploaderId'
   };
@@ -28427,10 +28455,12 @@ export namespace Prisma {
     NOT?: FileWhereInput | FileWhereInput[]
     id?: StringFilter<"File"> | string
     name?: StringFilter<"File"> | string
+    displayPath?: StringFilter<"File"> | string
     path?: StringFilter<"File"> | string
     mimeType?: StringFilter<"File"> | string
     size?: IntFilter<"File"> | number
     createdAt?: DateTimeFilter<"File"> | Date | string
+    updatedAt?: DateTimeFilter<"File"> | Date | string
     chapterId?: StringFilter<"File"> | string
     uploaderId?: StringFilter<"File"> | string
     chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
@@ -28440,10 +28470,12 @@ export namespace Prisma {
   export type FileOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
+    displayPath?: SortOrder
     path?: SortOrder
     mimeType?: SortOrder
     size?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     chapterId?: SortOrder
     uploaderId?: SortOrder
     chapter?: ChapterOrderByWithRelationInput
@@ -28457,9 +28489,11 @@ export namespace Prisma {
     OR?: FileWhereInput[]
     NOT?: FileWhereInput | FileWhereInput[]
     name?: StringFilter<"File"> | string
+    displayPath?: StringFilter<"File"> | string
     mimeType?: StringFilter<"File"> | string
     size?: IntFilter<"File"> | number
     createdAt?: DateTimeFilter<"File"> | Date | string
+    updatedAt?: DateTimeFilter<"File"> | Date | string
     chapterId?: StringFilter<"File"> | string
     uploaderId?: StringFilter<"File"> | string
     chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
@@ -28469,10 +28503,12 @@ export namespace Prisma {
   export type FileOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
+    displayPath?: SortOrder
     path?: SortOrder
     mimeType?: SortOrder
     size?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     chapterId?: SortOrder
     uploaderId?: SortOrder
     _count?: FileCountOrderByAggregateInput
@@ -28488,10 +28524,12 @@ export namespace Prisma {
     NOT?: FileScalarWhereWithAggregatesInput | FileScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"File"> | string
     name?: StringWithAggregatesFilter<"File"> | string
+    displayPath?: StringWithAggregatesFilter<"File"> | string
     path?: StringWithAggregatesFilter<"File"> | string
     mimeType?: StringWithAggregatesFilter<"File"> | string
     size?: IntWithAggregatesFilter<"File"> | number
     createdAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"File"> | Date | string
     chapterId?: StringWithAggregatesFilter<"File"> | string
     uploaderId?: StringWithAggregatesFilter<"File"> | string
   }
@@ -30129,10 +30167,12 @@ export namespace Prisma {
   export type FileCreateInput = {
     id?: string
     name: string
+    displayPath: string
     path: string
     mimeType: string
     size: number
     createdAt?: Date | string
+    updatedAt?: Date | string
     chapter: ChapterCreateNestedOneWithoutFilesInput
     uploader: UserCreateNestedOneWithoutUploadedFilesInput
   }
@@ -30140,10 +30180,12 @@ export namespace Prisma {
   export type FileUncheckedCreateInput = {
     id?: string
     name: string
+    displayPath: string
     path: string
     mimeType: string
     size: number
     createdAt?: Date | string
+    updatedAt?: Date | string
     chapterId: string
     uploaderId: string
   }
@@ -30151,10 +30193,12 @@ export namespace Prisma {
   export type FileUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    displayPath?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapter?: ChapterUpdateOneRequiredWithoutFilesNestedInput
     uploader?: UserUpdateOneRequiredWithoutUploadedFilesNestedInput
   }
@@ -30162,10 +30206,12 @@ export namespace Prisma {
   export type FileUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    displayPath?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapterId?: StringFieldUpdateOperationsInput | string
     uploaderId?: StringFieldUpdateOperationsInput | string
   }
@@ -30173,10 +30219,12 @@ export namespace Prisma {
   export type FileCreateManyInput = {
     id?: string
     name: string
+    displayPath: string
     path: string
     mimeType: string
     size: number
     createdAt?: Date | string
+    updatedAt?: Date | string
     chapterId: string
     uploaderId: string
   }
@@ -30184,19 +30232,23 @@ export namespace Prisma {
   export type FileUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    displayPath?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type FileUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    displayPath?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapterId?: StringFieldUpdateOperationsInput | string
     uploaderId?: StringFieldUpdateOperationsInput | string
   }
@@ -31582,10 +31634,12 @@ export namespace Prisma {
   export type FileCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    displayPath?: SortOrder
     path?: SortOrder
     mimeType?: SortOrder
     size?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     chapterId?: SortOrder
     uploaderId?: SortOrder
   }
@@ -31597,10 +31651,12 @@ export namespace Prisma {
   export type FileMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    displayPath?: SortOrder
     path?: SortOrder
     mimeType?: SortOrder
     size?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     chapterId?: SortOrder
     uploaderId?: SortOrder
   }
@@ -31608,10 +31664,12 @@ export namespace Prisma {
   export type FileMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
+    displayPath?: SortOrder
     path?: SortOrder
     mimeType?: SortOrder
     size?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     chapterId?: SortOrder
     uploaderId?: SortOrder
   }
@@ -34172,20 +34230,24 @@ export namespace Prisma {
   export type FileCreateWithoutChapterInput = {
     id?: string
     name: string
+    displayPath: string
     path: string
     mimeType: string
     size: number
     createdAt?: Date | string
+    updatedAt?: Date | string
     uploader: UserCreateNestedOneWithoutUploadedFilesInput
   }
 
   export type FileUncheckedCreateWithoutChapterInput = {
     id?: string
     name: string
+    displayPath: string
     path: string
     mimeType: string
     size: number
     createdAt?: Date | string
+    updatedAt?: Date | string
     uploaderId: string
   }
 
@@ -34645,10 +34707,12 @@ export namespace Prisma {
     NOT?: FileScalarWhereInput | FileScalarWhereInput[]
     id?: StringFilter<"File"> | string
     name?: StringFilter<"File"> | string
+    displayPath?: StringFilter<"File"> | string
     path?: StringFilter<"File"> | string
     mimeType?: StringFilter<"File"> | string
     size?: IntFilter<"File"> | number
     createdAt?: DateTimeFilter<"File"> | Date | string
+    updatedAt?: DateTimeFilter<"File"> | Date | string
     chapterId?: StringFilter<"File"> | string
     uploaderId?: StringFilter<"File"> | string
   }
@@ -35203,20 +35267,24 @@ export namespace Prisma {
   export type FileCreateWithoutUploaderInput = {
     id?: string
     name: string
+    displayPath: string
     path: string
     mimeType: string
     size: number
     createdAt?: Date | string
+    updatedAt?: Date | string
     chapter: ChapterCreateNestedOneWithoutFilesInput
   }
 
   export type FileUncheckedCreateWithoutUploaderInput = {
     id?: string
     name: string
+    displayPath: string
     path: string
     mimeType: string
     size: number
     createdAt?: Date | string
+    updatedAt?: Date | string
     chapterId: string
   }
 
@@ -39244,10 +39312,12 @@ export namespace Prisma {
   export type FileCreateManyChapterInput = {
     id?: string
     name: string
+    displayPath: string
     path: string
     mimeType: string
     size: number
     createdAt?: Date | string
+    updatedAt?: Date | string
     uploaderId: string
   }
 
@@ -39570,30 +39640,36 @@ export namespace Prisma {
   export type FileUpdateWithoutChapterInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    displayPath?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploader?: UserUpdateOneRequiredWithoutUploadedFilesNestedInput
   }
 
   export type FileUncheckedUpdateWithoutChapterInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    displayPath?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploaderId?: StringFieldUpdateOperationsInput | string
   }
 
   export type FileUncheckedUpdateManyWithoutChapterInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    displayPath?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     uploaderId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -39902,10 +39978,12 @@ export namespace Prisma {
   export type FileCreateManyUploaderInput = {
     id?: string
     name: string
+    displayPath: string
     path: string
     mimeType: string
     size: number
     createdAt?: Date | string
+    updatedAt?: Date | string
     chapterId: string
   }
 
@@ -40351,30 +40429,36 @@ export namespace Prisma {
   export type FileUpdateWithoutUploaderInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    displayPath?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapter?: ChapterUpdateOneRequiredWithoutFilesNestedInput
   }
 
   export type FileUncheckedUpdateWithoutUploaderInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    displayPath?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapterId?: StringFieldUpdateOperationsInput | string
   }
 
   export type FileUncheckedUpdateManyWithoutUploaderInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    displayPath?: StringFieldUpdateOperationsInput | string
     path?: StringFieldUpdateOperationsInput | string
     mimeType?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapterId?: StringFieldUpdateOperationsInput | string
   }
 

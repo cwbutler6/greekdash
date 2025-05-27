@@ -1,6 +1,6 @@
 import { PlanType } from '@/generated/prisma';
 import { v4 as uuidv4 } from 'uuid';
-import { supabaseAdmin } from './index';
+import { supabaseAdmin, isSupabaseConfigured } from './index';
 import path from 'path';
 import { prisma } from '@/lib/db';
 
@@ -18,6 +18,7 @@ interface UploadFileParams {
   mimeType: string;
   fileBuffer: Buffer;
   fileSize: number;
+  folderPath?: string; // Optional path for folder organization
 }
 
 export async function uploadFile({
@@ -27,6 +28,7 @@ export async function uploadFile({
   mimeType,
   fileBuffer,
   fileSize,
+  folderPath = '/', // Default to root folder if not specified
 }: UploadFileParams) {
   // Get chapter's subscription plan to determine storage limit
   const chapter = await prisma.chapter.findUnique({
@@ -59,16 +61,21 @@ export async function uploadFile({
   const uniqueFilename = `${uuidv4()}${fileExtension}`;
   const filePath = `${chapterId}/${uniqueFilename}`;
 
-  // Upload to Supabase Storage
-  const { error } = await supabaseAdmin.storage
-    .from('chapter-files')
-    .upload(filePath, fileBuffer, {
-      contentType: mimeType,
-      cacheControl: '3600',
-    });
+  // Check if Supabase is configured (skip during build time)
+  if (!isSupabaseConfigured()) {
+    console.warn('Supabase not configured - skipping storage upload');
+  } else {
+    // Upload to Supabase Storage
+    const { error } = await supabaseAdmin.storage
+      .from('chapter-files')
+      .upload(filePath, fileBuffer, {
+        contentType: mimeType,
+        cacheControl: '3600',
+      });
 
-  if (error) {
-    throw new Error(`Supabase storage error: ${error.message}`);
+    if (error) {
+      throw new Error(`Supabase storage error: ${error.message}`);
+    }
   }
 
   // Create file record in the database
@@ -76,6 +83,7 @@ export async function uploadFile({
     data: {
       name: fileName,
       path: filePath,
+      displayPath: folderPath || '/', // Use the specified folder path or root
       mimeType,
       size: fileSize,
       chapterId,

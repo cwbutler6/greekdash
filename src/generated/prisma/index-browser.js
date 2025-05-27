@@ -331,10 +331,12 @@ exports.Prisma.TransactionScalarFieldEnum = {
 exports.Prisma.FileScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  displayPath: 'displayPath',
   path: 'path',
   mimeType: 'mimeType',
   size: 'size',
   createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
   chapterId: 'chapterId',
   uploaderId: 'uploaderId'
 };

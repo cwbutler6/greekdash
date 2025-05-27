@@ -466,12 +466,14 @@ model Transaction {
 }
 
 model File {
-  id        String   @id @default(cuid())
-  name      String
-  path      String   @unique
-  mimeType  String
-  size      Int
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  name        String // Original filename
+  displayPath String // Folder path like "/reports/2025/"
+  path        String   @unique // Full path on storage (includes generated ID)
+  mimeType    String
+  size        Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   // Foreign keys - multi-tenant support
   chapterId  String
@@ -483,6 +485,7 @@ model File {
 
   @@index([chapterId])
   @@index([uploaderId])
+  @@index([displayPath])
 }
 
 model MessageLog {

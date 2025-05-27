@@ -465,34 +465,13 @@ model Transaction {
   @@index([createdAt])
 }
 
-model Folder {
-  id          String   @id @default(cuid())
-  name        String
-  description String?   @db.Text
-  parentId    String?   // Self-reference for nested folders
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  // Foreign keys - multi-tenant support
-  chapterId   String
-  creatorId   String
-  
-  // Relations
-  parent      Folder?   @relation("FolderToFolder", fields: [parentId], references: [id], onDelete: SetNull)
-  subfolders  Folder[]  @relation("FolderToFolder")
-  files       File[]    @relation("FolderToFile")
-  chapter     Chapter   @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  creator     User      @relation(fields: [creatorId], references: [id], onDelete: Cascade)
-  
-  @@index([chapterId])
-  @@index([creatorId])
-  @@index([parentId])
-}
+
 
 model File {
   id         String   @id @default(cuid())
-  name       String
-  path       String   @unique
+  name       String   // Original filename
+  displayPath String  // Folder path like "/reports/2025/"
+  path       String   @unique // Full path on storage (includes generated ID)
   mimeType   String
   size       Int
   createdAt  DateTime @default(now())
@@ -501,16 +480,14 @@ model File {
   // Foreign keys - multi-tenant support
   chapterId  String
   uploaderId String
-  folderId   String?   // Optional - files can be in root or in a folder
   
   // Relations
   chapter    Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   uploader   User     @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
-  folder     Folder?  @relation("FolderToFile", fields: [folderId], references: [id], onDelete: SetNull)
   
   @@index([chapterId])
   @@index([uploaderId])
-  @@index([folderId])
+  @@index([displayPath])
 }
 
 model MessageLog {
