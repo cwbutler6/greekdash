@@ -422,13 +422,13 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link 
-              href="/auth/signup" 
+              href="/signup" 
               className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-emerald-600 bg-white hover:bg-gray-100 transition-colors shadow-md"
             >
               Create Your Chapter
             </Link>
             <Link 
-              href="/auth/login" 
+              href="/login" 
               className="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-emerald-700 transition-colors"
             >
               Member Login

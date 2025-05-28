@@ -174,14 +174,14 @@ function SignupContent() {
     return () => clearTimeout(timeoutId);
   }, [chapterSlug, isGoogleUser, createChapterForm]);
   
-  // Don't check availability in real-time - only validate client-side format
+  // Check slug availability in real-time using the API
   useEffect(() => {
     if (activeTab !== 'create' || !chapterSlug) {
       setSlugAvailable(null);
       return;
     }
     
-    // Only do client-side validation for now
+    // Only proceed with API validation if the format is valid
     const isValidFormat = /^[a-z0-9-]+$/.test(chapterSlug) && 
                          chapterSlug.length >= 3 && 
                          chapterSlug.length <= 30;
@@ -192,9 +192,31 @@ function SignupContent() {
       return;
     }
     
-    // Mark as available for UI feedback, will be validated during form submission
-    setSlugAvailable(true);
-  }, [chapterSlug, activeTab]);
+    // Use a timeout to avoid too many requests while typing
+    const timeoutId = setTimeout(async () => {
+      try {
+        // Fetch availability from the chapters/check-slug API
+        const response = await fetch(`/api/chapters/check-slug?slug=${encodeURIComponent(chapterSlug)}`);
+        const data = await response.json();
+        
+        setSlugAvailable(data.available);
+        
+        if (!data.available) {
+          createChapterForm.setError('chapterSlug', { 
+            type: 'manual', 
+            message: 'This chapter URL is already taken' 
+          });
+        } else {
+          createChapterForm.clearErrors('chapterSlug');
+        }
+      } catch (error) {
+        console.error('Error checking slug availability:', error);
+        // Don't update state on error to avoid misleading feedback
+      }
+    }, 500);
+    
+    return () => clearTimeout(timeoutId);
+  }, [chapterSlug, activeTab, createChapterForm]);
   
   // We'll only verify slug availability during actual form submission
   // This avoids the JSON parsing errors during typing

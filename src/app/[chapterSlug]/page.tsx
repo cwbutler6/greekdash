@@ -123,11 +123,11 @@ export default async function PublicChapterPage({
           <div className="flex-1">
             <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-xl">
               <Image 
-                src="/dashboard-preview.png" 
-                alt="GreekDash Dashboard" 
-                fill
-                className="object-cover"
-                priority
+                src="/images/hero/dashboard-preview.svg" 
+                alt="GreekDash Dashboard Preview" 
+                fill 
+                className="object-cover" 
+                priority 
               />
             </div>
           </div>
