@@ -424,6 +424,7 @@ model Profile {
   major         String?
   gradYear      Int?
   bio           String?  @db.Text
+  profileImage  String?  // URL to profile image
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   

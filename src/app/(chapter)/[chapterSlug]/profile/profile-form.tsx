@@ -8,9 +8,10 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+
 import { AlertCircle, CheckCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { ProfileImageUpload } from '@/components/profile/profile-image-upload';
 
 // Profile form schema with validation
 const profileSchema = z.object({
@@ -36,6 +37,14 @@ interface ProfileFormProps {
   };
   membership: {
     role: string;
+    profile?: {
+      id: string;
+      profileImage: string | null;
+      phone?: string | null;
+      major?: string | null;
+      gradYear?: number | null;
+      bio?: string | null;
+    } | null;
   };
   chapterSlug: string;
   primaryColor: string;
@@ -64,14 +73,7 @@ export default function ProfileForm({ user, membership, chapterSlug, primaryColo
     },
   });
 
-  // Function to get user initials for the avatar
-  const getInitials = (name?: string | null): string => {
-    if (!name) return 'U';
-    return name
-      .split(' ')
-      .map(part => part.charAt(0))
-      .join('');
-  };
+
 
   // Form submission handler
   const onSubmit = async (data: ProfileFormValues) => {
@@ -122,18 +124,21 @@ export default function ProfileForm({ user, membership, chapterSlug, primaryColo
         </Alert>
       )}
       
-      {/* User Avatar Section */}
+      {/* Profile Image Upload */}
+      <div className="flex flex-col items-center pb-6 border-b">
+        <ProfileImageUpload 
+          chapterSlug={chapterSlug}
+          profileImage={membership.profile?.profileImage}
+          userName={user.name}
+          size="lg"
+        />
+        <p className="text-sm text-gray-500 mt-4">
+          Upload a profile photo to personalize your account
+        </p>
+      </div>
+      
+      {/* User Info Section */}
       <div className="flex items-center space-x-6">
-        <Avatar className="h-20 w-20">
-          <AvatarImage src={user?.image || undefined} />
-          <AvatarFallback 
-            className="text-xl"
-            style={{ backgroundColor: primaryColor, color: 'white' }}
-          >
-            {getInitials(user?.name)}
-          </AvatarFallback>
-        </Avatar>
-        
         <div>
           <h2 className="text-xl font-medium">{user?.name}</h2>
           <p className="text-sm text-gray-500">{user?.email}</p>

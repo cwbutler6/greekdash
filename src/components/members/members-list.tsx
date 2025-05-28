@@ -28,6 +28,7 @@ interface Member {
   major?: string | null;
   gradYear?: number | null;
   bio?: string | null;
+  profileImage?: string | null;
   user: {
     id: string;
     name?: string | null;
@@ -102,7 +103,10 @@ export function MembersList({
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <Avatar className="h-10 w-10">
-                  <AvatarImage src={member.user.image || ''} alt={member.user.name || 'Member'} />
+                  <AvatarImage 
+                    src={member.profileImage || member.user.image || ''} 
+                    alt={member.user.name || 'Member'} 
+                  />
                   <AvatarFallback>{getInitials(member.user.name)}</AvatarFallback>
                 </Avatar>
                 <div>

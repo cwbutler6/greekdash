@@ -38,7 +38,7 @@ export default async function ProfilePage(props: { params: Promise<{ chapterSlug
     return <div>Chapter not found</div>;
   }
   
-  // Get the user's membership details including chapter-specific data
+  // Get the user's membership details including chapter-specific data and profile
   const userMembership = await prisma.membership.findUnique({
     where: {
       userId_chapterId: {
@@ -53,7 +53,8 @@ export default async function ProfilePage(props: { params: Promise<{ chapterSlug
           email: true,
           image: true,
         }
-      }
+      },
+      profile: true
     }
   });
 

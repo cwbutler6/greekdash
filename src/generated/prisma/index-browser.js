@@ -308,6 +308,7 @@ exports.Prisma.ProfileScalarFieldEnum = {
   major: 'major',
   gradYear: 'gradYear',
   bio: 'bio',
+  profileImage: 'profileImage',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   membershipId: 'membershipId',

@@ -21794,6 +21794,7 @@ export namespace Prisma {
     major: string | null
     gradYear: number | null
     bio: string | null
+    profileImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
     membershipId: string | null
@@ -21809,6 +21810,7 @@ export namespace Prisma {
     major: string | null
     gradYear: number | null
     bio: string | null
+    profileImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
     membershipId: string | null
@@ -21824,6 +21826,7 @@ export namespace Prisma {
     major: number
     gradYear: number
     bio: number
+    profileImage: number
     createdAt: number
     updatedAt: number
     membershipId: number
@@ -21849,6 +21852,7 @@ export namespace Prisma {
     major?: true
     gradYear?: true
     bio?: true
+    profileImage?: true
     createdAt?: true
     updatedAt?: true
     membershipId?: true
@@ -21864,6 +21868,7 @@ export namespace Prisma {
     major?: true
     gradYear?: true
     bio?: true
+    profileImage?: true
     createdAt?: true
     updatedAt?: true
     membershipId?: true
@@ -21879,6 +21884,7 @@ export namespace Prisma {
     major?: true
     gradYear?: true
     bio?: true
+    profileImage?: true
     createdAt?: true
     updatedAt?: true
     membershipId?: true
@@ -21981,6 +21987,7 @@ export namespace Prisma {
     major: string | null
     gradYear: number | null
     bio: string | null
+    profileImage: string | null
     createdAt: Date
     updatedAt: Date
     membershipId: string
@@ -22015,6 +22022,7 @@ export namespace Prisma {
     major?: boolean
     gradYear?: boolean
     bio?: boolean
+    profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     membershipId?: boolean
@@ -22033,6 +22041,7 @@ export namespace Prisma {
     major?: boolean
     gradYear?: boolean
     bio?: boolean
+    profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     membershipId?: boolean
@@ -22051,6 +22060,7 @@ export namespace Prisma {
     major?: boolean
     gradYear?: boolean
     bio?: boolean
+    profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     membershipId?: boolean
@@ -22069,6 +22079,7 @@ export namespace Prisma {
     major?: boolean
     gradYear?: boolean
     bio?: boolean
+    profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     membershipId?: boolean
@@ -22076,7 +22087,7 @@ export namespace Prisma {
     chapterId?: boolean
   }
 
-  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone" | "phoneVerified" | "smsEnabled" | "major" | "gradYear" | "bio" | "createdAt" | "updatedAt" | "membershipId" | "userId" | "chapterId", ExtArgs["result"]["profile"]>
+  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone" | "phoneVerified" | "smsEnabled" | "major" | "gradYear" | "bio" | "profileImage" | "createdAt" | "updatedAt" | "membershipId" | "userId" | "chapterId", ExtArgs["result"]["profile"]>
   export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     membership?: boolean | MembershipDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -22108,6 +22119,7 @@ export namespace Prisma {
       major: string | null
       gradYear: number | null
       bio: string | null
+      profileImage: string | null
       createdAt: Date
       updatedAt: Date
       membershipId: string
@@ -22546,6 +22558,7 @@ export namespace Prisma {
     readonly major: FieldRef<"Profile", 'String'>
     readonly gradYear: FieldRef<"Profile", 'Int'>
     readonly bio: FieldRef<"Profile", 'String'>
+    readonly profileImage: FieldRef<"Profile", 'String'>
     readonly createdAt: FieldRef<"Profile", 'DateTime'>
     readonly updatedAt: FieldRef<"Profile", 'DateTime'>
     readonly membershipId: FieldRef<"Profile", 'String'>
@@ -26697,6 +26710,7 @@ export namespace Prisma {
     major: 'major',
     gradYear: 'gradYear',
     bio: 'bio',
+    profileImage: 'profileImage',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     membershipId: 'membershipId',
@@ -28274,6 +28288,7 @@ export namespace Prisma {
     major?: StringNullableFilter<"Profile"> | string | null
     gradYear?: IntNullableFilter<"Profile"> | number | null
     bio?: StringNullableFilter<"Profile"> | string | null
+    profileImage?: StringNullableFilter<"Profile"> | string | null
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
     membershipId?: StringFilter<"Profile"> | string
@@ -28292,6 +28307,7 @@ export namespace Prisma {
     major?: SortOrderInput | SortOrder
     gradYear?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     membershipId?: SortOrder
@@ -28314,6 +28330,7 @@ export namespace Prisma {
     major?: StringNullableFilter<"Profile"> | string | null
     gradYear?: IntNullableFilter<"Profile"> | number | null
     bio?: StringNullableFilter<"Profile"> | string | null
+    profileImage?: StringNullableFilter<"Profile"> | string | null
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
     userId?: StringFilter<"Profile"> | string
@@ -28331,6 +28348,7 @@ export namespace Prisma {
     major?: SortOrderInput | SortOrder
     gradYear?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     membershipId?: SortOrder
@@ -28354,6 +28372,7 @@ export namespace Prisma {
     major?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     gradYear?: IntNullableWithAggregatesFilter<"Profile"> | number | null
     bio?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    profileImage?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
     membershipId?: StringWithAggregatesFilter<"Profile"> | string
@@ -29982,6 +30001,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     membership: MembershipCreateNestedOneWithoutProfileInput
@@ -29997,6 +30017,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     membershipId: string
@@ -30012,6 +30033,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membership?: MembershipUpdateOneRequiredWithoutProfileNestedInput
@@ -30027,6 +30049,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membershipId?: StringFieldUpdateOperationsInput | string
@@ -30042,6 +30065,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     membershipId: string
@@ -30057,6 +30081,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30069,6 +30094,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membershipId?: StringFieldUpdateOperationsInput | string
@@ -31503,6 +31529,7 @@ export namespace Prisma {
     major?: SortOrder
     gradYear?: SortOrder
     bio?: SortOrder
+    profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     membershipId?: SortOrder
@@ -31522,6 +31549,7 @@ export namespace Prisma {
     major?: SortOrder
     gradYear?: SortOrder
     bio?: SortOrder
+    profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     membershipId?: SortOrder
@@ -31537,6 +31565,7 @@ export namespace Prisma {
     major?: SortOrder
     gradYear?: SortOrder
     bio?: SortOrder
+    profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     membershipId?: SortOrder
@@ -33982,6 +34011,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     membership: MembershipCreateNestedOneWithoutProfileInput
@@ -33996,6 +34026,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     membershipId: string
@@ -34464,6 +34495,7 @@ export namespace Prisma {
     major?: StringNullableFilter<"Profile"> | string | null
     gradYear?: IntNullableFilter<"Profile"> | number | null
     bio?: StringNullableFilter<"Profile"> | string | null
+    profileImage?: StringNullableFilter<"Profile"> | string | null
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
     membershipId?: StringFilter<"Profile"> | string
@@ -34944,6 +34976,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     membership: MembershipCreateNestedOneWithoutProfileInput
@@ -34958,6 +34991,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     membershipId: string
@@ -35660,6 +35694,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutProfilesInput
@@ -35674,6 +35709,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
@@ -35822,6 +35858,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutProfilesNestedInput
@@ -35836,6 +35873,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -39238,6 +39276,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     membershipId: string
@@ -39406,6 +39445,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membership?: MembershipUpdateOneRequiredWithoutProfileNestedInput
@@ -39420,6 +39460,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membershipId?: StringFieldUpdateOperationsInput | string
@@ -39434,6 +39475,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membershipId?: StringFieldUpdateOperationsInput | string
@@ -39868,6 +39910,7 @@ export namespace Prisma {
     major?: string | null
     gradYear?: number | null
     bio?: string | null
+    profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     membershipId: string
@@ -40081,6 +40124,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membership?: MembershipUpdateOneRequiredWithoutProfileNestedInput
@@ -40095,6 +40139,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membershipId?: StringFieldUpdateOperationsInput | string
@@ -40109,6 +40154,7 @@ export namespace Prisma {
     major?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     membershipId?: StringFieldUpdateOperationsInput | string

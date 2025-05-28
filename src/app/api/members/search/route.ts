@@ -136,6 +136,7 @@ export async function POST(request: NextRequest) {
         major: true,
         gradYear: true,
         bio: true,
+        profileImage: true,
         user: {
           select: {
             id: true,
