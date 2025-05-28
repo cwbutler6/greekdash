@@ -87,6 +87,60 @@ export default async function PortalPage(props: { params: Promise<{ chapterSlug:
             This is your chapter portal where you can access all resources and features available to your chapter.
           </p>
         </div>
+
+        {/* Quick Links Section */}
+        <div className="mb-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg">Member Directory</CardTitle>
+              <CardDescription>Connect with chapter members</CardDescription>
+            </CardHeader>
+            <CardContent className="pb-2">
+              <p className="text-sm text-gray-500">Search and communicate with other members of your chapter.</p>
+            </CardContent>
+            <CardFooter>
+              <Link href={`/${chapterSlug}/portal/members`} className="w-full">
+                <Button className="w-full" variant="outline">
+                  View Directory <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </CardFooter>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg">Events</CardTitle>
+              <CardDescription>View and RSVP to chapter events</CardDescription>
+            </CardHeader>
+            <CardContent className="pb-2">
+              <p className="text-sm text-gray-500">See upcoming events and manage your RSVPs.</p>
+            </CardContent>
+            <CardFooter>
+              <Link href={`/${chapterSlug}/portal/events`} className="w-full">
+                <Button className="w-full" variant="outline">
+                  View Events <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </CardFooter>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg">Files</CardTitle>
+              <CardDescription>Access shared documents</CardDescription>
+            </CardHeader>
+            <CardContent className="pb-2">
+              <p className="text-sm text-gray-500">View and download important chapter files and documents.</p>
+            </CardContent>
+            <CardFooter>
+              <Link href={`/${chapterSlug}/portal/files`} className="w-full">
+                <Button className="w-full" variant="outline">
+                  View Files <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </CardFooter>
+          </Card>
+        </div>
         
         {/* Upcoming Events Section */}
         <div className="mb-8">
