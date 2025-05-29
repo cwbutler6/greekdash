@@ -287,17 +287,34 @@ exports.Prisma.ExpenseScalarFieldEnum = {
   approvedById: 'approvedById'
 };
 
+exports.Prisma.DuesPlanScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  amount: 'amount',
+  frequency: 'frequency',
+  isActive: 'isActive',
+  applyToNewMembers: 'applyToNewMembers',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  chapterId: 'chapterId'
+};
+
 exports.Prisma.DuesPaymentScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
   dueDate: 'dueDate',
   paidAt: 'paidAt',
+  status: 'status',
   stripePaymentId: 'stripePaymentId',
   stripeInvoiceId: 'stripeInvoiceId',
+  stripeCheckoutUrl: 'stripeCheckoutUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  notes: 'notes',
   chapterId: 'chapterId',
-  userId: 'userId'
+  userId: 'userId',
+  duesPlanId: 'duesPlanId'
 };
 
 exports.Prisma.ProfileScalarFieldEnum = {
@@ -427,6 +444,21 @@ exports.ExpenseStatus = exports.$Enums.ExpenseStatus = {
   PAID: 'PAID'
 };
 
+exports.DuesFrequency = exports.$Enums.DuesFrequency = {
+  ONE_TIME: 'ONE_TIME',
+  MONTHLY: 'MONTHLY',
+  QUARTERLY: 'QUARTERLY',
+  SEMESTER: 'SEMESTER',
+  ANNUAL: 'ANNUAL'
+};
+
+exports.DuesStatus = exports.$Enums.DuesStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  OVERDUE: 'OVERDUE',
+  WAIVED: 'WAIVED'
+};
+
 exports.TransactionType = exports.$Enums.TransactionType = {
   DUES_PAYMENT: 'DUES_PAYMENT',
   EXPENSE: 'EXPENSE',
@@ -452,6 +484,7 @@ exports.Prisma.ModelName = {
   ContactMessage: 'ContactMessage',
   Budget: 'Budget',
   Expense: 'Expense',
+  DuesPlan: 'DuesPlan',
   DuesPayment: 'DuesPayment',
   Profile: 'Profile',
   Transaction: 'Transaction',

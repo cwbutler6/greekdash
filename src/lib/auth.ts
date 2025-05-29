@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth-options";
 import { redirect } from "next/navigation";
+import { prisma } from "@/lib/db";
 
 // Re-export authOptions for use in API routes
 export { authOptions };
@@ -70,6 +71,27 @@ export async function requireChapterAccess(chapterSlug: string) {
       // Add any other required fields from the session data
     },
   };
+}
+
+// Check if user has admin access to a specific chapter - use in server components
+export async function requireChapterAdmin(chapterSlug: string) {
+  const { user, membership } = await requireChapterAccess(chapterSlug);
+  
+  // Check if user has admin or owner role for this chapter
+  if (membership.role !== 'ADMIN' && membership.role !== 'OWNER') {
+    redirect(`/${chapterSlug}/portal`);
+  }
+  
+  // Get chapter data
+  const chapter = await prisma.chapter.findUnique({
+    where: { slug: chapterSlug },
+  });
+  
+  if (!chapter) {
+    redirect('/');
+  }
+  
+  return { user, membership, chapter };
 }
 
 // Get the current chapter context from route params

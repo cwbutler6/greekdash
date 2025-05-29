@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
-import { toast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { isValidPhoneNumber } from '@/lib/validation';
 import { updatePhoneSettings } from '@/app/actions/user-phone';
 
@@ -56,13 +56,12 @@ export function PhoneSettingsForm({ initialData, chapterSlug }: PhoneSettingsFor
       const result = await updatePhoneSettings(data, chapterSlug);
       
       if (result.success) {
-        toast('Phone settings updated', {
+        toast.success('Phone settings updated', {
           description: 'Your phone settings have been successfully updated.',
         });
       } else {
-        toast('Error', {
+        toast.error('Error', {
           description: result.error || 'Failed to update phone settings',
-          className: 'bg-destructive',
         });
       }
     } catch {

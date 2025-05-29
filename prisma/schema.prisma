@@ -36,6 +36,7 @@ enum MembershipRole {
   PENDING_MEMBER
 }
 
+
 model Chapter {
   id             String         @id @default(cuid())
   name           String
@@ -64,6 +65,7 @@ model Chapter {
   expenses       Expense[]      // One chapter has many expenses
   duesPayments   DuesPayment[]  // One chapter has many dues payments
   transactions   Transaction[]  // One chapter has many transactions
+  duesPlans      DuesPlan[]     // One chapter has many dues plans
 }
 
 model User {
@@ -391,29 +393,72 @@ model Expense {
   @@index([status])
 }
 
+enum DuesFrequency {
+  ONE_TIME
+  MONTHLY
+  QUARTERLY
+  SEMESTER
+  ANNUAL
+}
+
+enum DuesStatus {
+  PENDING
+  PAID
+  OVERDUE
+  WAIVED
+}
+
+model DuesPlan {
+  id             String        @id @default(cuid())
+  name           String
+  description    String?       @db.Text
+  amount         Float
+  frequency      DuesFrequency
+  isActive       Boolean       @default(true)
+  applyToNewMembers Boolean    @default(true)
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  
+  // Foreign keys
+  chapterId      String
+  
+  // Relations
+  chapter        Chapter       @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  duesPayments   DuesPayment[]
+  
+  @@index([chapterId])
+}
+
 model DuesPayment {
   id             String       @id @default(cuid())
   amount         Float
   dueDate        DateTime
   paidAt         DateTime?
+  status         DuesStatus   @default(PENDING)
   stripePaymentId String?
   stripeInvoiceId String?
+  stripeCheckoutUrl String?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+  notes          String?      @db.Text
   
   // Foreign keys
   chapterId      String
   userId         String
+  duesPlanId     String?
   
   // Relations
   chapter        Chapter      @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  duesPlan       DuesPlan?    @relation(fields: [duesPlanId], references: [id], onDelete: SetNull)
   transaction    Transaction? @relation("duesTransaction")
   
   @@index([chapterId])
   @@index([userId])
+  @@index([duesPlanId])
   @@index([dueDate])
   @@index([paidAt])
+  @@index([status])
 }
 
 model Profile {
