@@ -19,6 +19,26 @@ export const metadata: Metadata = {
   title: "GreekDash",
   description: "All-in-one chapter management, made easy.",
   keywords: ["GreekDash", "chapter management", "Greek community", "chapter operations"],
+  openGraph: {
+    type: "website",
+    locale: "en",
+    siteName: "GreekDash",
+    url: "https://greekdash.com",
+    images: [
+      {
+        url: "https://greekdash.com/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "GreekDash",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "GreekDash - Run Your Chapter Like a Pro",
+    description: "All-in-one chapter management, made easy.",
+    images: ["https://greekdash.com/og-image.png"],
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },

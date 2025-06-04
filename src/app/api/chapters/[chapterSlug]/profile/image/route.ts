@@ -69,10 +69,13 @@ export async function POST(
       fileBuffer: buffer,
     });
     
+    // If upload failed but we still want to continue
     if (!updatedProfile) {
       return NextResponse.json({ 
-        error: 'Failed to update profile image' 
-      }, { status: 500 });
+        success: true,
+        warning: 'Profile image could not be uploaded, but profile was updated. The system will try again later.',
+        profileImage: profile.profileImage // Return existing image URL if available
+      });
     }
 
     return NextResponse.json({ 

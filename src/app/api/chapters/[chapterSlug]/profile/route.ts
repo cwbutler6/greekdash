@@ -10,12 +10,17 @@ const profileSchema = z.object({
   email: z.string().email('Please enter a valid email address').optional(),
   phone: z.string().optional().nullable(),
   major: z.string().optional().nullable(),
+  discipline: z.string().optional().nullable(),
+  schoolName: z.string().optional().nullable(),
   gradYear: z.string()
     .refine(val => !val || /^\d{4}$/.test(val), {
       message: 'Graduation year must be a 4-digit year'
     })
     .optional()
     .nullable(),
+  lineName: z.string().optional().nullable(),
+  lineGroup: z.string().optional().nullable(),
+  crossingDate: z.string().optional().nullable(),
   bio: z.string().max(300, 'Bio cannot exceed 300 characters').optional().nullable(),
 });
 
@@ -89,10 +94,13 @@ export async function PUT(
     });
     
     // Extract profile data that should go in the chapter-specific profile
-    const { phone, major, gradYear, bio } = profileData;
+    const { phone, major, discipline, schoolName, gradYear, lineName, lineGroup, crossingDate, bio } = profileData;
     
     // Convert gradYear to a number if it exists
     const gradYearNum = gradYear ? parseInt(gradYear) : null;
+    
+    // Convert empty date strings to null for Prisma
+    const formattedCrossingDate = crossingDate === "" ? null : crossingDate;
     
     // Check if a profile already exists for this membership
     const existingProfile = await prisma.profile.findUnique({
@@ -106,7 +114,12 @@ export async function PUT(
         data: {
           phone,
           major,
+          discipline,
+          schoolName,
           gradYear: gradYearNum,
+          lineName,
+          lineGroup,
+          crossingDate: formattedCrossingDate,
           bio,
         }
       });
@@ -116,7 +129,12 @@ export async function PUT(
         data: {
           phone,
           major,
+          discipline,
+          schoolName,
           gradYear: gradYearNum,
+          lineName,
+          lineGroup,
+          crossingDate: formattedCrossingDate,
           bio,
           membership: {
             connect: { id: membership.id }
@@ -142,7 +160,12 @@ export async function PUT(
         metadata: {
           phone,
           major,
+          discipline,
+          schoolName,
           gradYear,
+          lineName,
+          lineGroup,
+          crossingDate: formattedCrossingDate,
           bio,
           updatedFields: Object.keys(profileData).filter(key => !!profileData[key as keyof typeof profileData]),
           timestamp: new Date().toISOString(),
@@ -159,7 +182,12 @@ export async function PUT(
       profile: {
         phone, 
         major,
+        discipline,
+        schoolName,
         gradYear,
+        lineName,
+        lineGroup,
+        crossingDate,
         bio
       }
     });

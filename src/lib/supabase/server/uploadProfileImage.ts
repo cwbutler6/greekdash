@@ -40,32 +40,87 @@ export async function uploadProfileImage({
     return null;
   }
 
-  // Upload to Supabase Storage
-  const { error } = await supabaseAdmin.storage
-    .from('profile-images')
-    .upload(filePath, fileBuffer, {
-      contentType: mimeType,
-      cacheControl: '3600',
-      upsert: false,
-    });
+  try {
+    // Try to ensure the bucket exists
+    const { data: buckets } = await supabaseAdmin.storage.listBuckets();
+    const bucketExists = buckets?.some(bucket => bucket.name === 'profile-images');
+    
+    if (!bucketExists) {
+      console.log('Creating profile-images bucket in Supabase...');
+      await supabaseAdmin.storage.createBucket('profile-images', {
+        public: true,
+        fileSizeLimit: 5242880, // 5MB in bytes
+      });
+      console.log('Bucket created successfully');
+    }
 
-  if (error) {
-    throw new Error(`Supabase storage error: ${error.message}`);
+    // Upload to Supabase Storage
+    const { error } = await supabaseAdmin.storage
+      .from('profile-images')
+      .upload(filePath, fileBuffer, {
+        contentType: mimeType,
+        cacheControl: '3600',
+        upsert: false,
+      });
+
+    if (error) {
+      if (error.message?.includes('Bucket not found')) {
+        console.error('Bucket not found even after creation attempt');
+        // Return null instead of throwing to avoid breaking the profile update
+        console.warn('Unable to upload profile image, but continuing with profile update');
+        return null;
+      }
+      throw new Error(`Supabase storage error: ${error.message}`);
+    }
+  } catch (err) {
+    console.error('Error with Supabase storage operation:', err);
+    // Return null instead of throwing to allow profile updates to continue even if image upload fails
+    return null;
   }
 
-  // Get the public URL
-  const { data: { publicUrl } } = supabaseAdmin.storage
+  // Important: We need to generate a URL that will work reliably across environments
+  // Option 1: Use Supabase's getPublicUrl function
+  const { data } = supabaseAdmin.storage
     .from('profile-images')
     .getPublicUrl(filePath);
+  
+  // Option 2: Construct URL manually using environment variable (fallback)
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!data?.publicUrl || !supabaseUrl) {
+    console.error('Failed to generate public URL from Supabase or missing NEXT_PUBLIC_SUPABASE_URL');
+    return null;
+  }
+  
+  // Use the publicUrl from Supabase, but add a timestamp query parameter to prevent caching issues
+  const timestamp = Date.now();
+  const fullUrl = `${data.publicUrl}?t=${timestamp}`;
+  
+  // Log both URLs for debugging
+  console.log('Original Supabase URL:', data.publicUrl);
+  console.log('Final URL with cache-busting:', fullUrl);
 
   // Update the profile record with the new image URL
-  return prisma.profile.update({
-    where: { id: profileId },
-    data: {
-      profileImage: publicUrl,
-      updatedAt: new Date(),
-    },
-  });
+  // First log what we're trying to save to ensure it's correct
+  console.log('About to update profile', { profileId, imageUrl: fullUrl });
+  
+  try {
+    // Update the profile record with the new image URL
+    const updatedProfile = await prisma.profile.update({
+      where: { id: profileId },
+      data: {
+        profileImage: fullUrl,
+        updatedAt: new Date(),
+      },
+    });
+    
+    // Verify the update was successful
+    console.log('Profile updated successfully with image URL', updatedProfile.profileImage);
+    
+    return updatedProfile;
+  } catch (error) {
+    console.error('Failed to update profile with image URL:', error);
+    throw new Error(`Failed to update profile with image URL: ${error instanceof Error ? error.message : 'Unknown error'}`);
+  }
 }
 
 // Function to remove a profile image

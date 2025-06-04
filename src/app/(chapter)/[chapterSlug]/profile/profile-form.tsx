@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,11 +19,16 @@ const profileSchema = z.object({
   email: z.string().email('Please enter a valid email address').optional(),
   phone: z.string().optional(),
   major: z.string().optional(),
+  discipline: z.string().optional(),
+  schoolName: z.string().optional(),
   gradYear: z.string()
     .refine(val => !val || /^\d{4}$/.test(val), {
       message: 'Graduation year must be a 4-digit year'
     })
     .optional(),
+  lineName: z.string().optional(),
+  lineGroup: z.string().optional(),
+  crossingDate: z.string().optional(),
   bio: z.string().max(300, 'Bio cannot exceed 300 characters').optional(),
 });
 
@@ -42,7 +47,12 @@ interface ProfileFormProps {
       profileImage: string | null;
       phone?: string | null;
       major?: string | null;
+      discipline?: string | null;
+      schoolName?: string | null;
       gradYear?: number | null;
+      lineName?: string | null;
+      lineGroup?: string | null;
+      crossingDate?: string | null;
       bio?: string | null;
     } | null;
   };
@@ -55,6 +65,20 @@ export default function ProfileForm({ user, membership, chapterSlug, primaryColo
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  // Ensure we have the current profileImage value from the server
+  const [profileImage, setProfileImage] = useState<string | null>(membership.profile?.profileImage || null);
+  
+  // Debug logging
+  console.log('ProfileForm - Full membership profile data:', JSON.stringify(membership.profile, null, 2));
+  console.log('ProfileForm initial profileImage:', membership.profile?.profileImage);
+  
+  // Update profileImage state when membership.profile.profileImage changes
+  useEffect(() => {
+    if (membership.profile?.profileImage) {
+      console.log('ProfileForm useEffect - Updating profileImage from props:', membership.profile.profileImage);
+      setProfileImage(membership.profile.profileImage);
+    }
+  }, [membership.profile?.profileImage]);
   
   // Initialize form with user's current data
   const {
@@ -66,10 +90,15 @@ export default function ProfileForm({ user, membership, chapterSlug, primaryColo
     defaultValues: {
       name: user?.name || '',
       email: user?.email || '',
-      phone: '',
-      major: '',
-      gradYear: '',
-      bio: '',
+      phone: membership.profile?.phone || '',
+      major: membership.profile?.major || '',
+      discipline: membership.profile?.discipline || '',
+      schoolName: membership.profile?.schoolName || '',
+      gradYear: membership.profile?.gradYear ? String(membership.profile.gradYear) : '',
+      lineName: membership.profile?.lineName || '',
+      lineGroup: membership.profile?.lineGroup || '',
+      crossingDate: membership.profile?.crossingDate ? new Date(membership.profile.crossingDate).toISOString().split('T')[0] : '',
+      bio: membership.profile?.bio || '',
     },
   });
 
@@ -126,11 +155,22 @@ export default function ProfileForm({ user, membership, chapterSlug, primaryColo
       
       {/* Profile Image Upload */}
       <div className="flex flex-col items-center pb-6 border-b">
-        <ProfileImageUpload 
+        <ProfileImageUpload
           chapterSlug={chapterSlug}
-          profileImage={membership.profile?.profileImage}
+          profileImage={profileImage || membership.profile?.profileImage || null}
           userName={user.name}
           size="lg"
+          onImageUpdate={(newImageUrl) => {
+            console.log('Image updated with new URL:', newImageUrl);
+            // Set the image URL in state
+            setProfileImage(newImageUrl);
+            setSuccess('Profile image updated successfully');
+            
+            // Force a router refresh to ensure server data is updated
+            setTimeout(() => {
+              router.refresh();
+            }, 1000);
+          }}
         />
         <p className="text-sm text-gray-500 mt-4">
           Upload a profile photo to personalize your account
@@ -197,13 +237,33 @@ export default function ProfileForm({ user, membership, chapterSlug, primaryColo
             )}
           </div>
           
-          {/* Major/Field of Study */}
+          {/* School Name */}
           <div className="space-y-2">
-            <Label htmlFor="major">Major/Field of Study</Label>
+            <Label htmlFor="schoolName">School/University</Label>
+            <Input
+              id="schoolName"
+              {...register('schoolName')}
+              placeholder="Your school or university"
+            />
+          </div>
+          
+          {/* Major */}
+          <div className="space-y-2">
+            <Label htmlFor="major">Major</Label>
             <Input
               id="major"
               {...register('major')}
-              placeholder="Your major or field of study"
+              placeholder="Your major"
+            />
+          </div>
+          
+          {/* Discipline */}
+          <div className="space-y-2">
+            <Label htmlFor="discipline">Discipline/Field of Study</Label>
+            <Input
+              id="discipline"
+              {...register('discipline')}
+              placeholder="Your discipline or field of study"
             />
           </div>
           
@@ -218,6 +278,36 @@ export default function ProfileForm({ user, membership, chapterSlug, primaryColo
             {errors.gradYear && (
               <p className="text-sm text-red-500">{errors.gradYear.message}</p>
             )}
+          </div>
+          
+          {/* Line Name */}
+          <div className="space-y-2">
+            <Label htmlFor="lineName">Line Name</Label>
+            <Input
+              id="lineName"
+              {...register('lineName')}
+              placeholder="Your individual line name"
+            />
+          </div>
+          
+          {/* Line Group */}
+          <div className="space-y-2">
+            <Label htmlFor="lineGroup">Line Group</Label>
+            <Input
+              id="lineGroup"
+              {...register('lineGroup')}
+              placeholder="Your whole line name/group"
+            />
+          </div>
+          
+          {/* Crossing Date */}
+          <div className="space-y-2">
+            <Label htmlFor="crossingDate">Crossing/Initiation Date</Label>
+            <Input
+              id="crossingDate"
+              type="date"
+              {...register('crossingDate')}
+            />
           </div>
         </div>
         

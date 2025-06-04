@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, useRef, useEffect, ChangeEvent } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { toast } from 'sonner';
@@ -34,10 +34,26 @@ export function ProfileImageUpload({
   size = 'md',
   editable = true,
 }: ProfileImageUploadProps) {
+  // Debug logging for profile image
+  console.log('ProfileImageUpload received profileImage:', profileImage, 'at', new Date().toISOString());
+  
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  // Add cache-busting timestamp for the image URL 
+  const imageSrc = profileImage && !previewUrl 
+    ? `${profileImage}${profileImage.includes('?') ? '&' : '?'}t=${Date.now()}` 
+    : previewUrl || null;
+    
+  useEffect(() => {
+    // When profile image prop changes, update component state
+    if (profileImage) {
+      console.log('ProfileImageUpload useEffect - Updating from props:', profileImage);
+      setPreviewUrl(null); // Clear preview so we use the updated profile image
+    }
+  }, [profileImage]); // Intentionally removing imageSrc from deps to avoid circular updates
 
   // Size mapping
   const sizeMap = {
@@ -163,8 +179,13 @@ export function ProfileImageUpload({
       <div className="relative">
         <Avatar className={`${sizeMap[size]} border-2`}>
           <AvatarImage
-            src={previewUrl || profileImage || ''}
+            src={previewUrl || imageSrc || ''}
             alt={userName || 'User profile'}
+            onError={(e) => {
+              console.error('Image failed to load:', e);
+              // If image fails to load, set src to null to show fallback
+              (e.target as HTMLImageElement).src = '';
+            }}
           />
           <AvatarFallback>{getInitials(userName)}</AvatarFallback>
         </Avatar>

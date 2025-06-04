@@ -24,6 +24,22 @@ export default withAuth(
       pathname === "/reset-password" ||
       pathname === "/api/auth" ||
       isChapterPublicPage;
+      
+    // Redirect authenticated users away from login/signup pages
+    if (isAuthenticated && (pathname === "/login" || pathname === "/signup")) {
+      // Redirect to an appropriate page based on user's membership
+      if (token.memberships && token.memberships.length > 0) {
+        const membership = token.memberships[0];
+        const redirectPath = membership.role === 'ADMIN' || membership.role === 'OWNER' 
+          ? `/${membership.chapterSlug}/admin`
+          : `/${membership.chapterSlug}/portal`;
+        
+        return NextResponse.redirect(new URL(redirectPath, request.url));
+      } else {
+        // If authenticated but no memberships, redirect to signup flow
+        return NextResponse.redirect(new URL("/signup", request.url));
+      }
+    }
     
     if (!isAuthenticated && !isPublicRoute) {
       // Redirect to login if trying to access protected route without authentication
@@ -99,6 +115,10 @@ export const config = {
     "/:chapterSlug/portal/:path*",
     "/:chapterSlug/join/:path*", // Join workflow is protected
     "/:chapterSlug/pending/:path*", // Pending approval workflow is protected
+    
+    // Also process authentication pages to prevent logged-in users from accessing them
+    "/login",
+    "/signup",
     "/settings/:path*",
     
     // Skip authentication check for API routes, public routes, and static files

@@ -169,7 +169,8 @@ function LoginForm() {
     }
   }, []);
 
-  return (
+  // Render the login form
+    return (
     <div className="flex min-h-full flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">

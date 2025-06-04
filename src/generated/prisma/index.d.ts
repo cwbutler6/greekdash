@@ -3332,6 +3332,7 @@ export namespace Prisma {
     joinCode: string | null
     publicInfo: string | null
     primaryColor: string | null
+    schoolName: string | null
     createdAt: Date | null
     updatedAt: Date | null
     stripeCustomerId: string | null
@@ -3344,6 +3345,7 @@ export namespace Prisma {
     joinCode: string | null
     publicInfo: string | null
     primaryColor: string | null
+    schoolName: string | null
     createdAt: Date | null
     updatedAt: Date | null
     stripeCustomerId: string | null
@@ -3356,6 +3358,7 @@ export namespace Prisma {
     joinCode: number
     publicInfo: number
     primaryColor: number
+    schoolName: number
     createdAt: number
     updatedAt: number
     stripeCustomerId: number
@@ -3370,6 +3373,7 @@ export namespace Prisma {
     joinCode?: true
     publicInfo?: true
     primaryColor?: true
+    schoolName?: true
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
@@ -3382,6 +3386,7 @@ export namespace Prisma {
     joinCode?: true
     publicInfo?: true
     primaryColor?: true
+    schoolName?: true
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
@@ -3394,6 +3399,7 @@ export namespace Prisma {
     joinCode?: true
     publicInfo?: true
     primaryColor?: true
+    schoolName?: true
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
@@ -3479,6 +3485,7 @@ export namespace Prisma {
     joinCode: string
     publicInfo: string | null
     primaryColor: string | null
+    schoolName: string | null
     createdAt: Date
     updatedAt: Date
     stripeCustomerId: string | null
@@ -3508,6 +3515,7 @@ export namespace Prisma {
     joinCode?: boolean
     publicInfo?: boolean
     primaryColor?: boolean
+    schoolName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
@@ -3536,6 +3544,7 @@ export namespace Prisma {
     joinCode?: boolean
     publicInfo?: boolean
     primaryColor?: boolean
+    schoolName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
@@ -3548,6 +3557,7 @@ export namespace Prisma {
     joinCode?: boolean
     publicInfo?: boolean
     primaryColor?: boolean
+    schoolName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
@@ -3560,12 +3570,13 @@ export namespace Prisma {
     joinCode?: boolean
     publicInfo?: boolean
     primaryColor?: boolean
+    schoolName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
   }
 
-  export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "publicInfo" | "primaryColor" | "createdAt" | "updatedAt" | "stripeCustomerId", ExtArgs["result"]["chapter"]>
+  export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "publicInfo" | "primaryColor" | "schoolName" | "createdAt" | "updatedAt" | "stripeCustomerId", ExtArgs["result"]["chapter"]>
   export type ChapterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     memberships?: boolean | Chapter$membershipsArgs<ExtArgs>
     profiles?: boolean | Chapter$profilesArgs<ExtArgs>
@@ -3613,6 +3624,7 @@ export namespace Prisma {
       joinCode: string
       publicInfo: string | null
       primaryColor: string | null
+      schoolName: string | null
       createdAt: Date
       updatedAt: Date
       stripeCustomerId: string | null
@@ -4060,6 +4072,7 @@ export namespace Prisma {
     readonly joinCode: FieldRef<"Chapter", 'String'>
     readonly publicInfo: FieldRef<"Chapter", 'String'>
     readonly primaryColor: FieldRef<"Chapter", 'String'>
+    readonly schoolName: FieldRef<"Chapter", 'String'>
     readonly createdAt: FieldRef<"Chapter", 'DateTime'>
     readonly updatedAt: FieldRef<"Chapter", 'DateTime'>
     readonly stripeCustomerId: FieldRef<"Chapter", 'String'>
@@ -23374,8 +23387,13 @@ export namespace Prisma {
     phoneVerified: boolean | null
     smsEnabled: boolean | null
     major: string | null
+    discipline: string | null
     gradYear: number | null
+    schoolName: string | null
     bio: string | null
+    lineName: string | null
+    lineGroup: string | null
+    crossingDate: Date | null
     profileImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -23390,8 +23408,13 @@ export namespace Prisma {
     phoneVerified: boolean | null
     smsEnabled: boolean | null
     major: string | null
+    discipline: string | null
     gradYear: number | null
+    schoolName: string | null
     bio: string | null
+    lineName: string | null
+    lineGroup: string | null
+    crossingDate: Date | null
     profileImage: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -23406,8 +23429,13 @@ export namespace Prisma {
     phoneVerified: number
     smsEnabled: number
     major: number
+    discipline: number
     gradYear: number
+    schoolName: number
     bio: number
+    lineName: number
+    lineGroup: number
+    crossingDate: number
     profileImage: number
     createdAt: number
     updatedAt: number
@@ -23432,8 +23460,13 @@ export namespace Prisma {
     phoneVerified?: true
     smsEnabled?: true
     major?: true
+    discipline?: true
     gradYear?: true
+    schoolName?: true
     bio?: true
+    lineName?: true
+    lineGroup?: true
+    crossingDate?: true
     profileImage?: true
     createdAt?: true
     updatedAt?: true
@@ -23448,8 +23481,13 @@ export namespace Prisma {
     phoneVerified?: true
     smsEnabled?: true
     major?: true
+    discipline?: true
     gradYear?: true
+    schoolName?: true
     bio?: true
+    lineName?: true
+    lineGroup?: true
+    crossingDate?: true
     profileImage?: true
     createdAt?: true
     updatedAt?: true
@@ -23464,8 +23502,13 @@ export namespace Prisma {
     phoneVerified?: true
     smsEnabled?: true
     major?: true
+    discipline?: true
     gradYear?: true
+    schoolName?: true
     bio?: true
+    lineName?: true
+    lineGroup?: true
+    crossingDate?: true
     profileImage?: true
     createdAt?: true
     updatedAt?: true
@@ -23567,8 +23610,13 @@ export namespace Prisma {
     phoneVerified: boolean
     smsEnabled: boolean
     major: string | null
+    discipline: string | null
     gradYear: number | null
+    schoolName: string | null
     bio: string | null
+    lineName: string | null
+    lineGroup: string | null
+    crossingDate: Date | null
     profileImage: string | null
     createdAt: Date
     updatedAt: Date
@@ -23602,8 +23650,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: boolean
+    discipline?: boolean
     gradYear?: boolean
+    schoolName?: boolean
     bio?: boolean
+    lineName?: boolean
+    lineGroup?: boolean
+    crossingDate?: boolean
     profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -23621,8 +23674,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: boolean
+    discipline?: boolean
     gradYear?: boolean
+    schoolName?: boolean
     bio?: boolean
+    lineName?: boolean
+    lineGroup?: boolean
+    crossingDate?: boolean
     profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -23640,8 +23698,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: boolean
+    discipline?: boolean
     gradYear?: boolean
+    schoolName?: boolean
     bio?: boolean
+    lineName?: boolean
+    lineGroup?: boolean
+    crossingDate?: boolean
     profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -23659,8 +23722,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: boolean
+    discipline?: boolean
     gradYear?: boolean
+    schoolName?: boolean
     bio?: boolean
+    lineName?: boolean
+    lineGroup?: boolean
+    crossingDate?: boolean
     profileImage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -23669,7 +23737,7 @@ export namespace Prisma {
     chapterId?: boolean
   }
 
-  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone" | "phoneVerified" | "smsEnabled" | "major" | "gradYear" | "bio" | "profileImage" | "createdAt" | "updatedAt" | "membershipId" | "userId" | "chapterId", ExtArgs["result"]["profile"]>
+  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone" | "phoneVerified" | "smsEnabled" | "major" | "discipline" | "gradYear" | "schoolName" | "bio" | "lineName" | "lineGroup" | "crossingDate" | "profileImage" | "createdAt" | "updatedAt" | "membershipId" | "userId" | "chapterId", ExtArgs["result"]["profile"]>
   export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     membership?: boolean | MembershipDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -23699,8 +23767,13 @@ export namespace Prisma {
       phoneVerified: boolean
       smsEnabled: boolean
       major: string | null
+      discipline: string | null
       gradYear: number | null
+      schoolName: string | null
       bio: string | null
+      lineName: string | null
+      lineGroup: string | null
+      crossingDate: Date | null
       profileImage: string | null
       createdAt: Date
       updatedAt: Date
@@ -24138,8 +24211,13 @@ export namespace Prisma {
     readonly phoneVerified: FieldRef<"Profile", 'Boolean'>
     readonly smsEnabled: FieldRef<"Profile", 'Boolean'>
     readonly major: FieldRef<"Profile", 'String'>
+    readonly discipline: FieldRef<"Profile", 'String'>
     readonly gradYear: FieldRef<"Profile", 'Int'>
+    readonly schoolName: FieldRef<"Profile", 'String'>
     readonly bio: FieldRef<"Profile", 'String'>
+    readonly lineName: FieldRef<"Profile", 'String'>
+    readonly lineGroup: FieldRef<"Profile", 'String'>
+    readonly crossingDate: FieldRef<"Profile", 'DateTime'>
     readonly profileImage: FieldRef<"Profile", 'String'>
     readonly createdAt: FieldRef<"Profile", 'DateTime'>
     readonly updatedAt: FieldRef<"Profile", 'DateTime'>
@@ -29218,6 +29296,7 @@ export namespace Prisma {
     joinCode: 'joinCode',
     publicInfo: 'publicInfo',
     primaryColor: 'primaryColor',
+    schoolName: 'schoolName',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     stripeCustomerId: 'stripeCustomerId'
@@ -29465,8 +29544,13 @@ export namespace Prisma {
     phoneVerified: 'phoneVerified',
     smsEnabled: 'smsEnabled',
     major: 'major',
+    discipline: 'discipline',
     gradYear: 'gradYear',
+    schoolName: 'schoolName',
     bio: 'bio',
+    lineName: 'lineName',
+    lineGroup: 'lineGroup',
+    crossingDate: 'crossingDate',
     profileImage: 'profileImage',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -29818,6 +29902,7 @@ export namespace Prisma {
     joinCode?: StringFilter<"Chapter"> | string
     publicInfo?: StringNullableFilter<"Chapter"> | string | null
     primaryColor?: StringNullableFilter<"Chapter"> | string | null
+    schoolName?: StringNullableFilter<"Chapter"> | string | null
     createdAt?: DateTimeFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableFilter<"Chapter"> | string | null
@@ -29845,6 +29930,7 @@ export namespace Prisma {
     joinCode?: SortOrder
     publicInfo?: SortOrderInput | SortOrder
     primaryColor?: SortOrderInput | SortOrder
+    schoolName?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrderInput | SortOrder
@@ -29875,6 +29961,7 @@ export namespace Prisma {
     joinCode?: StringFilter<"Chapter"> | string
     publicInfo?: StringNullableFilter<"Chapter"> | string | null
     primaryColor?: StringNullableFilter<"Chapter"> | string | null
+    schoolName?: StringNullableFilter<"Chapter"> | string | null
     createdAt?: DateTimeFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableFilter<"Chapter"> | string | null
@@ -29902,6 +29989,7 @@ export namespace Prisma {
     joinCode?: SortOrder
     publicInfo?: SortOrderInput | SortOrder
     primaryColor?: SortOrderInput | SortOrder
+    schoolName?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrderInput | SortOrder
@@ -29920,6 +30008,7 @@ export namespace Prisma {
     joinCode?: StringWithAggregatesFilter<"Chapter"> | string
     publicInfo?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
     primaryColor?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
+    schoolName?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
@@ -31202,8 +31291,13 @@ export namespace Prisma {
     phoneVerified?: BoolFilter<"Profile"> | boolean
     smsEnabled?: BoolFilter<"Profile"> | boolean
     major?: StringNullableFilter<"Profile"> | string | null
+    discipline?: StringNullableFilter<"Profile"> | string | null
     gradYear?: IntNullableFilter<"Profile"> | number | null
+    schoolName?: StringNullableFilter<"Profile"> | string | null
     bio?: StringNullableFilter<"Profile"> | string | null
+    lineName?: StringNullableFilter<"Profile"> | string | null
+    lineGroup?: StringNullableFilter<"Profile"> | string | null
+    crossingDate?: DateTimeNullableFilter<"Profile"> | Date | string | null
     profileImage?: StringNullableFilter<"Profile"> | string | null
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
@@ -31221,8 +31315,13 @@ export namespace Prisma {
     phoneVerified?: SortOrder
     smsEnabled?: SortOrder
     major?: SortOrderInput | SortOrder
+    discipline?: SortOrderInput | SortOrder
     gradYear?: SortOrderInput | SortOrder
+    schoolName?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    lineName?: SortOrderInput | SortOrder
+    lineGroup?: SortOrderInput | SortOrder
+    crossingDate?: SortOrderInput | SortOrder
     profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -31244,8 +31343,13 @@ export namespace Prisma {
     phoneVerified?: BoolFilter<"Profile"> | boolean
     smsEnabled?: BoolFilter<"Profile"> | boolean
     major?: StringNullableFilter<"Profile"> | string | null
+    discipline?: StringNullableFilter<"Profile"> | string | null
     gradYear?: IntNullableFilter<"Profile"> | number | null
+    schoolName?: StringNullableFilter<"Profile"> | string | null
     bio?: StringNullableFilter<"Profile"> | string | null
+    lineName?: StringNullableFilter<"Profile"> | string | null
+    lineGroup?: StringNullableFilter<"Profile"> | string | null
+    crossingDate?: DateTimeNullableFilter<"Profile"> | Date | string | null
     profileImage?: StringNullableFilter<"Profile"> | string | null
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
@@ -31262,8 +31366,13 @@ export namespace Prisma {
     phoneVerified?: SortOrder
     smsEnabled?: SortOrder
     major?: SortOrderInput | SortOrder
+    discipline?: SortOrderInput | SortOrder
     gradYear?: SortOrderInput | SortOrder
+    schoolName?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
+    lineName?: SortOrderInput | SortOrder
+    lineGroup?: SortOrderInput | SortOrder
+    crossingDate?: SortOrderInput | SortOrder
     profileImage?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -31286,8 +31395,13 @@ export namespace Prisma {
     phoneVerified?: BoolWithAggregatesFilter<"Profile"> | boolean
     smsEnabled?: BoolWithAggregatesFilter<"Profile"> | boolean
     major?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    discipline?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     gradYear?: IntNullableWithAggregatesFilter<"Profile"> | number | null
+    schoolName?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     bio?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    lineName?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    lineGroup?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    crossingDate?: DateTimeNullableWithAggregatesFilter<"Profile"> | Date | string | null
     profileImage?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
@@ -31636,6 +31750,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -31663,6 +31778,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -31690,6 +31806,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31717,6 +31834,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31744,6 +31862,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -31756,6 +31875,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -31768,6 +31888,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -33129,8 +33250,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -33145,8 +33271,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -33161,8 +33292,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33177,8 +33313,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33193,8 +33334,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -33209,8 +33355,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33222,8 +33373,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33787,6 +33943,7 @@ export namespace Prisma {
     joinCode?: SortOrder
     publicInfo?: SortOrder
     primaryColor?: SortOrder
+    schoolName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
@@ -33799,6 +33956,7 @@ export namespace Prisma {
     joinCode?: SortOrder
     publicInfo?: SortOrder
     primaryColor?: SortOrder
+    schoolName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
@@ -33811,6 +33969,7 @@ export namespace Prisma {
     joinCode?: SortOrder
     publicInfo?: SortOrder
     primaryColor?: SortOrder
+    schoolName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
@@ -34872,8 +35031,13 @@ export namespace Prisma {
     phoneVerified?: SortOrder
     smsEnabled?: SortOrder
     major?: SortOrder
+    discipline?: SortOrder
     gradYear?: SortOrder
+    schoolName?: SortOrder
     bio?: SortOrder
+    lineName?: SortOrder
+    lineGroup?: SortOrder
+    crossingDate?: SortOrder
     profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -34892,8 +35056,13 @@ export namespace Prisma {
     phoneVerified?: SortOrder
     smsEnabled?: SortOrder
     major?: SortOrder
+    discipline?: SortOrder
     gradYear?: SortOrder
+    schoolName?: SortOrder
     bio?: SortOrder
+    lineName?: SortOrder
+    lineGroup?: SortOrder
+    crossingDate?: SortOrder
     profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -34908,8 +35077,13 @@ export namespace Prisma {
     phoneVerified?: SortOrder
     smsEnabled?: SortOrder
     major?: SortOrder
+    discipline?: SortOrder
     gradYear?: SortOrder
+    schoolName?: SortOrder
     bio?: SortOrder
+    lineName?: SortOrder
+    lineGroup?: SortOrder
+    crossingDate?: SortOrder
     profileImage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -37610,8 +37784,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -37625,8 +37804,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -38138,8 +38322,13 @@ export namespace Prisma {
     phoneVerified?: BoolFilter<"Profile"> | boolean
     smsEnabled?: BoolFilter<"Profile"> | boolean
     major?: StringNullableFilter<"Profile"> | string | null
+    discipline?: StringNullableFilter<"Profile"> | string | null
     gradYear?: IntNullableFilter<"Profile"> | number | null
+    schoolName?: StringNullableFilter<"Profile"> | string | null
     bio?: StringNullableFilter<"Profile"> | string | null
+    lineName?: StringNullableFilter<"Profile"> | string | null
+    lineGroup?: StringNullableFilter<"Profile"> | string | null
+    crossingDate?: DateTimeNullableFilter<"Profile"> | Date | string | null
     profileImage?: StringNullableFilter<"Profile"> | string | null
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
@@ -38655,8 +38844,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -38670,8 +38864,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -39398,6 +39597,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -39424,6 +39624,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -39454,8 +39655,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -39469,8 +39675,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -39560,6 +39771,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39586,6 +39798,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39622,8 +39835,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39637,8 +39855,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39653,6 +39876,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -39679,6 +39903,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -39721,6 +39946,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39747,6 +39973,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39997,6 +40224,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -40023,6 +40251,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -40171,6 +40400,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40197,6 +40427,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40341,6 +40572,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -40367,6 +40599,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -40488,6 +40721,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40514,6 +40748,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -40860,6 +41095,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -40886,6 +41122,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -40987,6 +41224,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41013,6 +41251,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41039,6 +41278,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -41065,6 +41305,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -41107,6 +41348,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41133,6 +41375,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41159,6 +41402,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -41185,6 +41429,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -41227,6 +41472,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41253,6 +41499,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41279,6 +41526,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -41305,6 +41553,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -41389,6 +41638,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41415,6 +41665,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41457,6 +41708,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -41483,6 +41735,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -41691,6 +41944,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41717,6 +41971,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -41933,6 +42188,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -41959,6 +42215,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -42045,6 +42302,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42071,6 +42329,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42113,6 +42372,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -42139,6 +42399,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -42294,6 +42555,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42320,6 +42582,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42553,6 +42816,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -42579,6 +42843,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -42709,6 +42974,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42735,6 +43001,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42761,6 +43028,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -42787,6 +43055,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -42905,6 +43174,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42931,6 +43201,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43157,6 +43428,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -43183,6 +43455,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -43278,6 +43551,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43304,6 +43578,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43389,6 +43664,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -43415,6 +43691,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
@@ -43457,6 +43734,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43483,6 +43761,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43516,8 +43795,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -43701,8 +43985,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43716,8 +44005,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -43731,8 +44025,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44216,8 +44515,13 @@ export namespace Prisma {
     phoneVerified?: boolean
     smsEnabled?: boolean
     major?: string | null
+    discipline?: string | null
     gradYear?: number | null
+    schoolName?: string | null
     bio?: string | null
+    lineName?: string | null
+    lineGroup?: string | null
+    crossingDate?: Date | string | null
     profileImage?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -44447,8 +44751,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44462,8 +44771,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44477,8 +44791,13 @@ export namespace Prisma {
     phoneVerified?: BoolFieldUpdateOperationsInput | boolean
     smsEnabled?: BoolFieldUpdateOperationsInput | boolean
     major?: NullableStringFieldUpdateOperationsInput | string | null
+    discipline?: NullableStringFieldUpdateOperationsInput | string | null
     gradYear?: NullableIntFieldUpdateOperationsInput | number | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
+    lineName?: NullableStringFieldUpdateOperationsInput | string | null
+    lineGroup?: NullableStringFieldUpdateOperationsInput | string | null
+    crossingDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profileImage?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

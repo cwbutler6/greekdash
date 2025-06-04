@@ -43,6 +43,7 @@ model Chapter {
   joinCode         String   @default(uuid())
   publicInfo       String?  @db.Text
   primaryColor     String?
+  schoolName       String? // Name of the university/college
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   stripeCustomerId String?
@@ -464,16 +465,21 @@ model DuesPayment {
 }
 
 model Profile {
-  id            String   @id @default(cuid())
+  id            String    @id @default(cuid())
   phone         String?
-  phoneVerified Boolean  @default(false)
-  smsEnabled    Boolean  @default(true)
+  phoneVerified Boolean   @default(false)
+  smsEnabled    Boolean   @default(true)
   major         String?
+  discipline    String? // Field of study/specialization
   gradYear      Int?
-  bio           String?  @db.Text
+  schoolName    String? // Individual's school (may differ from chapter's school)
+  bio           String?   @db.Text
+  lineName      String? // Individual's line name in the fraternity/sorority
+  lineGroup     String? // Name of the entire line/group that joined together
+  crossingDate  DateTime? // When they crossed/initiated
   profileImage  String? // URL to profile image
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   // Foreign keys
   membershipId String @unique

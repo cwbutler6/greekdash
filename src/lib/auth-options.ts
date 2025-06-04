@@ -91,9 +91,28 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ user, account }) {
-      // Always allow sign in to proceed, but track sign-ins for debugging
-      if (account?.provider) {
-        console.log(`${account.provider} sign-in detected`, { userId: user.id });
+      // Track sign-ins for debugging and enhance social login detection
+      if (account?.provider && account.provider !== 'credentials') {
+        console.log(`Social sign-in detected from ${account.provider}`, { 
+          userId: user.id,
+          email: user.email,
+          name: user.name,
+          provider: account.provider
+        });
+        
+        // For social logins, we'll check if this user needs the special onboarding flow
+        try {
+          // Check if user has any memberships
+          const existingMemberships = await prisma.membership.findMany({
+            where: { userId: user.id }
+          });
+          
+          if (existingMemberships.length === 0) {
+            console.log(`Social user ${user.id} has no memberships - will use social onboarding`);
+          }
+        } catch (error) {
+          console.error('Error checking memberships during signIn:', error);
+        }
       }
       return true;
     },
@@ -195,9 +214,19 @@ export const authOptions: NextAuthOptions = {
           membershipIds: userMemberships.map((m) => m.id)
         });
         
-        // Mark as new user only if they have no memberships
-        // Important: Only set isNewUser flag for OAuth sign-ins, not for credentials sign-ins
-        const isNewUser = userMemberships.length === 0 && account?.provider !== 'credentials';
+        // Determine if this is a new user from a social login
+        // 1. Must have no memberships
+        // 2. Must be from an OAuth provider (not credentials)
+        // 3. Check if the account was just created
+        const isNewUser = 
+          userMemberships.length === 0 && 
+          account?.provider && 
+          account.provider !== 'credentials';
+        
+        if (isNewUser) {
+          console.log(`New social user detected from ${account?.provider}`, { userId: user.id, email: userEmail });
+        }
+        
         token.isNewUser = isNewUser;
         
         console.log('isNewUser flag set to:', isNewUser, 
@@ -322,8 +351,12 @@ export const authOptions: NextAuthOptions = {
             }
             
             // If we get here, the user doesn't have memberships yet
-            console.log('OAuth: No memberships found, redirecting to signup');
-            return `${baseUrl}/signup?google=true`;
+            // Extract the provider from the URL (google, github, etc.)
+            const providerMatch = url.match(/\/api\/auth\/callback\/([^/]+)/);
+            const provider = providerMatch ? providerMatch[1] : 'social';
+            
+            console.log(`OAuth: No memberships found, redirecting to social-signup with provider=${provider}`);
+            return `${baseUrl}/social-signup?provider=${provider}`;
           }
           
           // For standard redirects, use the session as before
@@ -340,10 +373,17 @@ export const authOptions: NextAuthOptions = {
           // Check memberships first - this is the primary factor for routing
           const memberships = session?.user?.memberships || [];
           
-          // Any user without memberships should be sent to signup
+          // Check if this is a new user from social login without memberships
           if (memberships.length === 0) {
-            console.log('No memberships found, redirecting to signup');
-            return `${baseUrl}/signup`;
+            if (session?.user?.isNewUser) {
+              // New social login user - send to social signup
+              console.log('New social user detected, redirecting to social-signup');
+              return `${baseUrl}/social-signup?provider=social`;
+            } else {
+              // Regular user without memberships - send to standard signup
+              console.log('No memberships found, redirecting to signup');
+              return `${baseUrl}/signup`;
+            }
           }
           
           // Find first active (non-pending) membership
@@ -382,9 +422,8 @@ export const authOptions: NextAuthOptions = {
         return baseUrl;
       } catch (error) {
         console.error('Error in redirect callback:', error);
-        return baseUrl;
+        return baseUrl; // Safe fallback in case of errors
       }
-    },
-  },
-  secret: process.env.NEXTAUTH_SECRET,
+    }
+  }
 };

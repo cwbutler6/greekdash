@@ -43,50 +43,95 @@ function validateGoogleChapterData(formData: FormData): GoogleChapterFormData {
  * This handles all server-side business logic and validation
  */
 export async function createChapterForGoogleUser(formData: FormData) {
-  const session = await getSession();
-  
-  if (!session?.user?.id) {
-    throw new Error('Not authenticated');
-  }
-  
-  // Validate form data server-side
-  const validatedData = validateGoogleChapterData(formData);
-  
-  // Check if slug is available
-  const existingChapter = await prisma.chapter.findUnique({
-    where: { slug: validatedData.chapterSlug }
-  });
-  
-  if (existingChapter) {
-    throw new Error('Chapter URL is already taken');
-  }
-  
-  // Generate secure random password on the server
-  const securePassword = `G${Math.random().toString(36).slice(2, 10)}${Math.floor(Math.random() * 10)}A`;
-  const hashedPassword = await hash(securePassword, 10);
-  
-  // Update the user with the hashed password
-  await prisma.user.update({
-    where: { id: session.user.id },
-    data: { password: hashedPassword }
-  });
-  
-  // Create the chapter and membership
-  await prisma.chapter.create({
-    data: {
-      slug: validatedData.chapterSlug,
-      name: validatedData.fullName.split(' ')[0] + "'s Chapter", // Default name
-      memberships: {
-        create: {
-          userId: session.user.id,
-          role: 'OWNER' as MembershipRole
-        }
-      }
+  try {
+    console.log('Starting social chapter creation process');
+    const session = await getSession();
+    
+    // Check session data
+    console.log('Session data for chapter creation:', { 
+      hasSession: !!session,
+      userId: session?.user?.id,
+      userName: session?.user?.name,
+      userEmail: session?.user?.email
+    });
+    
+    if (!session?.user?.id) {
+      console.error('Social chapter creation failed: Not authenticated');
+      throw new Error('Not authenticated');
     }
-  });
-  
-  // Redirect to the admin dashboard for the new chapter
-  redirect(`/${validatedData.chapterSlug}/admin`);
+    
+    // Validate form data server-side
+    const formValues = {
+      chapterSlug: formData.get('chapterSlug'),
+      fullName: formData.get('fullName'),
+      email: formData.get('email')
+    };
+    
+    console.log('Form data received:', formValues);
+    
+    const validatedData = validateGoogleChapterData(formData);
+    
+    // Check if slug is available
+    const existingChapter = await prisma.chapter.findUnique({
+      where: { slug: validatedData.chapterSlug }
+    });
+    
+    if (existingChapter) {
+      console.error(`Social chapter creation failed: Slug '${validatedData.chapterSlug}' is already taken`);
+      throw new Error('Chapter URL is already taken');
+    }
+    
+    // Generate secure random password on the server
+    // We need this because social logins don't have passwords initially
+    const securePassword = `G${Math.random().toString(36).slice(2, 10)}${Math.floor(Math.random() * 10)}A`;
+    const hashedPassword = await hash(securePassword, 10);
+    
+    console.log(`Setting password for social user ${session.user.id}`);
+    
+    // Update the user with the hashed password
+    await prisma.user.update({
+      where: { id: session.user.id },
+      data: { password: hashedPassword }
+    });
+    
+    // Construct chapter name from full name
+    let chapterName = validatedData.fullName.split(' ')[0] + "'s Chapter";
+    if (chapterName.length < 3) {
+      // Fallback if we can't get a good chapter name
+      chapterName = "New Greek Chapter";
+    }
+    
+    console.log(`Creating chapter '${chapterName}' with slug '${validatedData.chapterSlug}'`);
+    
+    // Create the chapter and membership
+    const newChapter = await prisma.chapter.create({
+      data: {
+        slug: validatedData.chapterSlug,
+        name: chapterName,
+        memberships: {
+          create: {
+            userId: session.user.id,
+            role: 'OWNER' as MembershipRole
+          }
+        }
+      },
+      include: {
+        memberships: true
+      }
+    });
+    
+    console.log(`Successfully created chapter:`, {
+      chapterId: newChapter.id,
+      chapterSlug: newChapter.slug,
+      membershipCount: newChapter.memberships.length
+    });
+    
+    // Redirect to the admin dashboard for the new chapter
+    redirect(`/${validatedData.chapterSlug}/admin`);
+  } catch (error) {
+    console.error('Error in createChapterForGoogleUser:', error);
+    throw error; // Re-throw to show error in UI
+  }
 }
 
 /**

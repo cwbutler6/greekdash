@@ -6,12 +6,16 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import ProfileForm from './profile-form';
 
+// Disable caching for this page to ensure we always get fresh data
+export const revalidate = 0;
+
 export default async function ProfilePage(props: { params: Promise<{ chapterSlug: string }> }) {
   // In Next.js 15, params is now a Promise that needs to be awaited
   const { chapterSlug } = await props.params;
   
   // This will redirect if user isn't authenticated or doesn't have access to this chapter
-  const { membership } = await requireChapterAccess(chapterSlug);
+  // We don't need the returned membership object since we're fetching fresh data below
+  await requireChapterAccess(chapterSlug);
   
   // Get current user data for the profile form
   const currentUser = await getCurrentUser();
@@ -38,8 +42,9 @@ export default async function ProfilePage(props: { params: Promise<{ chapterSlug
     return <div>Chapter not found</div>;
   }
   
-  // Get the user's membership details including chapter-specific data and profile
-  const userMembership = await prisma.membership.findUnique({
+  // Directly fetch the membership and profile separately for better control
+  // Step 1: Get the membership data with user data included
+  const membershipData = await prisma.membership.findUnique({
     where: {
       userId_chapterId: {
         userId: currentUser.id,
@@ -53,10 +58,44 @@ export default async function ProfilePage(props: { params: Promise<{ chapterSlug
           email: true,
           image: true,
         }
-      },
-      profile: true
+      }
     }
   });
+  
+  if (!membershipData) return null;
+  
+  // Step 2: Explicitly fetch the latest profile data
+  const profile = await prisma.profile.findUnique({
+    where: { membershipId: membershipData.id }
+  });
+  
+  console.log('Fetched membership data:', JSON.stringify(membershipData, null, 2));
+  console.log('Fetched profile data:', JSON.stringify(profile, null, 2));
+  
+  // Step 3: Combine and transform the data to match expected types for the ProfileForm component
+  // Convert any Date objects to strings to match the component's expected types
+  const transformedProfile = profile ? {
+    ...profile,
+    // Convert Date fields to strings for component compatibility
+    createdAt: profile.createdAt.toISOString(),
+    updatedAt: profile.updatedAt.toISOString(),
+    crossingDate: profile.crossingDate ? profile.crossingDate.toISOString() : null
+  } : undefined;
+  
+  const userMembership = {
+    ...membershipData,
+    profile: transformedProfile
+  };
+  
+  // Additional log to verify the combined data
+  console.log('Combined userMembership data:', 
+    JSON.stringify({
+      id: userMembership.id,
+      role: userMembership.role,
+      profileId: userMembership.profile?.id,
+      profileImage: userMembership.profile?.profileImage
+    }, null, 2)
+  );
 
   // Fallback if membership data isn't available
   if (!userMembership) {
@@ -110,7 +149,10 @@ export default async function ProfilePage(props: { params: Promise<{ chapterSlug
           
           <ProfileForm 
             user={userMembership.user} 
-            membership={membership}
+            membership={{
+              role: userMembership.role,
+              profile: userMembership.profile
+            }}
             chapterSlug={chapterSlug}
             primaryColor={chapter.primaryColor || '#1d4ed8'}
           />
