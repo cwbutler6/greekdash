@@ -49,6 +49,15 @@ model Chapter {
   updatedAt      DateTime       @updatedAt
   stripeCustomerId String?       
   
+  // Treasury DeFi fields
+  chapterTreasuryBalance  Float    @default(0)
+  autoInvestEnabled       Boolean  @default(false)
+  autoInvestStrategy      String?  // 'balanced', 'conservative', 'aggressive'
+  walletAddress          String?  // Chapter's blockchain wallet address
+  walletPrivateKey       String?  @db.Text // Encrypted private key
+  treasuryLastYield      Float?   // Last recorded yield amount
+  treasuryLastYieldDate  DateTime? // When the last yield was recorded
+  
   // Relations
   memberships    Membership[]   // One chapter has many memberships
   profiles       Profile[]      // One chapter has many profiles
@@ -67,6 +76,7 @@ model Chapter {
   duesPayments   DuesPayment[]  // One chapter has many dues payments
   transactions   Transaction[]  // One chapter has many transactions
   duesPlans      DuesPlan[]     // One chapter has many dues plans
+  treasuryTransactions TreasuryTransaction[] // One chapter has many treasury transactions
 }
 
 model User {
@@ -583,5 +593,29 @@ model MessageLog {
   @@index([chapterId])
   @@index([type])
   @@index([status])
+  @@index([createdAt])
+}
+
+enum TreasuryTransactionType {
+  DEPOSIT
+  WITHDRAW
+  AUTOINVEST
+  YIELD_EARNED
+}
+
+model TreasuryTransaction {
+  id          String                @id @default(cuid())
+  chapter     Chapter               @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapterId   String
+  amount      Float
+  type        TreasuryTransactionType
+  txHash      String?               // Blockchain transaction hash
+  apy         Float?                // APY at time of transaction if applicable
+  protocol    String?               // DeFi protocol used (Aave, etc.)
+  metadata    Json?                 // Additional transaction data
+  createdAt   DateTime              @default(now())
+  
+  @@index([chapterId])
+  @@index([type])
   @@index([createdAt])
 }

@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.7.0
- * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+ * Prisma Client JS version: 6.9.0
+ * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
  */
 Prisma.prismaVersion = {
-  client: "6.7.0",
-  engine: "3cff47a7f5d65c3ea74883f1d736e41d68ce91ed"
+  client: "6.9.0",
+  engine: "81e4af48011447c3cc503a190e86995b66d2a28e"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -130,7 +130,14 @@ exports.Prisma.ChapterScalarFieldEnum = {
   schoolName: 'schoolName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  stripeCustomerId: 'stripeCustomerId'
+  stripeCustomerId: 'stripeCustomerId',
+  chapterTreasuryBalance: 'chapterTreasuryBalance',
+  autoInvestEnabled: 'autoInvestEnabled',
+  autoInvestStrategy: 'autoInvestStrategy',
+  walletAddress: 'walletAddress',
+  walletPrivateKey: 'walletPrivateKey',
+  treasuryLastYield: 'treasuryLastYield',
+  treasuryLastYieldDate: 'treasuryLastYieldDate'
 };
 
 exports.Prisma.UserScalarFieldEnum = {
@@ -391,6 +398,18 @@ exports.Prisma.MessageLogScalarFieldEnum = {
   chapterId: 'chapterId'
 };
 
+exports.Prisma.TreasuryTransactionScalarFieldEnum = {
+  id: 'id',
+  chapterId: 'chapterId',
+  amount: 'amount',
+  type: 'type',
+  txHash: 'txHash',
+  apy: 'apy',
+  protocol: 'protocol',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -488,6 +507,13 @@ exports.TransactionType = exports.$Enums.TransactionType = {
   OTHER: 'OTHER'
 };
 
+exports.TreasuryTransactionType = exports.$Enums.TreasuryTransactionType = {
+  DEPOSIT: 'DEPOSIT',
+  WITHDRAW: 'WITHDRAW',
+  AUTOINVEST: 'AUTOINVEST',
+  YIELD_EARNED: 'YIELD_EARNED'
+};
+
 exports.Prisma.ModelName = {
   Chapter: 'Chapter',
   User: 'User',
@@ -510,7 +536,8 @@ exports.Prisma.ModelName = {
   Transaction: 'Transaction',
   FeedbackRequest: 'FeedbackRequest',
   File: 'File',
-  MessageLog: 'MessageLog'
+  MessageLog: 'MessageLog',
+  TreasuryTransaction: 'TreasuryTransaction'
 };
 
 /**

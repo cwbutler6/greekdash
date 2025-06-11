@@ -52,6 +52,7 @@ GreekDash is a multi-tenant SaaS platform designed for fraternity and sorority c
 - `STRIPE_SECRET_KEY` – Stripe API key
 - `STRIPE_WEBHOOK_SECRET` – Stripe webhook secret
 - `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` – Stripe publishable key
+- `WALLET_ENCRYPTION_KEY` – 32-byte key for encrypting blockchain wallet private keys
 
 ## 🧪 Testing
 

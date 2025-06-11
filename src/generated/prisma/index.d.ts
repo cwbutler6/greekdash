@@ -123,6 +123,11 @@ export type File = $Result.DefaultSelection<Prisma.$FilePayload>
  * 
  */
 export type MessageLog = $Result.DefaultSelection<Prisma.$MessageLogPayload>
+/**
+ * Model TreasuryTransaction
+ * 
+ */
+export type TreasuryTransaction = $Result.DefaultSelection<Prisma.$TreasuryTransactionPayload>
 
 /**
  * Enums
@@ -229,6 +234,16 @@ export const DuesStatus: {
 
 export type DuesStatus = (typeof DuesStatus)[keyof typeof DuesStatus]
 
+
+export const TreasuryTransactionType: {
+  DEPOSIT: 'DEPOSIT',
+  WITHDRAW: 'WITHDRAW',
+  AUTOINVEST: 'AUTOINVEST',
+  YIELD_EARNED: 'YIELD_EARNED'
+};
+
+export type TreasuryTransactionType = (typeof TreasuryTransactionType)[keyof typeof TreasuryTransactionType]
+
 }
 
 export type PlanType = $Enums.PlanType
@@ -270,6 +285,10 @@ export const DuesFrequency: typeof $Enums.DuesFrequency
 export type DuesStatus = $Enums.DuesStatus
 
 export const DuesStatus: typeof $Enums.DuesStatus
+
+export type TreasuryTransactionType = $Enums.TreasuryTransactionType
+
+export const TreasuryTransactionType: typeof $Enums.TreasuryTransactionType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -615,6 +634,16 @@ export class PrismaClient<
     * ```
     */
   get messageLog(): Prisma.MessageLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.treasuryTransaction`: Exposes CRUD operations for the **TreasuryTransaction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TreasuryTransactions
+    * const treasuryTransactions = await prisma.treasuryTransaction.findMany()
+    * ```
+    */
+  get treasuryTransaction(): Prisma.TreasuryTransactionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -673,8 +702,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.9.0
+   * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
    */
   export type PrismaVersion = {
     client: string
@@ -1076,7 +1105,8 @@ export namespace Prisma {
     Transaction: 'Transaction',
     FeedbackRequest: 'FeedbackRequest',
     File: 'File',
-    MessageLog: 'MessageLog'
+    MessageLog: 'MessageLog',
+    TreasuryTransaction: 'TreasuryTransaction'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1095,7 +1125,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage" | "budget" | "expense" | "duesPlan" | "duesPayment" | "profile" | "transaction" | "feedbackRequest" | "file" | "messageLog"
+      modelProps: "chapter" | "user" | "membership" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage" | "budget" | "expense" | "duesPlan" | "duesPayment" | "profile" | "transaction" | "feedbackRequest" | "file" | "messageLog" | "treasuryTransaction"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2727,6 +2757,80 @@ export namespace Prisma {
           }
         }
       }
+      TreasuryTransaction: {
+        payload: Prisma.$TreasuryTransactionPayload<ExtArgs>
+        fields: Prisma.TreasuryTransactionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TreasuryTransactionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TreasuryTransactionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload>
+          }
+          findFirst: {
+            args: Prisma.TreasuryTransactionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TreasuryTransactionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload>
+          }
+          findMany: {
+            args: Prisma.TreasuryTransactionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload>[]
+          }
+          create: {
+            args: Prisma.TreasuryTransactionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload>
+          }
+          createMany: {
+            args: Prisma.TreasuryTransactionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TreasuryTransactionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload>[]
+          }
+          delete: {
+            args: Prisma.TreasuryTransactionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload>
+          }
+          update: {
+            args: Prisma.TreasuryTransactionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload>
+          }
+          deleteMany: {
+            args: Prisma.TreasuryTransactionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TreasuryTransactionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TreasuryTransactionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload>[]
+          }
+          upsert: {
+            args: Prisma.TreasuryTransactionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TreasuryTransactionPayload>
+          }
+          aggregate: {
+            args: Prisma.TreasuryTransactionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTreasuryTransaction>
+          }
+          groupBy: {
+            args: Prisma.TreasuryTransactionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TreasuryTransactionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TreasuryTransactionCountArgs<ExtArgs>
+            result: $Utils.Optional<TreasuryTransactionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2833,6 +2937,7 @@ export namespace Prisma {
     feedbackRequest?: FeedbackRequestOmit
     file?: FileOmit
     messageLog?: MessageLogOmit
+    treasuryTransaction?: TreasuryTransactionOmit
   }
 
   /* Types for Logging */
@@ -2941,6 +3046,7 @@ export namespace Prisma {
     duesPayments: number
     transactions: number
     duesPlans: number
+    treasuryTransactions: number
   }
 
   export type ChapterCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2958,6 +3064,7 @@ export namespace Prisma {
     duesPayments?: boolean | ChapterCountOutputTypeCountDuesPaymentsArgs
     transactions?: boolean | ChapterCountOutputTypeCountTransactionsArgs
     duesPlans?: boolean | ChapterCountOutputTypeCountDuesPlansArgs
+    treasuryTransactions?: boolean | ChapterCountOutputTypeCountTreasuryTransactionsArgs
   }
 
   // Custom InputTypes
@@ -3067,6 +3174,13 @@ export namespace Prisma {
    */
   export type ChapterCountOutputTypeCountDuesPlansArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DuesPlanWhereInput
+  }
+
+  /**
+   * ChapterCountOutputType without action
+   */
+  export type ChapterCountOutputTypeCountTreasuryTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TreasuryTransactionWhereInput
   }
 
 
@@ -3321,8 +3435,20 @@ export namespace Prisma {
 
   export type AggregateChapter = {
     _count: ChapterCountAggregateOutputType | null
+    _avg: ChapterAvgAggregateOutputType | null
+    _sum: ChapterSumAggregateOutputType | null
     _min: ChapterMinAggregateOutputType | null
     _max: ChapterMaxAggregateOutputType | null
+  }
+
+  export type ChapterAvgAggregateOutputType = {
+    chapterTreasuryBalance: number | null
+    treasuryLastYield: number | null
+  }
+
+  export type ChapterSumAggregateOutputType = {
+    chapterTreasuryBalance: number | null
+    treasuryLastYield: number | null
   }
 
   export type ChapterMinAggregateOutputType = {
@@ -3336,6 +3462,13 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     stripeCustomerId: string | null
+    chapterTreasuryBalance: number | null
+    autoInvestEnabled: boolean | null
+    autoInvestStrategy: string | null
+    walletAddress: string | null
+    walletPrivateKey: string | null
+    treasuryLastYield: number | null
+    treasuryLastYieldDate: Date | null
   }
 
   export type ChapterMaxAggregateOutputType = {
@@ -3349,6 +3482,13 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     stripeCustomerId: string | null
+    chapterTreasuryBalance: number | null
+    autoInvestEnabled: boolean | null
+    autoInvestStrategy: string | null
+    walletAddress: string | null
+    walletPrivateKey: string | null
+    treasuryLastYield: number | null
+    treasuryLastYieldDate: Date | null
   }
 
   export type ChapterCountAggregateOutputType = {
@@ -3362,9 +3502,26 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     stripeCustomerId: number
+    chapterTreasuryBalance: number
+    autoInvestEnabled: number
+    autoInvestStrategy: number
+    walletAddress: number
+    walletPrivateKey: number
+    treasuryLastYield: number
+    treasuryLastYieldDate: number
     _all: number
   }
 
+
+  export type ChapterAvgAggregateInputType = {
+    chapterTreasuryBalance?: true
+    treasuryLastYield?: true
+  }
+
+  export type ChapterSumAggregateInputType = {
+    chapterTreasuryBalance?: true
+    treasuryLastYield?: true
+  }
 
   export type ChapterMinAggregateInputType = {
     id?: true
@@ -3377,6 +3534,13 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
+    chapterTreasuryBalance?: true
+    autoInvestEnabled?: true
+    autoInvestStrategy?: true
+    walletAddress?: true
+    walletPrivateKey?: true
+    treasuryLastYield?: true
+    treasuryLastYieldDate?: true
   }
 
   export type ChapterMaxAggregateInputType = {
@@ -3390,6 +3554,13 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
+    chapterTreasuryBalance?: true
+    autoInvestEnabled?: true
+    autoInvestStrategy?: true
+    walletAddress?: true
+    walletPrivateKey?: true
+    treasuryLastYield?: true
+    treasuryLastYieldDate?: true
   }
 
   export type ChapterCountAggregateInputType = {
@@ -3403,6 +3574,13 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
+    chapterTreasuryBalance?: true
+    autoInvestEnabled?: true
+    autoInvestStrategy?: true
+    walletAddress?: true
+    walletPrivateKey?: true
+    treasuryLastYield?: true
+    treasuryLastYieldDate?: true
     _all?: true
   }
 
@@ -3444,6 +3622,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: ChapterAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ChapterSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: ChapterMinAggregateInputType
@@ -3474,6 +3664,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: ChapterCountAggregateInputType | true
+    _avg?: ChapterAvgAggregateInputType
+    _sum?: ChapterSumAggregateInputType
     _min?: ChapterMinAggregateInputType
     _max?: ChapterMaxAggregateInputType
   }
@@ -3489,7 +3681,16 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     stripeCustomerId: string | null
+    chapterTreasuryBalance: number
+    autoInvestEnabled: boolean
+    autoInvestStrategy: string | null
+    walletAddress: string | null
+    walletPrivateKey: string | null
+    treasuryLastYield: number | null
+    treasuryLastYieldDate: Date | null
     _count: ChapterCountAggregateOutputType | null
+    _avg: ChapterAvgAggregateOutputType | null
+    _sum: ChapterSumAggregateOutputType | null
     _min: ChapterMinAggregateOutputType | null
     _max: ChapterMaxAggregateOutputType | null
   }
@@ -3519,6 +3720,13 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
+    chapterTreasuryBalance?: boolean
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: boolean
+    walletAddress?: boolean
+    walletPrivateKey?: boolean
+    treasuryLastYield?: boolean
+    treasuryLastYieldDate?: boolean
     memberships?: boolean | Chapter$membershipsArgs<ExtArgs>
     profiles?: boolean | Chapter$profilesArgs<ExtArgs>
     subscription?: boolean | Chapter$subscriptionArgs<ExtArgs>
@@ -3534,6 +3742,7 @@ export namespace Prisma {
     duesPayments?: boolean | Chapter$duesPaymentsArgs<ExtArgs>
     transactions?: boolean | Chapter$transactionsArgs<ExtArgs>
     duesPlans?: boolean | Chapter$duesPlansArgs<ExtArgs>
+    treasuryTransactions?: boolean | Chapter$treasuryTransactionsArgs<ExtArgs>
     _count?: boolean | ChapterCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chapter"]>
 
@@ -3548,6 +3757,13 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
+    chapterTreasuryBalance?: boolean
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: boolean
+    walletAddress?: boolean
+    walletPrivateKey?: boolean
+    treasuryLastYield?: boolean
+    treasuryLastYieldDate?: boolean
   }, ExtArgs["result"]["chapter"]>
 
   export type ChapterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3561,6 +3777,13 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
+    chapterTreasuryBalance?: boolean
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: boolean
+    walletAddress?: boolean
+    walletPrivateKey?: boolean
+    treasuryLastYield?: boolean
+    treasuryLastYieldDate?: boolean
   }, ExtArgs["result"]["chapter"]>
 
   export type ChapterSelectScalar = {
@@ -3574,9 +3797,16 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
+    chapterTreasuryBalance?: boolean
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: boolean
+    walletAddress?: boolean
+    walletPrivateKey?: boolean
+    treasuryLastYield?: boolean
+    treasuryLastYieldDate?: boolean
   }
 
-  export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "publicInfo" | "primaryColor" | "schoolName" | "createdAt" | "updatedAt" | "stripeCustomerId", ExtArgs["result"]["chapter"]>
+  export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "publicInfo" | "primaryColor" | "schoolName" | "createdAt" | "updatedAt" | "stripeCustomerId" | "chapterTreasuryBalance" | "autoInvestEnabled" | "autoInvestStrategy" | "walletAddress" | "walletPrivateKey" | "treasuryLastYield" | "treasuryLastYieldDate", ExtArgs["result"]["chapter"]>
   export type ChapterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     memberships?: boolean | Chapter$membershipsArgs<ExtArgs>
     profiles?: boolean | Chapter$profilesArgs<ExtArgs>
@@ -3593,6 +3823,7 @@ export namespace Prisma {
     duesPayments?: boolean | Chapter$duesPaymentsArgs<ExtArgs>
     transactions?: boolean | Chapter$transactionsArgs<ExtArgs>
     duesPlans?: boolean | Chapter$duesPlansArgs<ExtArgs>
+    treasuryTransactions?: boolean | Chapter$treasuryTransactionsArgs<ExtArgs>
     _count?: boolean | ChapterCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ChapterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3616,6 +3847,7 @@ export namespace Prisma {
       duesPayments: Prisma.$DuesPaymentPayload<ExtArgs>[]
       transactions: Prisma.$TransactionPayload<ExtArgs>[]
       duesPlans: Prisma.$DuesPlanPayload<ExtArgs>[]
+      treasuryTransactions: Prisma.$TreasuryTransactionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3628,6 +3860,13 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       stripeCustomerId: string | null
+      chapterTreasuryBalance: number
+      autoInvestEnabled: boolean
+      autoInvestStrategy: string | null
+      walletAddress: string | null
+      walletPrivateKey: string | null
+      treasuryLastYield: number | null
+      treasuryLastYieldDate: Date | null
     }, ExtArgs["result"]["chapter"]>
     composites: {}
   }
@@ -4037,6 +4276,7 @@ export namespace Prisma {
     duesPayments<T extends Chapter$duesPaymentsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$duesPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DuesPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     transactions<T extends Chapter$transactionsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     duesPlans<T extends Chapter$duesPlansArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$duesPlansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DuesPlanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    treasuryTransactions<T extends Chapter$treasuryTransactionsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$treasuryTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4076,6 +4316,13 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Chapter", 'DateTime'>
     readonly updatedAt: FieldRef<"Chapter", 'DateTime'>
     readonly stripeCustomerId: FieldRef<"Chapter", 'String'>
+    readonly chapterTreasuryBalance: FieldRef<"Chapter", 'Float'>
+    readonly autoInvestEnabled: FieldRef<"Chapter", 'Boolean'>
+    readonly autoInvestStrategy: FieldRef<"Chapter", 'String'>
+    readonly walletAddress: FieldRef<"Chapter", 'String'>
+    readonly walletPrivateKey: FieldRef<"Chapter", 'String'>
+    readonly treasuryLastYield: FieldRef<"Chapter", 'Float'>
+    readonly treasuryLastYieldDate: FieldRef<"Chapter", 'DateTime'>
   }
     
 
@@ -4816,6 +5063,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DuesPlanScalarFieldEnum | DuesPlanScalarFieldEnum[]
+  }
+
+  /**
+   * Chapter.treasuryTransactions
+   */
+  export type Chapter$treasuryTransactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+    where?: TreasuryTransactionWhereInput
+    orderBy?: TreasuryTransactionOrderByWithRelationInput | TreasuryTransactionOrderByWithRelationInput[]
+    cursor?: TreasuryTransactionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TreasuryTransactionScalarFieldEnum | TreasuryTransactionScalarFieldEnum[]
   }
 
   /**
@@ -29276,6 +29547,1150 @@ export namespace Prisma {
 
 
   /**
+   * Model TreasuryTransaction
+   */
+
+  export type AggregateTreasuryTransaction = {
+    _count: TreasuryTransactionCountAggregateOutputType | null
+    _avg: TreasuryTransactionAvgAggregateOutputType | null
+    _sum: TreasuryTransactionSumAggregateOutputType | null
+    _min: TreasuryTransactionMinAggregateOutputType | null
+    _max: TreasuryTransactionMaxAggregateOutputType | null
+  }
+
+  export type TreasuryTransactionAvgAggregateOutputType = {
+    amount: number | null
+    apy: number | null
+  }
+
+  export type TreasuryTransactionSumAggregateOutputType = {
+    amount: number | null
+    apy: number | null
+  }
+
+  export type TreasuryTransactionMinAggregateOutputType = {
+    id: string | null
+    chapterId: string | null
+    amount: number | null
+    type: $Enums.TreasuryTransactionType | null
+    txHash: string | null
+    apy: number | null
+    protocol: string | null
+    createdAt: Date | null
+  }
+
+  export type TreasuryTransactionMaxAggregateOutputType = {
+    id: string | null
+    chapterId: string | null
+    amount: number | null
+    type: $Enums.TreasuryTransactionType | null
+    txHash: string | null
+    apy: number | null
+    protocol: string | null
+    createdAt: Date | null
+  }
+
+  export type TreasuryTransactionCountAggregateOutputType = {
+    id: number
+    chapterId: number
+    amount: number
+    type: number
+    txHash: number
+    apy: number
+    protocol: number
+    metadata: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type TreasuryTransactionAvgAggregateInputType = {
+    amount?: true
+    apy?: true
+  }
+
+  export type TreasuryTransactionSumAggregateInputType = {
+    amount?: true
+    apy?: true
+  }
+
+  export type TreasuryTransactionMinAggregateInputType = {
+    id?: true
+    chapterId?: true
+    amount?: true
+    type?: true
+    txHash?: true
+    apy?: true
+    protocol?: true
+    createdAt?: true
+  }
+
+  export type TreasuryTransactionMaxAggregateInputType = {
+    id?: true
+    chapterId?: true
+    amount?: true
+    type?: true
+    txHash?: true
+    apy?: true
+    protocol?: true
+    createdAt?: true
+  }
+
+  export type TreasuryTransactionCountAggregateInputType = {
+    id?: true
+    chapterId?: true
+    amount?: true
+    type?: true
+    txHash?: true
+    apy?: true
+    protocol?: true
+    metadata?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type TreasuryTransactionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TreasuryTransaction to aggregate.
+     */
+    where?: TreasuryTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TreasuryTransactions to fetch.
+     */
+    orderBy?: TreasuryTransactionOrderByWithRelationInput | TreasuryTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TreasuryTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TreasuryTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TreasuryTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TreasuryTransactions
+    **/
+    _count?: true | TreasuryTransactionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TreasuryTransactionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TreasuryTransactionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TreasuryTransactionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TreasuryTransactionMaxAggregateInputType
+  }
+
+  export type GetTreasuryTransactionAggregateType<T extends TreasuryTransactionAggregateArgs> = {
+        [P in keyof T & keyof AggregateTreasuryTransaction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTreasuryTransaction[P]>
+      : GetScalarType<T[P], AggregateTreasuryTransaction[P]>
+  }
+
+
+
+
+  export type TreasuryTransactionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TreasuryTransactionWhereInput
+    orderBy?: TreasuryTransactionOrderByWithAggregationInput | TreasuryTransactionOrderByWithAggregationInput[]
+    by: TreasuryTransactionScalarFieldEnum[] | TreasuryTransactionScalarFieldEnum
+    having?: TreasuryTransactionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TreasuryTransactionCountAggregateInputType | true
+    _avg?: TreasuryTransactionAvgAggregateInputType
+    _sum?: TreasuryTransactionSumAggregateInputType
+    _min?: TreasuryTransactionMinAggregateInputType
+    _max?: TreasuryTransactionMaxAggregateInputType
+  }
+
+  export type TreasuryTransactionGroupByOutputType = {
+    id: string
+    chapterId: string
+    amount: number
+    type: $Enums.TreasuryTransactionType
+    txHash: string | null
+    apy: number | null
+    protocol: string | null
+    metadata: JsonValue | null
+    createdAt: Date
+    _count: TreasuryTransactionCountAggregateOutputType | null
+    _avg: TreasuryTransactionAvgAggregateOutputType | null
+    _sum: TreasuryTransactionSumAggregateOutputType | null
+    _min: TreasuryTransactionMinAggregateOutputType | null
+    _max: TreasuryTransactionMaxAggregateOutputType | null
+  }
+
+  type GetTreasuryTransactionGroupByPayload<T extends TreasuryTransactionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TreasuryTransactionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TreasuryTransactionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TreasuryTransactionGroupByOutputType[P]>
+            : GetScalarType<T[P], TreasuryTransactionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TreasuryTransactionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    chapterId?: boolean
+    amount?: boolean
+    type?: boolean
+    txHash?: boolean
+    apy?: boolean
+    protocol?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["treasuryTransaction"]>
+
+  export type TreasuryTransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    chapterId?: boolean
+    amount?: boolean
+    type?: boolean
+    txHash?: boolean
+    apy?: boolean
+    protocol?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["treasuryTransaction"]>
+
+  export type TreasuryTransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    chapterId?: boolean
+    amount?: boolean
+    type?: boolean
+    txHash?: boolean
+    apy?: boolean
+    protocol?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["treasuryTransaction"]>
+
+  export type TreasuryTransactionSelectScalar = {
+    id?: boolean
+    chapterId?: boolean
+    amount?: boolean
+    type?: boolean
+    txHash?: boolean
+    apy?: boolean
+    protocol?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+  }
+
+  export type TreasuryTransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "chapterId" | "amount" | "type" | "txHash" | "apy" | "protocol" | "metadata" | "createdAt", ExtArgs["result"]["treasuryTransaction"]>
+  export type TreasuryTransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type TreasuryTransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+  export type TreasuryTransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+  }
+
+  export type $TreasuryTransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TreasuryTransaction"
+    objects: {
+      chapter: Prisma.$ChapterPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      chapterId: string
+      amount: number
+      type: $Enums.TreasuryTransactionType
+      txHash: string | null
+      apy: number | null
+      protocol: string | null
+      metadata: Prisma.JsonValue | null
+      createdAt: Date
+    }, ExtArgs["result"]["treasuryTransaction"]>
+    composites: {}
+  }
+
+  type TreasuryTransactionGetPayload<S extends boolean | null | undefined | TreasuryTransactionDefaultArgs> = $Result.GetResult<Prisma.$TreasuryTransactionPayload, S>
+
+  type TreasuryTransactionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TreasuryTransactionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TreasuryTransactionCountAggregateInputType | true
+    }
+
+  export interface TreasuryTransactionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TreasuryTransaction'], meta: { name: 'TreasuryTransaction' } }
+    /**
+     * Find zero or one TreasuryTransaction that matches the filter.
+     * @param {TreasuryTransactionFindUniqueArgs} args - Arguments to find a TreasuryTransaction
+     * @example
+     * // Get one TreasuryTransaction
+     * const treasuryTransaction = await prisma.treasuryTransaction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TreasuryTransactionFindUniqueArgs>(args: SelectSubset<T, TreasuryTransactionFindUniqueArgs<ExtArgs>>): Prisma__TreasuryTransactionClient<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TreasuryTransaction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TreasuryTransactionFindUniqueOrThrowArgs} args - Arguments to find a TreasuryTransaction
+     * @example
+     * // Get one TreasuryTransaction
+     * const treasuryTransaction = await prisma.treasuryTransaction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TreasuryTransactionFindUniqueOrThrowArgs>(args: SelectSubset<T, TreasuryTransactionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TreasuryTransactionClient<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TreasuryTransaction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TreasuryTransactionFindFirstArgs} args - Arguments to find a TreasuryTransaction
+     * @example
+     * // Get one TreasuryTransaction
+     * const treasuryTransaction = await prisma.treasuryTransaction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TreasuryTransactionFindFirstArgs>(args?: SelectSubset<T, TreasuryTransactionFindFirstArgs<ExtArgs>>): Prisma__TreasuryTransactionClient<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TreasuryTransaction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TreasuryTransactionFindFirstOrThrowArgs} args - Arguments to find a TreasuryTransaction
+     * @example
+     * // Get one TreasuryTransaction
+     * const treasuryTransaction = await prisma.treasuryTransaction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TreasuryTransactionFindFirstOrThrowArgs>(args?: SelectSubset<T, TreasuryTransactionFindFirstOrThrowArgs<ExtArgs>>): Prisma__TreasuryTransactionClient<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TreasuryTransactions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TreasuryTransactionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TreasuryTransactions
+     * const treasuryTransactions = await prisma.treasuryTransaction.findMany()
+     * 
+     * // Get first 10 TreasuryTransactions
+     * const treasuryTransactions = await prisma.treasuryTransaction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const treasuryTransactionWithIdOnly = await prisma.treasuryTransaction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TreasuryTransactionFindManyArgs>(args?: SelectSubset<T, TreasuryTransactionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TreasuryTransaction.
+     * @param {TreasuryTransactionCreateArgs} args - Arguments to create a TreasuryTransaction.
+     * @example
+     * // Create one TreasuryTransaction
+     * const TreasuryTransaction = await prisma.treasuryTransaction.create({
+     *   data: {
+     *     // ... data to create a TreasuryTransaction
+     *   }
+     * })
+     * 
+     */
+    create<T extends TreasuryTransactionCreateArgs>(args: SelectSubset<T, TreasuryTransactionCreateArgs<ExtArgs>>): Prisma__TreasuryTransactionClient<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TreasuryTransactions.
+     * @param {TreasuryTransactionCreateManyArgs} args - Arguments to create many TreasuryTransactions.
+     * @example
+     * // Create many TreasuryTransactions
+     * const treasuryTransaction = await prisma.treasuryTransaction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TreasuryTransactionCreateManyArgs>(args?: SelectSubset<T, TreasuryTransactionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TreasuryTransactions and returns the data saved in the database.
+     * @param {TreasuryTransactionCreateManyAndReturnArgs} args - Arguments to create many TreasuryTransactions.
+     * @example
+     * // Create many TreasuryTransactions
+     * const treasuryTransaction = await prisma.treasuryTransaction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TreasuryTransactions and only return the `id`
+     * const treasuryTransactionWithIdOnly = await prisma.treasuryTransaction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TreasuryTransactionCreateManyAndReturnArgs>(args?: SelectSubset<T, TreasuryTransactionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TreasuryTransaction.
+     * @param {TreasuryTransactionDeleteArgs} args - Arguments to delete one TreasuryTransaction.
+     * @example
+     * // Delete one TreasuryTransaction
+     * const TreasuryTransaction = await prisma.treasuryTransaction.delete({
+     *   where: {
+     *     // ... filter to delete one TreasuryTransaction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TreasuryTransactionDeleteArgs>(args: SelectSubset<T, TreasuryTransactionDeleteArgs<ExtArgs>>): Prisma__TreasuryTransactionClient<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TreasuryTransaction.
+     * @param {TreasuryTransactionUpdateArgs} args - Arguments to update one TreasuryTransaction.
+     * @example
+     * // Update one TreasuryTransaction
+     * const treasuryTransaction = await prisma.treasuryTransaction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TreasuryTransactionUpdateArgs>(args: SelectSubset<T, TreasuryTransactionUpdateArgs<ExtArgs>>): Prisma__TreasuryTransactionClient<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TreasuryTransactions.
+     * @param {TreasuryTransactionDeleteManyArgs} args - Arguments to filter TreasuryTransactions to delete.
+     * @example
+     * // Delete a few TreasuryTransactions
+     * const { count } = await prisma.treasuryTransaction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TreasuryTransactionDeleteManyArgs>(args?: SelectSubset<T, TreasuryTransactionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TreasuryTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TreasuryTransactionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TreasuryTransactions
+     * const treasuryTransaction = await prisma.treasuryTransaction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TreasuryTransactionUpdateManyArgs>(args: SelectSubset<T, TreasuryTransactionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TreasuryTransactions and returns the data updated in the database.
+     * @param {TreasuryTransactionUpdateManyAndReturnArgs} args - Arguments to update many TreasuryTransactions.
+     * @example
+     * // Update many TreasuryTransactions
+     * const treasuryTransaction = await prisma.treasuryTransaction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TreasuryTransactions and only return the `id`
+     * const treasuryTransactionWithIdOnly = await prisma.treasuryTransaction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TreasuryTransactionUpdateManyAndReturnArgs>(args: SelectSubset<T, TreasuryTransactionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TreasuryTransaction.
+     * @param {TreasuryTransactionUpsertArgs} args - Arguments to update or create a TreasuryTransaction.
+     * @example
+     * // Update or create a TreasuryTransaction
+     * const treasuryTransaction = await prisma.treasuryTransaction.upsert({
+     *   create: {
+     *     // ... data to create a TreasuryTransaction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TreasuryTransaction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TreasuryTransactionUpsertArgs>(args: SelectSubset<T, TreasuryTransactionUpsertArgs<ExtArgs>>): Prisma__TreasuryTransactionClient<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TreasuryTransactions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TreasuryTransactionCountArgs} args - Arguments to filter TreasuryTransactions to count.
+     * @example
+     * // Count the number of TreasuryTransactions
+     * const count = await prisma.treasuryTransaction.count({
+     *   where: {
+     *     // ... the filter for the TreasuryTransactions we want to count
+     *   }
+     * })
+    **/
+    count<T extends TreasuryTransactionCountArgs>(
+      args?: Subset<T, TreasuryTransactionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TreasuryTransactionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TreasuryTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TreasuryTransactionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TreasuryTransactionAggregateArgs>(args: Subset<T, TreasuryTransactionAggregateArgs>): Prisma.PrismaPromise<GetTreasuryTransactionAggregateType<T>>
+
+    /**
+     * Group by TreasuryTransaction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TreasuryTransactionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TreasuryTransactionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TreasuryTransactionGroupByArgs['orderBy'] }
+        : { orderBy?: TreasuryTransactionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TreasuryTransactionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTreasuryTransactionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TreasuryTransaction model
+   */
+  readonly fields: TreasuryTransactionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TreasuryTransaction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TreasuryTransactionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TreasuryTransaction model
+   */
+  interface TreasuryTransactionFieldRefs {
+    readonly id: FieldRef<"TreasuryTransaction", 'String'>
+    readonly chapterId: FieldRef<"TreasuryTransaction", 'String'>
+    readonly amount: FieldRef<"TreasuryTransaction", 'Float'>
+    readonly type: FieldRef<"TreasuryTransaction", 'TreasuryTransactionType'>
+    readonly txHash: FieldRef<"TreasuryTransaction", 'String'>
+    readonly apy: FieldRef<"TreasuryTransaction", 'Float'>
+    readonly protocol: FieldRef<"TreasuryTransaction", 'String'>
+    readonly metadata: FieldRef<"TreasuryTransaction", 'Json'>
+    readonly createdAt: FieldRef<"TreasuryTransaction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TreasuryTransaction findUnique
+   */
+  export type TreasuryTransactionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which TreasuryTransaction to fetch.
+     */
+    where: TreasuryTransactionWhereUniqueInput
+  }
+
+  /**
+   * TreasuryTransaction findUniqueOrThrow
+   */
+  export type TreasuryTransactionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which TreasuryTransaction to fetch.
+     */
+    where: TreasuryTransactionWhereUniqueInput
+  }
+
+  /**
+   * TreasuryTransaction findFirst
+   */
+  export type TreasuryTransactionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which TreasuryTransaction to fetch.
+     */
+    where?: TreasuryTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TreasuryTransactions to fetch.
+     */
+    orderBy?: TreasuryTransactionOrderByWithRelationInput | TreasuryTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TreasuryTransactions.
+     */
+    cursor?: TreasuryTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TreasuryTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TreasuryTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TreasuryTransactions.
+     */
+    distinct?: TreasuryTransactionScalarFieldEnum | TreasuryTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * TreasuryTransaction findFirstOrThrow
+   */
+  export type TreasuryTransactionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which TreasuryTransaction to fetch.
+     */
+    where?: TreasuryTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TreasuryTransactions to fetch.
+     */
+    orderBy?: TreasuryTransactionOrderByWithRelationInput | TreasuryTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TreasuryTransactions.
+     */
+    cursor?: TreasuryTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TreasuryTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TreasuryTransactions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TreasuryTransactions.
+     */
+    distinct?: TreasuryTransactionScalarFieldEnum | TreasuryTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * TreasuryTransaction findMany
+   */
+  export type TreasuryTransactionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+    /**
+     * Filter, which TreasuryTransactions to fetch.
+     */
+    where?: TreasuryTransactionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TreasuryTransactions to fetch.
+     */
+    orderBy?: TreasuryTransactionOrderByWithRelationInput | TreasuryTransactionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TreasuryTransactions.
+     */
+    cursor?: TreasuryTransactionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TreasuryTransactions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TreasuryTransactions.
+     */
+    skip?: number
+    distinct?: TreasuryTransactionScalarFieldEnum | TreasuryTransactionScalarFieldEnum[]
+  }
+
+  /**
+   * TreasuryTransaction create
+   */
+  export type TreasuryTransactionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TreasuryTransaction.
+     */
+    data: XOR<TreasuryTransactionCreateInput, TreasuryTransactionUncheckedCreateInput>
+  }
+
+  /**
+   * TreasuryTransaction createMany
+   */
+  export type TreasuryTransactionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TreasuryTransactions.
+     */
+    data: TreasuryTransactionCreateManyInput | TreasuryTransactionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TreasuryTransaction createManyAndReturn
+   */
+  export type TreasuryTransactionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to create many TreasuryTransactions.
+     */
+    data: TreasuryTransactionCreateManyInput | TreasuryTransactionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TreasuryTransaction update
+   */
+  export type TreasuryTransactionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TreasuryTransaction.
+     */
+    data: XOR<TreasuryTransactionUpdateInput, TreasuryTransactionUncheckedUpdateInput>
+    /**
+     * Choose, which TreasuryTransaction to update.
+     */
+    where: TreasuryTransactionWhereUniqueInput
+  }
+
+  /**
+   * TreasuryTransaction updateMany
+   */
+  export type TreasuryTransactionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TreasuryTransactions.
+     */
+    data: XOR<TreasuryTransactionUpdateManyMutationInput, TreasuryTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which TreasuryTransactions to update
+     */
+    where?: TreasuryTransactionWhereInput
+    /**
+     * Limit how many TreasuryTransactions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TreasuryTransaction updateManyAndReturn
+   */
+  export type TreasuryTransactionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * The data used to update TreasuryTransactions.
+     */
+    data: XOR<TreasuryTransactionUpdateManyMutationInput, TreasuryTransactionUncheckedUpdateManyInput>
+    /**
+     * Filter which TreasuryTransactions to update
+     */
+    where?: TreasuryTransactionWhereInput
+    /**
+     * Limit how many TreasuryTransactions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TreasuryTransaction upsert
+   */
+  export type TreasuryTransactionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TreasuryTransaction to update in case it exists.
+     */
+    where: TreasuryTransactionWhereUniqueInput
+    /**
+     * In case the TreasuryTransaction found by the `where` argument doesn't exist, create a new TreasuryTransaction with this data.
+     */
+    create: XOR<TreasuryTransactionCreateInput, TreasuryTransactionUncheckedCreateInput>
+    /**
+     * In case the TreasuryTransaction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TreasuryTransactionUpdateInput, TreasuryTransactionUncheckedUpdateInput>
+  }
+
+  /**
+   * TreasuryTransaction delete
+   */
+  export type TreasuryTransactionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+    /**
+     * Filter which TreasuryTransaction to delete.
+     */
+    where: TreasuryTransactionWhereUniqueInput
+  }
+
+  /**
+   * TreasuryTransaction deleteMany
+   */
+  export type TreasuryTransactionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TreasuryTransactions to delete
+     */
+    where?: TreasuryTransactionWhereInput
+    /**
+     * Limit how many TreasuryTransactions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TreasuryTransaction without action
+   */
+  export type TreasuryTransactionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TreasuryTransaction
+     */
+    select?: TreasuryTransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TreasuryTransaction
+     */
+    omit?: TreasuryTransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TreasuryTransactionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -29299,7 +30714,14 @@ export namespace Prisma {
     schoolName: 'schoolName',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    stripeCustomerId: 'stripeCustomerId'
+    stripeCustomerId: 'stripeCustomerId',
+    chapterTreasuryBalance: 'chapterTreasuryBalance',
+    autoInvestEnabled: 'autoInvestEnabled',
+    autoInvestStrategy: 'autoInvestStrategy',
+    walletAddress: 'walletAddress',
+    walletPrivateKey: 'walletPrivateKey',
+    treasuryLastYield: 'treasuryLastYield',
+    treasuryLastYieldDate: 'treasuryLastYieldDate'
   };
 
   export type ChapterScalarFieldEnum = (typeof ChapterScalarFieldEnum)[keyof typeof ChapterScalarFieldEnum]
@@ -29626,6 +31048,21 @@ export namespace Prisma {
   export type MessageLogScalarFieldEnum = (typeof MessageLogScalarFieldEnum)[keyof typeof MessageLogScalarFieldEnum]
 
 
+  export const TreasuryTransactionScalarFieldEnum: {
+    id: 'id',
+    chapterId: 'chapterId',
+    amount: 'amount',
+    type: 'type',
+    txHash: 'txHash',
+    apy: 'apy',
+    protocol: 'protocol',
+    metadata: 'metadata',
+    createdAt: 'createdAt'
+  };
+
+  export type TreasuryTransactionScalarFieldEnum = (typeof TreasuryTransactionScalarFieldEnum)[keyof typeof TreasuryTransactionScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -29701,6 +31138,27 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Float'
+   */
+  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'Float[]'
+   */
+  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'MembershipRole'
    */
   export type EnumMembershipRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MembershipRole'>
@@ -29757,13 +31215,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'EventStatus'
    */
   export type EnumEventStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventStatus'>
@@ -29802,20 +31253,6 @@ export namespace Prisma {
    * Reference to a field of type 'QueryMode'
    */
   export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float'
-   */
-  export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
 
 
@@ -29887,6 +31324,20 @@ export namespace Prisma {
    */
   export type ListEnumTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionType[]'>
     
+
+
+  /**
+   * Reference to a field of type 'TreasuryTransactionType'
+   */
+  export type EnumTreasuryTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TreasuryTransactionType'>
+    
+
+
+  /**
+   * Reference to a field of type 'TreasuryTransactionType[]'
+   */
+  export type ListEnumTreasuryTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TreasuryTransactionType[]'>
+    
   /**
    * Deep Input Types
    */
@@ -29906,6 +31357,13 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableFilter<"Chapter"> | string | null
+    chapterTreasuryBalance?: FloatFilter<"Chapter"> | number
+    autoInvestEnabled?: BoolFilter<"Chapter"> | boolean
+    autoInvestStrategy?: StringNullableFilter<"Chapter"> | string | null
+    walletAddress?: StringNullableFilter<"Chapter"> | string | null
+    walletPrivateKey?: StringNullableFilter<"Chapter"> | string | null
+    treasuryLastYield?: FloatNullableFilter<"Chapter"> | number | null
+    treasuryLastYieldDate?: DateTimeNullableFilter<"Chapter"> | Date | string | null
     memberships?: MembershipListRelationFilter
     profiles?: ProfileListRelationFilter
     subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
@@ -29921,6 +31379,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentListRelationFilter
     transactions?: TransactionListRelationFilter
     duesPlans?: DuesPlanListRelationFilter
+    treasuryTransactions?: TreasuryTransactionListRelationFilter
   }
 
   export type ChapterOrderByWithRelationInput = {
@@ -29934,6 +31393,13 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrderInput | SortOrder
+    chapterTreasuryBalance?: SortOrder
+    autoInvestEnabled?: SortOrder
+    autoInvestStrategy?: SortOrderInput | SortOrder
+    walletAddress?: SortOrderInput | SortOrder
+    walletPrivateKey?: SortOrderInput | SortOrder
+    treasuryLastYield?: SortOrderInput | SortOrder
+    treasuryLastYieldDate?: SortOrderInput | SortOrder
     memberships?: MembershipOrderByRelationAggregateInput
     profiles?: ProfileOrderByRelationAggregateInput
     subscription?: SubscriptionOrderByWithRelationInput
@@ -29949,6 +31415,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentOrderByRelationAggregateInput
     transactions?: TransactionOrderByRelationAggregateInput
     duesPlans?: DuesPlanOrderByRelationAggregateInput
+    treasuryTransactions?: TreasuryTransactionOrderByRelationAggregateInput
   }
 
   export type ChapterWhereUniqueInput = Prisma.AtLeast<{
@@ -29965,6 +31432,13 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableFilter<"Chapter"> | string | null
+    chapterTreasuryBalance?: FloatFilter<"Chapter"> | number
+    autoInvestEnabled?: BoolFilter<"Chapter"> | boolean
+    autoInvestStrategy?: StringNullableFilter<"Chapter"> | string | null
+    walletAddress?: StringNullableFilter<"Chapter"> | string | null
+    walletPrivateKey?: StringNullableFilter<"Chapter"> | string | null
+    treasuryLastYield?: FloatNullableFilter<"Chapter"> | number | null
+    treasuryLastYieldDate?: DateTimeNullableFilter<"Chapter"> | Date | string | null
     memberships?: MembershipListRelationFilter
     profiles?: ProfileListRelationFilter
     subscription?: XOR<SubscriptionNullableScalarRelationFilter, SubscriptionWhereInput> | null
@@ -29980,6 +31454,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentListRelationFilter
     transactions?: TransactionListRelationFilter
     duesPlans?: DuesPlanListRelationFilter
+    treasuryTransactions?: TreasuryTransactionListRelationFilter
   }, "id" | "slug">
 
   export type ChapterOrderByWithAggregationInput = {
@@ -29993,9 +31468,18 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrderInput | SortOrder
+    chapterTreasuryBalance?: SortOrder
+    autoInvestEnabled?: SortOrder
+    autoInvestStrategy?: SortOrderInput | SortOrder
+    walletAddress?: SortOrderInput | SortOrder
+    walletPrivateKey?: SortOrderInput | SortOrder
+    treasuryLastYield?: SortOrderInput | SortOrder
+    treasuryLastYieldDate?: SortOrderInput | SortOrder
     _count?: ChapterCountOrderByAggregateInput
+    _avg?: ChapterAvgOrderByAggregateInput
     _max?: ChapterMaxOrderByAggregateInput
     _min?: ChapterMinOrderByAggregateInput
+    _sum?: ChapterSumOrderByAggregateInput
   }
 
   export type ChapterScalarWhereWithAggregatesInput = {
@@ -30012,6 +31496,13 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
+    chapterTreasuryBalance?: FloatWithAggregatesFilter<"Chapter"> | number
+    autoInvestEnabled?: BoolWithAggregatesFilter<"Chapter"> | boolean
+    autoInvestStrategy?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
+    walletAddress?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
+    walletPrivateKey?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
+    treasuryLastYield?: FloatNullableWithAggregatesFilter<"Chapter"> | number | null
+    treasuryLastYieldDate?: DateTimeNullableWithAggregatesFilter<"Chapter"> | Date | string | null
   }
 
   export type UserWhereInput = {
@@ -31743,6 +33234,83 @@ export namespace Prisma {
     chapterId?: StringWithAggregatesFilter<"MessageLog"> | string
   }
 
+  export type TreasuryTransactionWhereInput = {
+    AND?: TreasuryTransactionWhereInput | TreasuryTransactionWhereInput[]
+    OR?: TreasuryTransactionWhereInput[]
+    NOT?: TreasuryTransactionWhereInput | TreasuryTransactionWhereInput[]
+    id?: StringFilter<"TreasuryTransaction"> | string
+    chapterId?: StringFilter<"TreasuryTransaction"> | string
+    amount?: FloatFilter<"TreasuryTransaction"> | number
+    type?: EnumTreasuryTransactionTypeFilter<"TreasuryTransaction"> | $Enums.TreasuryTransactionType
+    txHash?: StringNullableFilter<"TreasuryTransaction"> | string | null
+    apy?: FloatNullableFilter<"TreasuryTransaction"> | number | null
+    protocol?: StringNullableFilter<"TreasuryTransaction"> | string | null
+    metadata?: JsonNullableFilter<"TreasuryTransaction">
+    createdAt?: DateTimeFilter<"TreasuryTransaction"> | Date | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }
+
+  export type TreasuryTransactionOrderByWithRelationInput = {
+    id?: SortOrder
+    chapterId?: SortOrder
+    amount?: SortOrder
+    type?: SortOrder
+    txHash?: SortOrderInput | SortOrder
+    apy?: SortOrderInput | SortOrder
+    protocol?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    chapter?: ChapterOrderByWithRelationInput
+  }
+
+  export type TreasuryTransactionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TreasuryTransactionWhereInput | TreasuryTransactionWhereInput[]
+    OR?: TreasuryTransactionWhereInput[]
+    NOT?: TreasuryTransactionWhereInput | TreasuryTransactionWhereInput[]
+    chapterId?: StringFilter<"TreasuryTransaction"> | string
+    amount?: FloatFilter<"TreasuryTransaction"> | number
+    type?: EnumTreasuryTransactionTypeFilter<"TreasuryTransaction"> | $Enums.TreasuryTransactionType
+    txHash?: StringNullableFilter<"TreasuryTransaction"> | string | null
+    apy?: FloatNullableFilter<"TreasuryTransaction"> | number | null
+    protocol?: StringNullableFilter<"TreasuryTransaction"> | string | null
+    metadata?: JsonNullableFilter<"TreasuryTransaction">
+    createdAt?: DateTimeFilter<"TreasuryTransaction"> | Date | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+  }, "id">
+
+  export type TreasuryTransactionOrderByWithAggregationInput = {
+    id?: SortOrder
+    chapterId?: SortOrder
+    amount?: SortOrder
+    type?: SortOrder
+    txHash?: SortOrderInput | SortOrder
+    apy?: SortOrderInput | SortOrder
+    protocol?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: TreasuryTransactionCountOrderByAggregateInput
+    _avg?: TreasuryTransactionAvgOrderByAggregateInput
+    _max?: TreasuryTransactionMaxOrderByAggregateInput
+    _min?: TreasuryTransactionMinOrderByAggregateInput
+    _sum?: TreasuryTransactionSumOrderByAggregateInput
+  }
+
+  export type TreasuryTransactionScalarWhereWithAggregatesInput = {
+    AND?: TreasuryTransactionScalarWhereWithAggregatesInput | TreasuryTransactionScalarWhereWithAggregatesInput[]
+    OR?: TreasuryTransactionScalarWhereWithAggregatesInput[]
+    NOT?: TreasuryTransactionScalarWhereWithAggregatesInput | TreasuryTransactionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TreasuryTransaction"> | string
+    chapterId?: StringWithAggregatesFilter<"TreasuryTransaction"> | string
+    amount?: FloatWithAggregatesFilter<"TreasuryTransaction"> | number
+    type?: EnumTreasuryTransactionTypeWithAggregatesFilter<"TreasuryTransaction"> | $Enums.TreasuryTransactionType
+    txHash?: StringNullableWithAggregatesFilter<"TreasuryTransaction"> | string | null
+    apy?: FloatNullableWithAggregatesFilter<"TreasuryTransaction"> | number | null
+    protocol?: StringNullableWithAggregatesFilter<"TreasuryTransaction"> | string | null
+    metadata?: JsonNullableWithAggregatesFilter<"TreasuryTransaction">
+    createdAt?: DateTimeWithAggregatesFilter<"TreasuryTransaction"> | Date | string
+  }
+
   export type ChapterCreateInput = {
     id?: string
     name: string
@@ -31754,6 +33322,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -31769,6 +33344,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateInput = {
@@ -31782,6 +33358,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -31797,6 +33380,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUpdateInput = {
@@ -31810,6 +33394,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -31825,6 +33416,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateInput = {
@@ -31838,6 +33430,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -31853,6 +33452,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateManyInput = {
@@ -31866,6 +33466,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
   }
 
   export type ChapterUpdateManyMutationInput = {
@@ -31879,6 +33486,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ChapterUncheckedUpdateManyInput = {
@@ -31892,6 +33506,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserCreateInput = {
@@ -33745,6 +35366,89 @@ export namespace Prisma {
     chapterId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type TreasuryTransactionCreateInput = {
+    id?: string
+    amount: number
+    type: $Enums.TreasuryTransactionType
+    txHash?: string | null
+    apy?: number | null
+    protocol?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutTreasuryTransactionsInput
+  }
+
+  export type TreasuryTransactionUncheckedCreateInput = {
+    id?: string
+    chapterId: string
+    amount: number
+    type: $Enums.TreasuryTransactionType
+    txHash?: string | null
+    apy?: number | null
+    protocol?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type TreasuryTransactionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumTreasuryTransactionTypeFieldUpdateOperationsInput | $Enums.TreasuryTransactionType
+    txHash?: NullableStringFieldUpdateOperationsInput | string | null
+    apy?: NullableFloatFieldUpdateOperationsInput | number | null
+    protocol?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutTreasuryTransactionsNestedInput
+  }
+
+  export type TreasuryTransactionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumTreasuryTransactionTypeFieldUpdateOperationsInput | $Enums.TreasuryTransactionType
+    txHash?: NullableStringFieldUpdateOperationsInput | string | null
+    apy?: NullableFloatFieldUpdateOperationsInput | number | null
+    protocol?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TreasuryTransactionCreateManyInput = {
+    id?: string
+    chapterId: string
+    amount: number
+    type: $Enums.TreasuryTransactionType
+    txHash?: string | null
+    apy?: number | null
+    protocol?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type TreasuryTransactionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumTreasuryTransactionTypeFieldUpdateOperationsInput | $Enums.TreasuryTransactionType
+    txHash?: NullableStringFieldUpdateOperationsInput | string | null
+    apy?: NullableFloatFieldUpdateOperationsInput | number | null
+    protocol?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TreasuryTransactionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumTreasuryTransactionTypeFieldUpdateOperationsInput | $Enums.TreasuryTransactionType
+    txHash?: NullableStringFieldUpdateOperationsInput | string | null
+    apy?: NullableFloatFieldUpdateOperationsInput | number | null
+    protocol?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -33784,6 +35488,44 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type MembershipListRelationFilter = {
@@ -33875,6 +35617,12 @@ export namespace Prisma {
     none?: DuesPlanWhereInput
   }
 
+  export type TreasuryTransactionListRelationFilter = {
+    every?: TreasuryTransactionWhereInput
+    some?: TreasuryTransactionWhereInput
+    none?: TreasuryTransactionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -33936,6 +35684,10 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type TreasuryTransactionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type ChapterCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -33947,6 +35699,18 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
+    chapterTreasuryBalance?: SortOrder
+    autoInvestEnabled?: SortOrder
+    autoInvestStrategy?: SortOrder
+    walletAddress?: SortOrder
+    walletPrivateKey?: SortOrder
+    treasuryLastYield?: SortOrder
+    treasuryLastYieldDate?: SortOrder
+  }
+
+  export type ChapterAvgOrderByAggregateInput = {
+    chapterTreasuryBalance?: SortOrder
+    treasuryLastYield?: SortOrder
   }
 
   export type ChapterMaxOrderByAggregateInput = {
@@ -33960,6 +35724,13 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
+    chapterTreasuryBalance?: SortOrder
+    autoInvestEnabled?: SortOrder
+    autoInvestStrategy?: SortOrder
+    walletAddress?: SortOrder
+    walletPrivateKey?: SortOrder
+    treasuryLastYield?: SortOrder
+    treasuryLastYieldDate?: SortOrder
   }
 
   export type ChapterMinOrderByAggregateInput = {
@@ -33973,6 +35744,18 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
+    chapterTreasuryBalance?: SortOrder
+    autoInvestEnabled?: SortOrder
+    autoInvestStrategy?: SortOrder
+    walletAddress?: SortOrder
+    walletPrivateKey?: SortOrder
+    treasuryLastYield?: SortOrder
+    treasuryLastYieldDate?: SortOrder
+  }
+
+  export type ChapterSumOrderByAggregateInput = {
+    chapterTreasuryBalance?: SortOrder
+    treasuryLastYield?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -34025,7 +35808,47 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
     notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -34033,7 +35856,10 @@ export namespace Prisma {
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type AccountListRelationFilter = {
@@ -34107,20 +35933,6 @@ export namespace Prisma {
     password?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type EnumMembershipRoleFilter<$PrismaModel = never> = {
@@ -34380,11 +36192,6 @@ export namespace Prisma {
     expires?: SortOrder
   }
 
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
@@ -34430,14 +36237,6 @@ export namespace Prisma {
     acceptedById?: SortOrder
     createdById?: SortOrder
     chapterId?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type EnumEventStatusFilter<$PrismaModel = never> = {
@@ -34701,17 +36500,6 @@ export namespace Prisma {
     chapterId?: SortOrder
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type EnumBudgetStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.BudgetStatus | EnumBudgetStatusFieldRefInput<$PrismaModel>
     in?: $Enums.BudgetStatus[] | ListEnumBudgetStatusFieldRefInput<$PrismaModel>
@@ -34764,22 +36552,6 @@ export namespace Prisma {
 
   export type BudgetSumOrderByAggregateInput = {
     amount?: SortOrder
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type EnumBudgetStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -35320,6 +37092,67 @@ export namespace Prisma {
     chapterId?: SortOrder
   }
 
+  export type EnumTreasuryTransactionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TreasuryTransactionType | EnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TreasuryTransactionType[] | ListEnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TreasuryTransactionType[] | ListEnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTreasuryTransactionTypeFilter<$PrismaModel> | $Enums.TreasuryTransactionType
+  }
+
+  export type TreasuryTransactionCountOrderByAggregateInput = {
+    id?: SortOrder
+    chapterId?: SortOrder
+    amount?: SortOrder
+    type?: SortOrder
+    txHash?: SortOrder
+    apy?: SortOrder
+    protocol?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TreasuryTransactionAvgOrderByAggregateInput = {
+    amount?: SortOrder
+    apy?: SortOrder
+  }
+
+  export type TreasuryTransactionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    chapterId?: SortOrder
+    amount?: SortOrder
+    type?: SortOrder
+    txHash?: SortOrder
+    apy?: SortOrder
+    protocol?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TreasuryTransactionMinOrderByAggregateInput = {
+    id?: SortOrder
+    chapterId?: SortOrder
+    amount?: SortOrder
+    type?: SortOrder
+    txHash?: SortOrder
+    apy?: SortOrder
+    protocol?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TreasuryTransactionSumOrderByAggregateInput = {
+    amount?: SortOrder
+    apy?: SortOrder
+  }
+
+  export type EnumTreasuryTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TreasuryTransactionType | EnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TreasuryTransactionType[] | ListEnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TreasuryTransactionType[] | ListEnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTreasuryTransactionTypeWithAggregatesFilter<$PrismaModel> | $Enums.TreasuryTransactionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTreasuryTransactionTypeFilter<$PrismaModel>
+    _max?: NestedEnumTreasuryTransactionTypeFilter<$PrismaModel>
+  }
+
   export type MembershipCreateNestedManyWithoutChapterInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -35422,6 +37255,13 @@ export namespace Prisma {
     connectOrCreate?: DuesPlanCreateOrConnectWithoutChapterInput | DuesPlanCreateOrConnectWithoutChapterInput[]
     createMany?: DuesPlanCreateManyChapterInputEnvelope
     connect?: DuesPlanWhereUniqueInput | DuesPlanWhereUniqueInput[]
+  }
+
+  export type TreasuryTransactionCreateNestedManyWithoutChapterInput = {
+    create?: XOR<TreasuryTransactionCreateWithoutChapterInput, TreasuryTransactionUncheckedCreateWithoutChapterInput> | TreasuryTransactionCreateWithoutChapterInput[] | TreasuryTransactionUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: TreasuryTransactionCreateOrConnectWithoutChapterInput | TreasuryTransactionCreateOrConnectWithoutChapterInput[]
+    createMany?: TreasuryTransactionCreateManyChapterInputEnvelope
+    connect?: TreasuryTransactionWhereUniqueInput | TreasuryTransactionWhereUniqueInput[]
   }
 
   export type MembershipUncheckedCreateNestedManyWithoutChapterInput = {
@@ -35528,6 +37368,13 @@ export namespace Prisma {
     connect?: DuesPlanWhereUniqueInput | DuesPlanWhereUniqueInput[]
   }
 
+  export type TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput = {
+    create?: XOR<TreasuryTransactionCreateWithoutChapterInput, TreasuryTransactionUncheckedCreateWithoutChapterInput> | TreasuryTransactionCreateWithoutChapterInput[] | TreasuryTransactionUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: TreasuryTransactionCreateOrConnectWithoutChapterInput | TreasuryTransactionCreateOrConnectWithoutChapterInput[]
+    createMany?: TreasuryTransactionCreateManyChapterInputEnvelope
+    connect?: TreasuryTransactionWhereUniqueInput | TreasuryTransactionWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -35538,6 +37385,30 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type MembershipUpdateManyWithoutChapterNestedInput = {
@@ -35746,6 +37617,20 @@ export namespace Prisma {
     deleteMany?: DuesPlanScalarWhereInput | DuesPlanScalarWhereInput[]
   }
 
+  export type TreasuryTransactionUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<TreasuryTransactionCreateWithoutChapterInput, TreasuryTransactionUncheckedCreateWithoutChapterInput> | TreasuryTransactionCreateWithoutChapterInput[] | TreasuryTransactionUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: TreasuryTransactionCreateOrConnectWithoutChapterInput | TreasuryTransactionCreateOrConnectWithoutChapterInput[]
+    upsert?: TreasuryTransactionUpsertWithWhereUniqueWithoutChapterInput | TreasuryTransactionUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: TreasuryTransactionCreateManyChapterInputEnvelope
+    set?: TreasuryTransactionWhereUniqueInput | TreasuryTransactionWhereUniqueInput[]
+    disconnect?: TreasuryTransactionWhereUniqueInput | TreasuryTransactionWhereUniqueInput[]
+    delete?: TreasuryTransactionWhereUniqueInput | TreasuryTransactionWhereUniqueInput[]
+    connect?: TreasuryTransactionWhereUniqueInput | TreasuryTransactionWhereUniqueInput[]
+    update?: TreasuryTransactionUpdateWithWhereUniqueWithoutChapterInput | TreasuryTransactionUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: TreasuryTransactionUpdateManyWithWhereWithoutChapterInput | TreasuryTransactionUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: TreasuryTransactionScalarWhereInput | TreasuryTransactionScalarWhereInput[]
+  }
+
   export type MembershipUncheckedUpdateManyWithoutChapterNestedInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -35952,6 +37837,20 @@ export namespace Prisma {
     deleteMany?: DuesPlanScalarWhereInput | DuesPlanScalarWhereInput[]
   }
 
+  export type TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<TreasuryTransactionCreateWithoutChapterInput, TreasuryTransactionUncheckedCreateWithoutChapterInput> | TreasuryTransactionCreateWithoutChapterInput[] | TreasuryTransactionUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: TreasuryTransactionCreateOrConnectWithoutChapterInput | TreasuryTransactionCreateOrConnectWithoutChapterInput[]
+    upsert?: TreasuryTransactionUpsertWithWhereUniqueWithoutChapterInput | TreasuryTransactionUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: TreasuryTransactionCreateManyChapterInputEnvelope
+    set?: TreasuryTransactionWhereUniqueInput | TreasuryTransactionWhereUniqueInput[]
+    disconnect?: TreasuryTransactionWhereUniqueInput | TreasuryTransactionWhereUniqueInput[]
+    delete?: TreasuryTransactionWhereUniqueInput | TreasuryTransactionWhereUniqueInput[]
+    connect?: TreasuryTransactionWhereUniqueInput | TreasuryTransactionWhereUniqueInput[]
+    update?: TreasuryTransactionUpdateWithWhereUniqueWithoutChapterInput | TreasuryTransactionUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: TreasuryTransactionUpdateManyWithWhereWithoutChapterInput | TreasuryTransactionUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: TreasuryTransactionScalarWhereInput | TreasuryTransactionScalarWhereInput[]
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -36146,10 +38045,6 @@ export namespace Prisma {
     connectOrCreate?: FeedbackRequestCreateOrConnectWithoutUserInput | FeedbackRequestCreateOrConnectWithoutUserInput[]
     createMany?: FeedbackRequestCreateManyUserInputEnvelope
     connect?: FeedbackRequestWhereUniqueInput | FeedbackRequestWhereUniqueInput[]
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type AccountUpdateManyWithoutUserNestedInput = {
@@ -36684,10 +38579,6 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
   export type ChapterUpdateOneRequiredWithoutInvitesNestedInput = {
     create?: XOR<ChapterCreateWithoutInvitesInput, ChapterUncheckedCreateWithoutInvitesInput>
     connectOrCreate?: ChapterCreateOrConnectWithoutInvitesInput
@@ -36896,14 +38787,6 @@ export namespace Prisma {
     connectOrCreate?: ExpenseCreateOrConnectWithoutBudgetInput | ExpenseCreateOrConnectWithoutBudgetInput[]
     createMany?: ExpenseCreateManyBudgetInputEnvelope
     connect?: ExpenseWhereUniqueInput | ExpenseWhereUniqueInput[]
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type EnumBudgetStatusFieldUpdateOperationsInput = {
@@ -37340,6 +39223,24 @@ export namespace Prisma {
     update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutMessageLogsInput, ChapterUpdateWithoutMessageLogsInput>, ChapterUncheckedUpdateWithoutMessageLogsInput>
   }
 
+  export type ChapterCreateNestedOneWithoutTreasuryTransactionsInput = {
+    create?: XOR<ChapterCreateWithoutTreasuryTransactionsInput, ChapterUncheckedCreateWithoutTreasuryTransactionsInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutTreasuryTransactionsInput
+    connect?: ChapterWhereUniqueInput
+  }
+
+  export type EnumTreasuryTransactionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.TreasuryTransactionType
+  }
+
+  export type ChapterUpdateOneRequiredWithoutTreasuryTransactionsNestedInput = {
+    create?: XOR<ChapterCreateWithoutTreasuryTransactionsInput, ChapterUncheckedCreateWithoutTreasuryTransactionsInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutTreasuryTransactionsInput
+    upsert?: ChapterUpsertWithoutTreasuryTransactionsInput
+    connect?: ChapterWhereUniqueInput
+    update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutTreasuryTransactionsInput, ChapterUpdateWithoutTreasuryTransactionsInput>, ChapterUncheckedUpdateWithoutTreasuryTransactionsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -37377,6 +39278,44 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -37449,15 +39388,44 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -37541,30 +39509,6 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type NestedEnumEventStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.EventStatus | EnumEventStatusFieldRefInput<$PrismaModel>
     in?: $Enums.EventStatus[] | ListEnumEventStatusFieldRefInput<$PrismaModel>
@@ -37622,38 +39566,11 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type NestedEnumBudgetStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.BudgetStatus | EnumBudgetStatusFieldRefInput<$PrismaModel>
     in?: $Enums.BudgetStatus[] | ListEnumBudgetStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.BudgetStatus[] | ListEnumBudgetStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumBudgetStatusFilter<$PrismaModel> | $Enums.BudgetStatus
-  }
-
-  export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type NestedEnumBudgetStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -37748,6 +39665,23 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTreasuryTransactionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.TreasuryTransactionType | EnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TreasuryTransactionType[] | ListEnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TreasuryTransactionType[] | ListEnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTreasuryTransactionTypeFilter<$PrismaModel> | $Enums.TreasuryTransactionType
+  }
+
+  export type NestedEnumTreasuryTransactionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TreasuryTransactionType | EnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TreasuryTransactionType[] | ListEnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.TreasuryTransactionType[] | ListEnumTreasuryTransactionTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumTreasuryTransactionTypeWithAggregatesFilter<$PrismaModel> | $Enums.TreasuryTransactionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTreasuryTransactionTypeFilter<$PrismaModel>
+    _max?: NestedEnumTreasuryTransactionTypeFilter<$PrismaModel>
   }
 
   export type MembershipCreateWithoutChapterInput = {
@@ -38269,6 +40203,38 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TreasuryTransactionCreateWithoutChapterInput = {
+    id?: string
+    amount: number
+    type: $Enums.TreasuryTransactionType
+    txHash?: string | null
+    apy?: number | null
+    protocol?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type TreasuryTransactionUncheckedCreateWithoutChapterInput = {
+    id?: string
+    amount: number
+    type: $Enums.TreasuryTransactionType
+    txHash?: string | null
+    apy?: number | null
+    protocol?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type TreasuryTransactionCreateOrConnectWithoutChapterInput = {
+    where: TreasuryTransactionWhereUniqueInput
+    create: XOR<TreasuryTransactionCreateWithoutChapterInput, TreasuryTransactionUncheckedCreateWithoutChapterInput>
+  }
+
+  export type TreasuryTransactionCreateManyChapterInputEnvelope = {
+    data: TreasuryTransactionCreateManyChapterInput | TreasuryTransactionCreateManyChapterInput[]
+    skipDuplicates?: boolean
+  }
+
   export type MembershipUpsertWithWhereUniqueWithoutChapterInput = {
     where: MembershipWhereUniqueInput
     update: XOR<MembershipUpdateWithoutChapterInput, MembershipUncheckedUpdateWithoutChapterInput>
@@ -38748,6 +40714,37 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"DuesPlan"> | Date | string
     updatedAt?: DateTimeFilter<"DuesPlan"> | Date | string
     chapterId?: StringFilter<"DuesPlan"> | string
+  }
+
+  export type TreasuryTransactionUpsertWithWhereUniqueWithoutChapterInput = {
+    where: TreasuryTransactionWhereUniqueInput
+    update: XOR<TreasuryTransactionUpdateWithoutChapterInput, TreasuryTransactionUncheckedUpdateWithoutChapterInput>
+    create: XOR<TreasuryTransactionCreateWithoutChapterInput, TreasuryTransactionUncheckedCreateWithoutChapterInput>
+  }
+
+  export type TreasuryTransactionUpdateWithWhereUniqueWithoutChapterInput = {
+    where: TreasuryTransactionWhereUniqueInput
+    data: XOR<TreasuryTransactionUpdateWithoutChapterInput, TreasuryTransactionUncheckedUpdateWithoutChapterInput>
+  }
+
+  export type TreasuryTransactionUpdateManyWithWhereWithoutChapterInput = {
+    where: TreasuryTransactionScalarWhereInput
+    data: XOR<TreasuryTransactionUpdateManyMutationInput, TreasuryTransactionUncheckedUpdateManyWithoutChapterInput>
+  }
+
+  export type TreasuryTransactionScalarWhereInput = {
+    AND?: TreasuryTransactionScalarWhereInput | TreasuryTransactionScalarWhereInput[]
+    OR?: TreasuryTransactionScalarWhereInput[]
+    NOT?: TreasuryTransactionScalarWhereInput | TreasuryTransactionScalarWhereInput[]
+    id?: StringFilter<"TreasuryTransaction"> | string
+    chapterId?: StringFilter<"TreasuryTransaction"> | string
+    amount?: FloatFilter<"TreasuryTransaction"> | number
+    type?: EnumTreasuryTransactionTypeFilter<"TreasuryTransaction"> | $Enums.TreasuryTransactionType
+    txHash?: StringNullableFilter<"TreasuryTransaction"> | string | null
+    apy?: FloatNullableFilter<"TreasuryTransaction"> | number | null
+    protocol?: StringNullableFilter<"TreasuryTransaction"> | string | null
+    metadata?: JsonNullableFilter<"TreasuryTransaction">
+    createdAt?: DateTimeFilter<"TreasuryTransaction"> | Date | string
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -39601,6 +41598,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
@@ -39615,6 +41619,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutMembershipsInput = {
@@ -39628,6 +41633,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
@@ -39642,6 +41654,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutMembershipsInput = {
@@ -39775,6 +41788,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
@@ -39789,6 +41809,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutMembershipsInput = {
@@ -39802,6 +41823,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
@@ -39816,6 +41844,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ProfileUpsertWithoutMembershipInput = {
@@ -39880,6 +41909,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
@@ -39894,6 +41930,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutSubscriptionInput = {
@@ -39907,6 +41944,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
@@ -39921,6 +41965,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutSubscriptionInput = {
@@ -39950,6 +41995,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
@@ -39964,6 +42016,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutSubscriptionInput = {
@@ -39977,6 +42030,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
@@ -39991,6 +42051,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -40228,6 +42289,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -40242,6 +42310,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutInvitesInput = {
@@ -40255,6 +42324,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -40269,6 +42345,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutInvitesInput = {
@@ -40404,6 +42481,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -40418,6 +42502,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutInvitesInput = {
@@ -40431,6 +42516,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -40445,6 +42537,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutAcceptedInvitesInput = {
@@ -40576,6 +42669,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -40590,6 +42690,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutEventsInput = {
@@ -40603,6 +42704,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -40617,6 +42725,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutEventsInput = {
@@ -40725,6 +42834,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -40739,6 +42855,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutEventsInput = {
@@ -40752,6 +42869,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -40766,6 +42890,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutCreatedEventsInput = {
@@ -41099,6 +43224,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -41113,6 +43245,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutAuditLogsInput = {
@@ -41126,6 +43259,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -41140,6 +43280,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutAuditLogsInput = {
@@ -41228,6 +43369,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -41242,6 +43390,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutAuditLogsInput = {
@@ -41255,6 +43404,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -41269,6 +43425,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutGalleryImagesInput = {
@@ -41282,6 +43439,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -41296,6 +43460,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutGalleryImagesInput = {
@@ -41309,6 +43474,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -41323,6 +43495,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutGalleryImagesInput = {
@@ -41352,6 +43525,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -41366,6 +43546,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutGalleryImagesInput = {
@@ -41379,6 +43560,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -41393,6 +43581,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutContactMessagesInput = {
@@ -41406,6 +43595,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -41420,6 +43616,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutContactMessagesInput = {
@@ -41433,6 +43630,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -41447,6 +43651,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutContactMessagesInput = {
@@ -41476,6 +43681,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -41490,6 +43702,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutContactMessagesInput = {
@@ -41503,6 +43716,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -41517,6 +43737,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutBudgetsInput = {
@@ -41530,6 +43751,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -41544,6 +43772,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutBudgetsInput = {
@@ -41557,6 +43786,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -41571,6 +43807,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutBudgetsInput = {
@@ -41642,6 +43879,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -41656,6 +43900,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutBudgetsInput = {
@@ -41669,6 +43914,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -41683,6 +43935,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ExpenseUpsertWithWhereUniqueWithoutBudgetInput = {
@@ -41712,6 +43965,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -41726,6 +43986,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutExpensesInput = {
@@ -41739,6 +44000,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -41753,6 +44021,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutExpensesInput = {
@@ -41948,6 +44217,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -41962,6 +44238,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutExpensesInput = {
@@ -41975,6 +44252,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -41989,6 +44273,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type BudgetUpsertWithoutExpensesInput = {
@@ -42192,6 +44477,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -42206,6 +44498,7 @@ export namespace Prisma {
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutDuesPlansInput = {
@@ -42219,6 +44512,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -42233,6 +44533,7 @@ export namespace Prisma {
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutDuesPlansInput = {
@@ -42306,6 +44607,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -42320,6 +44628,7 @@ export namespace Prisma {
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutDuesPlansInput = {
@@ -42333,6 +44642,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -42347,6 +44663,7 @@ export namespace Prisma {
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type DuesPaymentUpsertWithWhereUniqueWithoutDuesPlanInput = {
@@ -42376,6 +44693,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -42390,6 +44714,7 @@ export namespace Prisma {
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutDuesPaymentsInput = {
@@ -42403,6 +44728,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -42417,6 +44749,7 @@ export namespace Prisma {
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutDuesPaymentsInput = {
@@ -42559,6 +44892,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -42573,6 +44913,7 @@ export namespace Prisma {
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutDuesPaymentsInput = {
@@ -42586,6 +44927,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -42600,6 +44948,7 @@ export namespace Prisma {
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutDuesPaymentsInput = {
@@ -42820,6 +45169,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
     invites?: InviteCreateNestedManyWithoutChapterInput
@@ -42834,6 +45190,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutProfilesInput = {
@@ -42847,6 +45204,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
     invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
@@ -42861,6 +45225,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutProfilesInput = {
@@ -42978,6 +45343,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
     invites?: InviteUpdateManyWithoutChapterNestedInput
@@ -42992,6 +45364,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutProfilesInput = {
@@ -43005,6 +45378,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
     invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
@@ -43019,6 +45399,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutTransactionsInput = {
@@ -43032,6 +45413,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -43046,6 +45434,7 @@ export namespace Prisma {
     expenses?: ExpenseCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutTransactionsInput = {
@@ -43059,6 +45448,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -43073,6 +45469,7 @@ export namespace Prisma {
     expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutTransactionsInput = {
@@ -43178,6 +45575,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -43192,6 +45596,7 @@ export namespace Prisma {
     expenses?: ExpenseUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutTransactionsInput = {
@@ -43205,6 +45610,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -43219,6 +45631,7 @@ export namespace Prisma {
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ExpenseUpsertWithoutTransactionInput = {
@@ -43432,6 +45845,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -43446,6 +45866,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutFilesInput = {
@@ -43459,6 +45880,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -43473,6 +45901,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutFilesInput = {
@@ -43555,6 +45984,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -43569,6 +46005,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutFilesInput = {
@@ -43582,6 +46019,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -43596,6 +46040,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutUploadedFilesInput = {
@@ -43668,6 +46113,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipCreateNestedManyWithoutChapterInput
     profiles?: ProfileCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionCreateNestedOneWithoutChapterInput
@@ -43682,6 +46134,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutMessageLogsInput = {
@@ -43695,6 +46148,13 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
     memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
     profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
     subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
@@ -43709,6 +46169,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutMessageLogsInput = {
@@ -43738,6 +46199,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
@@ -43752,6 +46220,7 @@ export namespace Prisma {
     duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutMessageLogsInput = {
@@ -43765,6 +46234,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
     profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
     subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
@@ -43773,6 +46249,163 @@ export namespace Prisma {
     auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
     galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
     contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
+    duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterCreateWithoutTreasuryTransactionsInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    schoolName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
+    memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionCreateNestedOneWithoutChapterInput
+    invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
+    budgets?: BudgetCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
+    transactions?: TransactionCreateNestedManyWithoutChapterInput
+    duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterUncheckedCreateWithoutTreasuryTransactionsInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    schoolName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
+    memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
+    invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
+    budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
+    duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterCreateOrConnectWithoutTreasuryTransactionsInput = {
+    where: ChapterWhereUniqueInput
+    create: XOR<ChapterCreateWithoutTreasuryTransactionsInput, ChapterUncheckedCreateWithoutTreasuryTransactionsInput>
+  }
+
+  export type ChapterUpsertWithoutTreasuryTransactionsInput = {
+    update: XOR<ChapterUpdateWithoutTreasuryTransactionsInput, ChapterUncheckedUpdateWithoutTreasuryTransactionsInput>
+    create: XOR<ChapterCreateWithoutTreasuryTransactionsInput, ChapterUncheckedCreateWithoutTreasuryTransactionsInput>
+    where?: ChapterWhereInput
+  }
+
+  export type ChapterUpdateToOneWithWhereWithoutTreasuryTransactionsInput = {
+    where?: ChapterWhereInput
+    data: XOR<ChapterUpdateWithoutTreasuryTransactionsInput, ChapterUncheckedUpdateWithoutTreasuryTransactionsInput>
+  }
+
+  export type ChapterUpdateWithoutTreasuryTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
+    invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUpdateManyWithoutChapterNestedInput
+    duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterUncheckedUpdateWithoutTreasuryTransactionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
     files?: FileUncheckedUpdateManyWithoutChapterNestedInput
     budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
     expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
@@ -43951,6 +46584,17 @@ export namespace Prisma {
     applyToNewMembers?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type TreasuryTransactionCreateManyChapterInput = {
+    id?: string
+    amount: number
+    type: $Enums.TreasuryTransactionType
+    txHash?: string | null
+    apy?: number | null
+    protocol?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
   }
 
   export type MembershipUpdateWithoutChapterInput = {
@@ -44479,6 +47123,39 @@ export namespace Prisma {
     applyToNewMembers?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TreasuryTransactionUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumTreasuryTransactionTypeFieldUpdateOperationsInput | $Enums.TreasuryTransactionType
+    txHash?: NullableStringFieldUpdateOperationsInput | string | null
+    apy?: NullableFloatFieldUpdateOperationsInput | number | null
+    protocol?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TreasuryTransactionUncheckedUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumTreasuryTransactionTypeFieldUpdateOperationsInput | $Enums.TreasuryTransactionType
+    txHash?: NullableStringFieldUpdateOperationsInput | string | null
+    apy?: NullableFloatFieldUpdateOperationsInput | number | null
+    protocol?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TreasuryTransactionUncheckedUpdateManyWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumTreasuryTransactionTypeFieldUpdateOperationsInput | $Enums.TreasuryTransactionType
+    txHash?: NullableStringFieldUpdateOperationsInput | string | null
+    apy?: NullableFloatFieldUpdateOperationsInput | number | null
+    protocol?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AccountCreateManyUserInput = {

@@ -5,7 +5,7 @@ import { MembershipRole } from '@/generated/prisma';
 import Link from 'next/link';
 import { prisma } from '@/lib/db';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, CreditCard, FileText, Settings, Users } from 'lucide-react';
+import { Calendar, CreditCard, FileText, Settings, Users, Landmark } from 'lucide-react';
 import { MobileSidebarToggle } from '@/components/ui/mobile-sidebar-toggle';
 import { UserDropdown } from '@/components/ui/user-dropdown';
 import { SidebarLink } from '@/components/ui/sidebar-link';
@@ -137,6 +137,13 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
           >
             <FileText size={18} className="flex-shrink-0" />
             <span>Files</span>
+          </SidebarLink>
+          
+          <SidebarLink 
+            href={`/${chapterSlug}/admin/treasury`}
+          >
+            <Landmark size={18} className="flex-shrink-0" />
+            <span>Treasury DeFi</span>
           </SidebarLink>
           
           <SidebarLink 
