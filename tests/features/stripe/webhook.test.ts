@@ -209,8 +209,10 @@ describe('Stripe Webhook Handler', () => {
       // Verify membership tier was updated
       expect(prisma.membership.update).toHaveBeenCalledWith({
         where: { id: 'membership_123' },
-        data: { createdAt: new Date(),
-        updatedAt: new Date(),
+        data: {
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
       });
     });
     
@@ -339,8 +341,10 @@ describe('Stripe Webhook Handler', () => {
       // Verify membership tier was synced
       expect(prisma.membership.update).toHaveBeenCalledWith({
         where: { id: 'membership_123' },
-        data: { createdAt: new Date(),
-        updatedAt: new Date(),
+        data: {
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
       });
     });
     
@@ -407,8 +411,10 @@ describe('Stripe Webhook Handler', () => {
       // Verify membership tier was downgraded to FREE
       expect(prisma.membership.update).toHaveBeenCalledWith({
         where: { id: 'membership_123' },
-        data: { createdAt: new Date(),
-        updatedAt: new Date(),
+        data: {
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }
       });
     });
   });
