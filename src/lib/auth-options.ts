@@ -267,11 +267,33 @@ export const authOptions: NextAuthOptions = {
       return { ...session };
     },
     async redirect({ url, baseUrl }) {
-      // Create a URL with a safety parameter to prevent infinite loops
+      // Production-specific handling for auth callbacks
+      const isAuthCallback = url.includes('/api/auth/callback/');
+      const isProd = process.env.NODE_ENV === 'production';
+      
+      // Enhanced logging for debugging production issues
+      console.log(`NextAuth redirect called with: ${url}`, {
+        isProd,
+        isAuthCallback,
+        baseUrl
+      });
+      
+      // PRODUCTION-SPECIFIC handling to prevent redirect loops
+      if (isProd && isAuthCallback) {
+        console.log('🚨 PRODUCTION: Using simplified auth flow to prevent redirect loops');
+        
+        // Check if this callback is from a Google login
+        const isGoogle = url.includes('/api/auth/callback/google');
+        
+        // For auth callbacks in production, send users to a page that won't trigger
+        // another auth flow but can still fetch their session safely
+        return `${baseUrl}/social-signup?provider=${isGoogle ? 'google' : 'oauth'}`;
+      }
+      
+      // For non-emergency cases, implement the loop detection
       const createSafeUrl = (targetUrl: string): string => {
         const hasParam = targetUrl.includes('?');
         const connector = hasParam ? '&' : '?';
-        // Only add our safety param if it's not already there
         return targetUrl.includes('__auth_redirect=') 
           ? targetUrl 
           : `${targetUrl}${connector}__auth_redirect=true`;

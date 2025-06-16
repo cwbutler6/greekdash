@@ -116,9 +116,9 @@ export const config = {
     "/:chapterSlug/join/:path*", // Join workflow is protected
     "/:chapterSlug/pending/:path*", // Pending approval workflow is protected
     
-    // Also process authentication pages to prevent logged-in users from accessing them
+    // Only check login page to prevent logged-in users from going there
+    // Remove signup from matcher to prevent redirect loops in production
     "/login",
-    "/signup",
     "/settings/:path*",
     
     // Skip authentication check for API routes, public routes, and static files
