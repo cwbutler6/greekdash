@@ -4,9 +4,10 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import Stripe from "stripe";
 
-// Initialize Stripe with the secret key
+// Initialize Stripe with the secret key - use type assertion for cross-environment compatibility
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-04-30.basil", // Use the appropriate API version
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  apiVersion: "2025-05-28.basil" as any, // Type assertion to work in both local and Vercel environments
 });
 
 export async function POST(request: Request) {

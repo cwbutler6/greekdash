@@ -4,9 +4,10 @@ import { authOptions } from '@/lib/auth-options';
 import { prisma } from '@/lib/db';
 import Stripe from 'stripe';
 
-// Initialize Stripe
+// Initialize Stripe - use type assertion to work with different Stripe versions
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || '', {
-  apiVersion: '2025-04-30.basil',
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+  apiVersion: '2025-05-28.basil' as any, // Type assertion to work across environments
 });
 
 async function checkAdminAccess(chapterSlug: string, userEmail: string) {

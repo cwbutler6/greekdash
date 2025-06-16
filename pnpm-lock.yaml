@@ -117,8 +117,8 @@ importers:
         specifier: ^2.0.3
         version: 2.0.5(react-dom@19.1.0)(react@19.1.0)
       stripe:
-        specifier: ^18.1.0
-        version: 18.2.1(@types/node@20.17.57)
+        specifier: 18.1.0
+        version: 18.1.0(@types/node@20.17.57)
       tailwind-merge:
         specifier: ^3.3.0
         version: 3.3.0
@@ -7454,8 +7454,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /stripe@18.2.1(@types/node@20.17.57):
-    resolution: {integrity: sha512-GwB1B7WSwEBzW4dilgyJruUYhbGMscrwuyHsPUmSRKrGHZ5poSh2oU9XKdii5BFVJzXHn35geRvGJ6R8bYcp8w==}
+  /stripe@18.1.0(@types/node@20.17.57):
+    resolution: {integrity: sha512-MLDiniPTHqcfIT3anyBPmOEcaiDhYa7/jRaNypQ3Rt2SJnayQZBvVbFghIziUCZdltGAndm/ZxVOSw6uuSCDig==}
     engines: {node: '>=12.*'}
     peerDependencies:
       '@types/node': '>=12.x.x'
