@@ -5,7 +5,7 @@ import Stripe from 'stripe';
  * IMPORTANT: Only use this in server components or API routes
  */
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: '2025-05-28.basil', // Use the latest stable API version
+  apiVersion: '2025-04-30.basil', // Use the latest stable API version
   typescript: true,
 });
 
