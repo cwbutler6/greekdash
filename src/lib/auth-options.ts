@@ -267,7 +267,25 @@ export const authOptions: NextAuthOptions = {
       return { ...session };
     },
     async redirect({ url, baseUrl }) {
+      // Create a URL with a safety parameter to prevent infinite loops
+      const createSafeUrl = (targetUrl: string): string => {
+        const hasParam = targetUrl.includes('?');
+        const connector = hasParam ? '&' : '?';
+        // Only add our safety param if it's not already there
+        return targetUrl.includes('__auth_redirect=') 
+          ? targetUrl 
+          : `${targetUrl}${connector}__auth_redirect=true`;
+      };
+      
       try {
+        console.log(`NextAuth redirect called with url: ${url}`);
+        
+        // Detect potential redirect loops by checking URL
+        if (url.includes('__auth_redirect=')) {
+          console.log('⚠️ Potential redirect loop detected, falling back to baseUrl');
+          return baseUrl;
+        }
+        
         // Start with basic security checks
         // Block external redirects for security
         if (!url.startsWith("/") && new URL(url).origin !== baseUrl) {
@@ -336,17 +354,17 @@ export const authOptions: NextAuthOptions = {
                 if (activeMembership.role === 'ADMIN' || activeMembership.role === 'OWNER') {
                   const adminUrl = `${baseUrl}/${activeMembership.chapterSlug}/admin`;
                   console.log(`Redirecting OAuth admin to ${adminUrl}`);
-                  return adminUrl;
+                  return createSafeUrl(adminUrl);
                 } else {
                   const memberUrl = `${baseUrl}/${activeMembership.chapterSlug}/portal`;
                   console.log(`Redirecting OAuth member to ${memberUrl}`);
-                  return memberUrl;
+                  return createSafeUrl(memberUrl);
                 }
               } else if (memberships.length > 0) {
                 // Handle pending members
                 const pendingUrl = `${baseUrl}/${memberships[0].chapterSlug}/pending`;
                 console.log(`Redirecting OAuth pending member to ${pendingUrl}`);
-                return pendingUrl;
+                return createSafeUrl(pendingUrl);
               }
             }
             
@@ -356,7 +374,7 @@ export const authOptions: NextAuthOptions = {
             const provider = providerMatch ? providerMatch[1] : 'social';
             
             console.log(`OAuth: No memberships found, redirecting to social-signup with provider=${provider}`);
-            return `${baseUrl}/social-signup?provider=${provider}`;
+            return createSafeUrl(`${baseUrl}/social-signup?provider=${provider}`);
           }
           
           // For standard redirects, use the session as before
@@ -378,11 +396,11 @@ export const authOptions: NextAuthOptions = {
             if (session?.user?.isNewUser) {
               // New social login user - send to social signup
               console.log('New social user detected, redirecting to social-signup');
-              return `${baseUrl}/social-signup?provider=social`;
+              return createSafeUrl(`${baseUrl}/social-signup?provider=social`);
             } else {
               // Regular user without memberships - send to standard signup
               console.log('No memberships found, redirecting to signup');
-              return `${baseUrl}/signup`;
+              return createSafeUrl(`${baseUrl}/signup`);
             }
           }
           
@@ -396,33 +414,33 @@ export const authOptions: NextAuthOptions = {
             if (activeMembership.role === 'ADMIN' || activeMembership.role === 'OWNER') {
               const adminUrl = `${baseUrl}/${activeMembership.chapterSlug}/admin`;
               console.log(`Redirecting admin to ${adminUrl}`);
-              return adminUrl;
+              return createSafeUrl(adminUrl);
             } else {
               const memberUrl = `${baseUrl}/${activeMembership.chapterSlug}/portal`;
               console.log(`Redirecting member to ${memberUrl}`);
-              return memberUrl;
+              return createSafeUrl(memberUrl);
             }
           } else if (memberships.length > 0) {
             // Handle pending members
             const pendingUrl = `${baseUrl}/${memberships[0].chapterSlug}/pending`;
             console.log(`Redirecting pending member to ${pendingUrl}`);
-            return pendingUrl;
+            return createSafeUrl(pendingUrl);
           }
         }
         
         // Standard NextAuth redirect rules
         if (url.startsWith("/")) {
-          return `${baseUrl}${url}`;
+          return createSafeUrl(`${baseUrl}${url}`);
         }
         
         if (new URL(url).origin === baseUrl) {
-          return url;
+          return createSafeUrl(url);
         }
         
-        return baseUrl;
+        return createSafeUrl(baseUrl);
       } catch (error) {
         console.error('Error in redirect callback:', error);
-        return baseUrl; // Safe fallback in case of errors
+        return createSafeUrl(baseUrl); // Safe fallback in case of errors
       }
     }
   }
