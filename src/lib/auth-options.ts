@@ -267,202 +267,47 @@ export const authOptions: NextAuthOptions = {
       return { ...session };
     },
     async redirect({ url, baseUrl }) {
-      // Production-specific handling for auth callbacks
+      // Enhanced logging for debugging
+      console.log(`NextAuth redirect called with: ${url}`, { baseUrl });
+      
+      // Special handling for OAuth callbacks
       const isAuthCallback = url.includes('/api/auth/callback/');
-      const isProd = process.env.NODE_ENV === 'production';
       
-      // Enhanced logging for debugging production issues
-      console.log(`NextAuth redirect called with: ${url}`, {
-        isProd,
-        isAuthCallback,
-        baseUrl
-      });
-      
-      // PRODUCTION-SPECIFIC handling to prevent redirect loops
-      if (isProd && isAuthCallback) {
-        console.log('🚨 PRODUCTION: Using simplified auth flow to prevent redirect loops');
+      if (isAuthCallback) {
+        // Extract the provider from the URL (google, github, etc.)
+        const providerMatch = url.match(/\/api\/auth\/callback\/([^\/]+)/);
+        const provider = providerMatch ? providerMatch[1] : 'social';
         
-        // Check if this callback is from a Google login
-        const isGoogle = url.includes('/api/auth/callback/google');
-        
-        // For auth callbacks in production, send users to a page that won't trigger
-        // another auth flow but can still fetch their session safely
-        return `${baseUrl}/social-signup?provider=${isGoogle ? 'google' : 'oauth'}`;
+        console.log(`OAuth callback detected for provider: ${provider}`);
+        return `${baseUrl}/social-signup?provider=${provider}`;
       }
       
-      // For non-emergency cases, implement the loop detection
-      const createSafeUrl = (targetUrl: string): string => {
-        const hasParam = targetUrl.includes('?');
-        const connector = hasParam ? '&' : '?';
-        return targetUrl.includes('__auth_redirect=') 
-          ? targetUrl 
-          : `${targetUrl}${connector}__auth_redirect=true`;
-      };
+      // REMOVE CIRCULAR DEPENDENCY - no longer attempting to get session within authOptions
+      // since that creates a recursive call loop
       
+      // SIMPLE APPROACH: Standard NextAuth redirect rules without circular references
       try {
-        console.log(`NextAuth redirect called with url: ${url}`);
-        
-        // Detect potential redirect loops by checking URL
-        if (url.includes('__auth_redirect=')) {
-          console.log('⚠️ Potential redirect loop detected, falling back to baseUrl');
-          return baseUrl;
-        }
-        
-        // Start with basic security checks
-        // Block external redirects for security
-        if (!url.startsWith("/") && new URL(url).origin !== baseUrl) {
-          console.log('Security: Blocked redirect to external URL');
-          return baseUrl;
-        }
-        
-        // Special handling for Google OAuth flow completion
-        // We need to determine where to send users after they authenticate
-        if (url === '/' || url === baseUrl || url.includes('/api/auth/callback/google')) {
-          console.log('Handling post-auth redirection');
-          
-          // For Google OAuth callback, we need to handle differently
-          // The token might not be fully propagated to the session yet
-          if (url.includes('/api/auth/callback/google')) {
-            // We can't directly access the token here, so we need to rely on the session
-            // But we need to handle this special case differently than standard redirects
-            const { getServerSession } = await import('next-auth');
-            const session = await getServerSession(authOptions);
-            
-            console.log('OAuth callback redirect - session check:', { 
-              hasSession: !!session,
-              hasUser: !!session?.user,
-              email: session?.user?.email,
-              membershipCount: session?.user?.memberships?.length || 0
-            });
-            
-            // Use a direct database query to get memberships if the session isn't fully updated yet
-            // This is a safety check, as sometimes the session doesn't update fast enough during OAuth callbacks
-            let memberships = session?.user?.memberships || [];
-            if (memberships.length === 0 && session?.user?.id) {
-              // Try a direct query to get the latest membership data
-              try {
-                const userId = session.user.id;
-                console.log(`OAuth: Session memberships empty, checking database for user ${userId}`);
-                const userMemberships = await prisma.membership.findMany({
-                  where: { userId },
-                  include: { chapter: true }
-                });
-                
-                if (userMemberships.length > 0) {
-                  console.log(`OAuth: Found ${userMemberships.length} memberships in database`);
-                  // Map to the expected format
-                  memberships = userMemberships.map(m => ({
-                    id: m.id,
-                    role: m.role,
-                    chapterId: m.chapterId,
-                    chapterSlug: m.chapter.slug
-                  }));
-                }
-              } catch (error) {
-                console.error('Error fetching memberships:', error);
-              }
-            }
-            
-            // Check if we have memberships from the session or direct DB query
-            if (memberships && memberships.length > 0) {
-              // The user already has memberships, direct them to the appropriate page
-              // Find first active (non-pending) membership
-              const activeMembership = memberships.find(
-                (m: { role: string }) => m.role !== 'PENDING_MEMBER'
-              );
-              
-              if (activeMembership) {
-                // Determine destination based on role
-                if (activeMembership.role === 'ADMIN' || activeMembership.role === 'OWNER') {
-                  const adminUrl = `${baseUrl}/${activeMembership.chapterSlug}/admin`;
-                  console.log(`Redirecting OAuth admin to ${adminUrl}`);
-                  return createSafeUrl(adminUrl);
-                } else {
-                  const memberUrl = `${baseUrl}/${activeMembership.chapterSlug}/portal`;
-                  console.log(`Redirecting OAuth member to ${memberUrl}`);
-                  return createSafeUrl(memberUrl);
-                }
-              } else if (memberships.length > 0) {
-                // Handle pending members
-                const pendingUrl = `${baseUrl}/${memberships[0].chapterSlug}/pending`;
-                console.log(`Redirecting OAuth pending member to ${pendingUrl}`);
-                return createSafeUrl(pendingUrl);
-              }
-            }
-            
-            // If we get here, the user doesn't have memberships yet
-            // Extract the provider from the URL (google, github, etc.)
-            const providerMatch = url.match(/\/api\/auth\/callback\/([^/]+)/);
-            const provider = providerMatch ? providerMatch[1] : 'social';
-            
-            console.log(`OAuth: No memberships found, redirecting to social-signup with provider=${provider}`);
-            return createSafeUrl(`${baseUrl}/social-signup?provider=${provider}`);
-          }
-          
-          // For standard redirects, use the session as before
-          const { getServerSession } = await import('next-auth');
-          const session = await getServerSession(authOptions);
-          
-          console.log('Auth redirect - session check:', { 
-            hasSession: !!session,
-            hasUser: !!session?.user,
-            isNewUser: session?.user?.isNewUser,
-            membershipCount: session?.user?.memberships?.length || 0
-          });
-          
-          // Check memberships first - this is the primary factor for routing
-          const memberships = session?.user?.memberships || [];
-          
-          // Check if this is a new user from social login without memberships
-          if (memberships.length === 0) {
-            if (session?.user?.isNewUser) {
-              // New social login user - send to social signup
-              console.log('New social user detected, redirecting to social-signup');
-              return createSafeUrl(`${baseUrl}/social-signup?provider=social`);
-            } else {
-              // Regular user without memberships - send to standard signup
-              console.log('No memberships found, redirecting to signup');
-              return createSafeUrl(`${baseUrl}/signup`);
-            }
-          }
-          
-          // Find first active (non-pending) membership
-          const activeMembership = memberships.find(
-            (m: { role: string }) => m.role !== 'PENDING_MEMBER'
-          );
-          
-          if (activeMembership) {
-            // Determine destination based on role
-            if (activeMembership.role === 'ADMIN' || activeMembership.role === 'OWNER') {
-              const adminUrl = `${baseUrl}/${activeMembership.chapterSlug}/admin`;
-              console.log(`Redirecting admin to ${adminUrl}`);
-              return createSafeUrl(adminUrl);
-            } else {
-              const memberUrl = `${baseUrl}/${activeMembership.chapterSlug}/portal`;
-              console.log(`Redirecting member to ${memberUrl}`);
-              return createSafeUrl(memberUrl);
-            }
-          } else if (memberships.length > 0) {
-            // Handle pending members
-            const pendingUrl = `${baseUrl}/${memberships[0].chapterSlug}/pending`;
-            console.log(`Redirecting pending member to ${pendingUrl}`);
-            return createSafeUrl(pendingUrl);
-          }
-        }
-        
-        // Standard NextAuth redirect rules
+        // For relative URLs from the app
         if (url.startsWith("/")) {
-          return createSafeUrl(`${baseUrl}${url}`);
+          return `${baseUrl}${url}`;
         }
         
-        if (new URL(url).origin === baseUrl) {
-          return createSafeUrl(url);
+        // For absolute URLs from the same origin
+        try {
+          const urlOrigin = new URL(url).origin;
+          if (urlOrigin === baseUrl) {
+            return url;
+          }
+        } catch {
+          // URL parsing error, fall back to baseUrl
+          console.log('Invalid URL format, falling back to base URL');
         }
         
-        return createSafeUrl(baseUrl);
+        // Default fallback for safety
+        return baseUrl;
       } catch (error) {
         console.error('Error in redirect callback:', error);
-        return createSafeUrl(baseUrl); // Safe fallback in case of errors
+        return baseUrl; // Safe fallback in case of errors
       }
     }
   }

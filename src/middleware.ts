@@ -117,13 +117,13 @@ export const config = {
     "/:chapterSlug/pending/:path*", // Pending approval workflow is protected
     
     // Only check login page to prevent logged-in users from going there
-    // Remove signup from matcher to prevent redirect loops in production
+    // Skip signup, social-signup, and other auth pages to prevent redirect loops
     "/login",
     "/settings/:path*",
     
     // Skip authentication check for API routes, public routes, and static files
     // Note: We explicitly exclude the base chapterSlug route (e.g., /alpha-beta-gamma)
     // as these are public chapter pages accessible without authentication
-    "/((?!login|signup|forgot-password|reset-password|api/auth|api/chapters/check-slug|api/contact|_next/static|_next/image|images|favicon.ico|[a-zA-Z0-9-]+$).*)",
+    "/((?!login|signup|social-signup|forgot-password|reset-password|api/auth|api/chapters/check-slug|api/contact|_next/static|_next/image|images|favicon.ico|[a-zA-Z0-9-]+$).*)",
   ],
 };

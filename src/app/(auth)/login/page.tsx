@@ -55,9 +55,21 @@ function LoginForm() {
     // After successful login, we need to get the session data which includes memberships
     // NextAuth already populated the session with memberships data in the JWT callbacks
     try {
+      // Ensure we wait long enough for the session to be established
+      // This is important in Next.js 15 due to possible async timing issues
+      console.log('Waiting for session to stabilize before redirecting...');
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
       // Use a simple fetch to '/api/auth/session' to get the session data
       // This is a built-in NextAuth endpoint that returns the session
-      const sessionResponse = await fetch('/api/auth/session');
+      const sessionResponse = await fetch('/api/auth/session', {
+        // Add cache: 'no-store' to ensure we get the latest session
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      
       if (!sessionResponse.ok) {
         console.log('Session response not OK:', sessionResponse.status);
         router.push('/signup');
@@ -65,11 +77,17 @@ function LoginForm() {
       }
 
       const sessionData = await sessionResponse.json();
+      console.log('Session data received:', { 
+        hasUser: !!sessionData?.user,
+        email: sessionData?.user?.email,
+        isNewUser: sessionData?.user?.isNewUser,
+        hasMemberships: sessionData?.user?.memberships?.length > 0 
+      });
 
       // Check if this is a new Google user who needs to create a chapter
-      if (sessionData.user?.isNewGoogleUser) {
-        console.log('New Google user detected, redirecting to create chapter');
-        router.push('/signup?google=true');
+      if (sessionData.user?.isNewUser === true) {
+        console.log('New user detected, redirecting to social signup flow');
+        router.push('/social-signup?provider=credentials');
         return;
       }
 
@@ -100,7 +118,7 @@ function LoginForm() {
           console.log(`Redirecting member to /${activeMembership.chapterSlug}/portal`);
           router.push(`/${activeMembership.chapterSlug}/portal`);
         }
-      } else {
+      } else if (memberships.length > 0) {
         // If user only has pending memberships, redirect to their pending page
         console.log(`Redirecting pending member to /${memberships[0].chapterSlug}/pending`);
         router.push(`/${memberships[0].chapterSlug}/pending`);
@@ -260,28 +278,12 @@ function LoginForm() {
             onClick={async () => {
               setIsLoading(true);
               try {
-                // First, sign out to clear any existing session
-                // This ensures we don't have session mixing between different accounts
-                console.log('Clearing existing session before Google sign-in');
-                await fetch('/api/auth/signout', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    redirect: false,
-                    callbackUrl: '/login',
-                  }),
-                });
-                
-                // Small delay to ensure session is cleared
-                await new Promise(resolve => setTimeout(resolve, 500));
-                
-                // Now proceed with Google sign-in
-                console.log('Starting fresh Google sign-in flow');
+                // Directly proceed with Google sign-in without signing out first
+                // This prevents race conditions between signOut and signIn
+                console.log('Starting Google sign-in flow');
                 await signIn("google", {
                   redirect: true,
-                  callbackUrl: callbackUrl || "/", // Let NextAuth redirect callback handle routing
+                  callbackUrl: callbackUrl || "/social-signup", // Direct to social-signup to handle OAuth flow
                 });
               } catch (error) {
                 console.error('Google sign-in error:', error);
