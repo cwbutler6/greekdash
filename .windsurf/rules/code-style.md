@@ -14,4 +14,7 @@ trigger: always_on
 - Use UPPER_SNAKE_CASE for constants and environment variables.
 - Use Prettier for consistent code formatting.
 - Use Prisma generated types
+- Use the Prisma singleton from `@/lib/db` for all database operations
+- Always import Prisma types from `@/generated/prisma` (e.g., `import { User } from '@/generated/prisma'`)
+
 </code_style>
