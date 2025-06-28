@@ -269,6 +269,7 @@ export const financeService = {
     dueDate: Date;
     chapterId: string;
     userId: string;
+    duesPlanId: string; // Add this required field
   }) => {
     return db.duesPayment.create({
       data,
@@ -291,22 +292,24 @@ export const financeService = {
     dueDate: Date;
     chapterId: string;
     memberIds: string[];
+    duesPlanId: string; // Add this required field
   }) => {
-    const { amount, dueDate, chapterId, memberIds } = data;
+    const { amount, dueDate, chapterId, memberIds, duesPlanId } = data;
     
     const duesPayments = await db.$transaction(
       memberIds.map((userId) => 
         db.duesPayment.create({
           data: {
-            amount,
+            amount: amount ?? undefined,
             dueDate,
             chapterId,
             userId,
+            duesPlanId, // Add this field
           },
         })
       )
     );
-
+    
     return duesPayments;
   },
 
@@ -574,5 +577,32 @@ export const financeService = {
       },
       activeBudgetsCount,
     };
+  },
+  // Add method to check if user can pay specific dues
+  canUserPayDues: async (duesPaymentId: string, userId: string, chapterId: string) => {
+    const duesPayment = await db.duesPayment.findFirst({
+      where: {
+        id: duesPaymentId,
+        userId,
+        chapterId,
+      },
+      include: {
+        duesPlan: {
+          include: {
+            assignments: {
+              where: {
+                userId,
+                isActive: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  
+    if (!duesPayment) return false;
+  
+    // Allow payment if it's a manual assignment (no plan) or user has active assignment
+    return !duesPayment.duesPlan || duesPayment.duesPlan.assignments.length > 0;
   },
 };

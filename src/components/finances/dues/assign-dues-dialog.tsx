@@ -68,14 +68,25 @@ interface Member {
 // Form schema validation
 const assignDuesSchema = z.object({
   duesPlanId: z.string().min(1, 'Dues plan is required'),
-  memberIds: z.array(z.string()).min(1, 'At least one member must be selected'),
-  dueDate: z.date({
-    required_error: 'Due date is required',
-  }),
+  assignmentType: z.enum(['individual', 'role', 'all']),
+  memberIds: z.array(z.string()).optional(),
+  roles: z.array(z.enum(['MEMBER', 'ADMIN', 'OWNER'])).optional(),
+  dueDate: z.date(),
   notes: z.string().optional(),
   customAmount: z.coerce.number().optional(),
-  // Make this required to avoid TypeScript errors with the form
   useCustomAmount: z.boolean(),
+  createRecurring: z.boolean(), // Remove .default(false)
+  recurringFrequency: z.enum(['MONTHLY', 'QUARTERLY', 'SEMESTER', 'ANNUAL']).optional(),
+}).refine((data) => {
+  if (data.assignmentType === 'individual' && (!data.memberIds || data.memberIds.length === 0)) {
+    return false;
+  }
+  if (data.assignmentType === 'role' && (!data.roles || data.roles.length === 0)) {
+    return false;
+  }
+  return true;
+}, {
+  message: "Please select members or roles based on assignment type",
 });
 
 type AssignDuesFormValues = z.infer<typeof assignDuesSchema>;
@@ -103,15 +114,20 @@ export function AssignDuesDialog({
   const setIsOpen = onOpenChange || setDialogOpen;
 
   // Setup form
+  // Setup form
   const form = useForm<AssignDuesFormValues>({
     resolver: zodResolver(assignDuesSchema),
     defaultValues: {
       duesPlanId: '',
+      assignmentType: 'individual', // Add this
       memberIds: [],
+      roles: [], // Add this
       dueDate: new Date(),
       notes: '',
       customAmount: undefined,
       useCustomAmount: false,
+      createRecurring: false,
+      recurringFrequency: undefined, // Add this
     },
   });
 
@@ -233,9 +249,9 @@ export function AssignDuesDialog({
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select members">
-                          {field.value.length === 1
-                            ? members.find((m: Member) => m.id === field.value[0])?.name || 'One member'
-                            : field.value.length > 1
+                          {field.value && field.value.length === 1
+                            ? members.find((m: Member) => m.id === field.value?.[0])?.name || 'One member'
+                            : field.value && field.value.length > 1
                             ? `${field.value.length} members selected`
                             : 'Select members'}
                         </SelectValue>

@@ -48,9 +48,8 @@ interface DuesPayment {
   dueDate: Date;
   paidAt: Date | null;
   status: 'PENDING' | 'PAID' | 'OVERDUE' | 'WAIVED';
-  stripePaymentId: string | null;
-  stripeInvoiceId: string | null;
-  stripeCheckoutUrl: string | null;
+  stripePaymentIntentId: string | null;  // Changed from stripePaymentId
+  stripeCheckoutUrl: string | null;      // Remove stripeInvoiceId as it doesn't exist
   createdAt: Date;
   updatedAt: Date;
   notes: string | null;

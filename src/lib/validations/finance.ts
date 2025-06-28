@@ -35,6 +35,7 @@ export const duesPaymentSchema = z.object({
   dueDate: z.coerce.date(),
   userId: z.string().cuid("Invalid user ID"),
   chapterId: z.string().cuid("Invalid chapter ID"),
+  duesPlanId: z.string().cuid("Invalid dues plan ID"), // Add this required field
 });
 
 // Transaction schema
@@ -54,6 +55,7 @@ export const bulkDuesPaymentSchema = z.object({
   dueDate: z.coerce.date(),
   chapterId: z.string().cuid("Invalid chapter ID"),
   memberIds: z.array(z.string().cuid("Invalid member ID")),
+  duesPlanId: z.string().cuid("Invalid dues plan ID").optional(), // Make it optional to allow default plan lookup
 });
 
 // Schema for making a payment via Stripe

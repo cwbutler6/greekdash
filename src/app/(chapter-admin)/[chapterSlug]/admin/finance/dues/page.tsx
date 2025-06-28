@@ -40,6 +40,19 @@ export default async function DuesPage({
     orderBy: { dueDate: 'desc' },
   });
 
+  // Fetch dues plan assignments
+  const duesPlanAssignments = await prisma.duesPlanAssignment.findMany({
+    where: {
+      chapter: { slug: chapterSlug },
+    },
+    include: {
+      user: true,
+      duesPlan: true,
+      assignedByUser: true,
+    },
+    orderBy: { assignedAt: 'desc' },
+  });
+
   // Check if this chapter can use payments (has Stripe integration)
   const hasPaymentEnabled = Boolean(chapter.stripeCustomerId);
 
@@ -73,6 +86,7 @@ export default async function DuesPage({
       <Tabs defaultValue="plans">
         <TabsList>
           <TabsTrigger value="plans">Dues Plans</TabsTrigger>
+          <TabsTrigger value="assignments">Plan Assignments</TabsTrigger>
           <TabsTrigger value="payments">All Payments</TabsTrigger>
         </TabsList>
         
@@ -80,8 +94,47 @@ export default async function DuesPage({
           <DuesPlansTable plans={duesPlans} />
         </TabsContent>
         
+        <TabsContent value="assignments" className="mt-6">
+          {/* TODO: Create PlanAssignmentsTable component */}
+          <div className="rounded-md border">
+            <div className="p-4">
+              <h3 className="text-lg font-medium">Plan Assignments</h3>
+              <p className="text-sm text-muted-foreground mt-1">
+                View and manage dues plan assignments to members
+              </p>
+              {duesPlanAssignments.length === 0 ? (
+                <p className="text-center py-8 text-muted-foreground">
+                  No plan assignments found
+                </p>
+              ) : (
+                <div className="mt-4">
+                  {/* Temporary table structure until PlanAssignmentsTable is created */}
+                  <div className="space-y-2">
+                    {duesPlanAssignments.map((assignment) => (
+                      <div key={assignment.id} className="flex justify-between items-center p-2 border rounded">
+                        <div>
+                          <span className="font-medium">{assignment.user.name}</span>
+                          <span className="text-sm text-muted-foreground ml-2">
+                            - {assignment.duesPlan.name}
+                          </span>
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          Assigned by {assignment.assignedByUser.name}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </TabsContent>
+        
         <TabsContent value="payments" className="mt-6">
-          <DuesPaymentTable payments={duesPayments} hasPaymentEnabled={hasPaymentEnabled} />
+          <DuesPaymentTable 
+            payments={duesPayments}
+            hasPaymentEnabled={hasPaymentEnabled} 
+          />
         </TabsContent>
       </Tabs>
     </div>

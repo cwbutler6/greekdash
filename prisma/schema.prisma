@@ -77,6 +77,7 @@ model Chapter {
   transactions   Transaction[]  // One chapter has many transactions
   duesPlans      DuesPlan[]     // One chapter has many dues plans
   treasuryTransactions TreasuryTransaction[] // One chapter has many treasury transactions
+  duesPlanAssignments DuesPlanAssignment[] // One chapter has many dues plan assignments
 }
 
 model User {
@@ -110,6 +111,10 @@ model User {
   
   // Feedback relation
   feedbackRequests  FeedbackRequest[] // Feedback submitted by this user
+  
+  // Dues plan assignment relations
+  duesPlanAssignments DuesPlanAssignment[] // Dues plan assignments for this user
+  assignedDuesPlans   DuesPlanAssignment[] @relation("AssignedBy") // Dues plans assigned by this user
 }
 
 model Membership {
@@ -130,6 +135,37 @@ model Membership {
   @@unique([userId, chapterId]) // A user can only have one membership per chapter
   @@index([chapterId])
   @@index([userId])
+}
+
+model Profile {
+  id            String   @id @default(cuid())
+  phone         String?
+  major         String?
+  gradYear      Int?
+  bio           String?  @db.Text
+  discipline    String?
+  lineGroup     String?
+  lineName      String?
+  crossingDate  DateTime? // Add this field for crossing/initiation date
+  phoneVerified Boolean  @default(false)
+  profileImage  String?
+  schoolName    String?
+  smsEnabled    Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  // Foreign keys
+  membershipId String   @unique
+  userId       String
+  chapterId    String
+  
+  // Relations
+  membership   Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Restrict)
+  chapter      Chapter    @relation(fields: [chapterId], references: [id], onDelete: Restrict)
+  
+  @@index([userId])
+  @@index([chapterId])
 }
 
 model Subscription {
@@ -439,71 +475,43 @@ model DuesPlan {
   // Relations
   chapter        Chapter       @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   duesPayments   DuesPayment[]
+  assignments    DuesPlanAssignment[]
   
   @@index([chapterId])
 }
 
 model DuesPayment {
-  id             String       @id @default(cuid())
-  amount         Float
-  dueDate        DateTime
-  paidAt         DateTime?
-  status         DuesStatus   @default(PENDING)
-  stripePaymentId String?
-  stripeInvoiceId String?
-  stripeCheckoutUrl String?
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-  notes          String?      @db.Text
+  id              String      @id @default(cuid())
+  amount          Float
+  dueDate         DateTime
+  paidAt          DateTime?
+  status          DuesStatus  @default(PENDING)
+  notes           String?     @db.Text
+  customAmount    Float?      // Override amount if different from plan
+  
+  // Stripe integration
+  stripePaymentIntentId String?
+  stripeCheckoutUrl     String?
+  
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
   
   // Foreign keys
-  chapterId      String
-  userId         String
-  duesPlanId     String?
+  chapterId       String
+  userId          String
+  duesPlanId      String
   
   // Relations
-  chapter        Chapter      @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  duesPlan       DuesPlan?    @relation(fields: [duesPlanId], references: [id], onDelete: SetNull)
-  transaction    Transaction? @relation("duesTransaction")
+  chapter         Chapter     @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  duesPlan        DuesPlan    @relation(fields: [duesPlanId], references: [id], onDelete: Cascade)
+  transaction     Transaction? @relation("duesTransaction")
   
   @@index([chapterId])
   @@index([userId])
   @@index([duesPlanId])
-  @@index([dueDate])
-  @@index([paidAt])
   @@index([status])
-}
-
-model Profile {
-  id            String   @id @default(cuid())
-  phone         String?
-  phoneVerified Boolean  @default(false)
-  smsEnabled    Boolean  @default(true)
-  major         String?
-  discipline    String?  // Field of study/specialization
-  gradYear      Int?
-  schoolName    String?  // Individual's school (may differ from chapter's school)
-  bio           String?  @db.Text
-  lineName      String?  // Individual's line name in the fraternity/sorority
-  lineGroup     String?  // Name of the entire line/group that joined together
-  crossingDate  DateTime? // When they crossed/initiated
-  profileImage  String?  // URL to profile image
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  
-  // Foreign keys
-  membershipId String   @unique
-  userId      String
-  chapterId   String
-  
-  // Relations
-  membership  Membership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
-  user        User     @relation(fields: [userId], references: [id])
-  chapter     Chapter  @relation(fields: [chapterId], references: [id])
-  
-  @@index([userId])
-  @@index([chapterId])
+  @@index([dueDate])
 }
 
 model Transaction {
@@ -529,8 +537,6 @@ model Transaction {
   @@index([type])
   @@index([createdAt])
 }
-
-
 
 model FeedbackRequest {
   id          String    @id @default(cuid())
@@ -618,4 +624,28 @@ model TreasuryTransaction {
   @@index([chapterId])
   @@index([type])
   @@index([createdAt])
+}
+
+model DuesPlanAssignment {
+  id          String    @id @default(cuid())
+  isActive    Boolean   @default(true)
+  assignedAt  DateTime  @default(now())
+  assignedBy  String    // Admin who assigned the plan
+  notes       String?   @db.Text
+  
+  // Foreign keys
+  duesPlanId  String
+  userId      String
+  chapterId   String
+  
+  // Relations
+  duesPlan    DuesPlan  @relation(fields: [duesPlanId], references: [id], onDelete: Cascade)
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapter     Chapter   @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  assignedByUser User   @relation("AssignedBy", fields: [assignedBy], references: [id])
+  
+  @@unique([duesPlanId, userId, chapterId])
+  @@index([chapterId])
+  @@index([userId])
+  @@index([duesPlanId])
 }

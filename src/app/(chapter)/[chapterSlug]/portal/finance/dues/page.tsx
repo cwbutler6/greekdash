@@ -82,25 +82,55 @@ export default async function MemberDuesPage({
   if (!chapter) redirect('/login');
 
   // Fetch outstanding dues
+  // Fetch only dues payments for plans assigned to this user
   const outstandingDues = await prisma.duesPayment.findMany({
     where: {
+      chapter: { slug: chapterSlug },
       userId: user.id,
-      chapterId: chapter.id,
-      status: 'PENDING'
+      status: { in: ['PENDING', 'OVERDUE'] },
+      // Only include dues from assigned plans or manual assignments
+      OR: [
+        {
+          duesPlan: {
+            assignments: {
+              some: {
+                userId: user.id,
+                isActive: true,
+              },
+            },
+          },
+        },
+        {
+          duesPlanId: { equals: undefined }, // Manual dues assignments
+        },
+      ],
     },
-    include: {
-      duesPlan: true,
+    select: {
+      id: true,
+      amount: true,
+      dueDate: true,
+      paidAt: true,
+      status: true,
+      stripePaymentIntentId: true,  // Changed from stripePaymentId
+      stripeCheckoutUrl: true,      // This field exists, stripeInvoiceId does not
+      createdAt: true,
+      updatedAt: true,
+      notes: true,
       user: {
         select: {
           id: true,
           name: true,
-          email: true
-        }
-      }
+          email: true,
+        },
+      },
+      duesPlan: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
     },
-    orderBy: {
-      dueDate: 'asc'
-    }
+    orderBy: { dueDate: 'asc' },
   });
 
   // Fetch payment history
@@ -151,7 +181,7 @@ export default async function MemberDuesPage({
               dueDate: payment.dueDate,
               paidAt: payment.paidAt,
               status: payment.status as 'PAID' | 'WAIVED',
-              stripePaymentId: payment.stripePaymentId,
+              stripePaymentId: payment.stripePaymentIntentId,
               notes: payment.notes,
               duesPlan: payment.duesPlan ? {
                 id: payment.duesPlan.id,

@@ -175,8 +175,31 @@ export async function POST(
         chapterId: chapter.id, // Set the correct chapter ID
       });
       
+      // If duesPlanId is not provided, get the default active plan
+      let duesPlanId = validatedData.duesPlanId;
+      if (!duesPlanId) {
+        const defaultPlan = await prisma.duesPlan.findFirst({
+          where: {
+            chapterId: chapter.id,
+            isActive: true,
+          },
+        });
+        
+        if (!defaultPlan) {
+          return NextResponse.json(
+            { error: "No active dues plan found for this chapter" },
+            { status: 400 }
+          );
+        }
+        
+        duesPlanId = defaultPlan.id;
+      }
+      
       // Create bulk dues payments
-      const duesPayments = await financeService.createBulkDuesPayments(validatedData);
+      const duesPayments = await financeService.createBulkDuesPayments({
+        ...validatedData,
+        duesPlanId,
+      });
       return NextResponse.json(duesPayments, { status: 201 });
     } else {
       // Validate with single schema
@@ -184,6 +207,25 @@ export async function POST(
         ...body,
         chapterId: chapter.id, // Set the correct chapter ID
       });
+      
+      // If duesPlanId is not provided, get the default active plan
+      if (!validatedData.duesPlanId) {
+        const defaultPlan = await prisma.duesPlan.findFirst({
+          where: {
+            chapterId: chapter.id,
+            isActive: true,
+          },
+        });
+        
+        if (!defaultPlan) {
+          return NextResponse.json(
+            { error: "No active dues plan found for this chapter" },
+            { status: 400 }
+          );
+        }
+        
+        validatedData.duesPlanId = defaultPlan.id;
+      }
       
       // Create single dues payment
       const duesPayment = await financeService.createDuesPayment(validatedData);

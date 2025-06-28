@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.9.0
- * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
+ * Prisma Client JS version: 6.10.1
+ * Query Engine version: 9b628578b3b7cae625e8c927178f15a170e74a9c
  */
 Prisma.prismaVersion = {
-  client: "6.9.0",
-  engine: "81e4af48011447c3cc503a190e86995b66d2a28e"
+  client: "6.10.1",
+  engine: "9b628578b3b7cae625e8c927178f15a170e74a9c"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -156,6 +156,27 @@ exports.Prisma.MembershipScalarFieldEnum = {
   role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  userId: 'userId',
+  chapterId: 'chapterId'
+};
+
+exports.Prisma.ProfileScalarFieldEnum = {
+  id: 'id',
+  phone: 'phone',
+  major: 'major',
+  gradYear: 'gradYear',
+  bio: 'bio',
+  discipline: 'discipline',
+  lineGroup: 'lineGroup',
+  lineName: 'lineName',
+  crossingDate: 'crossingDate',
+  phoneVerified: 'phoneVerified',
+  profileImage: 'profileImage',
+  schoolName: 'schoolName',
+  smsEnabled: 'smsEnabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  membershipId: 'membershipId',
   userId: 'userId',
   chapterId: 'chapterId'
 };
@@ -314,36 +335,15 @@ exports.Prisma.DuesPaymentScalarFieldEnum = {
   dueDate: 'dueDate',
   paidAt: 'paidAt',
   status: 'status',
-  stripePaymentId: 'stripePaymentId',
-  stripeInvoiceId: 'stripeInvoiceId',
+  notes: 'notes',
+  customAmount: 'customAmount',
+  stripePaymentIntentId: 'stripePaymentIntentId',
   stripeCheckoutUrl: 'stripeCheckoutUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  notes: 'notes',
   chapterId: 'chapterId',
   userId: 'userId',
   duesPlanId: 'duesPlanId'
-};
-
-exports.Prisma.ProfileScalarFieldEnum = {
-  id: 'id',
-  phone: 'phone',
-  phoneVerified: 'phoneVerified',
-  smsEnabled: 'smsEnabled',
-  major: 'major',
-  discipline: 'discipline',
-  gradYear: 'gradYear',
-  schoolName: 'schoolName',
-  bio: 'bio',
-  lineName: 'lineName',
-  lineGroup: 'lineGroup',
-  crossingDate: 'crossingDate',
-  profileImage: 'profileImage',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  membershipId: 'membershipId',
-  userId: 'userId',
-  chapterId: 'chapterId'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
@@ -408,6 +408,17 @@ exports.Prisma.TreasuryTransactionScalarFieldEnum = {
   protocol: 'protocol',
   metadata: 'metadata',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.DuesPlanAssignmentScalarFieldEnum = {
+  id: 'id',
+  isActive: 'isActive',
+  assignedAt: 'assignedAt',
+  assignedBy: 'assignedBy',
+  notes: 'notes',
+  duesPlanId: 'duesPlanId',
+  userId: 'userId',
+  chapterId: 'chapterId'
 };
 
 exports.Prisma.SortOrder = {
@@ -518,6 +529,7 @@ exports.Prisma.ModelName = {
   Chapter: 'Chapter',
   User: 'User',
   Membership: 'Membership',
+  Profile: 'Profile',
   Subscription: 'Subscription',
   Account: 'Account',
   Session: 'Session',
@@ -532,12 +544,12 @@ exports.Prisma.ModelName = {
   Expense: 'Expense',
   DuesPlan: 'DuesPlan',
   DuesPayment: 'DuesPayment',
-  Profile: 'Profile',
   Transaction: 'Transaction',
   FeedbackRequest: 'FeedbackRequest',
   File: 'File',
   MessageLog: 'MessageLog',
-  TreasuryTransaction: 'TreasuryTransaction'
+  TreasuryTransaction: 'TreasuryTransaction',
+  DuesPlanAssignment: 'DuesPlanAssignment'
 };
 
 /**
