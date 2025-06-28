@@ -1,4 +1,4 @@
-import { vi } from 'vitest';
+import { describe, it, beforeEach, expect, vi } from 'vitest';
 import { MembershipRole } from '@/generated/prisma';
 
 // Import the modules under test - they're already mocked in setup-tests.ts

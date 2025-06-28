@@ -1,4 +1,5 @@
 // import { authOptions } from '../auth-options';
+import { describe, it } from "vitest";
 
 describe('Auth Options', () => {
   describe('Google Provider', () => {
