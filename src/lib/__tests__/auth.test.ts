@@ -212,6 +212,7 @@ vi.mocked(prisma.membership.findMany).mockResolvedValue(membershipsWithChapter);
         password: null,
         createdAt: new Date(),
         updatedAt: new Date(),
+        // @ts-expect-error - Adding memberships for test data
         memberships: [{
           id: 'membership-1',
           role: 'MEMBER', 

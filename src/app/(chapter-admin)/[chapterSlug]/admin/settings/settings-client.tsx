@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Paintbrush, RefreshCw } from 'lucide-react';
 
@@ -34,7 +35,10 @@ const formSchema = z.object({
   }),
   primaryColor: z.string().regex(/^#([0-9A-F]{6})$/i, {
     message: "Please enter a valid hex color code (e.g. #123ABC)",
-  })
+  }),
+  publicInfo: z.string().max(1000, {
+    message: "Public information must be less than 1000 characters.",
+  }).optional()
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -45,6 +49,7 @@ interface ChapterSettings {
   slug: string;
   joinCode: string;
   primaryColor?: string;
+  publicInfo?: string;
 }
 
 // Server action to update chapter settings
@@ -102,6 +107,7 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
     defaultValues: {
       name: '',
       primaryColor: '#4F46E5', // Default indigo color
+      publicInfo: '',
     }
   });
   
@@ -120,6 +126,7 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
         form.reset({
           name: data.chapter.name,
           primaryColor: data.chapter.primaryColor || '#4F46E5',
+          publicInfo: data.chapter.publicInfo || '',
         });
       } catch (error) {
         toast.error('Failed to load chapter settings');
@@ -140,6 +147,7 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
       const formData = new FormData();
       formData.append('name', values.name);
       formData.append('primaryColor', values.primaryColor);
+      formData.append('publicInfo', values.publicInfo || '');
       formData.append('chapterSlug', chapterSlug);
 
       await updateChapterSettings(formData);
@@ -235,6 +243,27 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
                     </FormControl>
                     <FormDescription>
                       Enter a hex color code (e.g. #123ABC) for your chapter&apos;s brand color.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="publicInfo"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Public Information</FormLabel>
+                    <FormControl>
+                      <Textarea 
+                        {...field}
+                        placeholder="Tell visitors about your chapter. This information will be displayed on your public page..."
+                        className="min-h-[120px] resize-none"
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      This information will be displayed on your chapter&apos;s public page. Describe your chapter&apos;s mission, values, and what makes it special. (Max 1000 characters)
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
