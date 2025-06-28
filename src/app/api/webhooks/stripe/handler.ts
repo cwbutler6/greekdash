@@ -86,12 +86,11 @@ export async function handleCheckoutSessionCompleted(event: Stripe.Event): Promi
       await prisma.subscription.create({
         data: {
           stripeSubscriptionId: session.subscription as string,
-          stripeCustomerId: session.customer as string,
           status: SubscriptionStatus.ACTIVE,
           plan: tier as PlanType,
-          membership: {
-            connect: { id: membershipId }
-          }
+          chapter: {
+            connect: { id: chapterId }
+          },
         }
       });
       
@@ -154,8 +153,9 @@ export async function handleSubscriptionUpdated(event: Stripe.Event): Promise<We
   try {
     // Find the subscription in our database
     const dbSubscription = await prisma.subscription.findUnique({
-      where: { 
-        stripeSubscriptionId: subscription.id 
+      where: {
+        id: subscription.id,
+        chapterId: subscription.id
       }
     });
     
@@ -183,7 +183,7 @@ export async function handleSubscriptionUpdated(event: Stripe.Event): Promise<We
     
     // Find membership
     const membership = await prisma.membership.findFirst({
-      where: { subscriptions: { some: { id: dbSubscription.id } } }
+      where: { chapterId: dbSubscription.chapterId }
     });
     
     // Also update the membership tier if found
@@ -217,9 +217,10 @@ export async function handleSubscriptionDeleted(event: Stripe.Event): Promise<We
   try {
     // Find the subscription in our database
     const dbSubscription = await prisma.subscription.findUnique({
-      where: { 
-        stripeSubscriptionId: subscription.id 
-      }
+      where: {
+        id: subscription.id,
+        chapterId: subscription.id
+      },
     });
     
     if (!dbSubscription) {
@@ -242,7 +243,7 @@ export async function handleSubscriptionDeleted(event: Stripe.Event): Promise<We
     
     // Find membership
     const membership = await prisma.membership.findFirst({
-      where: { subscriptions: { some: { id: dbSubscription.id } } }
+      where: { chapterId: dbSubscription.chapterId }
     });
     
     // Also downgrade the membership tier if found

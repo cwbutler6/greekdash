@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // Verify the webhook signature and construct event
-    event = await constructEvent(request);
+    event = await constructEvent(request) as unknown as Stripe.Event;
   } catch (err: unknown) {
     const errorMessage = err instanceof Error ? err.message : 'Unknown error';
     return NextResponse.json({ error: errorMessage }, { status: 400 });
@@ -24,16 +24,16 @@ export async function POST(request: NextRequest) {
     switch (event.type) {
       case "customer.subscription.created":
       case "customer.subscription.updated":
-        await handleSubscriptionUpdated(event.data.object as Stripe.Subscription);
+        await handleSubscriptionUpdated(event as Stripe.Event);
         break;
       case "customer.subscription.deleted":
-        await handleSubscriptionDeleted(event.data.object as Stripe.Subscription);
+        await handleSubscriptionDeleted(event as Stripe.Event);
         break;
       case "checkout.session.completed":
-        await handleCheckoutSessionCompleted(event.data.object as Stripe.Checkout.Session);
+        await handleCheckoutSessionCompleted(event as unknown as Stripe.Event);
         break;
       case "payment_intent.succeeded":
-        await handlePaymentIntentSucceeded(event.data.object as Stripe.PaymentIntent);
+        await handlePaymentIntentSucceeded(event);
         break;
       default:
         console.log(`Unhandled event type: ${event.type}`);

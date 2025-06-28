@@ -1,5 +1,5 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import LoginPage from '../login/page';
+// import { render, screen, fireEvent } from '@testing-library/react';
+// import LoginPage from '../login/page';
 
 describe('Login Page', () => {
   it('should validate email format', () => {

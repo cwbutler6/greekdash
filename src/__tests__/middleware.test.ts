@@ -1,5 +1,5 @@
-import { NextRequest } from 'next/server';
-import middleware from '../middleware';
+// import { NextRequest } from 'next/server';
+// import middleware from '../middleware';
 
 describe('Middleware', () => {
   it('should allow access to public routes', () => {

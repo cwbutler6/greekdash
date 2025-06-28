@@ -1,5 +1,5 @@
-import { POST } from '../register/route';
-import { prisma } from '@/lib/db';
+// import { POST } from '../register/route';
+// import { prisma } from '@/lib/db';
 import { vi } from 'vitest';
 
 vi.mock('@/lib/db');

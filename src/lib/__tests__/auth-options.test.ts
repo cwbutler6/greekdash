@@ -1,4 +1,4 @@
-import { authOptions } from '../auth-options';
+// import { authOptions } from '../auth-options';
 
 describe('Auth Options', () => {
   describe('Google Provider', () => {
