@@ -27,8 +27,8 @@ export default withAuth(
       
     // Redirect authenticated users away from login/signup pages
     if (isAuthenticated && (pathname === "/login" || pathname === "/signup")) {
-      // Redirect to an appropriate page based on user's membership
       if (token.memberships && token.memberships.length > 0) {
+        // User has memberships - redirect to their dashboard
         const membership = token.memberships[0];
         const redirectPath = membership.role === 'ADMIN' || membership.role === 'OWNER' 
           ? `/${membership.chapterSlug}/admin`
@@ -36,7 +36,13 @@ export default withAuth(
         
         return NextResponse.redirect(new URL(redirectPath, request.url));
       } else {
-        // If authenticated but no memberships, redirect to signup flow
+        // User is authenticated but has no memberships
+        if (pathname === "/login") {
+          // Allow access to login page - they might want to sign in as different user
+          // or there might be a UI element to help them join a chapter
+          return NextResponse.next();
+        }
+        // If they're trying to access signup, redirect them there
         return NextResponse.redirect(new URL("/signup", request.url));
       }
     }
