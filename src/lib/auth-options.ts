@@ -204,6 +204,30 @@ export const authOptions: NextAuthOptions = {
           chapterSlug: membership.chapter.slug,
         }));
         
+        // Get the profile image from the user's memberships
+        if (userMemberships.length > 0) {
+          const profileWithImage = await prisma.profile.findFirst({
+            where: {
+              membershipId: {
+                in: userMemberships.map(m => m.id)
+              },
+              profileImage: {
+                not: null
+              }
+            },
+            select: {
+              profileImage: true
+            },
+            orderBy: {
+              updatedAt: 'desc'
+            }
+          });
+          
+          if (profileWithImage?.profileImage) {
+            token.profileImage = profileWithImage.profileImage;
+          }
+        }
+        
         // Set new user flag based on whether we found any memberships
         console.log('Setting user token info', { 
           userId: user.id, 
@@ -211,7 +235,8 @@ export const authOptions: NextAuthOptions = {
           provider: account?.provider,
           hasMemberships: userMemberships.length > 0,
           membershipCount: userMemberships.length,
-          membershipIds: userMemberships.map((m) => m.id)
+          membershipIds: userMemberships.map((m) => m.id),
+          profileImage: token.profileImage
         });
         
         // Determine if this is a new user from a social login
@@ -256,11 +281,17 @@ export const authOptions: NextAuthOptions = {
           // Pass new user flag to client if present
           session.user.isNewUser = token.isNewUser === true;
           
+          // Add profile image from database if available
+          if (token.profileImage) {
+            session.user.image = token.profileImage as string;
+          }
+          
           // Log the session creation for debugging
           console.log('Session created/updated for user', { 
             userId: session.user.id,
             isNewUser: session.user.isNewUser,
-            tokenIsNewUser: token.isNewUser 
+            tokenIsNewUser: token.isNewUser,
+            profileImage: session.user.image
           });
         }
       }
