@@ -3,13 +3,25 @@ import { Prisma } from "@/generated/prisma";
 import { hash } from "bcrypt";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
+import { 
+  joinFormLimiter, 
+  getClientIP, 
+  validateHoneypot, 
+  validateFormTiming, 
+  sanitizeInput 
+} from "@/lib/rate-limit";
 
-// Validation schema for joining a chapter with join code
+// Enhanced validation schema with spam protection
 const joinChapterSchema = z.object({
-  fullName: z.string().min(3, "Full name must be at least 3 characters"),
+  fullName: z.string().min(3, "Full name must be at least 3 characters").max(100, "Name must be less than 100 characters"),
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(8, "Password must be at least 8 characters"),
   joinCode: z.string().min(1, "Join code is required"),
+  // Honeypot fields
+  website: z.string().optional(),
+  phone: z.string().optional(),
+  // Timing validation
+  formStartTime: z.number().optional(),
 });
 
 export async function POST(
@@ -18,6 +30,22 @@ export async function POST(
 ) {
   try {
     const { chapterSlug } = await params;
+    
+    // Get client IP for rate limiting
+    const clientIP = getClientIP(request);
+    
+    // Check rate limit (5 attempts per 15 minutes)
+    const rateLimitResult = joinFormLimiter.check(clientIP);
+    if (!rateLimitResult.allowed) {
+      return NextResponse.json(
+        { 
+          message: "Too many join attempts. Please try again later.",
+          rateLimited: true,
+          resetTime: rateLimitResult.resetTime
+        },
+        { status: 429 }
+      );
+    }
     
     // Parse request body
     const body = await request.json();
@@ -30,7 +58,28 @@ export async function POST(
       );
     }
     
-    const { fullName, email, password, joinCode } = validationResult.data;
+    const { fullName, email, password, joinCode, website, phone, formStartTime } = validationResult.data;
+    
+    // Validate honeypot fields
+    if (!validateHoneypot({ website, phone }, ['website', 'phone'])) {
+      console.warn(`Honeypot triggered for join form from IP: ${clientIP}`);
+      return NextResponse.json(
+        { message: "Invalid form submission" },
+        { status: 400 }
+      );
+    }
+    
+    // Validate form timing (minimum 3 seconds)
+    if (formStartTime && !validateFormTiming(formStartTime, 3000)) {
+      console.warn(`Form submitted too quickly from IP: ${clientIP}`);
+      return NextResponse.json(
+        { message: "Please take your time filling out the form" },
+        { status: 400 }
+      );
+    }
+    
+    // Sanitize inputs
+    const sanitizedFullName = sanitizeInput(fullName);
     
     // Check if chapter exists
     const chapter = await prisma.chapter.findUnique({
@@ -48,6 +97,29 @@ export async function POST(
     if (chapter.joinCode !== joinCode) {
       return NextResponse.json(
         { message: "Invalid join code" },
+        { status: 400 }
+      );
+    }
+    
+    // Check for duplicate submissions (same email + chapter within 1 hour)
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+    const recentSubmission = await prisma.user.findFirst({
+      where: {
+        email,
+        memberships: {
+          some: {
+            chapterId: chapter.id,
+            createdAt: {
+              gte: oneHourAgo,
+            },
+          },
+        },
+      },
+    });
+    
+    if (recentSubmission) {
+      return NextResponse.json(
+        { message: "A recent join request already exists for this email and chapter" },
         { status: 400 }
       );
     }
@@ -82,7 +154,7 @@ export async function POST(
         // Create user with included memberships
         user = await tx.user.create({
           data: {
-            name: fullName,
+            name: sanitizedFullName,
             email,
             password: hashedPassword,
           },
