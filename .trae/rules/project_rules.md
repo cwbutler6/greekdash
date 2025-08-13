@@ -57,6 +57,8 @@ These rules are specific to the project and should be followed consistently acro
 - Use Zod for validation.
 - Implement robust error handling for async operations using try/catch blocks.
 - Ensure type-safe data fetching and processing; define expected data shapes and validate them.
+- Avoid using 'any' type; prefer specific types whenever possible.
+- Always use DRY principle
 
 ## NextJS Rules
 

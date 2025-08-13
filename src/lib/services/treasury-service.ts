@@ -1,13 +1,13 @@
 import { db } from "@/lib/db";
 import { TreasuryTransactionType } from "@/generated/prisma";
-import { ethers } from "ethers";
+import { ethers, Wallet, JsonRpcProvider } from "ethers";
 import crypto from "crypto";
 
 // Configure providers for different networks
 const POLYGON_RPC_URL = process.env.POLYGON_RPC_URL || "https://polygon-rpc.com";
 const POLYGON_EXPLORER_URL = "https://polygonscan.com/tx/";
 const POLYGON_ADDRESS_EXPLORER_URL = "https://polygonscan.com/address/";
-const PROVIDER = new ethers.JsonRpcProvider(POLYGON_RPC_URL);
+const PROVIDER = new JsonRpcProvider(POLYGON_RPC_URL);
 
 // Encryption settings
 const ENCRYPTION_KEY = process.env.WALLET_ENCRYPTION_KEY || "defaultEncryptionKey123456789012345678901234"; // 32 bytes key
@@ -133,7 +133,7 @@ export const treasuryService = ({ chapterSlug }: TreasuryServiceOptions) => {
     // This wallet would be used in a real implementation to sign blockchain transactions
     // We're creating it here to demonstrate the pattern, though not using it in this demo
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const wallet = new ethers.Wallet(decryptedPrivateKey, PROVIDER);
+    const wallet = new Wallet(decryptedPrivateKey, PROVIDER);
 
     // In a real implementation, we would:
     // 1. Create a USDC contract instance
@@ -240,7 +240,7 @@ export const treasuryService = ({ chapterSlug }: TreasuryServiceOptions) => {
     }
 
     // Create a new wallet using ethers.js
-    const wallet = ethers.Wallet.createRandom();
+    const wallet = Wallet.createRandom();
 
     // Encrypt the private key before storing in database
     const encryptedPrivateKey = encryptPrivateKey(wallet.privateKey);
