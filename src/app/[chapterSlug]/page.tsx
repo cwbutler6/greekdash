@@ -217,6 +217,7 @@ export default async function PublicChapterPage({ params }: PublicChapterPagePro
                         className="object-cover"
                         loading={index < 6 ? 'eager' : 'lazy'}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        priority={index < 2}
                       />
                     </div>
                     {image.caption && (

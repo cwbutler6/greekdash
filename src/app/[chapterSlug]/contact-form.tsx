@@ -1,14 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
+// Enhanced schema with honeypot protection
 const contactSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name must be less than 100 characters'),
   email: z.string().email('Please enter a valid email address'),
-  message: z.string().min(10, 'Message must be at least 10 characters').max(1000, 'Message must be less than 1000 characters'),
+  message: z.string().min(10, 'Message must be at least 10 characters').max(2000, 'Message must be less than 2000 characters'),
+  // Honeypot fields
+  website: z.string().max(0).optional(),
+  phone: z.string().max(0).optional(),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -20,7 +24,8 @@ type ContactFormProps = {
 
 export default function ContactForm({ chapterSlug, primaryColor }: ContactFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error' | 'rate-limited'>('idle');
+  const [formStartTime, setFormStartTime] = useState<number>(0);
 
   const {
     register,
@@ -29,9 +34,25 @@ export default function ContactForm({ chapterSlug, primaryColor }: ContactFormPr
     formState: { errors },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
+    defaultValues: {
+      website: '',
+      phone: '',
+    },
   });
 
+  // Record form start time
+  useEffect(() => {
+    setFormStartTime(Date.now());
+  }, []);
+
   const onSubmit = async (data: ContactFormData) => {
+    // Check honeypot fields
+    if (data.website || data.phone) {
+      // Silently fail for bots
+      setSubmitStatus('success');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -44,12 +65,16 @@ export default function ContactForm({ chapterSlug, primaryColor }: ContactFormPr
         body: JSON.stringify({
           ...data,
           chapterSlug,
+          formStartTime,
         }),
       });
 
       if (response.ok) {
         setSubmitStatus('success');
         reset();
+        setFormStartTime(Date.now()); // Reset for potential new submission
+      } else if (response.status === 429) {
+        setSubmitStatus('rate-limited');
       } else {
         setSubmitStatus('error');
       }
@@ -115,6 +140,24 @@ export default function ContactForm({ chapterSlug, primaryColor }: ContactFormPr
           )}
         </div>
 
+        {/* Honeypot fields - hidden from users */}
+        <div style={{ display: 'none' }}>
+          <input
+            type="text"
+            {...register('website')}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
+          <input
+            type="text"
+            {...register('phone')}
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+          />
+        </div>
+
         <button
           type="submit"
           disabled={isSubmitting}
@@ -128,6 +171,14 @@ export default function ContactForm({ chapterSlug, primaryColor }: ContactFormPr
           <div className="p-4 bg-green-50 border border-green-200 rounded-md">
             <p className="text-green-800 text-sm">
               ✅ Thank you for your message! We&apos;ll get back to you soon.
+            </p>
+          </div>
+        )}
+
+        {submitStatus === 'rate-limited' && (
+          <div className="p-4 bg-orange-50 border border-orange-200 rounded-md">
+            <p className="text-orange-800 text-sm">
+              ⏱️ You&apos;ve submitted too many messages recently. Please wait 15 minutes before trying again.
             </p>
           </div>
         )}
