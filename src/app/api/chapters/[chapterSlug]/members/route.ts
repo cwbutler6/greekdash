@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { requireChapterAccess } from "@/lib/auth";
-import { MembershipRole } from "@/generated/prisma";
+import { requireChapterAdmin } from "@/lib/auth";
 
 // API route to get all members of a chapter
 export async function GET(
@@ -9,65 +8,41 @@ export async function GET(
   { params }: { params: Promise<{ chapterSlug: string }> }
 ) {
   try {
-    // In Next.js 15, params is a Promise that needs to be awaited
     const { chapterSlug } = await params;
+    const url = new URL(request.url);
+    const includeInactive = url.searchParams.get('includeInactive') === 'true';
+    
+    // Check if user has admin access to the chapter
+    await requireChapterAdmin(chapterSlug);
 
-    if (!chapterSlug) {
-      return NextResponse.json(
-        { error: "Chapter slug is required" },
-        { status: 400 }
-      );
-    }
-
-    // Get the authenticated user and membership with access check
-    const { membership } = await requireChapterAccess(chapterSlug);
-
-    // Check if the user has admin privileges
-    if (
-      membership.role !== MembershipRole.ADMIN &&
-      membership.role !== MembershipRole.OWNER
-    ) {
-      return NextResponse.json(
-        { error: "You must be an admin to access this resource" },
-        { status: 403 }
-      );
-    }
-
-    // Find the chapter
-    const chapter = await prisma.chapter.findUnique({
-      where: { slug: chapterSlug },
+    // Get all members of the chapter
+    const members = await prisma.membership.findMany({
+      where: {
+        chapter: { slug: chapterSlug },
+        ...(includeInactive ? {} : { isActive: true }),
+      },
       include: {
-        memberships: {
-          include: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
-                image: true,
-              },
-            },
+        user: true,
+        profile: true,
+        deactivatedByUser: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
           },
         },
       },
+      orderBy: [
+        { isActive: 'desc' }, // Active members first
+        { user: { name: 'asc' } },
+      ],
     });
 
-    if (!chapter) {
-      return NextResponse.json(
-        { error: "Chapter not found" },
-        { status: 404 }
-      );
-    }
-
-    // Return the members
-    return NextResponse.json({
-      success: true,
-      members: chapter.memberships,
-    });
+    return NextResponse.json({ members });
   } catch (error) {
-    console.error("Error fetching chapter members:", error);
+    console.error('Error fetching members:', error);
     return NextResponse.json(
-      { error: "Failed to fetch chapter members" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

@@ -154,6 +154,9 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.MembershipScalarFieldEnum = {
   id: 'id',
   role: 'role',
+  isActive: 'isActive',
+  deactivatedAt: 'deactivatedAt',
+  deactivatedBy: 'deactivatedBy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',

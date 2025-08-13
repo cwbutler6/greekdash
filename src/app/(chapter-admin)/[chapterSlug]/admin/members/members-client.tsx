@@ -35,16 +35,24 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { Search } from 'lucide-react';
+import { Search, MoreHorizontal, UserX, UserCheck } from 'lucide-react';
 
 // Define the member type
 interface Member {
   id: string;
   userId: string;
   role: MembershipRole;
+  isActive: boolean;
+  deactivatedAt: Date | null;
   user: {
     id: string;
     name: string | null;
@@ -97,18 +105,42 @@ async function removeMember(formData: FormData) {
   }
 }
 
+// Server action to deactivate/reactivate member
+async function toggleMemberStatus(formData: FormData) {
+  try {
+    const response = await fetch('/api/memberships/deactivate', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to update member status');
+    }
+
+    return await response.json();
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+    throw new Error('An unexpected error occurred');
+  }
+}
+
 export default function MembersClient({ chapterSlug }: { chapterSlug: string }) {
-  // const router = useRouter(); // Uncomment if needed for navigation
   const [members, setMembers] = useState<Member[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [memberToRemove, setMemberToRemove] = useState<Member | null>(null);
+  const [memberToToggle, setMemberToToggle] = useState<Member | null>(null);
+  const [showInactive, setShowInactive] = useState(false);
 
   // Fetch members data on component mount
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await fetch(`/api/chapters/${chapterSlug}/members`);
+        const url = `/api/chapters/${chapterSlug}/members${showInactive ? '?includeInactive=true' : ''}`;
+        const response = await fetch(url);
         if (!response.ok) {
           throw new Error('Failed to fetch members');
         }
@@ -123,7 +155,7 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
     };
 
     fetchMembers();
-  }, [chapterSlug]);
+  }, [chapterSlug, showInactive]);
 
   // Handle role update
   const handleRoleUpdate = async (memberId: string, newRole: MembershipRole) => {
@@ -173,6 +205,38 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
     }
   };
 
+  // Handle member deactivation/reactivation
+  const handleToggleMemberStatus = async () => {
+    if (!memberToToggle) return;
+    
+    try {
+      const formData = new FormData();
+      formData.append('memberId', memberToToggle.id);
+      formData.append('action', memberToToggle.isActive ? 'deactivate' : 'reactivate');
+
+      await toggleMemberStatus(formData);
+      
+      // Update the local state
+      setMembers(prevMembers => 
+        prevMembers.map(member => 
+          member.id === memberToToggle.id 
+            ? { 
+                ...member, 
+                isActive: !member.isActive,
+                deactivatedAt: member.isActive ? new Date() : null
+              } 
+            : member
+        )
+      );
+      
+      toast.success(`Member ${memberToToggle.isActive ? 'deactivated' : 'reactivated'}`);
+      setMemberToToggle(null);
+    } catch (error) {
+      toast.error(`Failed to ${memberToToggle.isActive ? 'deactivate' : 'reactivate'} member`);
+      console.error(error);
+    }
+  };
+
   // Filter members by search query
   const filteredMembers = members.filter(member => {
     const searchLower = searchQuery.toLowerCase();
@@ -192,7 +256,7 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center mb-4">
+          <div className="flex items-center justify-between mb-4">
             <div className="relative flex-1 max-w-sm">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
               <Input
@@ -202,6 +266,15 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant={showInactive ? "default" : "outline"}
+                size="sm"
+                onClick={() => setShowInactive(!showInactive)}
+              >
+                {showInactive ? 'Hide Inactive' : 'Show Inactive'}
+              </Button>
             </div>
           </div>
 
@@ -216,6 +289,7 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
                   <TableRow>
                     <TableHead>Name</TableHead>
                     <TableHead>Email</TableHead>
+                    <TableHead>Status</TableHead>
                     <TableHead>Role</TableHead>
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
@@ -223,7 +297,7 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
                 <TableBody>
                   {filteredMembers.length === 0 ? (
                     <TableRow>
-                      <TableCell colSpan={4} className="text-center py-6 text-gray-500">
+                      <TableCell colSpan={5} className="text-center py-6 text-gray-500">
                         {searchQuery 
                           ? 'No members found matching your search' 
                           : 'No members found in this chapter'}
@@ -231,17 +305,23 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
                     </TableRow>
                   ) : (
                     filteredMembers.map((member) => (
-                      <TableRow key={member.id}>
+                      <TableRow key={member.id} className={!member.isActive ? 'opacity-60' : ''}>
                         <TableCell className="font-medium">
                           {member.user.name || 'Unknown'}
                         </TableCell>
                         <TableCell>{member.user.email || 'No email'}</TableCell>
+                        <TableCell>
+                          <Badge variant={member.isActive ? "default" : "secondary"}>
+                            {member.isActive ? 'Active' : 'Inactive'}
+                          </Badge>
+                        </TableCell>
                         <TableCell>
                           <Select
                             defaultValue={member.role}
                             onValueChange={(value: string) => 
                               handleRoleUpdate(member.id, value as MembershipRole)
                             }
+                            disabled={!member.isActive}
                           >
                             <SelectTrigger className="w-32">
                               <SelectValue placeholder="Select role" />
@@ -254,32 +334,38 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
                           </Select>
                         </TableCell>
                         <TableCell className="text-right">
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button 
-                                variant="destructive" 
-                                size="sm"
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="ghost" className="h-8 w-8 p-0">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem
+                                onClick={() => setMemberToToggle(member)}
+                                className="cursor-pointer"
+                              >
+                                {member.isActive ? (
+                                  <>
+                                    <UserX className="mr-2 h-4 w-4" />
+                                    Deactivate
+                                  </>
+                                ) : (
+                                  <>
+                                    <UserCheck className="mr-2 h-4 w-4" />
+                                    Reactivate
+                                  </>
+                                )}
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
                                 onClick={() => setMemberToRemove(member)}
+                                className="cursor-pointer text-red-600"
                               >
                                 Remove
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>Remove Member</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  Are you sure you want to remove {member.user.name || 'this member'} from the chapter?
-                                  This action cannot be undone.
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction onClick={handleRemoveMember}>
-                                  Remove
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         </TableCell>
                       </TableRow>
                     ))
@@ -290,6 +376,48 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
           )}
         </CardContent>
       </Card>
+
+      {/* Deactivation/Reactivation Dialog */}
+      <AlertDialog open={!!memberToToggle} onOpenChange={() => setMemberToToggle(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {memberToToggle?.isActive ? 'Deactivate' : 'Reactivate'} Member
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to {memberToToggle?.isActive ? 'deactivate' : 'reactivate'} {memberToToggle?.user.name || 'this member'}?
+              {memberToToggle?.isActive 
+                ? ' They will lose access to the chapter but their data will be preserved.' 
+                : ' They will regain access to the chapter.'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleToggleMemberStatus}>
+              {memberToToggle?.isActive ? 'Deactivate' : 'Reactivate'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Removal Dialog */}
+      <AlertDialog open={!!memberToRemove} onOpenChange={() => setMemberToRemove(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove Member</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to remove {memberToRemove?.user.name || 'this member'} from the chapter?
+              This action cannot be undone and will permanently delete their data.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleRemoveMember} className="bg-red-600 hover:bg-red-700">
+              Remove
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

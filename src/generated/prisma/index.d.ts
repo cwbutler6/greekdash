@@ -3299,6 +3299,7 @@ export namespace Prisma {
     createdEvents: number
     rsvps: number
     auditLogs: number
+    deactivatedMemberships: number
     submittedExpenses: number
     approvedExpenses: number
     duesPayments: number
@@ -3318,6 +3319,7 @@ export namespace Prisma {
     createdEvents?: boolean | UserCountOutputTypeCountCreatedEventsArgs
     rsvps?: boolean | UserCountOutputTypeCountRsvpsArgs
     auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
+    deactivatedMemberships?: boolean | UserCountOutputTypeCountDeactivatedMembershipsArgs
     submittedExpenses?: boolean | UserCountOutputTypeCountSubmittedExpensesArgs
     approvedExpenses?: boolean | UserCountOutputTypeCountApprovedExpensesArgs
     duesPayments?: boolean | UserCountOutputTypeCountDuesPaymentsArgs
@@ -3399,6 +3401,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAuditLogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuditLogWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDeactivatedMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MembershipWhereInput
   }
 
   /**
@@ -5461,6 +5470,7 @@ export namespace Prisma {
     createdEvents?: boolean | User$createdEventsArgs<ExtArgs>
     rsvps?: boolean | User$rsvpsArgs<ExtArgs>
     auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
+    deactivatedMemberships?: boolean | User$deactivatedMembershipsArgs<ExtArgs>
     submittedExpenses?: boolean | User$submittedExpensesArgs<ExtArgs>
     approvedExpenses?: boolean | User$approvedExpensesArgs<ExtArgs>
     duesPayments?: boolean | User$duesPaymentsArgs<ExtArgs>
@@ -5515,6 +5525,7 @@ export namespace Prisma {
     createdEvents?: boolean | User$createdEventsArgs<ExtArgs>
     rsvps?: boolean | User$rsvpsArgs<ExtArgs>
     auditLogs?: boolean | User$auditLogsArgs<ExtArgs>
+    deactivatedMemberships?: boolean | User$deactivatedMembershipsArgs<ExtArgs>
     submittedExpenses?: boolean | User$submittedExpensesArgs<ExtArgs>
     approvedExpenses?: boolean | User$approvedExpensesArgs<ExtArgs>
     duesPayments?: boolean | User$duesPaymentsArgs<ExtArgs>
@@ -5539,6 +5550,7 @@ export namespace Prisma {
       createdEvents: Prisma.$EventPayload<ExtArgs>[]
       rsvps: Prisma.$EventRSVPPayload<ExtArgs>[]
       auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
+      deactivatedMemberships: Prisma.$MembershipPayload<ExtArgs>[]
       submittedExpenses: Prisma.$ExpensePayload<ExtArgs>[]
       approvedExpenses: Prisma.$ExpensePayload<ExtArgs>[]
       duesPayments: Prisma.$DuesPaymentPayload<ExtArgs>[]
@@ -5959,6 +5971,7 @@ export namespace Prisma {
     createdEvents<T extends User$createdEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     rsvps<T extends User$rsvpsArgs<ExtArgs> = {}>(args?: Subset<T, User$rsvpsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventRSVPPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     auditLogs<T extends User$auditLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    deactivatedMemberships<T extends User$deactivatedMembershipsArgs<ExtArgs> = {}>(args?: Subset<T, User$deactivatedMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     submittedExpenses<T extends User$submittedExpensesArgs<ExtArgs> = {}>(args?: Subset<T, User$submittedExpensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     approvedExpenses<T extends User$approvedExpensesArgs<ExtArgs> = {}>(args?: Subset<T, User$approvedExpensesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     duesPayments<T extends User$duesPaymentsArgs<ExtArgs> = {}>(args?: Subset<T, User$duesPaymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DuesPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -6607,6 +6620,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.deactivatedMemberships
+   */
+  export type User$deactivatedMembershipsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Membership
+     */
+    select?: MembershipSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Membership
+     */
+    omit?: MembershipOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MembershipInclude<ExtArgs> | null
+    where?: MembershipWhereInput
+    orderBy?: MembershipOrderByWithRelationInput | MembershipOrderByWithRelationInput[]
+    cursor?: MembershipWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MembershipScalarFieldEnum | MembershipScalarFieldEnum[]
+  }
+
+  /**
    * User.submittedExpenses
    */
   export type User$submittedExpensesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6806,6 +6843,9 @@ export namespace Prisma {
   export type MembershipMinAggregateOutputType = {
     id: string | null
     role: $Enums.MembershipRole | null
+    isActive: boolean | null
+    deactivatedAt: Date | null
+    deactivatedBy: string | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
@@ -6815,6 +6855,9 @@ export namespace Prisma {
   export type MembershipMaxAggregateOutputType = {
     id: string | null
     role: $Enums.MembershipRole | null
+    isActive: boolean | null
+    deactivatedAt: Date | null
+    deactivatedBy: string | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
@@ -6824,6 +6867,9 @@ export namespace Prisma {
   export type MembershipCountAggregateOutputType = {
     id: number
     role: number
+    isActive: number
+    deactivatedAt: number
+    deactivatedBy: number
     createdAt: number
     updatedAt: number
     userId: number
@@ -6835,6 +6881,9 @@ export namespace Prisma {
   export type MembershipMinAggregateInputType = {
     id?: true
     role?: true
+    isActive?: true
+    deactivatedAt?: true
+    deactivatedBy?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -6844,6 +6893,9 @@ export namespace Prisma {
   export type MembershipMaxAggregateInputType = {
     id?: true
     role?: true
+    isActive?: true
+    deactivatedAt?: true
+    deactivatedBy?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -6853,6 +6905,9 @@ export namespace Prisma {
   export type MembershipCountAggregateInputType = {
     id?: true
     role?: true
+    isActive?: true
+    deactivatedAt?: true
+    deactivatedBy?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -6935,6 +6990,9 @@ export namespace Prisma {
   export type MembershipGroupByOutputType = {
     id: string
     role: $Enums.MembershipRole
+    isActive: boolean
+    deactivatedAt: Date | null
+    deactivatedBy: string | null
     createdAt: Date
     updatedAt: Date
     userId: string
@@ -6961,6 +7019,9 @@ export namespace Prisma {
   export type MembershipSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     role?: boolean
+    isActive?: boolean
+    deactivatedAt?: boolean
+    deactivatedBy?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -6968,52 +7029,67 @@ export namespace Prisma {
     user?: boolean | UserDefaultArgs<ExtArgs>
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
     profile?: boolean | Membership$profileArgs<ExtArgs>
+    deactivatedByUser?: boolean | Membership$deactivatedByUserArgs<ExtArgs>
   }, ExtArgs["result"]["membership"]>
 
   export type MembershipSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     role?: boolean
+    isActive?: boolean
+    deactivatedAt?: boolean
+    deactivatedBy?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
     chapterId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    deactivatedByUser?: boolean | Membership$deactivatedByUserArgs<ExtArgs>
   }, ExtArgs["result"]["membership"]>
 
   export type MembershipSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     role?: boolean
+    isActive?: boolean
+    deactivatedAt?: boolean
+    deactivatedBy?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
     chapterId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    deactivatedByUser?: boolean | Membership$deactivatedByUserArgs<ExtArgs>
   }, ExtArgs["result"]["membership"]>
 
   export type MembershipSelectScalar = {
     id?: boolean
     role?: boolean
+    isActive?: boolean
+    deactivatedAt?: boolean
+    deactivatedBy?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
     chapterId?: boolean
   }
 
-  export type MembershipOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "role" | "createdAt" | "updatedAt" | "userId" | "chapterId", ExtArgs["result"]["membership"]>
+  export type MembershipOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "role" | "isActive" | "deactivatedAt" | "deactivatedBy" | "createdAt" | "updatedAt" | "userId" | "chapterId", ExtArgs["result"]["membership"]>
   export type MembershipInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
     profile?: boolean | Membership$profileArgs<ExtArgs>
+    deactivatedByUser?: boolean | Membership$deactivatedByUserArgs<ExtArgs>
   }
   export type MembershipIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    deactivatedByUser?: boolean | Membership$deactivatedByUserArgs<ExtArgs>
   }
   export type MembershipIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    deactivatedByUser?: boolean | Membership$deactivatedByUserArgs<ExtArgs>
   }
 
   export type $MembershipPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7022,10 +7098,14 @@ export namespace Prisma {
       user: Prisma.$UserPayload<ExtArgs>
       chapter: Prisma.$ChapterPayload<ExtArgs>
       profile: Prisma.$ProfilePayload<ExtArgs> | null
+      deactivatedByUser: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       role: $Enums.MembershipRole
+      isActive: boolean
+      deactivatedAt: Date | null
+      deactivatedBy: string | null
       createdAt: Date
       updatedAt: Date
       userId: string
@@ -7427,6 +7507,7 @@ export namespace Prisma {
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     profile<T extends Membership$profileArgs<ExtArgs> = {}>(args?: Subset<T, Membership$profileArgs<ExtArgs>>): Prisma__ProfileClient<$Result.GetResult<Prisma.$ProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    deactivatedByUser<T extends Membership$deactivatedByUserArgs<ExtArgs> = {}>(args?: Subset<T, Membership$deactivatedByUserArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7458,6 +7539,9 @@ export namespace Prisma {
   interface MembershipFieldRefs {
     readonly id: FieldRef<"Membership", 'String'>
     readonly role: FieldRef<"Membership", 'MembershipRole'>
+    readonly isActive: FieldRef<"Membership", 'Boolean'>
+    readonly deactivatedAt: FieldRef<"Membership", 'DateTime'>
+    readonly deactivatedBy: FieldRef<"Membership", 'String'>
     readonly createdAt: FieldRef<"Membership", 'DateTime'>
     readonly updatedAt: FieldRef<"Membership", 'DateTime'>
     readonly userId: FieldRef<"Membership", 'String'>
@@ -7874,6 +7958,25 @@ export namespace Prisma {
      */
     include?: ProfileInclude<ExtArgs> | null
     where?: ProfileWhereInput
+  }
+
+  /**
+   * Membership.deactivatedByUser
+   */
+  export type Membership$deactivatedByUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -32090,6 +32193,9 @@ export namespace Prisma {
   export const MembershipScalarFieldEnum: {
     id: 'id',
     role: 'role',
+    isActive: 'isActive',
+    deactivatedAt: 'deactivatedAt',
+    deactivatedBy: 'deactivatedBy',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     userId: 'userId',
@@ -32889,6 +32995,7 @@ export namespace Prisma {
     createdEvents?: EventListRelationFilter
     rsvps?: EventRSVPListRelationFilter
     auditLogs?: AuditLogListRelationFilter
+    deactivatedMemberships?: MembershipListRelationFilter
     submittedExpenses?: ExpenseListRelationFilter
     approvedExpenses?: ExpenseListRelationFilter
     duesPayments?: DuesPaymentListRelationFilter
@@ -32916,6 +33023,7 @@ export namespace Prisma {
     createdEvents?: EventOrderByRelationAggregateInput
     rsvps?: EventRSVPOrderByRelationAggregateInput
     auditLogs?: AuditLogOrderByRelationAggregateInput
+    deactivatedMemberships?: MembershipOrderByRelationAggregateInput
     submittedExpenses?: ExpenseOrderByRelationAggregateInput
     approvedExpenses?: ExpenseOrderByRelationAggregateInput
     duesPayments?: DuesPaymentOrderByRelationAggregateInput
@@ -32946,6 +33054,7 @@ export namespace Prisma {
     createdEvents?: EventListRelationFilter
     rsvps?: EventRSVPListRelationFilter
     auditLogs?: AuditLogListRelationFilter
+    deactivatedMemberships?: MembershipListRelationFilter
     submittedExpenses?: ExpenseListRelationFilter
     approvedExpenses?: ExpenseListRelationFilter
     duesPayments?: DuesPaymentListRelationFilter
@@ -32989,6 +33098,9 @@ export namespace Prisma {
     NOT?: MembershipWhereInput | MembershipWhereInput[]
     id?: StringFilter<"Membership"> | string
     role?: EnumMembershipRoleFilter<"Membership"> | $Enums.MembershipRole
+    isActive?: BoolFilter<"Membership"> | boolean
+    deactivatedAt?: DateTimeNullableFilter<"Membership"> | Date | string | null
+    deactivatedBy?: StringNullableFilter<"Membership"> | string | null
     createdAt?: DateTimeFilter<"Membership"> | Date | string
     updatedAt?: DateTimeFilter<"Membership"> | Date | string
     userId?: StringFilter<"Membership"> | string
@@ -32996,11 +33108,15 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
     profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
+    deactivatedByUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type MembershipOrderByWithRelationInput = {
     id?: SortOrder
     role?: SortOrder
+    isActive?: SortOrder
+    deactivatedAt?: SortOrderInput | SortOrder
+    deactivatedBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -33008,6 +33124,7 @@ export namespace Prisma {
     user?: UserOrderByWithRelationInput
     chapter?: ChapterOrderByWithRelationInput
     profile?: ProfileOrderByWithRelationInput
+    deactivatedByUser?: UserOrderByWithRelationInput
   }
 
   export type MembershipWhereUniqueInput = Prisma.AtLeast<{
@@ -33017,6 +33134,9 @@ export namespace Prisma {
     OR?: MembershipWhereInput[]
     NOT?: MembershipWhereInput | MembershipWhereInput[]
     role?: EnumMembershipRoleFilter<"Membership"> | $Enums.MembershipRole
+    isActive?: BoolFilter<"Membership"> | boolean
+    deactivatedAt?: DateTimeNullableFilter<"Membership"> | Date | string | null
+    deactivatedBy?: StringNullableFilter<"Membership"> | string | null
     createdAt?: DateTimeFilter<"Membership"> | Date | string
     updatedAt?: DateTimeFilter<"Membership"> | Date | string
     userId?: StringFilter<"Membership"> | string
@@ -33024,11 +33144,15 @@ export namespace Prisma {
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
     profile?: XOR<ProfileNullableScalarRelationFilter, ProfileWhereInput> | null
+    deactivatedByUser?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id" | "userId_chapterId">
 
   export type MembershipOrderByWithAggregationInput = {
     id?: SortOrder
     role?: SortOrder
+    isActive?: SortOrder
+    deactivatedAt?: SortOrderInput | SortOrder
+    deactivatedBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -33044,6 +33168,9 @@ export namespace Prisma {
     NOT?: MembershipScalarWhereWithAggregatesInput | MembershipScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Membership"> | string
     role?: EnumMembershipRoleWithAggregatesFilter<"Membership"> | $Enums.MembershipRole
+    isActive?: BoolWithAggregatesFilter<"Membership"> | boolean
+    deactivatedAt?: DateTimeNullableWithAggregatesFilter<"Membership"> | Date | string | null
+    deactivatedBy?: StringNullableWithAggregatesFilter<"Membership"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Membership"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Membership"> | Date | string
     userId?: StringWithAggregatesFilter<"Membership"> | string
@@ -34989,6 +35116,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -35016,6 +35144,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -35043,6 +35172,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -35070,6 +35200,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -35115,16 +35246,22 @@ export namespace Prisma {
   export type MembershipCreateInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutMembershipsInput
     chapter: ChapterCreateNestedOneWithoutMembershipsInput
     profile?: ProfileCreateNestedOneWithoutMembershipInput
+    deactivatedByUser?: UserCreateNestedOneWithoutDeactivatedMembershipsInput
   }
 
   export type MembershipUncheckedCreateInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
+    deactivatedBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
@@ -35135,16 +35272,22 @@ export namespace Prisma {
   export type MembershipUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
     chapter?: ChapterUpdateOneRequiredWithoutMembershipsNestedInput
     profile?: ProfileUpdateOneWithoutMembershipNestedInput
+    deactivatedByUser?: UserUpdateOneWithoutDeactivatedMembershipsNestedInput
   }
 
   export type MembershipUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deactivatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -35155,6 +35298,9 @@ export namespace Prisma {
   export type MembershipCreateManyInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
+    deactivatedBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
@@ -35164,6 +35310,8 @@ export namespace Prisma {
   export type MembershipUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -35171,6 +35319,9 @@ export namespace Prisma {
   export type MembershipUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deactivatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -37508,6 +37659,11 @@ export namespace Prisma {
     isNot?: ProfileWhereInput | null
   }
 
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
+  }
+
   export type MembershipUserIdChapterIdCompoundUniqueInput = {
     userId: string
     chapterId: string
@@ -37516,6 +37672,9 @@ export namespace Prisma {
   export type MembershipCountOrderByAggregateInput = {
     id?: SortOrder
     role?: SortOrder
+    isActive?: SortOrder
+    deactivatedAt?: SortOrder
+    deactivatedBy?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -37525,6 +37684,9 @@ export namespace Prisma {
   export type MembershipMaxOrderByAggregateInput = {
     id?: SortOrder
     role?: SortOrder
+    isActive?: SortOrder
+    deactivatedAt?: SortOrder
+    deactivatedBy?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -37534,6 +37696,9 @@ export namespace Prisma {
   export type MembershipMinOrderByAggregateInput = {
     id?: SortOrder
     role?: SortOrder
+    isActive?: SortOrder
+    deactivatedAt?: SortOrder
+    deactivatedBy?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -37817,11 +37982,6 @@ export namespace Prisma {
     identifier?: SortOrder
     token?: SortOrder
     expires?: SortOrder
-  }
-
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
   }
 
   export type InviteCountOrderByAggregateInput = {
@@ -39548,6 +39708,13 @@ export namespace Prisma {
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
   }
 
+  export type MembershipCreateNestedManyWithoutDeactivatedByUserInput = {
+    create?: XOR<MembershipCreateWithoutDeactivatedByUserInput, MembershipUncheckedCreateWithoutDeactivatedByUserInput> | MembershipCreateWithoutDeactivatedByUserInput[] | MembershipUncheckedCreateWithoutDeactivatedByUserInput[]
+    connectOrCreate?: MembershipCreateOrConnectWithoutDeactivatedByUserInput | MembershipCreateOrConnectWithoutDeactivatedByUserInput[]
+    createMany?: MembershipCreateManyDeactivatedByUserInputEnvelope
+    connect?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+  }
+
   export type ExpenseCreateNestedManyWithoutSubmittedByInput = {
     create?: XOR<ExpenseCreateWithoutSubmittedByInput, ExpenseUncheckedCreateWithoutSubmittedByInput> | ExpenseCreateWithoutSubmittedByInput[] | ExpenseUncheckedCreateWithoutSubmittedByInput[]
     connectOrCreate?: ExpenseCreateOrConnectWithoutSubmittedByInput | ExpenseCreateOrConnectWithoutSubmittedByInput[]
@@ -39658,6 +39825,13 @@ export namespace Prisma {
     connectOrCreate?: AuditLogCreateOrConnectWithoutUserInput | AuditLogCreateOrConnectWithoutUserInput[]
     createMany?: AuditLogCreateManyUserInputEnvelope
     connect?: AuditLogWhereUniqueInput | AuditLogWhereUniqueInput[]
+  }
+
+  export type MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput = {
+    create?: XOR<MembershipCreateWithoutDeactivatedByUserInput, MembershipUncheckedCreateWithoutDeactivatedByUserInput> | MembershipCreateWithoutDeactivatedByUserInput[] | MembershipUncheckedCreateWithoutDeactivatedByUserInput[]
+    connectOrCreate?: MembershipCreateOrConnectWithoutDeactivatedByUserInput | MembershipCreateOrConnectWithoutDeactivatedByUserInput[]
+    createMany?: MembershipCreateManyDeactivatedByUserInputEnvelope
+    connect?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
   }
 
   export type ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput = {
@@ -39833,6 +40007,20 @@ export namespace Prisma {
     update?: AuditLogUpdateWithWhereUniqueWithoutUserInput | AuditLogUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AuditLogUpdateManyWithWhereWithoutUserInput | AuditLogUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
+  }
+
+  export type MembershipUpdateManyWithoutDeactivatedByUserNestedInput = {
+    create?: XOR<MembershipCreateWithoutDeactivatedByUserInput, MembershipUncheckedCreateWithoutDeactivatedByUserInput> | MembershipCreateWithoutDeactivatedByUserInput[] | MembershipUncheckedCreateWithoutDeactivatedByUserInput[]
+    connectOrCreate?: MembershipCreateOrConnectWithoutDeactivatedByUserInput | MembershipCreateOrConnectWithoutDeactivatedByUserInput[]
+    upsert?: MembershipUpsertWithWhereUniqueWithoutDeactivatedByUserInput | MembershipUpsertWithWhereUniqueWithoutDeactivatedByUserInput[]
+    createMany?: MembershipCreateManyDeactivatedByUserInputEnvelope
+    set?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+    disconnect?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+    delete?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+    connect?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+    update?: MembershipUpdateWithWhereUniqueWithoutDeactivatedByUserInput | MembershipUpdateWithWhereUniqueWithoutDeactivatedByUserInput[]
+    updateMany?: MembershipUpdateManyWithWhereWithoutDeactivatedByUserInput | MembershipUpdateManyWithWhereWithoutDeactivatedByUserInput[]
+    deleteMany?: MembershipScalarWhereInput | MembershipScalarWhereInput[]
   }
 
   export type ExpenseUpdateManyWithoutSubmittedByNestedInput = {
@@ -40059,6 +40247,20 @@ export namespace Prisma {
     deleteMany?: AuditLogScalarWhereInput | AuditLogScalarWhereInput[]
   }
 
+  export type MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput = {
+    create?: XOR<MembershipCreateWithoutDeactivatedByUserInput, MembershipUncheckedCreateWithoutDeactivatedByUserInput> | MembershipCreateWithoutDeactivatedByUserInput[] | MembershipUncheckedCreateWithoutDeactivatedByUserInput[]
+    connectOrCreate?: MembershipCreateOrConnectWithoutDeactivatedByUserInput | MembershipCreateOrConnectWithoutDeactivatedByUserInput[]
+    upsert?: MembershipUpsertWithWhereUniqueWithoutDeactivatedByUserInput | MembershipUpsertWithWhereUniqueWithoutDeactivatedByUserInput[]
+    createMany?: MembershipCreateManyDeactivatedByUserInputEnvelope
+    set?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+    disconnect?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+    delete?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+    connect?: MembershipWhereUniqueInput | MembershipWhereUniqueInput[]
+    update?: MembershipUpdateWithWhereUniqueWithoutDeactivatedByUserInput | MembershipUpdateWithWhereUniqueWithoutDeactivatedByUserInput[]
+    updateMany?: MembershipUpdateManyWithWhereWithoutDeactivatedByUserInput | MembershipUpdateManyWithWhereWithoutDeactivatedByUserInput[]
+    deleteMany?: MembershipScalarWhereInput | MembershipScalarWhereInput[]
+  }
+
   export type ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput = {
     create?: XOR<ExpenseCreateWithoutSubmittedByInput, ExpenseUncheckedCreateWithoutSubmittedByInput> | ExpenseCreateWithoutSubmittedByInput[] | ExpenseUncheckedCreateWithoutSubmittedByInput[]
     connectOrCreate?: ExpenseCreateOrConnectWithoutSubmittedByInput | ExpenseCreateOrConnectWithoutSubmittedByInput[]
@@ -40175,6 +40377,12 @@ export namespace Prisma {
     connect?: ProfileWhereUniqueInput
   }
 
+  export type UserCreateNestedOneWithoutDeactivatedMembershipsInput = {
+    create?: XOR<UserCreateWithoutDeactivatedMembershipsInput, UserUncheckedCreateWithoutDeactivatedMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDeactivatedMembershipsInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type ProfileUncheckedCreateNestedOneWithoutMembershipInput = {
     create?: XOR<ProfileCreateWithoutMembershipInput, ProfileUncheckedCreateWithoutMembershipInput>
     connectOrCreate?: ProfileCreateOrConnectWithoutMembershipInput
@@ -40209,6 +40417,16 @@ export namespace Prisma {
     delete?: ProfileWhereInput | boolean
     connect?: ProfileWhereUniqueInput
     update?: XOR<XOR<ProfileUpdateToOneWithWhereWithoutMembershipInput, ProfileUpdateWithoutMembershipInput>, ProfileUncheckedUpdateWithoutMembershipInput>
+  }
+
+  export type UserUpdateOneWithoutDeactivatedMembershipsNestedInput = {
+    create?: XOR<UserCreateWithoutDeactivatedMembershipsInput, UserUncheckedCreateWithoutDeactivatedMembershipsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDeactivatedMembershipsInput
+    upsert?: UserUpsertWithoutDeactivatedMembershipsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDeactivatedMembershipsInput, UserUpdateWithoutDeactivatedMembershipsInput>, UserUncheckedUpdateWithoutDeactivatedMembershipsInput>
   }
 
   export type ProfileUncheckedUpdateOneWithoutMembershipNestedInput = {
@@ -41501,15 +41719,21 @@ export namespace Prisma {
   export type MembershipCreateWithoutChapterInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutMembershipsInput
     profile?: ProfileCreateNestedOneWithoutMembershipInput
+    deactivatedByUser?: UserCreateNestedOneWithoutDeactivatedMembershipsInput
   }
 
   export type MembershipUncheckedCreateWithoutChapterInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
+    deactivatedBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
@@ -42103,6 +42327,9 @@ export namespace Prisma {
     NOT?: MembershipScalarWhereInput | MembershipScalarWhereInput[]
     id?: StringFilter<"Membership"> | string
     role?: EnumMembershipRoleFilter<"Membership"> | $Enums.MembershipRole
+    isActive?: BoolFilter<"Membership"> | boolean
+    deactivatedAt?: DateTimeNullableFilter<"Membership"> | Date | string | null
+    deactivatedBy?: StringNullableFilter<"Membership"> | string | null
     createdAt?: DateTimeFilter<"Membership"> | Date | string
     updatedAt?: DateTimeFilter<"Membership"> | Date | string
     userId?: StringFilter<"Membership"> | string
@@ -42686,15 +42913,21 @@ export namespace Prisma {
   export type MembershipCreateWithoutUserInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     chapter: ChapterCreateNestedOneWithoutMembershipsInput
     profile?: ProfileCreateNestedOneWithoutMembershipInput
+    deactivatedByUser?: UserCreateNestedOneWithoutDeactivatedMembershipsInput
   }
 
   export type MembershipUncheckedCreateWithoutUserInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
+    deactivatedBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     chapterId: string
@@ -42928,6 +43161,40 @@ export namespace Prisma {
 
   export type AuditLogCreateManyUserInputEnvelope = {
     data: AuditLogCreateManyUserInput | AuditLogCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type MembershipCreateWithoutDeactivatedByUserInput = {
+    id?: string
+    role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutMembershipsInput
+    chapter: ChapterCreateNestedOneWithoutMembershipsInput
+    profile?: ProfileCreateNestedOneWithoutMembershipInput
+  }
+
+  export type MembershipUncheckedCreateWithoutDeactivatedByUserInput = {
+    id?: string
+    role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    chapterId: string
+    profile?: ProfileUncheckedCreateNestedOneWithoutMembershipInput
+  }
+
+  export type MembershipCreateOrConnectWithoutDeactivatedByUserInput = {
+    where: MembershipWhereUniqueInput
+    create: XOR<MembershipCreateWithoutDeactivatedByUserInput, MembershipUncheckedCreateWithoutDeactivatedByUserInput>
+  }
+
+  export type MembershipCreateManyDeactivatedByUserInputEnvelope = {
+    data: MembershipCreateManyDeactivatedByUserInput | MembershipCreateManyDeactivatedByUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -43373,6 +43640,22 @@ export namespace Prisma {
     data: XOR<AuditLogUpdateManyMutationInput, AuditLogUncheckedUpdateManyWithoutUserInput>
   }
 
+  export type MembershipUpsertWithWhereUniqueWithoutDeactivatedByUserInput = {
+    where: MembershipWhereUniqueInput
+    update: XOR<MembershipUpdateWithoutDeactivatedByUserInput, MembershipUncheckedUpdateWithoutDeactivatedByUserInput>
+    create: XOR<MembershipCreateWithoutDeactivatedByUserInput, MembershipUncheckedCreateWithoutDeactivatedByUserInput>
+  }
+
+  export type MembershipUpdateWithWhereUniqueWithoutDeactivatedByUserInput = {
+    where: MembershipWhereUniqueInput
+    data: XOR<MembershipUpdateWithoutDeactivatedByUserInput, MembershipUncheckedUpdateWithoutDeactivatedByUserInput>
+  }
+
+  export type MembershipUpdateManyWithWhereWithoutDeactivatedByUserInput = {
+    where: MembershipScalarWhereInput
+    data: XOR<MembershipUpdateManyMutationInput, MembershipUncheckedUpdateManyWithoutDeactivatedByUserInput>
+  }
+
   export type ExpenseUpsertWithWhereUniqueWithoutSubmittedByInput = {
     where: ExpenseWhereUniqueInput
     update: XOR<ExpenseUpdateWithoutSubmittedByInput, ExpenseUncheckedUpdateWithoutSubmittedByInput>
@@ -43519,6 +43802,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -43545,6 +43829,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -43681,6 +43966,65 @@ export namespace Prisma {
     create: XOR<ProfileCreateWithoutMembershipInput, ProfileUncheckedCreateWithoutMembershipInput>
   }
 
+  export type UserCreateWithoutDeactivatedMembershipsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
+    approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
+    feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
+    duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
+    assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+  }
+
+  export type UserUncheckedCreateWithoutDeactivatedMembershipsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
+    feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
+    duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
+    assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+  }
+
+  export type UserCreateOrConnectWithoutDeactivatedMembershipsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDeactivatedMembershipsInput, UserUncheckedCreateWithoutDeactivatedMembershipsInput>
+  }
+
   export type UserUpsertWithoutMembershipsInput = {
     update: XOR<UserUpdateWithoutMembershipsInput, UserUncheckedUpdateWithoutMembershipsInput>
     create: XOR<UserCreateWithoutMembershipsInput, UserUncheckedCreateWithoutMembershipsInput>
@@ -43709,6 +44053,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -43735,6 +44080,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -43878,18 +44224,89 @@ export namespace Prisma {
     chapterId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type UserUpsertWithoutDeactivatedMembershipsInput = {
+    update: XOR<UserUpdateWithoutDeactivatedMembershipsInput, UserUncheckedUpdateWithoutDeactivatedMembershipsInput>
+    create: XOR<UserCreateWithoutDeactivatedMembershipsInput, UserUncheckedCreateWithoutDeactivatedMembershipsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDeactivatedMembershipsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDeactivatedMembershipsInput, UserUncheckedUpdateWithoutDeactivatedMembershipsInput>
+  }
+
+  export type UserUpdateWithoutDeactivatedMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
+    approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
+    feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
+    duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
+    assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDeactivatedMembershipsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
+    feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
+    duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
+    assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+  }
+
   export type MembershipCreateWithoutProfileInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutMembershipsInput
     chapter: ChapterCreateNestedOneWithoutMembershipsInput
+    deactivatedByUser?: UserCreateNestedOneWithoutDeactivatedMembershipsInput
   }
 
   export type MembershipUncheckedCreateWithoutProfileInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
+    deactivatedBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
@@ -43918,6 +44335,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -43944,6 +44362,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -44049,15 +44468,21 @@ export namespace Prisma {
   export type MembershipUpdateWithoutProfileInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
     chapter?: ChapterUpdateOneRequiredWithoutMembershipsNestedInput
+    deactivatedByUser?: UserUpdateOneWithoutDeactivatedMembershipsNestedInput
   }
 
   export type MembershipUncheckedUpdateWithoutProfileInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deactivatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -44092,6 +44517,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -44118,6 +44544,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -44387,6 +44814,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -44413,6 +44841,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -44455,6 +44884,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -44481,6 +44911,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -44507,6 +44938,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -44533,6 +44965,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -44575,6 +45008,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -44601,6 +45035,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -44704,6 +45139,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -44730,6 +45166,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -44761,6 +45198,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -44787,6 +45225,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -44912,6 +45351,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -44938,6 +45378,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -44975,6 +45416,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -45001,6 +45443,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -45104,6 +45547,7 @@ export namespace Prisma {
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -45130,6 +45574,7 @@ export namespace Prisma {
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -45281,6 +45726,7 @@ export namespace Prisma {
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -45307,6 +45753,7 @@ export namespace Prisma {
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -45386,6 +45833,7 @@ export namespace Prisma {
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -45412,6 +45860,7 @@ export namespace Prisma {
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -45497,6 +45946,7 @@ export namespace Prisma {
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -45523,6 +45973,7 @@ export namespace Prisma {
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -45549,6 +46000,7 @@ export namespace Prisma {
     createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -45575,6 +46027,7 @@ export namespace Prisma {
     createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -45694,6 +46147,7 @@ export namespace Prisma {
     createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -45720,6 +46174,7 @@ export namespace Prisma {
     createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -46476,6 +46931,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
     uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
@@ -46502,6 +46958,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
     uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
@@ -46533,6 +46990,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
     uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
@@ -46559,6 +47017,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
     uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
@@ -46750,6 +47209,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
     uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
@@ -46776,6 +47236,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
     uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
@@ -46813,6 +47274,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
     uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
@@ -46839,6 +47301,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
     uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
@@ -47243,6 +47706,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
@@ -47269,6 +47733,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
@@ -47456,6 +47921,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
@@ -47482,6 +47948,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
@@ -47906,6 +48373,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -47932,6 +48400,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -47974,6 +48443,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -48000,6 +48470,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -48103,6 +48574,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -48129,6 +48601,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -48254,6 +48727,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -48280,6 +48754,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -48659,6 +49134,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -48685,6 +49161,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -48793,6 +49270,7 @@ export namespace Prisma {
     createdEvents?: EventCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
@@ -48819,6 +49297,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
     rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
     auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
     submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
     approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
     duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
@@ -48900,6 +49379,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -48926,6 +49406,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -49046,6 +49527,7 @@ export namespace Prisma {
     createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
@@ -49072,6 +49554,7 @@ export namespace Prisma {
     createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
     rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
     auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
     submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
     approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
     duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
@@ -49083,6 +49566,9 @@ export namespace Prisma {
   export type MembershipCreateManyChapterInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
+    deactivatedBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
@@ -49276,15 +49762,21 @@ export namespace Prisma {
   export type MembershipUpdateWithoutChapterInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
     profile?: ProfileUpdateOneWithoutMembershipNestedInput
+    deactivatedByUser?: UserUpdateOneWithoutDeactivatedMembershipsNestedInput
   }
 
   export type MembershipUncheckedUpdateWithoutChapterInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deactivatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -49294,6 +49786,9 @@ export namespace Prisma {
   export type MembershipUncheckedUpdateManyWithoutChapterInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deactivatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -49889,6 +50384,9 @@ export namespace Prisma {
   export type MembershipCreateManyUserInput = {
     id?: string
     role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
+    deactivatedBy?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     chapterId: string
@@ -49970,6 +50468,17 @@ export namespace Prisma {
     targetType: string
     targetId?: string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    chapterId: string
+  }
+
+  export type MembershipCreateManyDeactivatedByUserInput = {
+    id?: string
+    role?: $Enums.MembershipRole
+    isActive?: boolean
+    deactivatedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
     chapterId: string
   }
 
@@ -50127,15 +50636,21 @@ export namespace Prisma {
   export type MembershipUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapter?: ChapterUpdateOneRequiredWithoutMembershipsNestedInput
     profile?: ProfileUpdateOneWithoutMembershipNestedInput
+    deactivatedByUser?: UserUpdateOneWithoutDeactivatedMembershipsNestedInput
   }
 
   export type MembershipUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deactivatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapterId?: StringFieldUpdateOperationsInput | string
@@ -50145,6 +50660,9 @@ export namespace Prisma {
   export type MembershipUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deactivatedBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     chapterId?: StringFieldUpdateOperationsInput | string
@@ -50386,6 +50904,41 @@ export namespace Prisma {
     targetType?: StringFieldUpdateOperationsInput | string
     targetId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableJsonNullValueInput | InputJsonValue
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type MembershipUpdateWithoutDeactivatedByUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMembershipsNestedInput
+    chapter?: ChapterUpdateOneRequiredWithoutMembershipsNestedInput
+    profile?: ProfileUpdateOneWithoutMembershipNestedInput
+  }
+
+  export type MembershipUncheckedUpdateWithoutDeactivatedByUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    profile?: ProfileUncheckedUpdateOneWithoutMembershipNestedInput
+  }
+
+  export type MembershipUncheckedUpdateManyWithoutDeactivatedByUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    role?: EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    deactivatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
     chapterId?: StringFieldUpdateOperationsInput | string
   }
 

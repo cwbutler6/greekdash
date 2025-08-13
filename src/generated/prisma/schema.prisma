@@ -91,15 +91,16 @@ model User {
   updatedAt     DateTime  @updatedAt
 
   // Relations
-  accounts        Account[] // One user has many auth accounts
-  sessions        Session[] // One user has many sessions
-  memberships     Membership[] // One user can be a member of multiple chapters
-  profiles        Profile[] // One user can have multiple profiles (one per chapter)
-  acceptedInvites Invite[]     @relation("acceptedInvites") // Invites that were accepted by this user
-  createdInvites  Invite[]     @relation("createdInvites") // Invites created by this user
-  createdEvents   Event[]      @relation("createdEvents") // Events created by this user
-  rsvps           EventRSVP[] // RSVPs to events
-  auditLogs       AuditLog[] // Audit logs created by this user
+  accounts               Account[] // One user has many auth accounts
+  sessions               Session[] // One user has many sessions
+  memberships            Membership[] // One user can be a member of multiple chapters
+  profiles               Profile[] // One user can have multiple profiles (one per chapter)
+  acceptedInvites        Invite[]     @relation("acceptedInvites") // Invites that were accepted by this user
+  createdInvites         Invite[]     @relation("createdInvites") // Invites created by this user
+  createdEvents          Event[]      @relation("createdEvents") // Events created by this user
+  rsvps                  EventRSVP[] // RSVPs to events
+  auditLogs              AuditLog[] // Audit logs created by this user
+  deactivatedMemberships Membership[] @relation("DeactivatedMemberships") // Memberships deactivated by this user
 
   // Finance relations
   submittedExpenses Expense[]     @relation("submittedExpenses") // Expenses submitted by this user
@@ -118,23 +119,28 @@ model User {
 }
 
 model Membership {
-  id        String         @id @default(cuid())
-  role      MembershipRole @default(MEMBER)
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  id            String         @id @default(cuid())
+  role          MembershipRole @default(MEMBER)
+  isActive      Boolean        @default(true)
+  deactivatedAt DateTime?
+  deactivatedBy String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
 
   // Foreign keys
   userId    String
   chapterId String
 
   // Relations
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  chapter Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  profile Profile? // One membership can have one profile
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chapter           Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  profile           Profile? // One membership can have one profile
+  deactivatedByUser User?    @relation("DeactivatedMemberships", fields: [deactivatedBy], references: [id])
 
   @@unique([userId, chapterId]) // A user can only have one membership per chapter
   @@index([chapterId])
   @@index([userId])
+  @@index([isActive])
 }
 
 model Profile {
