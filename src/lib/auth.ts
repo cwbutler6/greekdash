@@ -24,6 +24,7 @@ export async function requireAuth() {
   
   if (!user) {
     redirect("/login");
+    throw new Error("REDIRECT"); // This ensures the function throws after redirect
   }
 
   return user;
@@ -32,6 +33,12 @@ export async function requireAuth() {
 // Check if user has access to a specific chapter - use in server components
 export async function requireChapterAccess(chapterSlug: string) {
   const user = await requireAuth();
+  
+  // Handle case where user.memberships might be undefined or not an array
+  if (!user.memberships || !Array.isArray(user.memberships)) {
+    redirect("/");
+    throw new Error("REDIRECT");
+  }
   
   // Check if user has access to this chapter
   const hasAccess = user.memberships.some((m) => m.chapterSlug === chapterSlug);
@@ -46,8 +53,10 @@ export async function requireChapterAccess(chapterSlug: string) {
         ? `/${membership.chapterSlug}/admin`
         : `/${membership.chapterSlug}/portal`;
       redirect(redirectPath);
+      throw new Error("REDIRECT");
     } else {
       redirect("/");
+      throw new Error("REDIRECT");
     }
   }
 
@@ -56,6 +65,7 @@ export async function requireChapterAccess(chapterSlug: string) {
   
   if (!sessionMembership) {
     redirect('/');
+    throw new Error("REDIRECT");
   }
   
   // Return both user and the membership for convenience
@@ -67,6 +77,7 @@ export async function requireChapterAccess(chapterSlug: string) {
       id: sessionMembership.id,
       role: sessionMembership.role,
       chapterId: sessionMembership.chapterId,
+      chapterSlug: sessionMembership.chapterSlug,
       userId: user.id,
       // Add any other required fields from the session data
     },
@@ -75,20 +86,25 @@ export async function requireChapterAccess(chapterSlug: string) {
 
 // Check if user has admin access to a specific chapter - use in server components
 export async function requireChapterAdmin(chapterSlug: string) {
-  const { user, membership } = await requireChapterAccess(chapterSlug);
+  const user = await requireAuth();
   
-  // Check if user has admin or owner role for this chapter
-  if (membership.role !== 'ADMIN' && membership.role !== 'OWNER') {
-    redirect(`/${chapterSlug}/portal`);
-  }
-  
-  // Get chapter data
+  // Check if chapter exists first, before doing access checks
   const chapter = await prisma.chapter.findUnique({
     where: { slug: chapterSlug },
   });
   
   if (!chapter) {
     redirect('/');
+    throw new Error("REDIRECT");
+  }
+  
+  // Now check chapter access
+  const { membership } = await requireChapterAccess(chapterSlug);
+  
+  // Check if user has admin or owner role for this chapter
+  if (membership.role !== 'ADMIN' && membership.role !== 'OWNER') {
+    redirect(`/${chapterSlug}/portal`);
+    throw new Error("REDIRECT");
   }
   
   return { user, membership, chapter };
