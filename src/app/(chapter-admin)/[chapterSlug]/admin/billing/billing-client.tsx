@@ -142,6 +142,11 @@ export default function BillingClient({ chapterSlug }: { chapterSlug: string }) 
         description: 'Premium features for established chapters',
         color: 'text-purple-600',
       },
+      [PlanType.ENTERPRISE]: {
+        name: 'Enterprise Plan',
+        description: 'Advanced features for large organizations',
+        color: 'text-indigo-600',
+      },
     };
     
     return planDetails[plan];

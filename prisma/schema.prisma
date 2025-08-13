@@ -19,6 +19,7 @@ enum PlanType {
   FREE
   BASIC
   PRO
+  ENTERPRISE
 }
 
 enum SubscriptionStatus {

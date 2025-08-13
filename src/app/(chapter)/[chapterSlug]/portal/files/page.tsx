@@ -3,6 +3,7 @@ import { PlanType } from '@/generated/prisma';
 import { authOptions } from '@/lib/auth';
 import { notFound, redirect } from 'next/navigation';
 import { prisma } from '@/lib/db';
+import { getStorageLimit } from '@/lib/storage-limits';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -12,15 +13,6 @@ import { formatBytes } from '@/lib/utils/formatters';
 
 import { FileUploadButton } from '@/components/files/FileUploadButton';
 import { FileList } from '@/components/files/FileList';
-
-// Using the Prisma singleton from lib/db
-
-// Storage limits per plan in bytes
-const STORAGE_LIMITS = {
-  [PlanType.FREE]: 100 * 1024 * 1024, // 100 MB
-  [PlanType.BASIC]: 5 * 1024 * 1024 * 1024, // 5 GB
-  [PlanType.PRO]: 20 * 1024 * 1024 * 1024, // 20 GB
-};
 
 export default async function FilesPage({
   params,
@@ -66,8 +58,7 @@ export default async function FilesPage({
   
   const usedStorage = storageUsage._sum.size || 0;
   const planType = chapter.subscription?.plan || PlanType.FREE;
-  // Add type assertion to fix indexing issue
-  const storageLimit = STORAGE_LIMITS[planType as keyof typeof STORAGE_LIMITS];
+  const storageLimit = getStorageLimit(planType);
   const usagePercentage = Math.min(100, Math.round((usedStorage / storageLimit) * 100));
   
   return (

@@ -141,7 +141,8 @@ export namespace $Enums {
   export const PlanType: {
   FREE: 'FREE',
   BASIC: 'BASIC',
-  PRO: 'PRO'
+  PRO: 'PRO',
+  ENTERPRISE: 'ENTERPRISE'
 };
 
 export type PlanType = (typeof PlanType)[keyof typeof PlanType]

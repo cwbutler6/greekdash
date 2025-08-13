@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
               name: 'GreekDash Basic Plan',
               description: 'Monthly subscription to GreekDash Basic features'
             },
-            unit_amount: 2900, // $29.00 USD
+            unit_amount: 2000, // $20.00 USD
             recurring: {
               interval: 'month' as Interval
             }

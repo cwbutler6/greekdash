@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
-import { MembershipRole } from '@/generated/prisma';
+import { MembershipRole, PlanType } from '@/generated/prisma';
+import { getStorageLimit, getMaxFileSize } from '@/lib/storage-limits';
 
 const DEFAULT_PAGE_SIZE = 20;
 
@@ -268,9 +269,7 @@ export async function POST(
     
     // Check file size limits based on subscription plan
     const planType = chapter.subscription?.plan || 'FREE';
-    const maxFileSize = planType === 'PRO' ? 100 * 1024 * 1024 : // 100 MB for Pro
-                        planType === 'BASIC' ? 50 * 1024 * 1024 : // 50 MB for Basic
-                        20 * 1024 * 1024; // 20 MB for Free
+    const maxFileSize = getMaxFileSize(planType as PlanType);
     
     if (!(file instanceof File)) {
       return NextResponse.json({ error: "Invalid file format" }, { status: 400 });
@@ -291,10 +290,8 @@ export async function POST(
     
     const totalStorageUsed = storageUsed._sum.size || 0;
     
-    // Define storage limits based on subscription tier
-    const storageLimit = planType === 'PRO' ? 20 * 1024 * 1024 * 1024 : // 20 GB for Pro
-                         planType === 'BASIC' ? 5 * 1024 * 1024 * 1024 : // 5 GB for Basic
-                         100 * 1024 * 1024; // 100 MB for Free
+    // Use centralized storage limit
+    const storageLimit = getStorageLimit(planType as PlanType);
     
     if (totalStorageUsed + file.size > storageLimit) {
       return NextResponse.json(

@@ -456,7 +456,8 @@ exports.MembershipRole = exports.$Enums.MembershipRole = {
 exports.PlanType = exports.$Enums.PlanType = {
   FREE: 'FREE',
   BASIC: 'BASIC',
-  PRO: 'PRO'
+  PRO: 'PRO',
+  ENTERPRISE: 'ENTERPRISE'
 };
 
 exports.SubscriptionStatus = exports.$Enums.SubscriptionStatus = {

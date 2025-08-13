@@ -55,58 +55,81 @@ async function createCheckoutSession(formData: FormData) {
   }
 }
 
-// Plans data
+// Plans data with correct pricing and features
 const PLANS = [
   {
     id: 'free',
     name: 'Free',
-    description: 'Basic features for small chapters',
+    description: 'Get started with the basics',
     price: '$0',
-    interval: 'forever',
+    interval: 'forever' as const,
     type: PlanType.FREE,
-    features: [
-      'Up to 25 members',
-      'Basic chapter profile',
-      'Event management',
-      'Member directory'
-    ],
-    recommended: false,
     stripePriceId: null,
+    recommended: false,
+    features: [
+      'Up to 30 members',
+      'Basic event management',
+      'Member directory',
+      'File sharing (100MB)'
+    ]
   },
   {
     id: 'basic',
     name: 'Basic',
-    description: 'Enhanced features for growing chapters',
-    price: '$19',
-    interval: 'month',
+    description: 'For small/new chapters',
+    price: '$20',
+    interval: 'month' as const,
     type: PlanType.BASIC,
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_BASIC_PRICE_ID || 'price_basic',
+    recommended: false,
     features: [
-      'Up to 100 members',
-      'Custom chapter branding',
+      'Up to 30 members',
+      'Public-facing site',
+      'Member portal',
+      'Event calendar',
       'Dues collection',
-      'Basic analytics',
-      'Email notifications',
-    ],
-    recommended: true,
-    stripePriceId: 'price_basic',
+      'File sharing (3GB)',
+      'Email support'
+    ]
   },
   {
     id: 'pro',
     name: 'Pro',
-    description: 'Premium features for established chapters',
-    price: '$49',
-    interval: 'month',
+    description: 'For growing chapters',
+    price: '$59',
+    interval: 'month' as const,
     type: PlanType.PRO,
+    stripePriceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID || 'price_pro',
+    recommended: true,
     features: [
       'Unlimited members',
+      'Everything in Basic',
+      'Custom domain',
+      'SMS notifications',
+      'Alumni CRM',
       'Advanced analytics',
-      'Custom forms',
-      'Integration with external tools',
-      'Priority support',
-      'All Basic features'
-    ],
+      'File sharing (20GB)',
+      'Priority email + live chat support'
+    ]
+  },
+  {
+    id: 'enterprise',
+    name: 'Enterprise',
+    description: 'For national orgs, multi-chapter networks',
+    price: 'Custom',
+    interval: 'month' as const,
+    type: PlanType.ENTERPRISE,
+    stripePriceId: null,
     recommended: false,
-    stripePriceId: 'price_pro',
+    features: [
+      'Everything in Pro',
+      'White-labeling',
+      'API access',
+      'Dedicated account manager',
+      'Bulk chapter onboarding',
+      'SLA-backed support',
+      'Negotiated terms'
+    ]
   }
 ];
 

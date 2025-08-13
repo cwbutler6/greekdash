@@ -252,15 +252,15 @@ export default function Home() {
               </div>
               <div className="p-6 flex flex-col flex-grow">
                 <div className="text-center pb-4">
-                  <span className="text-4xl font-bold">$29</span>
+                  <span className="text-4xl font-bold">$20</span>
                   <span className="text-gray-500">/month</span>
                 </div>
                 <ul className="space-y-3 flex-grow mb-6">
                   {[
-                    "Unlimited members",
+                    "Up to 30 members",
                     "Advanced event management",
                     "Points tracking system",
-                    "File sharing (1GB)",
+                    "File sharing (3GB)",
                     "Dues collection tools"
                   ].map((feature, i) => (
                     <li key={i} className="flex items-center">
@@ -291,7 +291,7 @@ export default function Home() {
               </div>
               <div className="p-6 flex flex-col flex-grow">
                 <div className="text-center pb-4">
-                  <span className="text-4xl font-bold">$79</span>
+                  <span className="text-4xl font-bold">$59</span>
                   <span className="text-gray-500">/month</span>
                 </div>
                 <ul className="space-y-3 flex-grow mb-6">
@@ -300,7 +300,7 @@ export default function Home() {
                     "Custom branding",
                     "Advanced analytics",
                     "API access",
-                    "File sharing (10GB)",
+                    "File sharing (20GB)",
                     "Priority support",
                     "Custom integrations"
                   ].map((feature, i) => (

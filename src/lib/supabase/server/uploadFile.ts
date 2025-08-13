@@ -3,13 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { supabaseAdmin, isSupabaseConfigured } from './index';
 import path from 'path';
 import { prisma } from '@/lib/db';
-
-// Storage limits per plan in bytes
-const STORAGE_LIMITS: Record<PlanType, number> = {
-  [PlanType.FREE]: 100 * 1024 * 1024, // 100 MB
-  [PlanType.BASIC]: 5 * 1024 * 1024 * 1024, // 5 GB
-  [PlanType.PRO]: 20 * 1024 * 1024 * 1024, // 20 GB
-};
+import { getStorageLimit } from '@/lib/storage-limits';
 
 interface UploadFileParams {
   chapterId: string;
@@ -41,7 +35,7 @@ export async function uploadFile({
   }
 
   const planType: PlanType = chapter.subscription?.plan || PlanType.FREE;
-  const storageLimit = STORAGE_LIMITS[planType];
+  const storageLimit = getStorageLimit(planType);
 
   // Calculate current storage usage
   const currentUsage = await prisma.file.aggregate({
