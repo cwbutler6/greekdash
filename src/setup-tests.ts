@@ -8,6 +8,23 @@ const mockRedirect = vi.fn().mockImplementation(() => {
   throw error;
 });
 
+// Mock Next.js router
+vi.mock('next/router', () => ({
+  useRouter: () => ({
+    push: vi.fn(),
+    pathname: '/',
+    query: {},
+    asPath: '/'
+  })
+}))
+
+// Mock NextAuth
+vi.mock('next-auth/react', () => ({
+  useSession: () => ({ data: null, status: 'unauthenticated' }),
+  signIn: vi.fn(),
+  signOut: vi.fn()
+}))
+
 vi.mock('next/navigation', () => ({
   redirect: mockRedirect,
   useRouter: vi.fn(() => ({
