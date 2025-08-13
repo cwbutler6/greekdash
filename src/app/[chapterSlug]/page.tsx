@@ -4,10 +4,91 @@ import { format } from 'date-fns';
 import Image from 'next/image';
 import Link from 'next/link';
 import ContactForm from './contact-form';
+import { Metadata } from 'next';
 
 type PublicChapterPageProps = {
   params: Promise<{ chapterSlug: string }>;
 };
+
+// Dynamic metadata generation for SEO
+export async function generateMetadata({ params }: PublicChapterPageProps): Promise<Metadata> {
+  const { chapterSlug } = await params;
+  
+  const chapter = await prisma.chapter.findUnique({
+    where: { slug: chapterSlug },
+    select: {
+      name: true,
+      slug: true,
+      publicInfo: true,
+      schoolName: true,
+      events: {
+        where: {
+          isPublic: true,
+          startDate: { gte: new Date() },
+        },
+        take: 1,
+        select: { title: true },
+      },
+    },
+  });
+
+  if (!chapter) {
+    return {
+      title: 'Chapter Not Found - GreekDash',
+      description: 'The requested chapter page could not be found.',
+    };
+  }
+
+  const title = `${chapter.name}${chapter.schoolName ? ` - ${chapter.schoolName}` : ''} | GreekDash`;
+  const description = chapter.publicInfo 
+    ? `${chapter.publicInfo.substring(0, 155)}...`
+    : `Learn about ${chapter.name}${chapter.schoolName ? ` at ${chapter.schoolName}` : ''}. Join our fraternity/sorority chapter and become part of our community.`;
+  
+  const url = `https://greekdash.com/${chapter.slug}`;
+
+  return {
+    title,
+    description,
+    keywords: [
+      chapter.name,
+      chapter.schoolName || '',
+      'fraternity',
+      'sorority',
+      'greek life',
+      'chapter',
+      'membership',
+      'college',
+      'university',
+    ].filter(Boolean),
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: 'GreekDash',
+      type: 'website',
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+    alternates: {
+      canonical: url,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+  };
+}
 
 export default async function PublicChapterPage({ params }: PublicChapterPageProps) {
   const { chapterSlug } = await params;
@@ -88,7 +169,7 @@ export default async function PublicChapterPage({ params }: PublicChapterPagePro
 
       {/* Main Content */}
       <main>
-        {/* Hero Section */}
+        {/* Hero Section - Optimized for LCP */}
         <section 
           className="relative py-20 text-white text-center"
           style={{ backgroundColor: primaryColor }}
@@ -118,7 +199,7 @@ export default async function PublicChapterPage({ params }: PublicChapterPagePro
           </section>
         )}
 
-        {/* Gallery Section */}
+        {/* Gallery Section - Lazy loading for performance */}
         {chapter.galleryImages.length > 0 && (
           <section className="py-16 bg-gray-50">
             <div className="max-w-6xl mx-auto px-4">
@@ -126,7 +207,7 @@ export default async function PublicChapterPage({ params }: PublicChapterPagePro
                 Chapter Gallery
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {chapter.galleryImages.map((image) => (
+                {chapter.galleryImages.map((image, index) => (
                   <div key={image.id} className="bg-white rounded-lg shadow-md overflow-hidden">
                     <div className="relative h-64">
                       <Image
@@ -134,6 +215,8 @@ export default async function PublicChapterPage({ params }: PublicChapterPagePro
                         alt={image.caption || 'Chapter gallery image'}
                         fill
                         className="object-cover"
+                        loading={index < 6 ? 'eager' : 'lazy'}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       />
                     </div>
                     {image.caption && (
