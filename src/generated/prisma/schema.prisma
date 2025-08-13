@@ -655,3 +655,22 @@ model DuesPlanAssignment {
   @@index([userId])
   @@index([duesPlanId])
 }
+
+model WebhookEvent {
+  id            String    @id @default(cuid())
+  stripeEventId String    @unique // Stripe's event.id
+  eventType     String // e.g., "checkout.session.completed"
+  processed     Boolean   @default(false)
+  processedAt   DateTime?
+  attempts      Int       @default(0)
+  lastAttemptAt DateTime  @default(now())
+  errorMessage  String?   @db.Text
+  metadata      Json? // Store relevant event data
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([stripeEventId])
+  @@index([eventType])
+  @@index([processed])
+  @@index([createdAt])
+}

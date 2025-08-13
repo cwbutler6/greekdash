@@ -424,6 +424,20 @@ exports.Prisma.DuesPlanAssignmentScalarFieldEnum = {
   chapterId: 'chapterId'
 };
 
+exports.Prisma.WebhookEventScalarFieldEnum = {
+  id: 'id',
+  stripeEventId: 'stripeEventId',
+  eventType: 'eventType',
+  processed: 'processed',
+  processedAt: 'processedAt',
+  attempts: 'attempts',
+  lastAttemptAt: 'lastAttemptAt',
+  errorMessage: 'errorMessage',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -553,7 +567,8 @@ exports.Prisma.ModelName = {
   File: 'File',
   MessageLog: 'MessageLog',
   TreasuryTransaction: 'TreasuryTransaction',
-  DuesPlanAssignment: 'DuesPlanAssignment'
+  DuesPlanAssignment: 'DuesPlanAssignment',
+  WebhookEvent: 'WebhookEvent'
 };
 
 /**

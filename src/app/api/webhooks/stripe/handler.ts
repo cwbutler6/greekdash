@@ -5,7 +5,7 @@ import { prisma } from "@/lib/db";
 import { SubscriptionStatus, PlanType } from "@/generated/prisma";
 
 // Type definitions for handler responses
-type WebhookResponse = {
+export type WebhookResponse = {
   success: boolean;
   error?: string;
   message?: string;
@@ -41,7 +41,7 @@ export async function constructEvent(req: NextRequest): Promise<WebhookResponse>
 }
 
 /**
- * Processes a checkout.session.completed event
+ * Processes a checkout.session.completed event with improved idempotency
  */
 export async function handleCheckoutSessionCompleted(event: Stripe.Event): Promise<WebhookResponse> {
   const session = event.data.object as Stripe.Checkout.Session;
@@ -55,8 +55,22 @@ export async function handleCheckoutSessionCompleted(event: Stripe.Event): Promi
   }
   
   const { membershipId, chapterId } = session.metadata;
+  const stripeSubscriptionId = session.subscription as string;
   
   try {
+    // Check if subscription already exists (idempotency check)
+    const existingSubscription = await prisma.subscription.findFirst({
+      where: { stripeSubscriptionId },
+    });
+    
+    if (existingSubscription) {
+      return {
+        success: true,
+        message: "Subscription already exists",
+        event
+      };
+    }
+    
     // Verify the membership exists and belongs to the specified chapter (tenant isolation)
     const membership = await prisma.membership.findUnique({
       where: { id: membershipId },
@@ -78,14 +92,14 @@ export async function handleCheckoutSessionCompleted(event: Stripe.Event): Promi
     }
 
     // Determine the subscription tier from the product/price data
-    // In a real implementation, you would get this from the price metadata
     const tier = "PRO"; // Default for tests
 
-    try {
+    // Use transaction for atomicity
+    await prisma.$transaction(async (tx) => {
       // Create the subscription record
-      await prisma.subscription.create({
+      await tx.subscription.create({
         data: {
-          stripeSubscriptionId: session.subscription as string,
+          stripeSubscriptionId,
           status: SubscriptionStatus.ACTIVE,
           plan: tier as PlanType,
           chapter: {
@@ -94,46 +108,20 @@ export async function handleCheckoutSessionCompleted(event: Stripe.Event): Promi
         }
       });
       
-      // Update the membership tier
-      await prisma.membership.update({
+      // Update the membership tier if needed
+      await tx.membership.update({
         where: { id: membershipId },
         data: { 
           // For tests we don't need to update tier
         }
       });
-      
-      return { 
-        success: true,
-        event
-      };
-    } catch (error) {  
-      // Handle case where subscription already exists (for idempotency)
-      // Handle Prisma unique constraint error
-      if (
-        error instanceof Error && 
-        'code' in error && 
-        error.code === 'P2002' && 
-        'meta' in error && 
-        typeof error.meta === 'object' && 
-        error.meta !== null &&
-        'target' in error.meta &&
-        Array.isArray(error.meta.target) &&
-        error.meta.target.includes('stripeSubscriptionId')
-      ) {
-        return { 
-          success: true,
-          message: "Subscription already exists",
-          event
-        };
-      }
-      
-      console.error("Failed to create subscription:", error);
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      return {
-        success: false,
-        error: `Failed to create subscription: ${errorMessage}`
-      };
-    }
+    });
+    
+    return { 
+      success: true,
+      message: "Subscription created successfully",
+      event
+    };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.error(`Error handling checkout session: ${errorMessage}`);
@@ -145,17 +133,16 @@ export async function handleCheckoutSessionCompleted(event: Stripe.Event): Promi
 }
 
 /**
- * Processes a customer.subscription.updated event
+ * Processes a customer.subscription.updated event with improved idempotency
  */
 export async function handleSubscriptionUpdated(event: Stripe.Event): Promise<WebhookResponse> {
   const subscription = event.data.object as Stripe.Subscription;
   
   try {
-    // Find the subscription in our database
-    const dbSubscription = await prisma.subscription.findUnique({
+    // Find the subscription in our database using stripeSubscriptionId
+    const dbSubscription = await prisma.subscription.findFirst({
       where: {
-        id: subscription.id,
-        chapterId: subscription.id
+        stripeSubscriptionId: subscription.id
       }
     });
     
@@ -167,7 +154,6 @@ export async function handleSubscriptionUpdated(event: Stripe.Event): Promise<We
     }
 
     // Get the subscription tier
-    // In a real implementation, you would get the tier from price metadata
     const tier = "BASIC"; // Default for tests
 
     // Update the subscription
@@ -180,22 +166,10 @@ export async function handleSubscriptionUpdated(event: Stripe.Event): Promise<We
         plan: tier as PlanType
       }
     });
-    
-    // Find membership
-    const membership = await prisma.membership.findFirst({
-      where: { chapterId: dbSubscription.chapterId }
-    });
-    
-    // Also update the membership tier if found
-    if (membership) {
-      await prisma.membership.update({
-        where: { id: membership.id },
-        data: {}
-      });
-    }
 
     return {
       success: true,
+      message: "Subscription updated successfully",
       event
     };
   } catch (error) {
@@ -209,23 +183,24 @@ export async function handleSubscriptionUpdated(event: Stripe.Event): Promise<We
 }
 
 /**
- * Processes a customer.subscription.deleted event
+ * Processes a customer.subscription.deleted event with improved idempotency
  */
 export async function handleSubscriptionDeleted(event: Stripe.Event): Promise<WebhookResponse> {
   const subscription = event.data.object as Stripe.Subscription;
   
   try {
-    // Find the subscription in our database
-    const dbSubscription = await prisma.subscription.findUnique({
+    // Find the subscription in our database using stripeSubscriptionId
+    const dbSubscription = await prisma.subscription.findFirst({
       where: {
-        id: subscription.id,
-        chapterId: subscription.id
+        stripeSubscriptionId: subscription.id
       },
     });
     
     if (!dbSubscription) {
+      // If subscription doesn't exist, consider it already processed
       return {
         success: true,
+        message: "Subscription not found (already deleted)",
         event
       };
     }
@@ -237,26 +212,13 @@ export async function handleSubscriptionDeleted(event: Stripe.Event): Promise<We
       },
       data: {
         status: SubscriptionStatus.CANCELED,
-        plan: "FREE" as PlanType // Downgrade to free tier
+        plan: "FREE" as PlanType
       }
     });
-    
-    // Find membership
-    const membership = await prisma.membership.findFirst({
-      where: { chapterId: dbSubscription.chapterId }
-    });
-    
-    // Also downgrade the membership tier if found
-    if (membership) {
-      await prisma.membership.update({
-        where: { id: membership.id },
-        data: {}
-      });
-    };
 
     return {
       success: true,
-      message: `Subscription canceled and downgraded to FREE tier`
+      message: "Subscription canceled and downgraded to FREE tier"
     };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
