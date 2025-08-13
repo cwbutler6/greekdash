@@ -14,6 +14,7 @@ export type AuditAction =
   | 'member.removed'
   | 'member.deactivated'
   | 'member.reactivated'
+  | 'member.exported'
   
   // Chapter related
   | 'chapter.settings_updated'

@@ -43,8 +43,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
-import { Search, MoreHorizontal, UserX, UserCheck } from 'lucide-react';
+import { Search, MoreHorizontal, UserX, UserCheck, Download } from 'lucide-react';
 
 // Define the member type
 interface Member {
@@ -246,6 +247,52 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
     );
   });
 
+  // Add the exportMembers function inside the component
+  const exportMembers = async (format: 'csv' | 'json' = 'csv') => {
+    try {
+      const params = new URLSearchParams({
+        format,
+        includeInactive: showInactive.toString(),
+      });
+      
+      const response = await fetch(`/api/chapters/${chapterSlug}/members/export?${params}`);
+      
+      if (!response.ok) {
+        throw new Error('Export failed');
+      }
+      
+      if (format === 'csv') {
+        // Handle CSV download
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${chapterSlug}-members-${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      } else {
+        // Handle JSON download
+        const data = await response.json();
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${chapterSlug}-members-${new Date().toISOString().split('T')[0]}.json`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
+      
+      toast.success('Member data exported successfully');
+    } catch (error) {
+      console.error('Export error:', error);
+      toast.error('Failed to export member data');
+    }
+  };
+
   return (
     <div className="space-y-6">
       <Card>
@@ -257,24 +304,45 @@ export default function MembersClient({ chapterSlug }: { chapterSlug: string }) 
         </CardHeader>
         <CardContent>
           <div className="flex items-center justify-between mb-4">
-            <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-              <Input
-                type="text"
-                placeholder="Search members..."
-                className="pl-8"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+            <div className="flex items-center space-x-4">
+              <div className="relative flex-1 max-w-sm">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+                <Input
+                  type="text"
+                  placeholder="Search members..."
+                  className="pl-8"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="show-inactive"
+                  checked={showInactive}
+                  onCheckedChange={(checked) => setShowInactive(checked === true)}
+                />
+                <label htmlFor="show-inactive" className="text-sm font-medium">
+                  Show inactive members
+                </label>
+              </div>
             </div>
             <div className="flex items-center space-x-2">
-              <Button
-                variant={showInactive ? "default" : "outline"}
-                size="sm"
-                onClick={() => setShowInactive(!showInactive)}
-              >
-                {showInactive ? 'Hide Inactive' : 'Show Inactive'}
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Download className="h-4 w-4 mr-2" />
+                    Export
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => exportMembers('csv')}>
+                    Export as CSV
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => exportMembers('json')}>
+                    Export as JSON
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
