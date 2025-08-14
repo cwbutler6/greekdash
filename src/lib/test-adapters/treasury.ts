@@ -17,8 +17,8 @@ const transactionTypeMap: Record<TransactionTypeString, TransactionType> = {
   'DUES': TransactionType.DUES_PAYMENT,
   'EXPENSE': TransactionType.EXPENSE,
   'INCOME': TransactionType.INCOME,
-  'FEE': TransactionType.OTHER,
-  'OTHER': TransactionType.OTHER
+  'FEE': TransactionType.EXPENSE,
+  'OTHER': TransactionType.EXPENSE
 };
 
 // We're not using the status mapping since it appears the Transaction model

@@ -19,18 +19,20 @@ const transactionTypeColors: Record<TransactionType, string> = {
   DUES_PAYMENT: 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100',
   EXPENSE: 'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100',
   INCOME: 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100',
-  TRANSFER: 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100',
-  REFUND: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100',
-  OTHER: 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100',
+  DONATION: 'bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100',
+  TREASURY_DEPOSIT: 'bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100',
+  TREASURY_WITHDRAWAL: 'bg-orange-100 text-orange-800 dark:bg-orange-800 dark:text-orange-100',
+  TREASURY_YIELD: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-800 dark:text-emerald-100',
 };
 
 const transactionTypeIcons: Record<TransactionType, React.ReactNode> = {
   DUES_PAYMENT: <ChevronUp className="h-4 w-4 text-green-600" />,
   EXPENSE: <ChevronDown className="h-4 w-4 text-red-600" />,
   INCOME: <ChevronUp className="h-4 w-4 text-green-600" />,
-  TRANSFER: <ChevronRight className="h-4 w-4 text-blue-600" />,
-  REFUND: <ChevronUp className="h-4 w-4 text-yellow-600" />,
-  OTHER: <ChevronRight className="h-4 w-4 text-gray-600" />,
+  DONATION: <ChevronUp className="h-4 w-4 text-purple-600" />,
+  TREASURY_DEPOSIT: <ChevronUp className="h-4 w-4 text-blue-600" />,
+  TREASURY_WITHDRAWAL: <ChevronDown className="h-4 w-4 text-orange-600" />,
+  TREASURY_YIELD: <ChevronUp className="h-4 w-4 text-emerald-600" />,
 };
 
 export function RecentTransactions({ chapterSlug, limit = 5 }: RecentTransactionsProps) {
@@ -137,18 +139,29 @@ function getTransactionDescription(transaction: Transaction): string {
     return `Dues payment`;
   }
 
+  // Handle donation-related transactions
+  if (transaction.donationId) {
+    return `Donation received`;
+  }
+
   // Handle specific transaction types with friendly descriptions
   switch (transaction.type) {
-    case TransactionType.TRANSFER:
-      return 'Funds transfer';
-    case TransactionType.REFUND:
-      return 'Refund processed';
+    case TransactionType.TREASURY_DEPOSIT:
+      return 'Treasury deposit';
+    case TransactionType.TREASURY_WITHDRAWAL:
+      return 'Treasury withdrawal';
+    case TransactionType.TREASURY_YIELD:
+      return 'Treasury yield';
+    case TransactionType.DONATION:
+      return 'Donation received';
     case TransactionType.INCOME:
       return 'Income received';
-    case TransactionType.OTHER:
-      return 'Other transaction';
+    case TransactionType.EXPENSE:
+      return 'Expense payment';
+    case TransactionType.DUES_PAYMENT:
+      return 'Dues payment';
     default:
       // Default description based on transaction type
-      return transaction.type.replace('_', ' ');
+      return (transaction.type as string).replace('_', ' ');
   }
 }

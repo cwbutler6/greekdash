@@ -74,11 +74,11 @@ export async function GET(
     // Get any pending finance-related invoices
     let pendingInvoices: TransactionRecord[] = [];
     try {
-      // Try to fetch invoices with the 'OTHER' transaction type
+      // Try to fetch invoices with the 'EXPENSE' transaction type
       pendingInvoices = await prisma.transaction.findMany({
         where: {
           chapterId: chapter.id,
-          type: "OTHER",
+          type: "EXPENSE",
           metadata: {
             path: ["transactionCategory"],
             equals: "invoice",
@@ -205,7 +205,7 @@ export async function POST(
       await prisma.transaction.create({
         data: {
           amount: 0,
-          type: "OTHER",
+          type: "INCOME",
           description: `Subscription downgraded to FREE plan`,
           chapterId: chapter.id,
           metadata: {
