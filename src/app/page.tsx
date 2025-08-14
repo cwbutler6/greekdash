@@ -20,7 +20,7 @@ const FeatureIcons = {
   ),
   PublicWebpage: () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9 3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
     </svg>
   ),
   PaymentsDonations: () => (
@@ -42,6 +42,21 @@ const FeatureIcons = {
     <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
     </svg>
+  ),
+  Security: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+    </svg>
+  ),
+  FinancialManagement: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+    </svg>
+  ),
+  Donations: () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>
   )
 };
 
@@ -54,10 +69,10 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-1/2 space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black tracking-tight">
-                Complete Greek Chapter Management Solution
+                The Complete Greek Life Management Platform
               </h1>
               <p className="text-xl text-gray-600">
-                Create your chapter, invite members, manage events, collect payments, and communicate seamlessly—all from one platform designed for Greek life.
+                Streamline chapter operations with secure member management, advanced financial tools, donation campaigns, event coordination, and seamless communication—all in one powerful platform designed specifically for Greek organizations.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-2">
                 <Link 
@@ -145,48 +160,48 @@ export default function Home() {
             {[
               {
                 title: "Create Your Chapter",
-                description: "Set up your chapter in minutes with a unique URL, branding, and customizable settings for your organization.",
+                description: "Set up your chapter in minutes with a unique URL, custom branding, and configurable settings. Complete tenant isolation ensures your data stays secure and separate.",
                 icon: <FeatureIcons.ChapterCreation />
               },
               {
-                title: "Invite & Manage Members",
-                description: "Send invitations, approve applications, and maintain a complete membership directory with profiles and roles.",
+                title: "Smart Member Management",
+                description: "Send invitations with approval workflows, manage member applications, and maintain a complete directory with profiles, roles, and audit trails for all changes.",
                 icon: <FeatureIcons.MemberInvites />
               },
               {
                 title: "Event Management",
-                description: "Create, schedule, and promote chapter events. Track RSVPs, attendance, and collect event-specific payments.",
+                description: "Create, schedule, and promote chapter events. Track RSVPs, attendance, and collect event-specific payments with integrated Stripe processing.",
                 icon: <FeatureIcons.EventManagement />
               },
               {
                 title: "Public Chapter Website",
-                description: "Every chapter gets a customizable public web page for recruiting new members and showcasing chapter activities.",
+                description: "Every chapter gets a customizable public web page for recruiting new members, showcasing activities, and accepting donations from alumni and supporters.",
                 icon: <FeatureIcons.PublicWebpage />
               },
               {
-                title: "Payments & Donations",
-                description: "Collect dues, process event fees, and accept donations with secure integrated payment processing.",
-                icon: <FeatureIcons.PaymentsDonations />
+                title: "Advanced Financial Management",
+                description: "Create budgets, track expenses, manage dues collection, and generate comprehensive financial reports. Full integration with Stripe for secure payment processing.",
+                icon: <FeatureIcons.FinancialManagement />
               },
               {
-                title: "Email Communication",
-                description: "Send targeted emails to your entire chapter or specific member groups. Create newsletters and announcements.",
+                title: "Donation Campaigns",
+                description: "Launch fundraising campaigns, accept donations from alumni and supporters, track progress toward goals, and send automated confirmation emails to donors.",
+                icon: <FeatureIcons.Donations />
+              },
+              {
+                title: "Secure Communication",
+                description: "Send targeted emails to your entire chapter or specific member groups. Create newsletters, announcements, and automated notifications with full audit logging.",
                 icon: <FeatureIcons.Communication />
               },
               {
                 title: "Member Portal Access",
-                description: "Members get their own login to access events, pay dues, update profiles, and connect with other members.",
+                description: "Members get their own secure login to access events, pay dues, update profiles, view financial information, and connect with other members.",
                 icon: <FeatureIcons.MemberPortal />
               },
               {
-                title: "Financial Tracking",
-                description: "Track chapter finances, create budgets, record expenses, and generate financial reports.",
-                icon: <FeatureIcons.FileSharing />
-              },
-              {
-                title: "Document Sharing",
-                description: "Securely store and share important documents, bylaws, meeting minutes, and resources with your members.",
-                icon: <FeatureIcons.FileSharing />
+                title: "Enterprise Security",
+                description: "Bank-level security with data encryption, tenant isolation, role-based access controls, and comprehensive audit trails for all chapter activities.",
+                icon: <FeatureIcons.Security />
               }
             ].map((feature, i) => (
               <div key={i} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col">
@@ -201,8 +216,51 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Security & Compliance Section */}
+      <section className="bg-white px-6 py-16 md:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-black">
+              Enterprise-Grade Security & Compliance
+            </h2>
+            <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+              Your chapter&apos;s data is protected with the same security standards used by financial institutions.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: "Data Encryption",
+                description: "All data encrypted in transit and at rest using industry-standard AES-256 encryption."
+              },
+              {
+                title: "Tenant Isolation",
+                description: "Complete data separation between chapters with multi-tenant architecture and access controls."
+              },
+              {
+                title: "Audit Trails",
+                description: "Comprehensive logging of all user actions, data changes, and system access for compliance."
+              },
+              {
+                title: "Role-Based Access",
+                description: "Granular permission controls ensure members only access appropriate chapter information."
+              }
+            ].map((item, i) => (
+              <div key={i} className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 bg-emerald-100 rounded-full flex items-center justify-center">
+                  <FeatureIcons.Security />
+                </div>
+                <h3 className="text-lg font-bold text-black mb-2">{item.title}</h3>
+                <p className="text-gray-600">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Pricing Section */}
-      <section id="pricing" className="bg-white px-6 py-16 md:py-24">
+      <section id="pricing" className="bg-emerald-600/5 px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-black">
@@ -226,7 +284,7 @@ export default function Home() {
                   <span className="text-gray-500">/month</span>
                 </div>
                 <ul className="space-y-3 flex-grow mb-6">
-                  {["Up to 30 members", "Basic event management", "Member directory", "File sharing (100MB)"].map((feature, i) => (
+                  {["Up to 30 members", "Basic event management", "Member directory", "File sharing (100MB)", "Basic donation campaigns"].map((feature, i) => (
                     <li key={i} className="flex items-center">
                       <span className="text-emerald-600 mr-2">✓</span>
                       <span>{feature}</span>
@@ -261,7 +319,9 @@ export default function Home() {
                     "Advanced event management",
                     "Points tracking system",
                     "File sharing (3GB)",
-                    "Dues collection tools"
+                    "Dues collection tools",
+                    "Advanced donation campaigns",
+                    "Financial reporting"
                   ].map((feature, i) => (
                     <li key={i} className="flex items-center">
                       <span className="text-emerald-600 mr-2">✓</span>
@@ -302,7 +362,9 @@ export default function Home() {
                     "API access",
                     "File sharing (20GB)",
                     "Priority support",
-                    "Custom integrations"
+                    "Custom integrations",
+                    "Advanced financial tools",
+                    "Unlimited donation campaigns"
                   ].map((feature, i) => (
                     <li key={i} className="flex items-center">
                       <span className="text-emerald-600 mr-2">✓</span>
@@ -325,7 +387,7 @@ export default function Home() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="bg-emerald-600/5 px-6 py-16 md:py-24">
+      <section id="testimonials" className="bg-white px-6 py-16 md:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-black">
@@ -354,7 +416,7 @@ export default function Home() {
                 title: "Member Engagement Chair, Zeta Theta Iota"
               }
             ].map((testimonial, i) => (
-              <blockquote key={i} className="bg-white p-6 rounded-xl shadow-sm">
+              <blockquote key={i} className="bg-emerald-600/5 p-6 rounded-xl shadow-sm">
                 <div className="text-emerald-600 text-4xl font-serif mb-4">&quot;</div>
                 <p className="text-gray-600 mb-6">{testimonial.quote}</p>
                 <footer>
@@ -368,7 +430,7 @@ export default function Home() {
       </section>
 
       {/* FAQ Section */}
-      <section id="faq" className="bg-white px-6 py-16 md:py-24">
+      <section id="faq" className="bg-emerald-600/5 px-6 py-16 md:py-24">
         <div className="mx-auto max-w-4xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-black">
@@ -383,11 +445,11 @@ export default function Home() {
             {[
               {
                 question: "Is there a free plan?",
-                answer: "Yes! We offer a free plan for chapters with up to 30 members. It includes basic event management, a member directory, and limited file sharing."
+                answer: "Yes! We offer a free plan for chapters with up to 30 members. It includes basic event management, member directory, file sharing, and donation campaigns to help you get started."
               },
               {
-                question: "How secure is my chapter&apos;s data?",
-                answer: "We take security very seriously. All data is encrypted both in transit and at rest. We employ industry-standard security practices and regular audits to ensure your chapter&apos;s data remains secure."
+                question: "How secure is my chapter's data?",
+                answer: "We take security very seriously. All data is encrypted both in transit and at rest. We employ industry-standard security practices and regular audits to ensure your chapter's data remains secure."
               },
               {
                 question: "Can we switch plans later?",
@@ -400,6 +462,10 @@ export default function Home() {
               {
                 question: "Do you offer discounts for annual billing?",
                 answer: "Yes, we offer a 15% discount when you choose annual billing instead of monthly billing."
+              },
+              {
+                question: "How does the donation system work?",
+                answer: "Our donation system allows you to create fundraising campaigns, accept secure payments via Stripe, track progress toward goals, and automatically send confirmation emails to donors. Alumni and supporters can donate directly through your public chapter page."
               }
             ].map((faq, i) => (
               <div key={i} className="border-b border-gray-200 pb-6">
@@ -418,7 +484,7 @@ export default function Home() {
             Ready to transform your chapter management?
           </h2>
           <p className="text-white/90 text-lg mb-6">
-            Join thousands of fraternity and sorority chapters using GreekDash to streamline operations and engage members.
+            Join thousands of fraternity and sorority chapters using GreekDash to streamline operations, enhance security, and engage members.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link 
