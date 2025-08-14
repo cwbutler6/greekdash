@@ -1,5 +1,9 @@
 // This file is used by Vitest to set up the test environment
+import React from 'react';
 import { vi } from 'vitest';
+
+// Make React available globally for tests
+global.React = React;
 
 // Mock the Next.js environment with a redirect that throws REDIRECT error
 const mockRedirect = vi.fn().mockImplementation(() => {
@@ -20,10 +24,15 @@ vi.mock('next/router', () => ({
 
 // Mock NextAuth
 vi.mock('next-auth/react', () => ({
-  useSession: () => ({ data: null, status: 'unauthenticated' }),
+  useSession: vi.fn(() => ({
+    data: null,
+    status: 'loading',
+    update: vi.fn().mockResolvedValue({}), // Fix: Make update return a resolved Promise
+  })),
   signIn: vi.fn(),
-  signOut: vi.fn()
-}))
+  signOut: vi.fn(),
+  getSession: vi.fn(),
+}));
 
 vi.mock('next/navigation', () => ({
   redirect: mockRedirect,

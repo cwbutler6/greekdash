@@ -71,12 +71,8 @@ describe('AuthGuard', () => {
       );
 
       await waitFor(() => {
-        // BUG: Currently redirects to /signup instead of /social-signup
-        // This test documents the current buggy behavior
-        expect(mockReplace).toHaveBeenCalledWith('/signup');
-        
-        // EXPECTED BEHAVIOR: Should redirect to /social-signup for social users
-        // expect(mockReplace).toHaveBeenCalledWith('/social-signup');
+        // Fix: AuthGuard uses router.push(), not router.replace()
+        expect(mockPush).toHaveBeenCalledWith('/social-signup');
       });
     });
 
@@ -108,8 +104,8 @@ describe('AuthGuard', () => {
       );
 
       await waitFor(() => {
-        // This should correctly redirect to /signup for regular users
-        expect(mockReplace).toHaveBeenCalledWith('/signup');
+        // Fix: AuthGuard uses router.push(), not router.replace()
+        expect(mockPush).toHaveBeenCalledWith('/signup');
       });
     });
 
@@ -128,7 +124,7 @@ describe('AuthGuard', () => {
       mockUseSession.mockReturnValue({
         data: socialUserSession,
         status: 'authenticated',
-        update: vi.fn(),
+        update: vi.fn().mockResolvedValue(undefined), // Fix: Return a resolved Promise
       });
 
       // User is already on social-signup page
@@ -142,6 +138,7 @@ describe('AuthGuard', () => {
 
       await waitFor(() => {
         // Should not redirect when already on the correct page
+        expect(mockPush).not.toHaveBeenCalled();
         expect(mockReplace).not.toHaveBeenCalled();
       });
     });
@@ -175,6 +172,7 @@ describe('AuthGuard', () => {
 
       await waitFor(() => {
         // Should not redirect when already on the correct page
+        expect(mockPush).not.toHaveBeenCalled();
         expect(mockReplace).not.toHaveBeenCalled();
       });
     });
@@ -212,8 +210,8 @@ describe('AuthGuard', () => {
       );
 
       await waitFor(() => {
-        // Should redirect to their chapter portal
-        expect(mockReplace).toHaveBeenCalledWith('/test-chapter/portal');
+        // Fix: AuthGuard uses router.push() and redirects to portal for MEMBER role
+        expect(mockPush).toHaveBeenCalledWith('/test-chapter/portal');
       });
     });
   });
