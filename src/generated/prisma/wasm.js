@@ -359,7 +359,8 @@ exports.Prisma.TransactionScalarFieldEnum = {
   processedAt: 'processedAt',
   chapterId: 'chapterId',
   expenseId: 'expenseId',
-  duesPaymentId: 'duesPaymentId'
+  duesPaymentId: 'duesPaymentId',
+  donationId: 'donationId'
 };
 
 exports.Prisma.FeedbackRequestScalarFieldEnum = {
@@ -436,6 +437,46 @@ exports.Prisma.WebhookEventScalarFieldEnum = {
   metadata: 'metadata',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DonationCampaignScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  goalAmount: 'goalAmount',
+  currentAmount: 'currentAmount',
+  type: 'type',
+  status: 'status',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  isPublic: 'isPublic',
+  allowAnonymous: 'allowAnonymous',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  chapterId: 'chapterId',
+  createdById: 'createdById'
+};
+
+exports.Prisma.DonationScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  donorName: 'donorName',
+  donorEmail: 'donorEmail',
+  donorPhone: 'donorPhone',
+  message: 'message',
+  isAnonymous: 'isAnonymous',
+  status: 'status',
+  stripePaymentIntentId: 'stripePaymentIntentId',
+  stripeCheckoutUrl: 'stripeCheckoutUrl',
+  stripeSessionId: 'stripeSessionId',
+  metadata: 'metadata',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  completedAt: 'completedAt',
+  chapterId: 'chapterId',
+  campaignId: 'campaignId',
+  userId: 'userId'
 };
 
 exports.Prisma.SortOrder = {
@@ -528,12 +569,13 @@ exports.DuesStatus = exports.$Enums.DuesStatus = {
 };
 
 exports.TransactionType = exports.$Enums.TransactionType = {
-  DUES_PAYMENT: 'DUES_PAYMENT',
-  EXPENSE: 'EXPENSE',
   INCOME: 'INCOME',
-  TRANSFER: 'TRANSFER',
-  REFUND: 'REFUND',
-  OTHER: 'OTHER'
+  EXPENSE: 'EXPENSE',
+  DUES_PAYMENT: 'DUES_PAYMENT',
+  DONATION: 'DONATION',
+  TREASURY_DEPOSIT: 'TREASURY_DEPOSIT',
+  TREASURY_WITHDRAWAL: 'TREASURY_WITHDRAWAL',
+  TREASURY_YIELD: 'TREASURY_YIELD'
 };
 
 exports.TreasuryTransactionType = exports.$Enums.TreasuryTransactionType = {
@@ -541,6 +583,30 @@ exports.TreasuryTransactionType = exports.$Enums.TreasuryTransactionType = {
   WITHDRAW: 'WITHDRAW',
   AUTOINVEST: 'AUTOINVEST',
   YIELD_EARNED: 'YIELD_EARNED'
+};
+
+exports.DonationCampaignType = exports.$Enums.DonationCampaignType = {
+  GENERAL: 'GENERAL',
+  FUNDRAISER: 'FUNDRAISER',
+  SCHOLARSHIP: 'SCHOLARSHIP',
+  CHARITY: 'CHARITY',
+  EVENT: 'EVENT',
+  EMERGENCY: 'EMERGENCY'
+};
+
+exports.DonationCampaignStatus = exports.$Enums.DonationCampaignStatus = {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
+exports.DonationStatus = exports.$Enums.DonationStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
 };
 
 exports.Prisma.ModelName = {
@@ -568,7 +634,9 @@ exports.Prisma.ModelName = {
   MessageLog: 'MessageLog',
   TreasuryTransaction: 'TreasuryTransaction',
   DuesPlanAssignment: 'DuesPlanAssignment',
-  WebhookEvent: 'WebhookEvent'
+  WebhookEvent: 'WebhookEvent',
+  DonationCampaign: 'DonationCampaign',
+  Donation: 'Donation'
 };
 
 /**

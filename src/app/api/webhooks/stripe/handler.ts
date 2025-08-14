@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import stripe from "@/lib/stripe";
 import { prisma } from "@/lib/db";
 import { SubscriptionStatus, PlanType } from "@/generated/prisma";
+import { financeService } from "@/lib/services/finance-service";
 
 // Type definitions for handler responses
 export type WebhookResponse = {
@@ -46,7 +47,12 @@ export async function constructEvent(req: NextRequest): Promise<WebhookResponse>
 export async function handleCheckoutSessionCompleted(event: Stripe.Event): Promise<WebhookResponse> {
   const session = event.data.object as Stripe.Checkout.Session;
   
-  // Verify session has the required metadata
+  // Check if this is a donation payment
+  if (session.metadata?.type === 'donation') {
+    return handleDonationCheckoutCompleted(session, event);
+  }
+  
+  // Verify session has the required metadata for subscriptions
   if (!session.metadata || !session.metadata.membershipId || !session.metadata.chapterId) {
     return {
       success: false,
@@ -231,9 +237,115 @@ export async function handleSubscriptionDeleted(event: Stripe.Event): Promise<We
 }
 
 /**
- * For compatibility with our tests
+ * Handles donation checkout session completion
+ */
+export async function handleDonationCheckoutCompleted(session: Stripe.Checkout.Session, event: Stripe.Event): Promise<WebhookResponse> {
+  try {
+    if (!session.metadata?.donationId || !session.metadata?.chapterId) {
+      return {
+        success: false,
+        error: "Missing donation metadata in checkout session"
+      };
+    }
+
+    const { donationId, chapterId } = session.metadata;
+    
+    // Check if donation is already processed (idempotency)
+    const existingDonation = await prisma.donation.findFirst({
+      where: {
+        id: donationId,
+        chapterId,
+        status: "COMPLETED"
+      }
+    });
+
+    if (existingDonation) {
+      return {
+        success: true,
+        message: "Donation already processed",
+        event
+      };
+    }
+
+    // Process the donation payment
+    await financeService.processDonationPayment(session.id);
+    
+    return {
+      success: true,
+      message: "Donation payment processed successfully",
+      event
+    };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error(`Error processing donation payment: ${errorMessage}`);
+    return {
+      success: false,
+      error: errorMessage
+    };
+  }
+}
+
+/**
+ * Processes payment_intent.succeeded events for donations
  */
 export async function handlePaymentIntentSucceeded(event: Stripe.Event): Promise<WebhookResponse> {
-  // Not implemented in the tests, but keeping for compatibility
-  return { success: true, event };
+  const paymentIntent = event.data.object as Stripe.PaymentIntent;
+  
+  try {
+    // Check if this payment intent is associated with a donation
+    if (paymentIntent.metadata?.type === 'donation') {
+      const { donationId, chapterId } = paymentIntent.metadata;
+      
+      if (!donationId || !chapterId) {
+        return {
+          success: false,
+          error: "Missing donation metadata in payment intent"
+        };
+      }
+
+      // Check if donation is already processed (idempotency)
+      const existingDonation = await prisma.donation.findFirst({
+        where: {
+          id: donationId,
+          chapterId,
+          status: "COMPLETED"
+        }
+      });
+
+      if (existingDonation) {
+        return {
+          success: true,
+          message: "Donation already processed",
+          event
+        };
+      }
+
+      // Update donation status
+      await financeService.updateDonation(donationId, chapterId, {
+        status: "COMPLETED",
+        completedAt: new Date(),
+        stripePaymentIntentId: paymentIntent.id,
+      });
+      
+      return {
+        success: true,
+        message: "Donation payment intent processed successfully",
+        event
+      };
+    }
+    
+    // For non-donation payment intents, just return success
+    return { 
+      success: true, 
+      message: "Payment intent succeeded (non-donation)",
+      event 
+    };
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error(`Error handling payment intent: ${errorMessage}`);
+    return {
+      success: false,
+      error: errorMessage
+    };
+  }
 }

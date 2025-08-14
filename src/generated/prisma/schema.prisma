@@ -78,6 +78,10 @@ model Chapter {
   duesPlans            DuesPlan[] // One chapter has many dues plans
   treasuryTransactions TreasuryTransaction[] // One chapter has many treasury transactions
   duesPlanAssignments  DuesPlanAssignment[] // One chapter has many dues plan assignments
+
+  // Donation relations
+  donations         Donation[] // One chapter has many donations
+  donationCampaigns DonationCampaign[] // One chapter has many donation campaigns
 }
 
 model User {
@@ -116,6 +120,10 @@ model User {
   // Dues plan assignment relations
   duesPlanAssignments DuesPlanAssignment[] // Dues plan assignments for this user
   assignedDuesPlans   DuesPlanAssignment[] @relation("AssignedBy") // Dues plans assigned by this user
+
+  // Donation relations
+  donations        Donation[] // Donations made by this user
+  createdCampaigns DonationCampaign[] @relation("CreatedCampaigns") // Campaigns created by this user
 }
 
 model Membership {
@@ -387,12 +395,13 @@ enum ExpenseStatus {
 }
 
 enum TransactionType {
-  DUES_PAYMENT
-  EXPENSE
   INCOME
-  TRANSFER
-  REFUND
-  OTHER
+  EXPENSE
+  DUES_PAYMENT
+  DONATION
+  TREASURY_DEPOSIT
+  TREASURY_WITHDRAWAL
+  TREASURY_YIELD
 }
 
 model Budget {
@@ -533,11 +542,13 @@ model Transaction {
   chapterId     String
   expenseId     String? @unique
   duesPaymentId String? @unique
+  donationId    String? @unique
 
   // Relations
   chapter     Chapter      @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   expense     Expense?     @relation("expenseTransaction", fields: [expenseId], references: [id])
   duesPayment DuesPayment? @relation("duesTransaction", fields: [duesPaymentId], references: [id])
+  donation    Donation?    @relation("donationTransaction", fields: [donationId], references: [id])
 
   @@index([chapterId])
   @@index([type])
@@ -673,4 +684,104 @@ model WebhookEvent {
   @@index([eventType])
   @@index([processed])
   @@index([createdAt])
+}
+
+// Donation-related enums
+enum DonationStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum DonationCampaignStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+enum DonationCampaignType {
+  GENERAL
+  FUNDRAISER
+  SCHOLARSHIP
+  CHARITY
+  EVENT
+  EMERGENCY
+}
+
+// Donation Campaign model
+model DonationCampaign {
+  id             String                 @id @default(cuid())
+  title          String
+  description    String                 @db.Text
+  goalAmount     Float?
+  currentAmount  Float                  @default(0)
+  type           DonationCampaignType   @default(GENERAL)
+  status         DonationCampaignStatus @default(DRAFT)
+  startDate      DateTime?
+  endDate        DateTime?
+  isPublic       Boolean                @default(true)
+  allowAnonymous Boolean                @default(true)
+  imageUrl       String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+
+  // Foreign keys
+  chapterId   String
+  createdById String
+
+  // Relations
+  chapter   Chapter    @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  createdBy User       @relation("CreatedCampaigns", fields: [createdById], references: [id])
+  donations Donation[]
+
+  @@index([chapterId])
+  @@index([createdById])
+  @@index([status])
+  @@index([isPublic])
+  @@index([startDate])
+  @@index([endDate])
+}
+
+// Donation model
+model Donation {
+  id          String         @id @default(cuid())
+  amount      Float
+  donorName   String?
+  donorEmail  String?
+  donorPhone  String?
+  message     String?        @db.Text
+  isAnonymous Boolean        @default(false)
+  status      DonationStatus @default(PENDING)
+
+  // Stripe integration
+  stripePaymentIntentId String?
+  stripeCheckoutUrl     String?
+  stripeSessionId       String?
+
+  // Metadata
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  completedAt DateTime?
+
+  // Foreign keys
+  chapterId  String
+  campaignId String?
+  userId     String? // Optional if user is logged in
+
+  // Relations
+  chapter     Chapter           @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  campaign    DonationCampaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  user        User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  transaction Transaction?      @relation("donationTransaction")
+
+  @@index([chapterId])
+  @@index([campaignId])
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([donorEmail])
 }

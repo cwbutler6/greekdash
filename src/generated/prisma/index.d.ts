@@ -138,6 +138,16 @@ export type DuesPlanAssignment = $Result.DefaultSelection<Prisma.$DuesPlanAssign
  * 
  */
 export type WebhookEvent = $Result.DefaultSelection<Prisma.$WebhookEventPayload>
+/**
+ * Model DonationCampaign
+ * 
+ */
+export type DonationCampaign = $Result.DefaultSelection<Prisma.$DonationCampaignPayload>
+/**
+ * Model Donation
+ * 
+ */
+export type Donation = $Result.DefaultSelection<Prisma.$DonationPayload>
 
 /**
  * Enums
@@ -214,12 +224,13 @@ export type ExpenseStatus = (typeof ExpenseStatus)[keyof typeof ExpenseStatus]
 
 
 export const TransactionType: {
-  DUES_PAYMENT: 'DUES_PAYMENT',
-  EXPENSE: 'EXPENSE',
   INCOME: 'INCOME',
-  TRANSFER: 'TRANSFER',
-  REFUND: 'REFUND',
-  OTHER: 'OTHER'
+  EXPENSE: 'EXPENSE',
+  DUES_PAYMENT: 'DUES_PAYMENT',
+  DONATION: 'DONATION',
+  TREASURY_DEPOSIT: 'TREASURY_DEPOSIT',
+  TREASURY_WITHDRAWAL: 'TREASURY_WITHDRAWAL',
+  TREASURY_YIELD: 'TREASURY_YIELD'
 };
 
 export type TransactionType = (typeof TransactionType)[keyof typeof TransactionType]
@@ -254,6 +265,39 @@ export const TreasuryTransactionType: {
 };
 
 export type TreasuryTransactionType = (typeof TreasuryTransactionType)[keyof typeof TreasuryTransactionType]
+
+
+export const DonationStatus: {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED'
+};
+
+export type DonationStatus = (typeof DonationStatus)[keyof typeof DonationStatus]
+
+
+export const DonationCampaignStatus: {
+  DRAFT: 'DRAFT',
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+};
+
+export type DonationCampaignStatus = (typeof DonationCampaignStatus)[keyof typeof DonationCampaignStatus]
+
+
+export const DonationCampaignType: {
+  GENERAL: 'GENERAL',
+  FUNDRAISER: 'FUNDRAISER',
+  SCHOLARSHIP: 'SCHOLARSHIP',
+  CHARITY: 'CHARITY',
+  EVENT: 'EVENT',
+  EMERGENCY: 'EMERGENCY'
+};
+
+export type DonationCampaignType = (typeof DonationCampaignType)[keyof typeof DonationCampaignType]
 
 }
 
@@ -300,6 +344,18 @@ export const DuesStatus: typeof $Enums.DuesStatus
 export type TreasuryTransactionType = $Enums.TreasuryTransactionType
 
 export const TreasuryTransactionType: typeof $Enums.TreasuryTransactionType
+
+export type DonationStatus = $Enums.DonationStatus
+
+export const DonationStatus: typeof $Enums.DonationStatus
+
+export type DonationCampaignStatus = $Enums.DonationCampaignStatus
+
+export const DonationCampaignStatus: typeof $Enums.DonationCampaignStatus
+
+export type DonationCampaignType = $Enums.DonationCampaignType
+
+export const DonationCampaignType: typeof $Enums.DonationCampaignType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -675,6 +731,26 @@ export class PrismaClient<
     * ```
     */
   get webhookEvent(): Prisma.WebhookEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.donationCampaign`: Exposes CRUD operations for the **DonationCampaign** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DonationCampaigns
+    * const donationCampaigns = await prisma.donationCampaign.findMany()
+    * ```
+    */
+  get donationCampaign(): Prisma.DonationCampaignDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.donation`: Exposes CRUD operations for the **Donation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Donations
+    * const donations = await prisma.donation.findMany()
+    * ```
+    */
+  get donation(): Prisma.DonationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1139,7 +1215,9 @@ export namespace Prisma {
     MessageLog: 'MessageLog',
     TreasuryTransaction: 'TreasuryTransaction',
     DuesPlanAssignment: 'DuesPlanAssignment',
-    WebhookEvent: 'WebhookEvent'
+    WebhookEvent: 'WebhookEvent',
+    DonationCampaign: 'DonationCampaign',
+    Donation: 'Donation'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1158,7 +1236,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "chapter" | "user" | "membership" | "profile" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage" | "budget" | "expense" | "duesPlan" | "duesPayment" | "transaction" | "feedbackRequest" | "file" | "messageLog" | "treasuryTransaction" | "duesPlanAssignment" | "webhookEvent"
+      modelProps: "chapter" | "user" | "membership" | "profile" | "subscription" | "account" | "session" | "verificationToken" | "invite" | "event" | "eventRSVP" | "auditLog" | "galleryImage" | "contactMessage" | "budget" | "expense" | "duesPlan" | "duesPayment" | "transaction" | "feedbackRequest" | "file" | "messageLog" | "treasuryTransaction" | "duesPlanAssignment" | "webhookEvent" | "donationCampaign" | "donation"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3012,6 +3090,154 @@ export namespace Prisma {
           }
         }
       }
+      DonationCampaign: {
+        payload: Prisma.$DonationCampaignPayload<ExtArgs>
+        fields: Prisma.DonationCampaignFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DonationCampaignFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DonationCampaignFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload>
+          }
+          findFirst: {
+            args: Prisma.DonationCampaignFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DonationCampaignFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload>
+          }
+          findMany: {
+            args: Prisma.DonationCampaignFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload>[]
+          }
+          create: {
+            args: Prisma.DonationCampaignCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload>
+          }
+          createMany: {
+            args: Prisma.DonationCampaignCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DonationCampaignCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload>[]
+          }
+          delete: {
+            args: Prisma.DonationCampaignDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload>
+          }
+          update: {
+            args: Prisma.DonationCampaignUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload>
+          }
+          deleteMany: {
+            args: Prisma.DonationCampaignDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DonationCampaignUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DonationCampaignUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload>[]
+          }
+          upsert: {
+            args: Prisma.DonationCampaignUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationCampaignPayload>
+          }
+          aggregate: {
+            args: Prisma.DonationCampaignAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDonationCampaign>
+          }
+          groupBy: {
+            args: Prisma.DonationCampaignGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DonationCampaignGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DonationCampaignCountArgs<ExtArgs>
+            result: $Utils.Optional<DonationCampaignCountAggregateOutputType> | number
+          }
+        }
+      }
+      Donation: {
+        payload: Prisma.$DonationPayload<ExtArgs>
+        fields: Prisma.DonationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DonationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DonationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload>
+          }
+          findFirst: {
+            args: Prisma.DonationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DonationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload>
+          }
+          findMany: {
+            args: Prisma.DonationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload>[]
+          }
+          create: {
+            args: Prisma.DonationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload>
+          }
+          createMany: {
+            args: Prisma.DonationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DonationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload>[]
+          }
+          delete: {
+            args: Prisma.DonationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload>
+          }
+          update: {
+            args: Prisma.DonationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload>
+          }
+          deleteMany: {
+            args: Prisma.DonationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DonationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DonationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload>[]
+          }
+          upsert: {
+            args: Prisma.DonationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DonationPayload>
+          }
+          aggregate: {
+            args: Prisma.DonationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDonation>
+          }
+          groupBy: {
+            args: Prisma.DonationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DonationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DonationCountArgs<ExtArgs>
+            result: $Utils.Optional<DonationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3121,6 +3347,8 @@ export namespace Prisma {
     treasuryTransaction?: TreasuryTransactionOmit
     duesPlanAssignment?: DuesPlanAssignmentOmit
     webhookEvent?: WebhookEventOmit
+    donationCampaign?: DonationCampaignOmit
+    donation?: DonationOmit
   }
 
   /* Types for Logging */
@@ -3231,6 +3459,8 @@ export namespace Prisma {
     duesPlans: number
     treasuryTransactions: number
     duesPlanAssignments: number
+    donations: number
+    donationCampaigns: number
   }
 
   export type ChapterCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3250,6 +3480,8 @@ export namespace Prisma {
     duesPlans?: boolean | ChapterCountOutputTypeCountDuesPlansArgs
     treasuryTransactions?: boolean | ChapterCountOutputTypeCountTreasuryTransactionsArgs
     duesPlanAssignments?: boolean | ChapterCountOutputTypeCountDuesPlanAssignmentsArgs
+    donations?: boolean | ChapterCountOutputTypeCountDonationsArgs
+    donationCampaigns?: boolean | ChapterCountOutputTypeCountDonationCampaignsArgs
   }
 
   // Custom InputTypes
@@ -3375,6 +3607,20 @@ export namespace Prisma {
     where?: DuesPlanAssignmentWhereInput
   }
 
+  /**
+   * ChapterCountOutputType without action
+   */
+  export type ChapterCountOutputTypeCountDonationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DonationWhereInput
+  }
+
+  /**
+   * ChapterCountOutputType without action
+   */
+  export type ChapterCountOutputTypeCountDonationCampaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DonationCampaignWhereInput
+  }
+
 
   /**
    * Count Type UserCountOutputType
@@ -3398,6 +3644,8 @@ export namespace Prisma {
     feedbackRequests: number
     duesPlanAssignments: number
     assignedDuesPlans: number
+    donations: number
+    createdCampaigns: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3418,6 +3666,8 @@ export namespace Prisma {
     feedbackRequests?: boolean | UserCountOutputTypeCountFeedbackRequestsArgs
     duesPlanAssignments?: boolean | UserCountOutputTypeCountDuesPlanAssignmentsArgs
     assignedDuesPlans?: boolean | UserCountOutputTypeCountAssignedDuesPlansArgs
+    donations?: boolean | UserCountOutputTypeCountDonationsArgs
+    createdCampaigns?: boolean | UserCountOutputTypeCountCreatedCampaignsArgs
   }
 
   // Custom InputTypes
@@ -3550,6 +3800,20 @@ export namespace Prisma {
     where?: DuesPlanAssignmentWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDonationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DonationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCreatedCampaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DonationCampaignWhereInput
+  }
+
 
   /**
    * Count Type EventCountOutputType
@@ -3650,6 +3914,37 @@ export namespace Prisma {
    */
   export type DuesPlanCountOutputTypeCountAssignmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DuesPlanAssignmentWhereInput
+  }
+
+
+  /**
+   * Count Type DonationCampaignCountOutputType
+   */
+
+  export type DonationCampaignCountOutputType = {
+    donations: number
+  }
+
+  export type DonationCampaignCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    donations?: boolean | DonationCampaignCountOutputTypeCountDonationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DonationCampaignCountOutputType without action
+   */
+  export type DonationCampaignCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaignCountOutputType
+     */
+    select?: DonationCampaignCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DonationCampaignCountOutputType without action
+   */
+  export type DonationCampaignCountOutputTypeCountDonationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DonationWhereInput
   }
 
 
@@ -3972,6 +4267,8 @@ export namespace Prisma {
     duesPlans?: boolean | Chapter$duesPlansArgs<ExtArgs>
     treasuryTransactions?: boolean | Chapter$treasuryTransactionsArgs<ExtArgs>
     duesPlanAssignments?: boolean | Chapter$duesPlanAssignmentsArgs<ExtArgs>
+    donations?: boolean | Chapter$donationsArgs<ExtArgs>
+    donationCampaigns?: boolean | Chapter$donationCampaignsArgs<ExtArgs>
     _count?: boolean | ChapterCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chapter"]>
 
@@ -4054,6 +4351,8 @@ export namespace Prisma {
     duesPlans?: boolean | Chapter$duesPlansArgs<ExtArgs>
     treasuryTransactions?: boolean | Chapter$treasuryTransactionsArgs<ExtArgs>
     duesPlanAssignments?: boolean | Chapter$duesPlanAssignmentsArgs<ExtArgs>
+    donations?: boolean | Chapter$donationsArgs<ExtArgs>
+    donationCampaigns?: boolean | Chapter$donationCampaignsArgs<ExtArgs>
     _count?: boolean | ChapterCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ChapterIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4079,6 +4378,8 @@ export namespace Prisma {
       duesPlans: Prisma.$DuesPlanPayload<ExtArgs>[]
       treasuryTransactions: Prisma.$TreasuryTransactionPayload<ExtArgs>[]
       duesPlanAssignments: Prisma.$DuesPlanAssignmentPayload<ExtArgs>[]
+      donations: Prisma.$DonationPayload<ExtArgs>[]
+      donationCampaigns: Prisma.$DonationCampaignPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4509,6 +4810,8 @@ export namespace Prisma {
     duesPlans<T extends Chapter$duesPlansArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$duesPlansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DuesPlanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     treasuryTransactions<T extends Chapter$treasuryTransactionsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$treasuryTransactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TreasuryTransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     duesPlanAssignments<T extends Chapter$duesPlanAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$duesPlanAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DuesPlanAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    donations<T extends Chapter$donationsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    donationCampaigns<T extends Chapter$donationCampaignsArgs<ExtArgs> = {}>(args?: Subset<T, Chapter$donationCampaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5346,6 +5649,54 @@ export namespace Prisma {
   }
 
   /**
+   * Chapter.donations
+   */
+  export type Chapter$donationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    where?: DonationWhereInput
+    orderBy?: DonationOrderByWithRelationInput | DonationOrderByWithRelationInput[]
+    cursor?: DonationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DonationScalarFieldEnum | DonationScalarFieldEnum[]
+  }
+
+  /**
+   * Chapter.donationCampaigns
+   */
+  export type Chapter$donationCampaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    where?: DonationCampaignWhereInput
+    orderBy?: DonationCampaignOrderByWithRelationInput | DonationCampaignOrderByWithRelationInput[]
+    cursor?: DonationCampaignWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DonationCampaignScalarFieldEnum | DonationCampaignScalarFieldEnum[]
+  }
+
+  /**
    * Chapter without action
    */
   export type ChapterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5569,6 +5920,8 @@ export namespace Prisma {
     feedbackRequests?: boolean | User$feedbackRequestsArgs<ExtArgs>
     duesPlanAssignments?: boolean | User$duesPlanAssignmentsArgs<ExtArgs>
     assignedDuesPlans?: boolean | User$assignedDuesPlansArgs<ExtArgs>
+    donations?: boolean | User$donationsArgs<ExtArgs>
+    createdCampaigns?: boolean | User$createdCampaignsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -5624,6 +5977,8 @@ export namespace Prisma {
     feedbackRequests?: boolean | User$feedbackRequestsArgs<ExtArgs>
     duesPlanAssignments?: boolean | User$duesPlanAssignmentsArgs<ExtArgs>
     assignedDuesPlans?: boolean | User$assignedDuesPlansArgs<ExtArgs>
+    donations?: boolean | User$donationsArgs<ExtArgs>
+    createdCampaigns?: boolean | User$createdCampaignsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -5649,6 +6004,8 @@ export namespace Prisma {
       feedbackRequests: Prisma.$FeedbackRequestPayload<ExtArgs>[]
       duesPlanAssignments: Prisma.$DuesPlanAssignmentPayload<ExtArgs>[]
       assignedDuesPlans: Prisma.$DuesPlanAssignmentPayload<ExtArgs>[]
+      donations: Prisma.$DonationPayload<ExtArgs>[]
+      createdCampaigns: Prisma.$DonationCampaignPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6070,6 +6427,8 @@ export namespace Prisma {
     feedbackRequests<T extends User$feedbackRequestsArgs<ExtArgs> = {}>(args?: Subset<T, User$feedbackRequestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FeedbackRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     duesPlanAssignments<T extends User$duesPlanAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$duesPlanAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DuesPlanAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     assignedDuesPlans<T extends User$assignedDuesPlansArgs<ExtArgs> = {}>(args?: Subset<T, User$assignedDuesPlansArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DuesPlanAssignmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    donations<T extends User$donationsArgs<ExtArgs> = {}>(args?: Subset<T, User$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    createdCampaigns<T extends User$createdCampaignsArgs<ExtArgs> = {}>(args?: Subset<T, User$createdCampaignsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6900,6 +7259,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DuesPlanAssignmentScalarFieldEnum | DuesPlanAssignmentScalarFieldEnum[]
+  }
+
+  /**
+   * User.donations
+   */
+  export type User$donationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    where?: DonationWhereInput
+    orderBy?: DonationOrderByWithRelationInput | DonationOrderByWithRelationInput[]
+    cursor?: DonationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DonationScalarFieldEnum | DonationScalarFieldEnum[]
+  }
+
+  /**
+   * User.createdCampaigns
+   */
+  export type User$createdCampaignsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    where?: DonationCampaignWhereInput
+    orderBy?: DonationCampaignOrderByWithRelationInput | DonationCampaignOrderByWithRelationInput[]
+    cursor?: DonationCampaignWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DonationCampaignScalarFieldEnum | DonationCampaignScalarFieldEnum[]
   }
 
   /**
@@ -25358,6 +25765,7 @@ export namespace Prisma {
     chapterId: string | null
     expenseId: string | null
     duesPaymentId: string | null
+    donationId: string | null
   }
 
   export type TransactionMaxAggregateOutputType = {
@@ -25370,6 +25778,7 @@ export namespace Prisma {
     chapterId: string | null
     expenseId: string | null
     duesPaymentId: string | null
+    donationId: string | null
   }
 
   export type TransactionCountAggregateOutputType = {
@@ -25383,6 +25792,7 @@ export namespace Prisma {
     chapterId: number
     expenseId: number
     duesPaymentId: number
+    donationId: number
     _all: number
   }
 
@@ -25405,6 +25815,7 @@ export namespace Prisma {
     chapterId?: true
     expenseId?: true
     duesPaymentId?: true
+    donationId?: true
   }
 
   export type TransactionMaxAggregateInputType = {
@@ -25417,6 +25828,7 @@ export namespace Prisma {
     chapterId?: true
     expenseId?: true
     duesPaymentId?: true
+    donationId?: true
   }
 
   export type TransactionCountAggregateInputType = {
@@ -25430,6 +25842,7 @@ export namespace Prisma {
     chapterId?: true
     expenseId?: true
     duesPaymentId?: true
+    donationId?: true
     _all?: true
   }
 
@@ -25530,6 +25943,7 @@ export namespace Prisma {
     chapterId: string
     expenseId: string | null
     duesPaymentId: string | null
+    donationId: string | null
     _count: TransactionCountAggregateOutputType | null
     _avg: TransactionAvgAggregateOutputType | null
     _sum: TransactionSumAggregateOutputType | null
@@ -25562,9 +25976,11 @@ export namespace Prisma {
     chapterId?: boolean
     expenseId?: boolean
     duesPaymentId?: boolean
+    donationId?: boolean
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
     expense?: boolean | Transaction$expenseArgs<ExtArgs>
     duesPayment?: boolean | Transaction$duesPaymentArgs<ExtArgs>
+    donation?: boolean | Transaction$donationArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -25578,9 +25994,11 @@ export namespace Prisma {
     chapterId?: boolean
     expenseId?: boolean
     duesPaymentId?: boolean
+    donationId?: boolean
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
     expense?: boolean | Transaction$expenseArgs<ExtArgs>
     duesPayment?: boolean | Transaction$duesPaymentArgs<ExtArgs>
+    donation?: boolean | Transaction$donationArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -25594,9 +26012,11 @@ export namespace Prisma {
     chapterId?: boolean
     expenseId?: boolean
     duesPaymentId?: boolean
+    donationId?: boolean
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
     expense?: boolean | Transaction$expenseArgs<ExtArgs>
     duesPayment?: boolean | Transaction$duesPaymentArgs<ExtArgs>
+    donation?: boolean | Transaction$donationArgs<ExtArgs>
   }, ExtArgs["result"]["transaction"]>
 
   export type TransactionSelectScalar = {
@@ -25610,23 +26030,27 @@ export namespace Prisma {
     chapterId?: boolean
     expenseId?: boolean
     duesPaymentId?: boolean
+    donationId?: boolean
   }
 
-  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "type" | "description" | "metadata" | "createdAt" | "processedAt" | "chapterId" | "expenseId" | "duesPaymentId", ExtArgs["result"]["transaction"]>
+  export type TransactionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "type" | "description" | "metadata" | "createdAt" | "processedAt" | "chapterId" | "expenseId" | "duesPaymentId" | "donationId", ExtArgs["result"]["transaction"]>
   export type TransactionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
     expense?: boolean | Transaction$expenseArgs<ExtArgs>
     duesPayment?: boolean | Transaction$duesPaymentArgs<ExtArgs>
+    donation?: boolean | Transaction$donationArgs<ExtArgs>
   }
   export type TransactionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
     expense?: boolean | Transaction$expenseArgs<ExtArgs>
     duesPayment?: boolean | Transaction$duesPaymentArgs<ExtArgs>
+    donation?: boolean | Transaction$donationArgs<ExtArgs>
   }
   export type TransactionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     chapter?: boolean | ChapterDefaultArgs<ExtArgs>
     expense?: boolean | Transaction$expenseArgs<ExtArgs>
     duesPayment?: boolean | Transaction$duesPaymentArgs<ExtArgs>
+    donation?: boolean | Transaction$donationArgs<ExtArgs>
   }
 
   export type $TransactionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -25635,6 +26059,7 @@ export namespace Prisma {
       chapter: Prisma.$ChapterPayload<ExtArgs>
       expense: Prisma.$ExpensePayload<ExtArgs> | null
       duesPayment: Prisma.$DuesPaymentPayload<ExtArgs> | null
+      donation: Prisma.$DonationPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -25647,6 +26072,7 @@ export namespace Prisma {
       chapterId: string
       expenseId: string | null
       duesPaymentId: string | null
+      donationId: string | null
     }, ExtArgs["result"]["transaction"]>
     composites: {}
   }
@@ -26044,6 +26470,7 @@ export namespace Prisma {
     chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     expense<T extends Transaction$expenseArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$expenseArgs<ExtArgs>>): Prisma__ExpenseClient<$Result.GetResult<Prisma.$ExpensePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     duesPayment<T extends Transaction$duesPaymentArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$duesPaymentArgs<ExtArgs>>): Prisma__DuesPaymentClient<$Result.GetResult<Prisma.$DuesPaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    donation<T extends Transaction$donationArgs<ExtArgs> = {}>(args?: Subset<T, Transaction$donationArgs<ExtArgs>>): Prisma__DonationClient<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -26083,6 +26510,7 @@ export namespace Prisma {
     readonly chapterId: FieldRef<"Transaction", 'String'>
     readonly expenseId: FieldRef<"Transaction", 'String'>
     readonly duesPaymentId: FieldRef<"Transaction", 'String'>
+    readonly donationId: FieldRef<"Transaction", 'String'>
   }
     
 
@@ -26514,6 +26942,25 @@ export namespace Prisma {
      */
     include?: DuesPaymentInclude<ExtArgs> | null
     where?: DuesPaymentWhereInput
+  }
+
+  /**
+   * Transaction.donation
+   */
+  export type Transaction$donationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    where?: DonationWhereInput
   }
 
   /**
@@ -33334,6 +33781,2617 @@ export namespace Prisma {
 
 
   /**
+   * Model DonationCampaign
+   */
+
+  export type AggregateDonationCampaign = {
+    _count: DonationCampaignCountAggregateOutputType | null
+    _avg: DonationCampaignAvgAggregateOutputType | null
+    _sum: DonationCampaignSumAggregateOutputType | null
+    _min: DonationCampaignMinAggregateOutputType | null
+    _max: DonationCampaignMaxAggregateOutputType | null
+  }
+
+  export type DonationCampaignAvgAggregateOutputType = {
+    goalAmount: number | null
+    currentAmount: number | null
+  }
+
+  export type DonationCampaignSumAggregateOutputType = {
+    goalAmount: number | null
+    currentAmount: number | null
+  }
+
+  export type DonationCampaignMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    goalAmount: number | null
+    currentAmount: number | null
+    type: $Enums.DonationCampaignType | null
+    status: $Enums.DonationCampaignStatus | null
+    startDate: Date | null
+    endDate: Date | null
+    isPublic: boolean | null
+    allowAnonymous: boolean | null
+    imageUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    chapterId: string | null
+    createdById: string | null
+  }
+
+  export type DonationCampaignMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    description: string | null
+    goalAmount: number | null
+    currentAmount: number | null
+    type: $Enums.DonationCampaignType | null
+    status: $Enums.DonationCampaignStatus | null
+    startDate: Date | null
+    endDate: Date | null
+    isPublic: boolean | null
+    allowAnonymous: boolean | null
+    imageUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    chapterId: string | null
+    createdById: string | null
+  }
+
+  export type DonationCampaignCountAggregateOutputType = {
+    id: number
+    title: number
+    description: number
+    goalAmount: number
+    currentAmount: number
+    type: number
+    status: number
+    startDate: number
+    endDate: number
+    isPublic: number
+    allowAnonymous: number
+    imageUrl: number
+    createdAt: number
+    updatedAt: number
+    chapterId: number
+    createdById: number
+    _all: number
+  }
+
+
+  export type DonationCampaignAvgAggregateInputType = {
+    goalAmount?: true
+    currentAmount?: true
+  }
+
+  export type DonationCampaignSumAggregateInputType = {
+    goalAmount?: true
+    currentAmount?: true
+  }
+
+  export type DonationCampaignMinAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    goalAmount?: true
+    currentAmount?: true
+    type?: true
+    status?: true
+    startDate?: true
+    endDate?: true
+    isPublic?: true
+    allowAnonymous?: true
+    imageUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    chapterId?: true
+    createdById?: true
+  }
+
+  export type DonationCampaignMaxAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    goalAmount?: true
+    currentAmount?: true
+    type?: true
+    status?: true
+    startDate?: true
+    endDate?: true
+    isPublic?: true
+    allowAnonymous?: true
+    imageUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    chapterId?: true
+    createdById?: true
+  }
+
+  export type DonationCampaignCountAggregateInputType = {
+    id?: true
+    title?: true
+    description?: true
+    goalAmount?: true
+    currentAmount?: true
+    type?: true
+    status?: true
+    startDate?: true
+    endDate?: true
+    isPublic?: true
+    allowAnonymous?: true
+    imageUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    chapterId?: true
+    createdById?: true
+    _all?: true
+  }
+
+  export type DonationCampaignAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DonationCampaign to aggregate.
+     */
+    where?: DonationCampaignWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DonationCampaigns to fetch.
+     */
+    orderBy?: DonationCampaignOrderByWithRelationInput | DonationCampaignOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DonationCampaignWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DonationCampaigns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DonationCampaigns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DonationCampaigns
+    **/
+    _count?: true | DonationCampaignCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DonationCampaignAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DonationCampaignSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DonationCampaignMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DonationCampaignMaxAggregateInputType
+  }
+
+  export type GetDonationCampaignAggregateType<T extends DonationCampaignAggregateArgs> = {
+        [P in keyof T & keyof AggregateDonationCampaign]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDonationCampaign[P]>
+      : GetScalarType<T[P], AggregateDonationCampaign[P]>
+  }
+
+
+
+
+  export type DonationCampaignGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DonationCampaignWhereInput
+    orderBy?: DonationCampaignOrderByWithAggregationInput | DonationCampaignOrderByWithAggregationInput[]
+    by: DonationCampaignScalarFieldEnum[] | DonationCampaignScalarFieldEnum
+    having?: DonationCampaignScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DonationCampaignCountAggregateInputType | true
+    _avg?: DonationCampaignAvgAggregateInputType
+    _sum?: DonationCampaignSumAggregateInputType
+    _min?: DonationCampaignMinAggregateInputType
+    _max?: DonationCampaignMaxAggregateInputType
+  }
+
+  export type DonationCampaignGroupByOutputType = {
+    id: string
+    title: string
+    description: string
+    goalAmount: number | null
+    currentAmount: number
+    type: $Enums.DonationCampaignType
+    status: $Enums.DonationCampaignStatus
+    startDate: Date | null
+    endDate: Date | null
+    isPublic: boolean
+    allowAnonymous: boolean
+    imageUrl: string | null
+    createdAt: Date
+    updatedAt: Date
+    chapterId: string
+    createdById: string
+    _count: DonationCampaignCountAggregateOutputType | null
+    _avg: DonationCampaignAvgAggregateOutputType | null
+    _sum: DonationCampaignSumAggregateOutputType | null
+    _min: DonationCampaignMinAggregateOutputType | null
+    _max: DonationCampaignMaxAggregateOutputType | null
+  }
+
+  type GetDonationCampaignGroupByPayload<T extends DonationCampaignGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DonationCampaignGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DonationCampaignGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DonationCampaignGroupByOutputType[P]>
+            : GetScalarType<T[P], DonationCampaignGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DonationCampaignSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    goalAmount?: boolean
+    currentAmount?: boolean
+    type?: boolean
+    status?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    createdById?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    donations?: boolean | DonationCampaign$donationsArgs<ExtArgs>
+    _count?: boolean | DonationCampaignCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["donationCampaign"]>
+
+  export type DonationCampaignSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    goalAmount?: boolean
+    currentAmount?: boolean
+    type?: boolean
+    status?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    createdById?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["donationCampaign"]>
+
+  export type DonationCampaignSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    goalAmount?: boolean
+    currentAmount?: boolean
+    type?: boolean
+    status?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    createdById?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["donationCampaign"]>
+
+  export type DonationCampaignSelectScalar = {
+    id?: boolean
+    title?: boolean
+    description?: boolean
+    goalAmount?: boolean
+    currentAmount?: boolean
+    type?: boolean
+    status?: boolean
+    startDate?: boolean
+    endDate?: boolean
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    chapterId?: boolean
+    createdById?: boolean
+  }
+
+  export type DonationCampaignOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "goalAmount" | "currentAmount" | "type" | "status" | "startDate" | "endDate" | "isPublic" | "allowAnonymous" | "imageUrl" | "createdAt" | "updatedAt" | "chapterId" | "createdById", ExtArgs["result"]["donationCampaign"]>
+  export type DonationCampaignInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    donations?: boolean | DonationCampaign$donationsArgs<ExtArgs>
+    _count?: boolean | DonationCampaignCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DonationCampaignIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type DonationCampaignIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $DonationCampaignPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DonationCampaign"
+    objects: {
+      chapter: Prisma.$ChapterPayload<ExtArgs>
+      createdBy: Prisma.$UserPayload<ExtArgs>
+      donations: Prisma.$DonationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      description: string
+      goalAmount: number | null
+      currentAmount: number
+      type: $Enums.DonationCampaignType
+      status: $Enums.DonationCampaignStatus
+      startDate: Date | null
+      endDate: Date | null
+      isPublic: boolean
+      allowAnonymous: boolean
+      imageUrl: string | null
+      createdAt: Date
+      updatedAt: Date
+      chapterId: string
+      createdById: string
+    }, ExtArgs["result"]["donationCampaign"]>
+    composites: {}
+  }
+
+  type DonationCampaignGetPayload<S extends boolean | null | undefined | DonationCampaignDefaultArgs> = $Result.GetResult<Prisma.$DonationCampaignPayload, S>
+
+  type DonationCampaignCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DonationCampaignFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DonationCampaignCountAggregateInputType | true
+    }
+
+  export interface DonationCampaignDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DonationCampaign'], meta: { name: 'DonationCampaign' } }
+    /**
+     * Find zero or one DonationCampaign that matches the filter.
+     * @param {DonationCampaignFindUniqueArgs} args - Arguments to find a DonationCampaign
+     * @example
+     * // Get one DonationCampaign
+     * const donationCampaign = await prisma.donationCampaign.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DonationCampaignFindUniqueArgs>(args: SelectSubset<T, DonationCampaignFindUniqueArgs<ExtArgs>>): Prisma__DonationCampaignClient<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DonationCampaign that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DonationCampaignFindUniqueOrThrowArgs} args - Arguments to find a DonationCampaign
+     * @example
+     * // Get one DonationCampaign
+     * const donationCampaign = await prisma.donationCampaign.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DonationCampaignFindUniqueOrThrowArgs>(args: SelectSubset<T, DonationCampaignFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DonationCampaignClient<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DonationCampaign that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationCampaignFindFirstArgs} args - Arguments to find a DonationCampaign
+     * @example
+     * // Get one DonationCampaign
+     * const donationCampaign = await prisma.donationCampaign.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DonationCampaignFindFirstArgs>(args?: SelectSubset<T, DonationCampaignFindFirstArgs<ExtArgs>>): Prisma__DonationCampaignClient<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DonationCampaign that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationCampaignFindFirstOrThrowArgs} args - Arguments to find a DonationCampaign
+     * @example
+     * // Get one DonationCampaign
+     * const donationCampaign = await prisma.donationCampaign.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DonationCampaignFindFirstOrThrowArgs>(args?: SelectSubset<T, DonationCampaignFindFirstOrThrowArgs<ExtArgs>>): Prisma__DonationCampaignClient<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DonationCampaigns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationCampaignFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DonationCampaigns
+     * const donationCampaigns = await prisma.donationCampaign.findMany()
+     * 
+     * // Get first 10 DonationCampaigns
+     * const donationCampaigns = await prisma.donationCampaign.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const donationCampaignWithIdOnly = await prisma.donationCampaign.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DonationCampaignFindManyArgs>(args?: SelectSubset<T, DonationCampaignFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DonationCampaign.
+     * @param {DonationCampaignCreateArgs} args - Arguments to create a DonationCampaign.
+     * @example
+     * // Create one DonationCampaign
+     * const DonationCampaign = await prisma.donationCampaign.create({
+     *   data: {
+     *     // ... data to create a DonationCampaign
+     *   }
+     * })
+     * 
+     */
+    create<T extends DonationCampaignCreateArgs>(args: SelectSubset<T, DonationCampaignCreateArgs<ExtArgs>>): Prisma__DonationCampaignClient<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DonationCampaigns.
+     * @param {DonationCampaignCreateManyArgs} args - Arguments to create many DonationCampaigns.
+     * @example
+     * // Create many DonationCampaigns
+     * const donationCampaign = await prisma.donationCampaign.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DonationCampaignCreateManyArgs>(args?: SelectSubset<T, DonationCampaignCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DonationCampaigns and returns the data saved in the database.
+     * @param {DonationCampaignCreateManyAndReturnArgs} args - Arguments to create many DonationCampaigns.
+     * @example
+     * // Create many DonationCampaigns
+     * const donationCampaign = await prisma.donationCampaign.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DonationCampaigns and only return the `id`
+     * const donationCampaignWithIdOnly = await prisma.donationCampaign.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DonationCampaignCreateManyAndReturnArgs>(args?: SelectSubset<T, DonationCampaignCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DonationCampaign.
+     * @param {DonationCampaignDeleteArgs} args - Arguments to delete one DonationCampaign.
+     * @example
+     * // Delete one DonationCampaign
+     * const DonationCampaign = await prisma.donationCampaign.delete({
+     *   where: {
+     *     // ... filter to delete one DonationCampaign
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DonationCampaignDeleteArgs>(args: SelectSubset<T, DonationCampaignDeleteArgs<ExtArgs>>): Prisma__DonationCampaignClient<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DonationCampaign.
+     * @param {DonationCampaignUpdateArgs} args - Arguments to update one DonationCampaign.
+     * @example
+     * // Update one DonationCampaign
+     * const donationCampaign = await prisma.donationCampaign.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DonationCampaignUpdateArgs>(args: SelectSubset<T, DonationCampaignUpdateArgs<ExtArgs>>): Prisma__DonationCampaignClient<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DonationCampaigns.
+     * @param {DonationCampaignDeleteManyArgs} args - Arguments to filter DonationCampaigns to delete.
+     * @example
+     * // Delete a few DonationCampaigns
+     * const { count } = await prisma.donationCampaign.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DonationCampaignDeleteManyArgs>(args?: SelectSubset<T, DonationCampaignDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DonationCampaigns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationCampaignUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DonationCampaigns
+     * const donationCampaign = await prisma.donationCampaign.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DonationCampaignUpdateManyArgs>(args: SelectSubset<T, DonationCampaignUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DonationCampaigns and returns the data updated in the database.
+     * @param {DonationCampaignUpdateManyAndReturnArgs} args - Arguments to update many DonationCampaigns.
+     * @example
+     * // Update many DonationCampaigns
+     * const donationCampaign = await prisma.donationCampaign.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DonationCampaigns and only return the `id`
+     * const donationCampaignWithIdOnly = await prisma.donationCampaign.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DonationCampaignUpdateManyAndReturnArgs>(args: SelectSubset<T, DonationCampaignUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DonationCampaign.
+     * @param {DonationCampaignUpsertArgs} args - Arguments to update or create a DonationCampaign.
+     * @example
+     * // Update or create a DonationCampaign
+     * const donationCampaign = await prisma.donationCampaign.upsert({
+     *   create: {
+     *     // ... data to create a DonationCampaign
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DonationCampaign we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DonationCampaignUpsertArgs>(args: SelectSubset<T, DonationCampaignUpsertArgs<ExtArgs>>): Prisma__DonationCampaignClient<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DonationCampaigns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationCampaignCountArgs} args - Arguments to filter DonationCampaigns to count.
+     * @example
+     * // Count the number of DonationCampaigns
+     * const count = await prisma.donationCampaign.count({
+     *   where: {
+     *     // ... the filter for the DonationCampaigns we want to count
+     *   }
+     * })
+    **/
+    count<T extends DonationCampaignCountArgs>(
+      args?: Subset<T, DonationCampaignCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DonationCampaignCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DonationCampaign.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationCampaignAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DonationCampaignAggregateArgs>(args: Subset<T, DonationCampaignAggregateArgs>): Prisma.PrismaPromise<GetDonationCampaignAggregateType<T>>
+
+    /**
+     * Group by DonationCampaign.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationCampaignGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DonationCampaignGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DonationCampaignGroupByArgs['orderBy'] }
+        : { orderBy?: DonationCampaignGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DonationCampaignGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDonationCampaignGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DonationCampaign model
+   */
+  readonly fields: DonationCampaignFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DonationCampaign.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DonationCampaignClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    donations<T extends DonationCampaign$donationsArgs<ExtArgs> = {}>(args?: Subset<T, DonationCampaign$donationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DonationCampaign model
+   */
+  interface DonationCampaignFieldRefs {
+    readonly id: FieldRef<"DonationCampaign", 'String'>
+    readonly title: FieldRef<"DonationCampaign", 'String'>
+    readonly description: FieldRef<"DonationCampaign", 'String'>
+    readonly goalAmount: FieldRef<"DonationCampaign", 'Float'>
+    readonly currentAmount: FieldRef<"DonationCampaign", 'Float'>
+    readonly type: FieldRef<"DonationCampaign", 'DonationCampaignType'>
+    readonly status: FieldRef<"DonationCampaign", 'DonationCampaignStatus'>
+    readonly startDate: FieldRef<"DonationCampaign", 'DateTime'>
+    readonly endDate: FieldRef<"DonationCampaign", 'DateTime'>
+    readonly isPublic: FieldRef<"DonationCampaign", 'Boolean'>
+    readonly allowAnonymous: FieldRef<"DonationCampaign", 'Boolean'>
+    readonly imageUrl: FieldRef<"DonationCampaign", 'String'>
+    readonly createdAt: FieldRef<"DonationCampaign", 'DateTime'>
+    readonly updatedAt: FieldRef<"DonationCampaign", 'DateTime'>
+    readonly chapterId: FieldRef<"DonationCampaign", 'String'>
+    readonly createdById: FieldRef<"DonationCampaign", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DonationCampaign findUnique
+   */
+  export type DonationCampaignFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    /**
+     * Filter, which DonationCampaign to fetch.
+     */
+    where: DonationCampaignWhereUniqueInput
+  }
+
+  /**
+   * DonationCampaign findUniqueOrThrow
+   */
+  export type DonationCampaignFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    /**
+     * Filter, which DonationCampaign to fetch.
+     */
+    where: DonationCampaignWhereUniqueInput
+  }
+
+  /**
+   * DonationCampaign findFirst
+   */
+  export type DonationCampaignFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    /**
+     * Filter, which DonationCampaign to fetch.
+     */
+    where?: DonationCampaignWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DonationCampaigns to fetch.
+     */
+    orderBy?: DonationCampaignOrderByWithRelationInput | DonationCampaignOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DonationCampaigns.
+     */
+    cursor?: DonationCampaignWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DonationCampaigns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DonationCampaigns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DonationCampaigns.
+     */
+    distinct?: DonationCampaignScalarFieldEnum | DonationCampaignScalarFieldEnum[]
+  }
+
+  /**
+   * DonationCampaign findFirstOrThrow
+   */
+  export type DonationCampaignFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    /**
+     * Filter, which DonationCampaign to fetch.
+     */
+    where?: DonationCampaignWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DonationCampaigns to fetch.
+     */
+    orderBy?: DonationCampaignOrderByWithRelationInput | DonationCampaignOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DonationCampaigns.
+     */
+    cursor?: DonationCampaignWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DonationCampaigns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DonationCampaigns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DonationCampaigns.
+     */
+    distinct?: DonationCampaignScalarFieldEnum | DonationCampaignScalarFieldEnum[]
+  }
+
+  /**
+   * DonationCampaign findMany
+   */
+  export type DonationCampaignFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    /**
+     * Filter, which DonationCampaigns to fetch.
+     */
+    where?: DonationCampaignWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DonationCampaigns to fetch.
+     */
+    orderBy?: DonationCampaignOrderByWithRelationInput | DonationCampaignOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DonationCampaigns.
+     */
+    cursor?: DonationCampaignWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DonationCampaigns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DonationCampaigns.
+     */
+    skip?: number
+    distinct?: DonationCampaignScalarFieldEnum | DonationCampaignScalarFieldEnum[]
+  }
+
+  /**
+   * DonationCampaign create
+   */
+  export type DonationCampaignCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DonationCampaign.
+     */
+    data: XOR<DonationCampaignCreateInput, DonationCampaignUncheckedCreateInput>
+  }
+
+  /**
+   * DonationCampaign createMany
+   */
+  export type DonationCampaignCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DonationCampaigns.
+     */
+    data: DonationCampaignCreateManyInput | DonationCampaignCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DonationCampaign createManyAndReturn
+   */
+  export type DonationCampaignCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * The data used to create many DonationCampaigns.
+     */
+    data: DonationCampaignCreateManyInput | DonationCampaignCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DonationCampaign update
+   */
+  export type DonationCampaignUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DonationCampaign.
+     */
+    data: XOR<DonationCampaignUpdateInput, DonationCampaignUncheckedUpdateInput>
+    /**
+     * Choose, which DonationCampaign to update.
+     */
+    where: DonationCampaignWhereUniqueInput
+  }
+
+  /**
+   * DonationCampaign updateMany
+   */
+  export type DonationCampaignUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DonationCampaigns.
+     */
+    data: XOR<DonationCampaignUpdateManyMutationInput, DonationCampaignUncheckedUpdateManyInput>
+    /**
+     * Filter which DonationCampaigns to update
+     */
+    where?: DonationCampaignWhereInput
+    /**
+     * Limit how many DonationCampaigns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DonationCampaign updateManyAndReturn
+   */
+  export type DonationCampaignUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * The data used to update DonationCampaigns.
+     */
+    data: XOR<DonationCampaignUpdateManyMutationInput, DonationCampaignUncheckedUpdateManyInput>
+    /**
+     * Filter which DonationCampaigns to update
+     */
+    where?: DonationCampaignWhereInput
+    /**
+     * Limit how many DonationCampaigns to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DonationCampaign upsert
+   */
+  export type DonationCampaignUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DonationCampaign to update in case it exists.
+     */
+    where: DonationCampaignWhereUniqueInput
+    /**
+     * In case the DonationCampaign found by the `where` argument doesn't exist, create a new DonationCampaign with this data.
+     */
+    create: XOR<DonationCampaignCreateInput, DonationCampaignUncheckedCreateInput>
+    /**
+     * In case the DonationCampaign was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DonationCampaignUpdateInput, DonationCampaignUncheckedUpdateInput>
+  }
+
+  /**
+   * DonationCampaign delete
+   */
+  export type DonationCampaignDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    /**
+     * Filter which DonationCampaign to delete.
+     */
+    where: DonationCampaignWhereUniqueInput
+  }
+
+  /**
+   * DonationCampaign deleteMany
+   */
+  export type DonationCampaignDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DonationCampaigns to delete
+     */
+    where?: DonationCampaignWhereInput
+    /**
+     * Limit how many DonationCampaigns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DonationCampaign.donations
+   */
+  export type DonationCampaign$donationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    where?: DonationWhereInput
+    orderBy?: DonationOrderByWithRelationInput | DonationOrderByWithRelationInput[]
+    cursor?: DonationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DonationScalarFieldEnum | DonationScalarFieldEnum[]
+  }
+
+  /**
+   * DonationCampaign without action
+   */
+  export type DonationCampaignDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Donation
+   */
+
+  export type AggregateDonation = {
+    _count: DonationCountAggregateOutputType | null
+    _avg: DonationAvgAggregateOutputType | null
+    _sum: DonationSumAggregateOutputType | null
+    _min: DonationMinAggregateOutputType | null
+    _max: DonationMaxAggregateOutputType | null
+  }
+
+  export type DonationAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type DonationSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type DonationMinAggregateOutputType = {
+    id: string | null
+    amount: number | null
+    donorName: string | null
+    donorEmail: string | null
+    donorPhone: string | null
+    message: string | null
+    isAnonymous: boolean | null
+    status: $Enums.DonationStatus | null
+    stripePaymentIntentId: string | null
+    stripeCheckoutUrl: string | null
+    stripeSessionId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    completedAt: Date | null
+    chapterId: string | null
+    campaignId: string | null
+    userId: string | null
+  }
+
+  export type DonationMaxAggregateOutputType = {
+    id: string | null
+    amount: number | null
+    donorName: string | null
+    donorEmail: string | null
+    donorPhone: string | null
+    message: string | null
+    isAnonymous: boolean | null
+    status: $Enums.DonationStatus | null
+    stripePaymentIntentId: string | null
+    stripeCheckoutUrl: string | null
+    stripeSessionId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    completedAt: Date | null
+    chapterId: string | null
+    campaignId: string | null
+    userId: string | null
+  }
+
+  export type DonationCountAggregateOutputType = {
+    id: number
+    amount: number
+    donorName: number
+    donorEmail: number
+    donorPhone: number
+    message: number
+    isAnonymous: number
+    status: number
+    stripePaymentIntentId: number
+    stripeCheckoutUrl: number
+    stripeSessionId: number
+    metadata: number
+    createdAt: number
+    updatedAt: number
+    completedAt: number
+    chapterId: number
+    campaignId: number
+    userId: number
+    _all: number
+  }
+
+
+  export type DonationAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type DonationSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type DonationMinAggregateInputType = {
+    id?: true
+    amount?: true
+    donorName?: true
+    donorEmail?: true
+    donorPhone?: true
+    message?: true
+    isAnonymous?: true
+    status?: true
+    stripePaymentIntentId?: true
+    stripeCheckoutUrl?: true
+    stripeSessionId?: true
+    createdAt?: true
+    updatedAt?: true
+    completedAt?: true
+    chapterId?: true
+    campaignId?: true
+    userId?: true
+  }
+
+  export type DonationMaxAggregateInputType = {
+    id?: true
+    amount?: true
+    donorName?: true
+    donorEmail?: true
+    donorPhone?: true
+    message?: true
+    isAnonymous?: true
+    status?: true
+    stripePaymentIntentId?: true
+    stripeCheckoutUrl?: true
+    stripeSessionId?: true
+    createdAt?: true
+    updatedAt?: true
+    completedAt?: true
+    chapterId?: true
+    campaignId?: true
+    userId?: true
+  }
+
+  export type DonationCountAggregateInputType = {
+    id?: true
+    amount?: true
+    donorName?: true
+    donorEmail?: true
+    donorPhone?: true
+    message?: true
+    isAnonymous?: true
+    status?: true
+    stripePaymentIntentId?: true
+    stripeCheckoutUrl?: true
+    stripeSessionId?: true
+    metadata?: true
+    createdAt?: true
+    updatedAt?: true
+    completedAt?: true
+    chapterId?: true
+    campaignId?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type DonationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Donation to aggregate.
+     */
+    where?: DonationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Donations to fetch.
+     */
+    orderBy?: DonationOrderByWithRelationInput | DonationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DonationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Donations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Donations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Donations
+    **/
+    _count?: true | DonationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DonationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DonationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DonationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DonationMaxAggregateInputType
+  }
+
+  export type GetDonationAggregateType<T extends DonationAggregateArgs> = {
+        [P in keyof T & keyof AggregateDonation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDonation[P]>
+      : GetScalarType<T[P], AggregateDonation[P]>
+  }
+
+
+
+
+  export type DonationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DonationWhereInput
+    orderBy?: DonationOrderByWithAggregationInput | DonationOrderByWithAggregationInput[]
+    by: DonationScalarFieldEnum[] | DonationScalarFieldEnum
+    having?: DonationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DonationCountAggregateInputType | true
+    _avg?: DonationAvgAggregateInputType
+    _sum?: DonationSumAggregateInputType
+    _min?: DonationMinAggregateInputType
+    _max?: DonationMaxAggregateInputType
+  }
+
+  export type DonationGroupByOutputType = {
+    id: string
+    amount: number
+    donorName: string | null
+    donorEmail: string | null
+    donorPhone: string | null
+    message: string | null
+    isAnonymous: boolean
+    status: $Enums.DonationStatus
+    stripePaymentIntentId: string | null
+    stripeCheckoutUrl: string | null
+    stripeSessionId: string | null
+    metadata: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    completedAt: Date | null
+    chapterId: string
+    campaignId: string | null
+    userId: string | null
+    _count: DonationCountAggregateOutputType | null
+    _avg: DonationAvgAggregateOutputType | null
+    _sum: DonationSumAggregateOutputType | null
+    _min: DonationMinAggregateOutputType | null
+    _max: DonationMaxAggregateOutputType | null
+  }
+
+  type GetDonationGroupByPayload<T extends DonationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DonationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DonationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DonationGroupByOutputType[P]>
+            : GetScalarType<T[P], DonationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DonationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    amount?: boolean
+    donorName?: boolean
+    donorEmail?: boolean
+    donorPhone?: boolean
+    message?: boolean
+    isAnonymous?: boolean
+    status?: boolean
+    stripePaymentIntentId?: boolean
+    stripeCheckoutUrl?: boolean
+    stripeSessionId?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    completedAt?: boolean
+    chapterId?: boolean
+    campaignId?: boolean
+    userId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    campaign?: boolean | Donation$campaignArgs<ExtArgs>
+    user?: boolean | Donation$userArgs<ExtArgs>
+    transaction?: boolean | Donation$transactionArgs<ExtArgs>
+  }, ExtArgs["result"]["donation"]>
+
+  export type DonationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    amount?: boolean
+    donorName?: boolean
+    donorEmail?: boolean
+    donorPhone?: boolean
+    message?: boolean
+    isAnonymous?: boolean
+    status?: boolean
+    stripePaymentIntentId?: boolean
+    stripeCheckoutUrl?: boolean
+    stripeSessionId?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    completedAt?: boolean
+    chapterId?: boolean
+    campaignId?: boolean
+    userId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    campaign?: boolean | Donation$campaignArgs<ExtArgs>
+    user?: boolean | Donation$userArgs<ExtArgs>
+  }, ExtArgs["result"]["donation"]>
+
+  export type DonationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    amount?: boolean
+    donorName?: boolean
+    donorEmail?: boolean
+    donorPhone?: boolean
+    message?: boolean
+    isAnonymous?: boolean
+    status?: boolean
+    stripePaymentIntentId?: boolean
+    stripeCheckoutUrl?: boolean
+    stripeSessionId?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    completedAt?: boolean
+    chapterId?: boolean
+    campaignId?: boolean
+    userId?: boolean
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    campaign?: boolean | Donation$campaignArgs<ExtArgs>
+    user?: boolean | Donation$userArgs<ExtArgs>
+  }, ExtArgs["result"]["donation"]>
+
+  export type DonationSelectScalar = {
+    id?: boolean
+    amount?: boolean
+    donorName?: boolean
+    donorEmail?: boolean
+    donorPhone?: boolean
+    message?: boolean
+    isAnonymous?: boolean
+    status?: boolean
+    stripePaymentIntentId?: boolean
+    stripeCheckoutUrl?: boolean
+    stripeSessionId?: boolean
+    metadata?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    completedAt?: boolean
+    chapterId?: boolean
+    campaignId?: boolean
+    userId?: boolean
+  }
+
+  export type DonationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "donorName" | "donorEmail" | "donorPhone" | "message" | "isAnonymous" | "status" | "stripePaymentIntentId" | "stripeCheckoutUrl" | "stripeSessionId" | "metadata" | "createdAt" | "updatedAt" | "completedAt" | "chapterId" | "campaignId" | "userId", ExtArgs["result"]["donation"]>
+  export type DonationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    campaign?: boolean | Donation$campaignArgs<ExtArgs>
+    user?: boolean | Donation$userArgs<ExtArgs>
+    transaction?: boolean | Donation$transactionArgs<ExtArgs>
+  }
+  export type DonationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    campaign?: boolean | Donation$campaignArgs<ExtArgs>
+    user?: boolean | Donation$userArgs<ExtArgs>
+  }
+  export type DonationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    chapter?: boolean | ChapterDefaultArgs<ExtArgs>
+    campaign?: boolean | Donation$campaignArgs<ExtArgs>
+    user?: boolean | Donation$userArgs<ExtArgs>
+  }
+
+  export type $DonationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Donation"
+    objects: {
+      chapter: Prisma.$ChapterPayload<ExtArgs>
+      campaign: Prisma.$DonationCampaignPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs> | null
+      transaction: Prisma.$TransactionPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      amount: number
+      donorName: string | null
+      donorEmail: string | null
+      donorPhone: string | null
+      message: string | null
+      isAnonymous: boolean
+      status: $Enums.DonationStatus
+      stripePaymentIntentId: string | null
+      stripeCheckoutUrl: string | null
+      stripeSessionId: string | null
+      metadata: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+      completedAt: Date | null
+      chapterId: string
+      campaignId: string | null
+      userId: string | null
+    }, ExtArgs["result"]["donation"]>
+    composites: {}
+  }
+
+  type DonationGetPayload<S extends boolean | null | undefined | DonationDefaultArgs> = $Result.GetResult<Prisma.$DonationPayload, S>
+
+  type DonationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DonationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DonationCountAggregateInputType | true
+    }
+
+  export interface DonationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Donation'], meta: { name: 'Donation' } }
+    /**
+     * Find zero or one Donation that matches the filter.
+     * @param {DonationFindUniqueArgs} args - Arguments to find a Donation
+     * @example
+     * // Get one Donation
+     * const donation = await prisma.donation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DonationFindUniqueArgs>(args: SelectSubset<T, DonationFindUniqueArgs<ExtArgs>>): Prisma__DonationClient<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Donation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DonationFindUniqueOrThrowArgs} args - Arguments to find a Donation
+     * @example
+     * // Get one Donation
+     * const donation = await prisma.donation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DonationFindUniqueOrThrowArgs>(args: SelectSubset<T, DonationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DonationClient<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Donation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationFindFirstArgs} args - Arguments to find a Donation
+     * @example
+     * // Get one Donation
+     * const donation = await prisma.donation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DonationFindFirstArgs>(args?: SelectSubset<T, DonationFindFirstArgs<ExtArgs>>): Prisma__DonationClient<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Donation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationFindFirstOrThrowArgs} args - Arguments to find a Donation
+     * @example
+     * // Get one Donation
+     * const donation = await prisma.donation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DonationFindFirstOrThrowArgs>(args?: SelectSubset<T, DonationFindFirstOrThrowArgs<ExtArgs>>): Prisma__DonationClient<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Donations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Donations
+     * const donations = await prisma.donation.findMany()
+     * 
+     * // Get first 10 Donations
+     * const donations = await prisma.donation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const donationWithIdOnly = await prisma.donation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DonationFindManyArgs>(args?: SelectSubset<T, DonationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Donation.
+     * @param {DonationCreateArgs} args - Arguments to create a Donation.
+     * @example
+     * // Create one Donation
+     * const Donation = await prisma.donation.create({
+     *   data: {
+     *     // ... data to create a Donation
+     *   }
+     * })
+     * 
+     */
+    create<T extends DonationCreateArgs>(args: SelectSubset<T, DonationCreateArgs<ExtArgs>>): Prisma__DonationClient<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Donations.
+     * @param {DonationCreateManyArgs} args - Arguments to create many Donations.
+     * @example
+     * // Create many Donations
+     * const donation = await prisma.donation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DonationCreateManyArgs>(args?: SelectSubset<T, DonationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Donations and returns the data saved in the database.
+     * @param {DonationCreateManyAndReturnArgs} args - Arguments to create many Donations.
+     * @example
+     * // Create many Donations
+     * const donation = await prisma.donation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Donations and only return the `id`
+     * const donationWithIdOnly = await prisma.donation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DonationCreateManyAndReturnArgs>(args?: SelectSubset<T, DonationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Donation.
+     * @param {DonationDeleteArgs} args - Arguments to delete one Donation.
+     * @example
+     * // Delete one Donation
+     * const Donation = await prisma.donation.delete({
+     *   where: {
+     *     // ... filter to delete one Donation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DonationDeleteArgs>(args: SelectSubset<T, DonationDeleteArgs<ExtArgs>>): Prisma__DonationClient<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Donation.
+     * @param {DonationUpdateArgs} args - Arguments to update one Donation.
+     * @example
+     * // Update one Donation
+     * const donation = await prisma.donation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DonationUpdateArgs>(args: SelectSubset<T, DonationUpdateArgs<ExtArgs>>): Prisma__DonationClient<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Donations.
+     * @param {DonationDeleteManyArgs} args - Arguments to filter Donations to delete.
+     * @example
+     * // Delete a few Donations
+     * const { count } = await prisma.donation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DonationDeleteManyArgs>(args?: SelectSubset<T, DonationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Donations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Donations
+     * const donation = await prisma.donation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DonationUpdateManyArgs>(args: SelectSubset<T, DonationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Donations and returns the data updated in the database.
+     * @param {DonationUpdateManyAndReturnArgs} args - Arguments to update many Donations.
+     * @example
+     * // Update many Donations
+     * const donation = await prisma.donation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Donations and only return the `id`
+     * const donationWithIdOnly = await prisma.donation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DonationUpdateManyAndReturnArgs>(args: SelectSubset<T, DonationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Donation.
+     * @param {DonationUpsertArgs} args - Arguments to update or create a Donation.
+     * @example
+     * // Update or create a Donation
+     * const donation = await prisma.donation.upsert({
+     *   create: {
+     *     // ... data to create a Donation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Donation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DonationUpsertArgs>(args: SelectSubset<T, DonationUpsertArgs<ExtArgs>>): Prisma__DonationClient<$Result.GetResult<Prisma.$DonationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Donations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationCountArgs} args - Arguments to filter Donations to count.
+     * @example
+     * // Count the number of Donations
+     * const count = await prisma.donation.count({
+     *   where: {
+     *     // ... the filter for the Donations we want to count
+     *   }
+     * })
+    **/
+    count<T extends DonationCountArgs>(
+      args?: Subset<T, DonationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DonationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Donation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DonationAggregateArgs>(args: Subset<T, DonationAggregateArgs>): Prisma.PrismaPromise<GetDonationAggregateType<T>>
+
+    /**
+     * Group by Donation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DonationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DonationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DonationGroupByArgs['orderBy'] }
+        : { orderBy?: DonationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DonationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDonationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Donation model
+   */
+  readonly fields: DonationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Donation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DonationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    chapter<T extends ChapterDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ChapterDefaultArgs<ExtArgs>>): Prisma__ChapterClient<$Result.GetResult<Prisma.$ChapterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    campaign<T extends Donation$campaignArgs<ExtArgs> = {}>(args?: Subset<T, Donation$campaignArgs<ExtArgs>>): Prisma__DonationCampaignClient<$Result.GetResult<Prisma.$DonationCampaignPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends Donation$userArgs<ExtArgs> = {}>(args?: Subset<T, Donation$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    transaction<T extends Donation$transactionArgs<ExtArgs> = {}>(args?: Subset<T, Donation$transactionArgs<ExtArgs>>): Prisma__TransactionClient<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Donation model
+   */
+  interface DonationFieldRefs {
+    readonly id: FieldRef<"Donation", 'String'>
+    readonly amount: FieldRef<"Donation", 'Float'>
+    readonly donorName: FieldRef<"Donation", 'String'>
+    readonly donorEmail: FieldRef<"Donation", 'String'>
+    readonly donorPhone: FieldRef<"Donation", 'String'>
+    readonly message: FieldRef<"Donation", 'String'>
+    readonly isAnonymous: FieldRef<"Donation", 'Boolean'>
+    readonly status: FieldRef<"Donation", 'DonationStatus'>
+    readonly stripePaymentIntentId: FieldRef<"Donation", 'String'>
+    readonly stripeCheckoutUrl: FieldRef<"Donation", 'String'>
+    readonly stripeSessionId: FieldRef<"Donation", 'String'>
+    readonly metadata: FieldRef<"Donation", 'Json'>
+    readonly createdAt: FieldRef<"Donation", 'DateTime'>
+    readonly updatedAt: FieldRef<"Donation", 'DateTime'>
+    readonly completedAt: FieldRef<"Donation", 'DateTime'>
+    readonly chapterId: FieldRef<"Donation", 'String'>
+    readonly campaignId: FieldRef<"Donation", 'String'>
+    readonly userId: FieldRef<"Donation", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Donation findUnique
+   */
+  export type DonationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    /**
+     * Filter, which Donation to fetch.
+     */
+    where: DonationWhereUniqueInput
+  }
+
+  /**
+   * Donation findUniqueOrThrow
+   */
+  export type DonationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    /**
+     * Filter, which Donation to fetch.
+     */
+    where: DonationWhereUniqueInput
+  }
+
+  /**
+   * Donation findFirst
+   */
+  export type DonationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    /**
+     * Filter, which Donation to fetch.
+     */
+    where?: DonationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Donations to fetch.
+     */
+    orderBy?: DonationOrderByWithRelationInput | DonationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Donations.
+     */
+    cursor?: DonationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Donations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Donations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Donations.
+     */
+    distinct?: DonationScalarFieldEnum | DonationScalarFieldEnum[]
+  }
+
+  /**
+   * Donation findFirstOrThrow
+   */
+  export type DonationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    /**
+     * Filter, which Donation to fetch.
+     */
+    where?: DonationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Donations to fetch.
+     */
+    orderBy?: DonationOrderByWithRelationInput | DonationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Donations.
+     */
+    cursor?: DonationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Donations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Donations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Donations.
+     */
+    distinct?: DonationScalarFieldEnum | DonationScalarFieldEnum[]
+  }
+
+  /**
+   * Donation findMany
+   */
+  export type DonationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    /**
+     * Filter, which Donations to fetch.
+     */
+    where?: DonationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Donations to fetch.
+     */
+    orderBy?: DonationOrderByWithRelationInput | DonationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Donations.
+     */
+    cursor?: DonationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Donations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Donations.
+     */
+    skip?: number
+    distinct?: DonationScalarFieldEnum | DonationScalarFieldEnum[]
+  }
+
+  /**
+   * Donation create
+   */
+  export type DonationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Donation.
+     */
+    data: XOR<DonationCreateInput, DonationUncheckedCreateInput>
+  }
+
+  /**
+   * Donation createMany
+   */
+  export type DonationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Donations.
+     */
+    data: DonationCreateManyInput | DonationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Donation createManyAndReturn
+   */
+  export type DonationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Donations.
+     */
+    data: DonationCreateManyInput | DonationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Donation update
+   */
+  export type DonationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Donation.
+     */
+    data: XOR<DonationUpdateInput, DonationUncheckedUpdateInput>
+    /**
+     * Choose, which Donation to update.
+     */
+    where: DonationWhereUniqueInput
+  }
+
+  /**
+   * Donation updateMany
+   */
+  export type DonationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Donations.
+     */
+    data: XOR<DonationUpdateManyMutationInput, DonationUncheckedUpdateManyInput>
+    /**
+     * Filter which Donations to update
+     */
+    where?: DonationWhereInput
+    /**
+     * Limit how many Donations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Donation updateManyAndReturn
+   */
+  export type DonationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * The data used to update Donations.
+     */
+    data: XOR<DonationUpdateManyMutationInput, DonationUncheckedUpdateManyInput>
+    /**
+     * Filter which Donations to update
+     */
+    where?: DonationWhereInput
+    /**
+     * Limit how many Donations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Donation upsert
+   */
+  export type DonationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Donation to update in case it exists.
+     */
+    where: DonationWhereUniqueInput
+    /**
+     * In case the Donation found by the `where` argument doesn't exist, create a new Donation with this data.
+     */
+    create: XOR<DonationCreateInput, DonationUncheckedCreateInput>
+    /**
+     * In case the Donation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DonationUpdateInput, DonationUncheckedUpdateInput>
+  }
+
+  /**
+   * Donation delete
+   */
+  export type DonationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+    /**
+     * Filter which Donation to delete.
+     */
+    where: DonationWhereUniqueInput
+  }
+
+  /**
+   * Donation deleteMany
+   */
+  export type DonationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Donations to delete
+     */
+    where?: DonationWhereInput
+    /**
+     * Limit how many Donations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Donation.campaign
+   */
+  export type Donation$campaignArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DonationCampaign
+     */
+    select?: DonationCampaignSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DonationCampaign
+     */
+    omit?: DonationCampaignOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationCampaignInclude<ExtArgs> | null
+    where?: DonationCampaignWhereInput
+  }
+
+  /**
+   * Donation.user
+   */
+  export type Donation$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Donation.transaction
+   */
+  export type Donation$transactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transaction
+     */
+    select?: TransactionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Transaction
+     */
+    omit?: TransactionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TransactionInclude<ExtArgs> | null
+    where?: TransactionWhereInput
+  }
+
+  /**
+   * Donation without action
+   */
+  export type DonationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Donation
+     */
+    select?: DonationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Donation
+     */
+    omit?: DonationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DonationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -33640,7 +36698,8 @@ export namespace Prisma {
     processedAt: 'processedAt',
     chapterId: 'chapterId',
     expenseId: 'expenseId',
-    duesPaymentId: 'duesPaymentId'
+    duesPaymentId: 'duesPaymentId',
+    donationId: 'donationId'
   };
 
   export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
@@ -33738,6 +36797,52 @@ export namespace Prisma {
   };
 
   export type WebhookEventScalarFieldEnum = (typeof WebhookEventScalarFieldEnum)[keyof typeof WebhookEventScalarFieldEnum]
+
+
+  export const DonationCampaignScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    description: 'description',
+    goalAmount: 'goalAmount',
+    currentAmount: 'currentAmount',
+    type: 'type',
+    status: 'status',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    isPublic: 'isPublic',
+    allowAnonymous: 'allowAnonymous',
+    imageUrl: 'imageUrl',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    chapterId: 'chapterId',
+    createdById: 'createdById'
+  };
+
+  export type DonationCampaignScalarFieldEnum = (typeof DonationCampaignScalarFieldEnum)[keyof typeof DonationCampaignScalarFieldEnum]
+
+
+  export const DonationScalarFieldEnum: {
+    id: 'id',
+    amount: 'amount',
+    donorName: 'donorName',
+    donorEmail: 'donorEmail',
+    donorPhone: 'donorPhone',
+    message: 'message',
+    isAnonymous: 'isAnonymous',
+    status: 'status',
+    stripePaymentIntentId: 'stripePaymentIntentId',
+    stripeCheckoutUrl: 'stripeCheckoutUrl',
+    stripeSessionId: 'stripeSessionId',
+    metadata: 'metadata',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    completedAt: 'completedAt',
+    chapterId: 'chapterId',
+    campaignId: 'campaignId',
+    userId: 'userId'
+  };
+
+  export type DonationScalarFieldEnum = (typeof DonationScalarFieldEnum)[keyof typeof DonationScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -34015,6 +37120,48 @@ export namespace Prisma {
    */
   export type ListEnumTreasuryTransactionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TreasuryTransactionType[]'>
     
+
+
+  /**
+   * Reference to a field of type 'DonationCampaignType'
+   */
+  export type EnumDonationCampaignTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationCampaignType'>
+    
+
+
+  /**
+   * Reference to a field of type 'DonationCampaignType[]'
+   */
+  export type ListEnumDonationCampaignTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationCampaignType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DonationCampaignStatus'
+   */
+  export type EnumDonationCampaignStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationCampaignStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'DonationCampaignStatus[]'
+   */
+  export type ListEnumDonationCampaignStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationCampaignStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'DonationStatus'
+   */
+  export type EnumDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'DonationStatus[]'
+   */
+  export type ListEnumDonationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DonationStatus[]'>
+    
   /**
    * Deep Input Types
    */
@@ -34058,6 +37205,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanListRelationFilter
     treasuryTransactions?: TreasuryTransactionListRelationFilter
     duesPlanAssignments?: DuesPlanAssignmentListRelationFilter
+    donations?: DonationListRelationFilter
+    donationCampaigns?: DonationCampaignListRelationFilter
   }
 
   export type ChapterOrderByWithRelationInput = {
@@ -34095,6 +37244,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanOrderByRelationAggregateInput
     treasuryTransactions?: TreasuryTransactionOrderByRelationAggregateInput
     duesPlanAssignments?: DuesPlanAssignmentOrderByRelationAggregateInput
+    donations?: DonationOrderByRelationAggregateInput
+    donationCampaigns?: DonationCampaignOrderByRelationAggregateInput
   }
 
   export type ChapterWhereUniqueInput = Prisma.AtLeast<{
@@ -34135,6 +37286,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanListRelationFilter
     treasuryTransactions?: TreasuryTransactionListRelationFilter
     duesPlanAssignments?: DuesPlanAssignmentListRelationFilter
+    donations?: DonationListRelationFilter
+    donationCampaigns?: DonationCampaignListRelationFilter
   }, "id" | "slug">
 
   export type ChapterOrderByWithAggregationInput = {
@@ -34214,6 +37367,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestListRelationFilter
     duesPlanAssignments?: DuesPlanAssignmentListRelationFilter
     assignedDuesPlans?: DuesPlanAssignmentListRelationFilter
+    donations?: DonationListRelationFilter
+    createdCampaigns?: DonationCampaignListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -34242,6 +37397,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestOrderByRelationAggregateInput
     duesPlanAssignments?: DuesPlanAssignmentOrderByRelationAggregateInput
     assignedDuesPlans?: DuesPlanAssignmentOrderByRelationAggregateInput
+    donations?: DonationOrderByRelationAggregateInput
+    createdCampaigns?: DonationCampaignOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -34273,6 +37430,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestListRelationFilter
     duesPlanAssignments?: DuesPlanAssignmentListRelationFilter
     assignedDuesPlans?: DuesPlanAssignmentListRelationFilter
+    donations?: DonationListRelationFilter
+    createdCampaigns?: DonationCampaignListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -35625,9 +38784,11 @@ export namespace Prisma {
     chapterId?: StringFilter<"Transaction"> | string
     expenseId?: StringNullableFilter<"Transaction"> | string | null
     duesPaymentId?: StringNullableFilter<"Transaction"> | string | null
+    donationId?: StringNullableFilter<"Transaction"> | string | null
     chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
     expense?: XOR<ExpenseNullableScalarRelationFilter, ExpenseWhereInput> | null
     duesPayment?: XOR<DuesPaymentNullableScalarRelationFilter, DuesPaymentWhereInput> | null
+    donation?: XOR<DonationNullableScalarRelationFilter, DonationWhereInput> | null
   }
 
   export type TransactionOrderByWithRelationInput = {
@@ -35641,15 +38802,18 @@ export namespace Prisma {
     chapterId?: SortOrder
     expenseId?: SortOrderInput | SortOrder
     duesPaymentId?: SortOrderInput | SortOrder
+    donationId?: SortOrderInput | SortOrder
     chapter?: ChapterOrderByWithRelationInput
     expense?: ExpenseOrderByWithRelationInput
     duesPayment?: DuesPaymentOrderByWithRelationInput
+    donation?: DonationOrderByWithRelationInput
   }
 
   export type TransactionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     expenseId?: string
     duesPaymentId?: string
+    donationId?: string
     AND?: TransactionWhereInput | TransactionWhereInput[]
     OR?: TransactionWhereInput[]
     NOT?: TransactionWhereInput | TransactionWhereInput[]
@@ -35663,7 +38827,8 @@ export namespace Prisma {
     chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
     expense?: XOR<ExpenseNullableScalarRelationFilter, ExpenseWhereInput> | null
     duesPayment?: XOR<DuesPaymentNullableScalarRelationFilter, DuesPaymentWhereInput> | null
-  }, "id" | "expenseId" | "duesPaymentId">
+    donation?: XOR<DonationNullableScalarRelationFilter, DonationWhereInput> | null
+  }, "id" | "expenseId" | "duesPaymentId" | "donationId">
 
   export type TransactionOrderByWithAggregationInput = {
     id?: SortOrder
@@ -35676,6 +38841,7 @@ export namespace Prisma {
     chapterId?: SortOrder
     expenseId?: SortOrderInput | SortOrder
     duesPaymentId?: SortOrderInput | SortOrder
+    donationId?: SortOrderInput | SortOrder
     _count?: TransactionCountOrderByAggregateInput
     _avg?: TransactionAvgOrderByAggregateInput
     _max?: TransactionMaxOrderByAggregateInput
@@ -35697,6 +38863,7 @@ export namespace Prisma {
     chapterId?: StringWithAggregatesFilter<"Transaction"> | string
     expenseId?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
     duesPaymentId?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
+    donationId?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
   }
 
   export type FeedbackRequestWhereInput = {
@@ -36185,6 +39352,255 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"WebhookEvent"> | Date | string
   }
 
+  export type DonationCampaignWhereInput = {
+    AND?: DonationCampaignWhereInput | DonationCampaignWhereInput[]
+    OR?: DonationCampaignWhereInput[]
+    NOT?: DonationCampaignWhereInput | DonationCampaignWhereInput[]
+    id?: StringFilter<"DonationCampaign"> | string
+    title?: StringFilter<"DonationCampaign"> | string
+    description?: StringFilter<"DonationCampaign"> | string
+    goalAmount?: FloatNullableFilter<"DonationCampaign"> | number | null
+    currentAmount?: FloatFilter<"DonationCampaign"> | number
+    type?: EnumDonationCampaignTypeFilter<"DonationCampaign"> | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFilter<"DonationCampaign"> | $Enums.DonationCampaignStatus
+    startDate?: DateTimeNullableFilter<"DonationCampaign"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"DonationCampaign"> | Date | string | null
+    isPublic?: BoolFilter<"DonationCampaign"> | boolean
+    allowAnonymous?: BoolFilter<"DonationCampaign"> | boolean
+    imageUrl?: StringNullableFilter<"DonationCampaign"> | string | null
+    createdAt?: DateTimeFilter<"DonationCampaign"> | Date | string
+    updatedAt?: DateTimeFilter<"DonationCampaign"> | Date | string
+    chapterId?: StringFilter<"DonationCampaign"> | string
+    createdById?: StringFilter<"DonationCampaign"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    donations?: DonationListRelationFilter
+  }
+
+  export type DonationCampaignOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    goalAmount?: SortOrderInput | SortOrder
+    currentAmount?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    startDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
+    isPublic?: SortOrder
+    allowAnonymous?: SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    createdById?: SortOrder
+    chapter?: ChapterOrderByWithRelationInput
+    createdBy?: UserOrderByWithRelationInput
+    donations?: DonationOrderByRelationAggregateInput
+  }
+
+  export type DonationCampaignWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DonationCampaignWhereInput | DonationCampaignWhereInput[]
+    OR?: DonationCampaignWhereInput[]
+    NOT?: DonationCampaignWhereInput | DonationCampaignWhereInput[]
+    title?: StringFilter<"DonationCampaign"> | string
+    description?: StringFilter<"DonationCampaign"> | string
+    goalAmount?: FloatNullableFilter<"DonationCampaign"> | number | null
+    currentAmount?: FloatFilter<"DonationCampaign"> | number
+    type?: EnumDonationCampaignTypeFilter<"DonationCampaign"> | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFilter<"DonationCampaign"> | $Enums.DonationCampaignStatus
+    startDate?: DateTimeNullableFilter<"DonationCampaign"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"DonationCampaign"> | Date | string | null
+    isPublic?: BoolFilter<"DonationCampaign"> | boolean
+    allowAnonymous?: BoolFilter<"DonationCampaign"> | boolean
+    imageUrl?: StringNullableFilter<"DonationCampaign"> | string | null
+    createdAt?: DateTimeFilter<"DonationCampaign"> | Date | string
+    updatedAt?: DateTimeFilter<"DonationCampaign"> | Date | string
+    chapterId?: StringFilter<"DonationCampaign"> | string
+    createdById?: StringFilter<"DonationCampaign"> | string
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    donations?: DonationListRelationFilter
+  }, "id">
+
+  export type DonationCampaignOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    goalAmount?: SortOrderInput | SortOrder
+    currentAmount?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    startDate?: SortOrderInput | SortOrder
+    endDate?: SortOrderInput | SortOrder
+    isPublic?: SortOrder
+    allowAnonymous?: SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    createdById?: SortOrder
+    _count?: DonationCampaignCountOrderByAggregateInput
+    _avg?: DonationCampaignAvgOrderByAggregateInput
+    _max?: DonationCampaignMaxOrderByAggregateInput
+    _min?: DonationCampaignMinOrderByAggregateInput
+    _sum?: DonationCampaignSumOrderByAggregateInput
+  }
+
+  export type DonationCampaignScalarWhereWithAggregatesInput = {
+    AND?: DonationCampaignScalarWhereWithAggregatesInput | DonationCampaignScalarWhereWithAggregatesInput[]
+    OR?: DonationCampaignScalarWhereWithAggregatesInput[]
+    NOT?: DonationCampaignScalarWhereWithAggregatesInput | DonationCampaignScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DonationCampaign"> | string
+    title?: StringWithAggregatesFilter<"DonationCampaign"> | string
+    description?: StringWithAggregatesFilter<"DonationCampaign"> | string
+    goalAmount?: FloatNullableWithAggregatesFilter<"DonationCampaign"> | number | null
+    currentAmount?: FloatWithAggregatesFilter<"DonationCampaign"> | number
+    type?: EnumDonationCampaignTypeWithAggregatesFilter<"DonationCampaign"> | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusWithAggregatesFilter<"DonationCampaign"> | $Enums.DonationCampaignStatus
+    startDate?: DateTimeNullableWithAggregatesFilter<"DonationCampaign"> | Date | string | null
+    endDate?: DateTimeNullableWithAggregatesFilter<"DonationCampaign"> | Date | string | null
+    isPublic?: BoolWithAggregatesFilter<"DonationCampaign"> | boolean
+    allowAnonymous?: BoolWithAggregatesFilter<"DonationCampaign"> | boolean
+    imageUrl?: StringNullableWithAggregatesFilter<"DonationCampaign"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"DonationCampaign"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"DonationCampaign"> | Date | string
+    chapterId?: StringWithAggregatesFilter<"DonationCampaign"> | string
+    createdById?: StringWithAggregatesFilter<"DonationCampaign"> | string
+  }
+
+  export type DonationWhereInput = {
+    AND?: DonationWhereInput | DonationWhereInput[]
+    OR?: DonationWhereInput[]
+    NOT?: DonationWhereInput | DonationWhereInput[]
+    id?: StringFilter<"Donation"> | string
+    amount?: FloatFilter<"Donation"> | number
+    donorName?: StringNullableFilter<"Donation"> | string | null
+    donorEmail?: StringNullableFilter<"Donation"> | string | null
+    donorPhone?: StringNullableFilter<"Donation"> | string | null
+    message?: StringNullableFilter<"Donation"> | string | null
+    isAnonymous?: BoolFilter<"Donation"> | boolean
+    status?: EnumDonationStatusFilter<"Donation"> | $Enums.DonationStatus
+    stripePaymentIntentId?: StringNullableFilter<"Donation"> | string | null
+    stripeCheckoutUrl?: StringNullableFilter<"Donation"> | string | null
+    stripeSessionId?: StringNullableFilter<"Donation"> | string | null
+    metadata?: JsonNullableFilter<"Donation">
+    createdAt?: DateTimeFilter<"Donation"> | Date | string
+    updatedAt?: DateTimeFilter<"Donation"> | Date | string
+    completedAt?: DateTimeNullableFilter<"Donation"> | Date | string | null
+    chapterId?: StringFilter<"Donation"> | string
+    campaignId?: StringNullableFilter<"Donation"> | string | null
+    userId?: StringNullableFilter<"Donation"> | string | null
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+    campaign?: XOR<DonationCampaignNullableScalarRelationFilter, DonationCampaignWhereInput> | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    transaction?: XOR<TransactionNullableScalarRelationFilter, TransactionWhereInput> | null
+  }
+
+  export type DonationOrderByWithRelationInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    donorName?: SortOrderInput | SortOrder
+    donorEmail?: SortOrderInput | SortOrder
+    donorPhone?: SortOrderInput | SortOrder
+    message?: SortOrderInput | SortOrder
+    isAnonymous?: SortOrder
+    status?: SortOrder
+    stripePaymentIntentId?: SortOrderInput | SortOrder
+    stripeCheckoutUrl?: SortOrderInput | SortOrder
+    stripeSessionId?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    chapterId?: SortOrder
+    campaignId?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    chapter?: ChapterOrderByWithRelationInput
+    campaign?: DonationCampaignOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+    transaction?: TransactionOrderByWithRelationInput
+  }
+
+  export type DonationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DonationWhereInput | DonationWhereInput[]
+    OR?: DonationWhereInput[]
+    NOT?: DonationWhereInput | DonationWhereInput[]
+    amount?: FloatFilter<"Donation"> | number
+    donorName?: StringNullableFilter<"Donation"> | string | null
+    donorEmail?: StringNullableFilter<"Donation"> | string | null
+    donorPhone?: StringNullableFilter<"Donation"> | string | null
+    message?: StringNullableFilter<"Donation"> | string | null
+    isAnonymous?: BoolFilter<"Donation"> | boolean
+    status?: EnumDonationStatusFilter<"Donation"> | $Enums.DonationStatus
+    stripePaymentIntentId?: StringNullableFilter<"Donation"> | string | null
+    stripeCheckoutUrl?: StringNullableFilter<"Donation"> | string | null
+    stripeSessionId?: StringNullableFilter<"Donation"> | string | null
+    metadata?: JsonNullableFilter<"Donation">
+    createdAt?: DateTimeFilter<"Donation"> | Date | string
+    updatedAt?: DateTimeFilter<"Donation"> | Date | string
+    completedAt?: DateTimeNullableFilter<"Donation"> | Date | string | null
+    chapterId?: StringFilter<"Donation"> | string
+    campaignId?: StringNullableFilter<"Donation"> | string | null
+    userId?: StringNullableFilter<"Donation"> | string | null
+    chapter?: XOR<ChapterScalarRelationFilter, ChapterWhereInput>
+    campaign?: XOR<DonationCampaignNullableScalarRelationFilter, DonationCampaignWhereInput> | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    transaction?: XOR<TransactionNullableScalarRelationFilter, TransactionWhereInput> | null
+  }, "id">
+
+  export type DonationOrderByWithAggregationInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    donorName?: SortOrderInput | SortOrder
+    donorEmail?: SortOrderInput | SortOrder
+    donorPhone?: SortOrderInput | SortOrder
+    message?: SortOrderInput | SortOrder
+    isAnonymous?: SortOrder
+    status?: SortOrder
+    stripePaymentIntentId?: SortOrderInput | SortOrder
+    stripeCheckoutUrl?: SortOrderInput | SortOrder
+    stripeSessionId?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    chapterId?: SortOrder
+    campaignId?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    _count?: DonationCountOrderByAggregateInput
+    _avg?: DonationAvgOrderByAggregateInput
+    _max?: DonationMaxOrderByAggregateInput
+    _min?: DonationMinOrderByAggregateInput
+    _sum?: DonationSumOrderByAggregateInput
+  }
+
+  export type DonationScalarWhereWithAggregatesInput = {
+    AND?: DonationScalarWhereWithAggregatesInput | DonationScalarWhereWithAggregatesInput[]
+    OR?: DonationScalarWhereWithAggregatesInput[]
+    NOT?: DonationScalarWhereWithAggregatesInput | DonationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Donation"> | string
+    amount?: FloatWithAggregatesFilter<"Donation"> | number
+    donorName?: StringNullableWithAggregatesFilter<"Donation"> | string | null
+    donorEmail?: StringNullableWithAggregatesFilter<"Donation"> | string | null
+    donorPhone?: StringNullableWithAggregatesFilter<"Donation"> | string | null
+    message?: StringNullableWithAggregatesFilter<"Donation"> | string | null
+    isAnonymous?: BoolWithAggregatesFilter<"Donation"> | boolean
+    status?: EnumDonationStatusWithAggregatesFilter<"Donation"> | $Enums.DonationStatus
+    stripePaymentIntentId?: StringNullableWithAggregatesFilter<"Donation"> | string | null
+    stripeCheckoutUrl?: StringNullableWithAggregatesFilter<"Donation"> | string | null
+    stripeSessionId?: StringNullableWithAggregatesFilter<"Donation"> | string | null
+    metadata?: JsonNullableWithAggregatesFilter<"Donation">
+    createdAt?: DateTimeWithAggregatesFilter<"Donation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Donation"> | Date | string
+    completedAt?: DateTimeNullableWithAggregatesFilter<"Donation"> | Date | string | null
+    chapterId?: StringWithAggregatesFilter<"Donation"> | string
+    campaignId?: StringNullableWithAggregatesFilter<"Donation"> | string | null
+    userId?: StringNullableWithAggregatesFilter<"Donation"> | string | null
+  }
+
   export type ChapterCreateInput = {
     id?: string
     name: string
@@ -36220,6 +39636,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateInput = {
@@ -36257,6 +39675,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUpdateInput = {
@@ -36294,6 +39714,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateInput = {
@@ -36331,6 +39753,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateManyInput = {
@@ -36419,6 +39843,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -36447,6 +39873,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -36475,6 +39903,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -36503,6 +39933,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -37934,6 +41366,7 @@ export namespace Prisma {
     chapter: ChapterCreateNestedOneWithoutTransactionsInput
     expense?: ExpenseCreateNestedOneWithoutTransactionInput
     duesPayment?: DuesPaymentCreateNestedOneWithoutTransactionInput
+    donation?: DonationCreateNestedOneWithoutTransactionInput
   }
 
   export type TransactionUncheckedCreateInput = {
@@ -37947,6 +41380,7 @@ export namespace Prisma {
     chapterId: string
     expenseId?: string | null
     duesPaymentId?: string | null
+    donationId?: string | null
   }
 
   export type TransactionUpdateInput = {
@@ -37960,6 +41394,7 @@ export namespace Prisma {
     chapter?: ChapterUpdateOneRequiredWithoutTransactionsNestedInput
     expense?: ExpenseUpdateOneWithoutTransactionNestedInput
     duesPayment?: DuesPaymentUpdateOneWithoutTransactionNestedInput
+    donation?: DonationUpdateOneWithoutTransactionNestedInput
   }
 
   export type TransactionUncheckedUpdateInput = {
@@ -37973,6 +41408,7 @@ export namespace Prisma {
     chapterId?: StringFieldUpdateOperationsInput | string
     expenseId?: NullableStringFieldUpdateOperationsInput | string | null
     duesPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    donationId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TransactionCreateManyInput = {
@@ -37986,6 +41422,7 @@ export namespace Prisma {
     chapterId: string
     expenseId?: string | null
     duesPaymentId?: string | null
+    donationId?: string | null
   }
 
   export type TransactionUpdateManyMutationInput = {
@@ -38009,6 +41446,7 @@ export namespace Prisma {
     chapterId?: StringFieldUpdateOperationsInput | string
     expenseId?: NullableStringFieldUpdateOperationsInput | string | null
     duesPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    donationId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FeedbackRequestCreateInput = {
@@ -38534,6 +41972,289 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DonationCampaignCreateInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutDonationCampaignsInput
+    createdBy: UserCreateNestedOneWithoutCreatedCampaignsInput
+    donations?: DonationCreateNestedManyWithoutCampaignInput
+  }
+
+  export type DonationCampaignUncheckedCreateInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+    createdById: string
+    donations?: DonationUncheckedCreateNestedManyWithoutCampaignInput
+  }
+
+  export type DonationCampaignUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutDonationCampaignsNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutCreatedCampaignsNestedInput
+    donations?: DonationUpdateManyWithoutCampaignNestedInput
+  }
+
+  export type DonationCampaignUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    donations?: DonationUncheckedUpdateManyWithoutCampaignNestedInput
+  }
+
+  export type DonationCampaignCreateManyInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+    createdById: string
+  }
+
+  export type DonationCampaignUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DonationCampaignUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DonationCreateInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapter: ChapterCreateNestedOneWithoutDonationsInput
+    campaign?: DonationCampaignCreateNestedOneWithoutDonationsInput
+    user?: UserCreateNestedOneWithoutDonationsInput
+    transaction?: TransactionCreateNestedOneWithoutDonationInput
+  }
+
+  export type DonationUncheckedCreateInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapterId: string
+    campaignId?: string | null
+    userId?: string | null
+    transaction?: TransactionUncheckedCreateNestedOneWithoutDonationInput
+  }
+
+  export type DonationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapter?: ChapterUpdateOneRequiredWithoutDonationsNestedInput
+    campaign?: DonationCampaignUpdateOneWithoutDonationsNestedInput
+    user?: UserUpdateOneWithoutDonationsNestedInput
+    transaction?: TransactionUpdateOneWithoutDonationNestedInput
+  }
+
+  export type DonationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapterId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction?: TransactionUncheckedUpdateOneWithoutDonationNestedInput
+  }
+
+  export type DonationCreateManyInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapterId: string
+    campaignId?: string | null
+    userId?: string | null
+  }
+
+  export type DonationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type DonationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapterId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -38714,6 +42435,18 @@ export namespace Prisma {
     none?: DuesPlanAssignmentWhereInput
   }
 
+  export type DonationListRelationFilter = {
+    every?: DonationWhereInput
+    some?: DonationWhereInput
+    none?: DonationWhereInput
+  }
+
+  export type DonationCampaignListRelationFilter = {
+    every?: DonationCampaignWhereInput
+    some?: DonationCampaignWhereInput
+    none?: DonationCampaignWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -38780,6 +42513,14 @@ export namespace Prisma {
   }
 
   export type DuesPlanAssignmentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DonationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DonationCampaignOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -39991,6 +43732,11 @@ export namespace Prisma {
     isNot?: DuesPaymentWhereInput | null
   }
 
+  export type DonationNullableScalarRelationFilter = {
+    is?: DonationWhereInput | null
+    isNot?: DonationWhereInput | null
+  }
+
   export type TransactionCountOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
@@ -40002,6 +43748,7 @@ export namespace Prisma {
     chapterId?: SortOrder
     expenseId?: SortOrder
     duesPaymentId?: SortOrder
+    donationId?: SortOrder
   }
 
   export type TransactionAvgOrderByAggregateInput = {
@@ -40018,6 +43765,7 @@ export namespace Prisma {
     chapterId?: SortOrder
     expenseId?: SortOrder
     duesPaymentId?: SortOrder
+    donationId?: SortOrder
   }
 
   export type TransactionMinOrderByAggregateInput = {
@@ -40030,6 +43778,7 @@ export namespace Prisma {
     chapterId?: SortOrder
     expenseId?: SortOrder
     duesPaymentId?: SortOrder
+    donationId?: SortOrder
   }
 
   export type TransactionSumOrderByAggregateInput = {
@@ -40346,6 +44095,198 @@ export namespace Prisma {
     attempts?: SortOrder
   }
 
+  export type EnumDonationCampaignTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationCampaignType | EnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationCampaignType[] | ListEnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationCampaignType[] | ListEnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationCampaignTypeFilter<$PrismaModel> | $Enums.DonationCampaignType
+  }
+
+  export type EnumDonationCampaignStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationCampaignStatus | EnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationCampaignStatus[] | ListEnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationCampaignStatus[] | ListEnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationCampaignStatusFilter<$PrismaModel> | $Enums.DonationCampaignStatus
+  }
+
+  export type DonationCampaignCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    goalAmount?: SortOrder
+    currentAmount?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isPublic?: SortOrder
+    allowAnonymous?: SortOrder
+    imageUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type DonationCampaignAvgOrderByAggregateInput = {
+    goalAmount?: SortOrder
+    currentAmount?: SortOrder
+  }
+
+  export type DonationCampaignMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    goalAmount?: SortOrder
+    currentAmount?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isPublic?: SortOrder
+    allowAnonymous?: SortOrder
+    imageUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type DonationCampaignMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    goalAmount?: SortOrder
+    currentAmount?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    startDate?: SortOrder
+    endDate?: SortOrder
+    isPublic?: SortOrder
+    allowAnonymous?: SortOrder
+    imageUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    chapterId?: SortOrder
+    createdById?: SortOrder
+  }
+
+  export type DonationCampaignSumOrderByAggregateInput = {
+    goalAmount?: SortOrder
+    currentAmount?: SortOrder
+  }
+
+  export type EnumDonationCampaignTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationCampaignType | EnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationCampaignType[] | ListEnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationCampaignType[] | ListEnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationCampaignTypeWithAggregatesFilter<$PrismaModel> | $Enums.DonationCampaignType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDonationCampaignTypeFilter<$PrismaModel>
+    _max?: NestedEnumDonationCampaignTypeFilter<$PrismaModel>
+  }
+
+  export type EnumDonationCampaignStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationCampaignStatus | EnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationCampaignStatus[] | ListEnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationCampaignStatus[] | ListEnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationCampaignStatusWithAggregatesFilter<$PrismaModel> | $Enums.DonationCampaignStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDonationCampaignStatusFilter<$PrismaModel>
+    _max?: NestedEnumDonationCampaignStatusFilter<$PrismaModel>
+  }
+
+  export type EnumDonationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationStatus | EnumDonationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationStatus[] | ListEnumDonationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationStatus[] | ListEnumDonationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationStatusFilter<$PrismaModel> | $Enums.DonationStatus
+  }
+
+  export type DonationCampaignNullableScalarRelationFilter = {
+    is?: DonationCampaignWhereInput | null
+    isNot?: DonationCampaignWhereInput | null
+  }
+
+  export type DonationCountOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    donorName?: SortOrder
+    donorEmail?: SortOrder
+    donorPhone?: SortOrder
+    message?: SortOrder
+    isAnonymous?: SortOrder
+    status?: SortOrder
+    stripePaymentIntentId?: SortOrder
+    stripeCheckoutUrl?: SortOrder
+    stripeSessionId?: SortOrder
+    metadata?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    completedAt?: SortOrder
+    chapterId?: SortOrder
+    campaignId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type DonationAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type DonationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    donorName?: SortOrder
+    donorEmail?: SortOrder
+    donorPhone?: SortOrder
+    message?: SortOrder
+    isAnonymous?: SortOrder
+    status?: SortOrder
+    stripePaymentIntentId?: SortOrder
+    stripeCheckoutUrl?: SortOrder
+    stripeSessionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    completedAt?: SortOrder
+    chapterId?: SortOrder
+    campaignId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type DonationMinOrderByAggregateInput = {
+    id?: SortOrder
+    amount?: SortOrder
+    donorName?: SortOrder
+    donorEmail?: SortOrder
+    donorPhone?: SortOrder
+    message?: SortOrder
+    isAnonymous?: SortOrder
+    status?: SortOrder
+    stripePaymentIntentId?: SortOrder
+    stripeCheckoutUrl?: SortOrder
+    stripeSessionId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    completedAt?: SortOrder
+    chapterId?: SortOrder
+    campaignId?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type DonationSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type EnumDonationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationStatus | EnumDonationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationStatus[] | ListEnumDonationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationStatus[] | ListEnumDonationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationStatusWithAggregatesFilter<$PrismaModel> | $Enums.DonationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDonationStatusFilter<$PrismaModel>
+    _max?: NestedEnumDonationStatusFilter<$PrismaModel>
+  }
+
   export type MembershipCreateNestedManyWithoutChapterInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -40464,6 +44405,20 @@ export namespace Prisma {
     connect?: DuesPlanAssignmentWhereUniqueInput | DuesPlanAssignmentWhereUniqueInput[]
   }
 
+  export type DonationCreateNestedManyWithoutChapterInput = {
+    create?: XOR<DonationCreateWithoutChapterInput, DonationUncheckedCreateWithoutChapterInput> | DonationCreateWithoutChapterInput[] | DonationUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutChapterInput | DonationCreateOrConnectWithoutChapterInput[]
+    createMany?: DonationCreateManyChapterInputEnvelope
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+  }
+
+  export type DonationCampaignCreateNestedManyWithoutChapterInput = {
+    create?: XOR<DonationCampaignCreateWithoutChapterInput, DonationCampaignUncheckedCreateWithoutChapterInput> | DonationCampaignCreateWithoutChapterInput[] | DonationCampaignUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: DonationCampaignCreateOrConnectWithoutChapterInput | DonationCampaignCreateOrConnectWithoutChapterInput[]
+    createMany?: DonationCampaignCreateManyChapterInputEnvelope
+    connect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+  }
+
   export type MembershipUncheckedCreateNestedManyWithoutChapterInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -40580,6 +44535,20 @@ export namespace Prisma {
     connectOrCreate?: DuesPlanAssignmentCreateOrConnectWithoutChapterInput | DuesPlanAssignmentCreateOrConnectWithoutChapterInput[]
     createMany?: DuesPlanAssignmentCreateManyChapterInputEnvelope
     connect?: DuesPlanAssignmentWhereUniqueInput | DuesPlanAssignmentWhereUniqueInput[]
+  }
+
+  export type DonationUncheckedCreateNestedManyWithoutChapterInput = {
+    create?: XOR<DonationCreateWithoutChapterInput, DonationUncheckedCreateWithoutChapterInput> | DonationCreateWithoutChapterInput[] | DonationUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutChapterInput | DonationCreateOrConnectWithoutChapterInput[]
+    createMany?: DonationCreateManyChapterInputEnvelope
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+  }
+
+  export type DonationCampaignUncheckedCreateNestedManyWithoutChapterInput = {
+    create?: XOR<DonationCampaignCreateWithoutChapterInput, DonationCampaignUncheckedCreateWithoutChapterInput> | DonationCampaignCreateWithoutChapterInput[] | DonationCampaignUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: DonationCampaignCreateOrConnectWithoutChapterInput | DonationCampaignCreateOrConnectWithoutChapterInput[]
+    createMany?: DonationCampaignCreateManyChapterInputEnvelope
+    connect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -40852,6 +44821,34 @@ export namespace Prisma {
     deleteMany?: DuesPlanAssignmentScalarWhereInput | DuesPlanAssignmentScalarWhereInput[]
   }
 
+  export type DonationUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<DonationCreateWithoutChapterInput, DonationUncheckedCreateWithoutChapterInput> | DonationCreateWithoutChapterInput[] | DonationUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutChapterInput | DonationCreateOrConnectWithoutChapterInput[]
+    upsert?: DonationUpsertWithWhereUniqueWithoutChapterInput | DonationUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: DonationCreateManyChapterInputEnvelope
+    set?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    disconnect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    delete?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    update?: DonationUpdateWithWhereUniqueWithoutChapterInput | DonationUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: DonationUpdateManyWithWhereWithoutChapterInput | DonationUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
+  }
+
+  export type DonationCampaignUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<DonationCampaignCreateWithoutChapterInput, DonationCampaignUncheckedCreateWithoutChapterInput> | DonationCampaignCreateWithoutChapterInput[] | DonationCampaignUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: DonationCampaignCreateOrConnectWithoutChapterInput | DonationCampaignCreateOrConnectWithoutChapterInput[]
+    upsert?: DonationCampaignUpsertWithWhereUniqueWithoutChapterInput | DonationCampaignUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: DonationCampaignCreateManyChapterInputEnvelope
+    set?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    disconnect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    delete?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    connect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    update?: DonationCampaignUpdateWithWhereUniqueWithoutChapterInput | DonationCampaignUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: DonationCampaignUpdateManyWithWhereWithoutChapterInput | DonationCampaignUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: DonationCampaignScalarWhereInput | DonationCampaignScalarWhereInput[]
+  }
+
   export type MembershipUncheckedUpdateManyWithoutChapterNestedInput = {
     create?: XOR<MembershipCreateWithoutChapterInput, MembershipUncheckedCreateWithoutChapterInput> | MembershipCreateWithoutChapterInput[] | MembershipUncheckedCreateWithoutChapterInput[]
     connectOrCreate?: MembershipCreateOrConnectWithoutChapterInput | MembershipCreateOrConnectWithoutChapterInput[]
@@ -41086,6 +45083,34 @@ export namespace Prisma {
     deleteMany?: DuesPlanAssignmentScalarWhereInput | DuesPlanAssignmentScalarWhereInput[]
   }
 
+  export type DonationUncheckedUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<DonationCreateWithoutChapterInput, DonationUncheckedCreateWithoutChapterInput> | DonationCreateWithoutChapterInput[] | DonationUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutChapterInput | DonationCreateOrConnectWithoutChapterInput[]
+    upsert?: DonationUpsertWithWhereUniqueWithoutChapterInput | DonationUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: DonationCreateManyChapterInputEnvelope
+    set?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    disconnect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    delete?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    update?: DonationUpdateWithWhereUniqueWithoutChapterInput | DonationUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: DonationUpdateManyWithWhereWithoutChapterInput | DonationUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
+  }
+
+  export type DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput = {
+    create?: XOR<DonationCampaignCreateWithoutChapterInput, DonationCampaignUncheckedCreateWithoutChapterInput> | DonationCampaignCreateWithoutChapterInput[] | DonationCampaignUncheckedCreateWithoutChapterInput[]
+    connectOrCreate?: DonationCampaignCreateOrConnectWithoutChapterInput | DonationCampaignCreateOrConnectWithoutChapterInput[]
+    upsert?: DonationCampaignUpsertWithWhereUniqueWithoutChapterInput | DonationCampaignUpsertWithWhereUniqueWithoutChapterInput[]
+    createMany?: DonationCampaignCreateManyChapterInputEnvelope
+    set?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    disconnect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    delete?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    connect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    update?: DonationCampaignUpdateWithWhereUniqueWithoutChapterInput | DonationCampaignUpdateWithWhereUniqueWithoutChapterInput[]
+    updateMany?: DonationCampaignUpdateManyWithWhereWithoutChapterInput | DonationCampaignUpdateManyWithWhereWithoutChapterInput[]
+    deleteMany?: DonationCampaignScalarWhereInput | DonationCampaignScalarWhereInput[]
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -41205,6 +45230,20 @@ export namespace Prisma {
     connect?: DuesPlanAssignmentWhereUniqueInput | DuesPlanAssignmentWhereUniqueInput[]
   }
 
+  export type DonationCreateNestedManyWithoutUserInput = {
+    create?: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput> | DonationCreateWithoutUserInput[] | DonationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutUserInput | DonationCreateOrConnectWithoutUserInput[]
+    createMany?: DonationCreateManyUserInputEnvelope
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+  }
+
+  export type DonationCampaignCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<DonationCampaignCreateWithoutCreatedByInput, DonationCampaignUncheckedCreateWithoutCreatedByInput> | DonationCampaignCreateWithoutCreatedByInput[] | DonationCampaignUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DonationCampaignCreateOrConnectWithoutCreatedByInput | DonationCampaignCreateOrConnectWithoutCreatedByInput[]
+    createMany?: DonationCampaignCreateManyCreatedByInputEnvelope
+    connect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -41322,6 +45361,20 @@ export namespace Prisma {
     connectOrCreate?: DuesPlanAssignmentCreateOrConnectWithoutAssignedByUserInput | DuesPlanAssignmentCreateOrConnectWithoutAssignedByUserInput[]
     createMany?: DuesPlanAssignmentCreateManyAssignedByUserInputEnvelope
     connect?: DuesPlanAssignmentWhereUniqueInput | DuesPlanAssignmentWhereUniqueInput[]
+  }
+
+  export type DonationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput> | DonationCreateWithoutUserInput[] | DonationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutUserInput | DonationCreateOrConnectWithoutUserInput[]
+    createMany?: DonationCreateManyUserInputEnvelope
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+  }
+
+  export type DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<DonationCampaignCreateWithoutCreatedByInput, DonationCampaignUncheckedCreateWithoutCreatedByInput> | DonationCampaignCreateWithoutCreatedByInput[] | DonationCampaignUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DonationCampaignCreateOrConnectWithoutCreatedByInput | DonationCampaignCreateOrConnectWithoutCreatedByInput[]
+    createMany?: DonationCampaignCreateManyCreatedByInputEnvelope
+    connect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
   }
 
   export type AccountUpdateManyWithoutUserNestedInput = {
@@ -41562,6 +45615,34 @@ export namespace Prisma {
     deleteMany?: DuesPlanAssignmentScalarWhereInput | DuesPlanAssignmentScalarWhereInput[]
   }
 
+  export type DonationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput> | DonationCreateWithoutUserInput[] | DonationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutUserInput | DonationCreateOrConnectWithoutUserInput[]
+    upsert?: DonationUpsertWithWhereUniqueWithoutUserInput | DonationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DonationCreateManyUserInputEnvelope
+    set?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    disconnect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    delete?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    update?: DonationUpdateWithWhereUniqueWithoutUserInput | DonationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DonationUpdateManyWithWhereWithoutUserInput | DonationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
+  }
+
+  export type DonationCampaignUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<DonationCampaignCreateWithoutCreatedByInput, DonationCampaignUncheckedCreateWithoutCreatedByInput> | DonationCampaignCreateWithoutCreatedByInput[] | DonationCampaignUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DonationCampaignCreateOrConnectWithoutCreatedByInput | DonationCampaignCreateOrConnectWithoutCreatedByInput[]
+    upsert?: DonationCampaignUpsertWithWhereUniqueWithoutCreatedByInput | DonationCampaignUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: DonationCampaignCreateManyCreatedByInputEnvelope
+    set?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    disconnect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    delete?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    connect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    update?: DonationCampaignUpdateWithWhereUniqueWithoutCreatedByInput | DonationCampaignUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: DonationCampaignUpdateManyWithWhereWithoutCreatedByInput | DonationCampaignUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: DonationCampaignScalarWhereInput | DonationCampaignScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -41798,6 +45879,34 @@ export namespace Prisma {
     update?: DuesPlanAssignmentUpdateWithWhereUniqueWithoutAssignedByUserInput | DuesPlanAssignmentUpdateWithWhereUniqueWithoutAssignedByUserInput[]
     updateMany?: DuesPlanAssignmentUpdateManyWithWhereWithoutAssignedByUserInput | DuesPlanAssignmentUpdateManyWithWhereWithoutAssignedByUserInput[]
     deleteMany?: DuesPlanAssignmentScalarWhereInput | DuesPlanAssignmentScalarWhereInput[]
+  }
+
+  export type DonationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput> | DonationCreateWithoutUserInput[] | DonationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutUserInput | DonationCreateOrConnectWithoutUserInput[]
+    upsert?: DonationUpsertWithWhereUniqueWithoutUserInput | DonationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: DonationCreateManyUserInputEnvelope
+    set?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    disconnect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    delete?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    update?: DonationUpdateWithWhereUniqueWithoutUserInput | DonationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: DonationUpdateManyWithWhereWithoutUserInput | DonationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
+  }
+
+  export type DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<DonationCampaignCreateWithoutCreatedByInput, DonationCampaignUncheckedCreateWithoutCreatedByInput> | DonationCampaignCreateWithoutCreatedByInput[] | DonationCampaignUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: DonationCampaignCreateOrConnectWithoutCreatedByInput | DonationCampaignCreateOrConnectWithoutCreatedByInput[]
+    upsert?: DonationCampaignUpsertWithWhereUniqueWithoutCreatedByInput | DonationCampaignUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: DonationCampaignCreateManyCreatedByInputEnvelope
+    set?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    disconnect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    delete?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    connect?: DonationCampaignWhereUniqueInput | DonationCampaignWhereUniqueInput[]
+    update?: DonationCampaignUpdateWithWhereUniqueWithoutCreatedByInput | DonationCampaignUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: DonationCampaignUpdateManyWithWhereWithoutCreatedByInput | DonationCampaignUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: DonationCampaignScalarWhereInput | DonationCampaignScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutMembershipsInput = {
@@ -42542,6 +46651,12 @@ export namespace Prisma {
     connect?: DuesPaymentWhereUniqueInput
   }
 
+  export type DonationCreateNestedOneWithoutTransactionInput = {
+    create?: XOR<DonationCreateWithoutTransactionInput, DonationUncheckedCreateWithoutTransactionInput>
+    connectOrCreate?: DonationCreateOrConnectWithoutTransactionInput
+    connect?: DonationWhereUniqueInput
+  }
+
   export type EnumTransactionTypeFieldUpdateOperationsInput = {
     set?: $Enums.TransactionType
   }
@@ -42572,6 +46687,16 @@ export namespace Prisma {
     delete?: DuesPaymentWhereInput | boolean
     connect?: DuesPaymentWhereUniqueInput
     update?: XOR<XOR<DuesPaymentUpdateToOneWithWhereWithoutTransactionInput, DuesPaymentUpdateWithoutTransactionInput>, DuesPaymentUncheckedUpdateWithoutTransactionInput>
+  }
+
+  export type DonationUpdateOneWithoutTransactionNestedInput = {
+    create?: XOR<DonationCreateWithoutTransactionInput, DonationUncheckedCreateWithoutTransactionInput>
+    connectOrCreate?: DonationCreateOrConnectWithoutTransactionInput
+    upsert?: DonationUpsertWithoutTransactionInput
+    disconnect?: DonationWhereInput | boolean
+    delete?: DonationWhereInput | boolean
+    connect?: DonationWhereUniqueInput
+    update?: XOR<XOR<DonationUpdateToOneWithWhereWithoutTransactionInput, DonationUpdateWithoutTransactionInput>, DonationUncheckedUpdateWithoutTransactionInput>
   }
 
   export type UserCreateNestedOneWithoutFeedbackRequestsInput = {
@@ -42712,6 +46837,166 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutAssignedDuesPlansInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAssignedDuesPlansInput, UserUpdateWithoutAssignedDuesPlansInput>, UserUncheckedUpdateWithoutAssignedDuesPlansInput>
+  }
+
+  export type ChapterCreateNestedOneWithoutDonationCampaignsInput = {
+    create?: XOR<ChapterCreateWithoutDonationCampaignsInput, ChapterUncheckedCreateWithoutDonationCampaignsInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutDonationCampaignsInput
+    connect?: ChapterWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutCreatedCampaignsInput = {
+    create?: XOR<UserCreateWithoutCreatedCampaignsInput, UserUncheckedCreateWithoutCreatedCampaignsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedCampaignsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type DonationCreateNestedManyWithoutCampaignInput = {
+    create?: XOR<DonationCreateWithoutCampaignInput, DonationUncheckedCreateWithoutCampaignInput> | DonationCreateWithoutCampaignInput[] | DonationUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutCampaignInput | DonationCreateOrConnectWithoutCampaignInput[]
+    createMany?: DonationCreateManyCampaignInputEnvelope
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+  }
+
+  export type DonationUncheckedCreateNestedManyWithoutCampaignInput = {
+    create?: XOR<DonationCreateWithoutCampaignInput, DonationUncheckedCreateWithoutCampaignInput> | DonationCreateWithoutCampaignInput[] | DonationUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutCampaignInput | DonationCreateOrConnectWithoutCampaignInput[]
+    createMany?: DonationCreateManyCampaignInputEnvelope
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+  }
+
+  export type EnumDonationCampaignTypeFieldUpdateOperationsInput = {
+    set?: $Enums.DonationCampaignType
+  }
+
+  export type EnumDonationCampaignStatusFieldUpdateOperationsInput = {
+    set?: $Enums.DonationCampaignStatus
+  }
+
+  export type ChapterUpdateOneRequiredWithoutDonationCampaignsNestedInput = {
+    create?: XOR<ChapterCreateWithoutDonationCampaignsInput, ChapterUncheckedCreateWithoutDonationCampaignsInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutDonationCampaignsInput
+    upsert?: ChapterUpsertWithoutDonationCampaignsInput
+    connect?: ChapterWhereUniqueInput
+    update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutDonationCampaignsInput, ChapterUpdateWithoutDonationCampaignsInput>, ChapterUncheckedUpdateWithoutDonationCampaignsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutCreatedCampaignsNestedInput = {
+    create?: XOR<UserCreateWithoutCreatedCampaignsInput, UserUncheckedCreateWithoutCreatedCampaignsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCreatedCampaignsInput
+    upsert?: UserUpsertWithoutCreatedCampaignsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCreatedCampaignsInput, UserUpdateWithoutCreatedCampaignsInput>, UserUncheckedUpdateWithoutCreatedCampaignsInput>
+  }
+
+  export type DonationUpdateManyWithoutCampaignNestedInput = {
+    create?: XOR<DonationCreateWithoutCampaignInput, DonationUncheckedCreateWithoutCampaignInput> | DonationCreateWithoutCampaignInput[] | DonationUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutCampaignInput | DonationCreateOrConnectWithoutCampaignInput[]
+    upsert?: DonationUpsertWithWhereUniqueWithoutCampaignInput | DonationUpsertWithWhereUniqueWithoutCampaignInput[]
+    createMany?: DonationCreateManyCampaignInputEnvelope
+    set?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    disconnect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    delete?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    update?: DonationUpdateWithWhereUniqueWithoutCampaignInput | DonationUpdateWithWhereUniqueWithoutCampaignInput[]
+    updateMany?: DonationUpdateManyWithWhereWithoutCampaignInput | DonationUpdateManyWithWhereWithoutCampaignInput[]
+    deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
+  }
+
+  export type DonationUncheckedUpdateManyWithoutCampaignNestedInput = {
+    create?: XOR<DonationCreateWithoutCampaignInput, DonationUncheckedCreateWithoutCampaignInput> | DonationCreateWithoutCampaignInput[] | DonationUncheckedCreateWithoutCampaignInput[]
+    connectOrCreate?: DonationCreateOrConnectWithoutCampaignInput | DonationCreateOrConnectWithoutCampaignInput[]
+    upsert?: DonationUpsertWithWhereUniqueWithoutCampaignInput | DonationUpsertWithWhereUniqueWithoutCampaignInput[]
+    createMany?: DonationCreateManyCampaignInputEnvelope
+    set?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    disconnect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    delete?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    connect?: DonationWhereUniqueInput | DonationWhereUniqueInput[]
+    update?: DonationUpdateWithWhereUniqueWithoutCampaignInput | DonationUpdateWithWhereUniqueWithoutCampaignInput[]
+    updateMany?: DonationUpdateManyWithWhereWithoutCampaignInput | DonationUpdateManyWithWhereWithoutCampaignInput[]
+    deleteMany?: DonationScalarWhereInput | DonationScalarWhereInput[]
+  }
+
+  export type ChapterCreateNestedOneWithoutDonationsInput = {
+    create?: XOR<ChapterCreateWithoutDonationsInput, ChapterUncheckedCreateWithoutDonationsInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutDonationsInput
+    connect?: ChapterWhereUniqueInput
+  }
+
+  export type DonationCampaignCreateNestedOneWithoutDonationsInput = {
+    create?: XOR<DonationCampaignCreateWithoutDonationsInput, DonationCampaignUncheckedCreateWithoutDonationsInput>
+    connectOrCreate?: DonationCampaignCreateOrConnectWithoutDonationsInput
+    connect?: DonationCampaignWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutDonationsInput = {
+    create?: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDonationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TransactionCreateNestedOneWithoutDonationInput = {
+    create?: XOR<TransactionCreateWithoutDonationInput, TransactionUncheckedCreateWithoutDonationInput>
+    connectOrCreate?: TransactionCreateOrConnectWithoutDonationInput
+    connect?: TransactionWhereUniqueInput
+  }
+
+  export type TransactionUncheckedCreateNestedOneWithoutDonationInput = {
+    create?: XOR<TransactionCreateWithoutDonationInput, TransactionUncheckedCreateWithoutDonationInput>
+    connectOrCreate?: TransactionCreateOrConnectWithoutDonationInput
+    connect?: TransactionWhereUniqueInput
+  }
+
+  export type EnumDonationStatusFieldUpdateOperationsInput = {
+    set?: $Enums.DonationStatus
+  }
+
+  export type ChapterUpdateOneRequiredWithoutDonationsNestedInput = {
+    create?: XOR<ChapterCreateWithoutDonationsInput, ChapterUncheckedCreateWithoutDonationsInput>
+    connectOrCreate?: ChapterCreateOrConnectWithoutDonationsInput
+    upsert?: ChapterUpsertWithoutDonationsInput
+    connect?: ChapterWhereUniqueInput
+    update?: XOR<XOR<ChapterUpdateToOneWithWhereWithoutDonationsInput, ChapterUpdateWithoutDonationsInput>, ChapterUncheckedUpdateWithoutDonationsInput>
+  }
+
+  export type DonationCampaignUpdateOneWithoutDonationsNestedInput = {
+    create?: XOR<DonationCampaignCreateWithoutDonationsInput, DonationCampaignUncheckedCreateWithoutDonationsInput>
+    connectOrCreate?: DonationCampaignCreateOrConnectWithoutDonationsInput
+    upsert?: DonationCampaignUpsertWithoutDonationsInput
+    disconnect?: DonationCampaignWhereInput | boolean
+    delete?: DonationCampaignWhereInput | boolean
+    connect?: DonationCampaignWhereUniqueInput
+    update?: XOR<XOR<DonationCampaignUpdateToOneWithWhereWithoutDonationsInput, DonationCampaignUpdateWithoutDonationsInput>, DonationCampaignUncheckedUpdateWithoutDonationsInput>
+  }
+
+  export type UserUpdateOneWithoutDonationsNestedInput = {
+    create?: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDonationsInput
+    upsert?: UserUpsertWithoutDonationsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDonationsInput, UserUpdateWithoutDonationsInput>, UserUncheckedUpdateWithoutDonationsInput>
+  }
+
+  export type TransactionUpdateOneWithoutDonationNestedInput = {
+    create?: XOR<TransactionCreateWithoutDonationInput, TransactionUncheckedCreateWithoutDonationInput>
+    connectOrCreate?: TransactionCreateOrConnectWithoutDonationInput
+    upsert?: TransactionUpsertWithoutDonationInput
+    disconnect?: TransactionWhereInput | boolean
+    delete?: TransactionWhereInput | boolean
+    connect?: TransactionWhereUniqueInput
+    update?: XOR<XOR<TransactionUpdateToOneWithWhereWithoutDonationInput, TransactionUpdateWithoutDonationInput>, TransactionUncheckedUpdateWithoutDonationInput>
+  }
+
+  export type TransactionUncheckedUpdateOneWithoutDonationNestedInput = {
+    create?: XOR<TransactionCreateWithoutDonationInput, TransactionUncheckedCreateWithoutDonationInput>
+    connectOrCreate?: TransactionCreateOrConnectWithoutDonationInput
+    upsert?: TransactionUpsertWithoutDonationInput
+    disconnect?: TransactionWhereInput | boolean
+    delete?: TransactionWhereInput | boolean
+    connect?: TransactionWhereUniqueInput
+    update?: XOR<XOR<TransactionUpdateToOneWithWhereWithoutDonationInput, TransactionUpdateWithoutDonationInput>, TransactionUncheckedUpdateWithoutDonationInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -43155,6 +47440,57 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTreasuryTransactionTypeFilter<$PrismaModel>
     _max?: NestedEnumTreasuryTransactionTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumDonationCampaignTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationCampaignType | EnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationCampaignType[] | ListEnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationCampaignType[] | ListEnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationCampaignTypeFilter<$PrismaModel> | $Enums.DonationCampaignType
+  }
+
+  export type NestedEnumDonationCampaignStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationCampaignStatus | EnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationCampaignStatus[] | ListEnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationCampaignStatus[] | ListEnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationCampaignStatusFilter<$PrismaModel> | $Enums.DonationCampaignStatus
+  }
+
+  export type NestedEnumDonationCampaignTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationCampaignType | EnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationCampaignType[] | ListEnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationCampaignType[] | ListEnumDonationCampaignTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationCampaignTypeWithAggregatesFilter<$PrismaModel> | $Enums.DonationCampaignType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDonationCampaignTypeFilter<$PrismaModel>
+    _max?: NestedEnumDonationCampaignTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumDonationCampaignStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationCampaignStatus | EnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationCampaignStatus[] | ListEnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationCampaignStatus[] | ListEnumDonationCampaignStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationCampaignStatusWithAggregatesFilter<$PrismaModel> | $Enums.DonationCampaignStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDonationCampaignStatusFilter<$PrismaModel>
+    _max?: NestedEnumDonationCampaignStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumDonationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationStatus | EnumDonationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationStatus[] | ListEnumDonationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationStatus[] | ListEnumDonationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationStatusFilter<$PrismaModel> | $Enums.DonationStatus
+  }
+
+  export type NestedEnumDonationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.DonationStatus | EnumDonationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.DonationStatus[] | ListEnumDonationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.DonationStatus[] | ListEnumDonationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumDonationStatusWithAggregatesFilter<$PrismaModel> | $Enums.DonationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumDonationStatusFilter<$PrismaModel>
+    _max?: NestedEnumDonationStatusFilter<$PrismaModel>
   }
 
   export type MembershipCreateWithoutChapterInput = {
@@ -43622,6 +47958,7 @@ export namespace Prisma {
     processedAt?: Date | string | null
     expense?: ExpenseCreateNestedOneWithoutTransactionInput
     duesPayment?: DuesPaymentCreateNestedOneWithoutTransactionInput
+    donation?: DonationCreateNestedOneWithoutTransactionInput
   }
 
   export type TransactionUncheckedCreateWithoutChapterInput = {
@@ -43634,6 +47971,7 @@ export namespace Prisma {
     processedAt?: Date | string | null
     expenseId?: string | null
     duesPaymentId?: string | null
+    donationId?: string | null
   }
 
   export type TransactionCreateOrConnectWithoutChapterInput = {
@@ -43743,6 +48081,106 @@ export namespace Prisma {
 
   export type DuesPlanAssignmentCreateManyChapterInputEnvelope = {
     data: DuesPlanAssignmentCreateManyChapterInput | DuesPlanAssignmentCreateManyChapterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DonationCreateWithoutChapterInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    campaign?: DonationCampaignCreateNestedOneWithoutDonationsInput
+    user?: UserCreateNestedOneWithoutDonationsInput
+    transaction?: TransactionCreateNestedOneWithoutDonationInput
+  }
+
+  export type DonationUncheckedCreateWithoutChapterInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    campaignId?: string | null
+    userId?: string | null
+    transaction?: TransactionUncheckedCreateNestedOneWithoutDonationInput
+  }
+
+  export type DonationCreateOrConnectWithoutChapterInput = {
+    where: DonationWhereUniqueInput
+    create: XOR<DonationCreateWithoutChapterInput, DonationUncheckedCreateWithoutChapterInput>
+  }
+
+  export type DonationCreateManyChapterInputEnvelope = {
+    data: DonationCreateManyChapterInput | DonationCreateManyChapterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DonationCampaignCreateWithoutChapterInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutCreatedCampaignsInput
+    donations?: DonationCreateNestedManyWithoutCampaignInput
+  }
+
+  export type DonationCampaignUncheckedCreateWithoutChapterInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdById: string
+    donations?: DonationUncheckedCreateNestedManyWithoutCampaignInput
+  }
+
+  export type DonationCampaignCreateOrConnectWithoutChapterInput = {
+    where: DonationCampaignWhereUniqueInput
+    create: XOR<DonationCampaignCreateWithoutChapterInput, DonationCampaignUncheckedCreateWithoutChapterInput>
+  }
+
+  export type DonationCampaignCreateManyChapterInputEnvelope = {
+    data: DonationCampaignCreateManyChapterInput | DonationCampaignCreateManyChapterInput[]
     skipDuplicates?: boolean
   }
 
@@ -44196,6 +48634,7 @@ export namespace Prisma {
     chapterId?: StringFilter<"Transaction"> | string
     expenseId?: StringNullableFilter<"Transaction"> | string | null
     duesPaymentId?: StringNullableFilter<"Transaction"> | string | null
+    donationId?: StringNullableFilter<"Transaction"> | string | null
   }
 
   export type DuesPlanUpsertWithWhereUniqueWithoutChapterInput = {
@@ -44289,6 +48728,84 @@ export namespace Prisma {
     duesPlanId?: StringFilter<"DuesPlanAssignment"> | string
     userId?: StringFilter<"DuesPlanAssignment"> | string
     chapterId?: StringFilter<"DuesPlanAssignment"> | string
+  }
+
+  export type DonationUpsertWithWhereUniqueWithoutChapterInput = {
+    where: DonationWhereUniqueInput
+    update: XOR<DonationUpdateWithoutChapterInput, DonationUncheckedUpdateWithoutChapterInput>
+    create: XOR<DonationCreateWithoutChapterInput, DonationUncheckedCreateWithoutChapterInput>
+  }
+
+  export type DonationUpdateWithWhereUniqueWithoutChapterInput = {
+    where: DonationWhereUniqueInput
+    data: XOR<DonationUpdateWithoutChapterInput, DonationUncheckedUpdateWithoutChapterInput>
+  }
+
+  export type DonationUpdateManyWithWhereWithoutChapterInput = {
+    where: DonationScalarWhereInput
+    data: XOR<DonationUpdateManyMutationInput, DonationUncheckedUpdateManyWithoutChapterInput>
+  }
+
+  export type DonationScalarWhereInput = {
+    AND?: DonationScalarWhereInput | DonationScalarWhereInput[]
+    OR?: DonationScalarWhereInput[]
+    NOT?: DonationScalarWhereInput | DonationScalarWhereInput[]
+    id?: StringFilter<"Donation"> | string
+    amount?: FloatFilter<"Donation"> | number
+    donorName?: StringNullableFilter<"Donation"> | string | null
+    donorEmail?: StringNullableFilter<"Donation"> | string | null
+    donorPhone?: StringNullableFilter<"Donation"> | string | null
+    message?: StringNullableFilter<"Donation"> | string | null
+    isAnonymous?: BoolFilter<"Donation"> | boolean
+    status?: EnumDonationStatusFilter<"Donation"> | $Enums.DonationStatus
+    stripePaymentIntentId?: StringNullableFilter<"Donation"> | string | null
+    stripeCheckoutUrl?: StringNullableFilter<"Donation"> | string | null
+    stripeSessionId?: StringNullableFilter<"Donation"> | string | null
+    metadata?: JsonNullableFilter<"Donation">
+    createdAt?: DateTimeFilter<"Donation"> | Date | string
+    updatedAt?: DateTimeFilter<"Donation"> | Date | string
+    completedAt?: DateTimeNullableFilter<"Donation"> | Date | string | null
+    chapterId?: StringFilter<"Donation"> | string
+    campaignId?: StringNullableFilter<"Donation"> | string | null
+    userId?: StringNullableFilter<"Donation"> | string | null
+  }
+
+  export type DonationCampaignUpsertWithWhereUniqueWithoutChapterInput = {
+    where: DonationCampaignWhereUniqueInput
+    update: XOR<DonationCampaignUpdateWithoutChapterInput, DonationCampaignUncheckedUpdateWithoutChapterInput>
+    create: XOR<DonationCampaignCreateWithoutChapterInput, DonationCampaignUncheckedCreateWithoutChapterInput>
+  }
+
+  export type DonationCampaignUpdateWithWhereUniqueWithoutChapterInput = {
+    where: DonationCampaignWhereUniqueInput
+    data: XOR<DonationCampaignUpdateWithoutChapterInput, DonationCampaignUncheckedUpdateWithoutChapterInput>
+  }
+
+  export type DonationCampaignUpdateManyWithWhereWithoutChapterInput = {
+    where: DonationCampaignScalarWhereInput
+    data: XOR<DonationCampaignUpdateManyMutationInput, DonationCampaignUncheckedUpdateManyWithoutChapterInput>
+  }
+
+  export type DonationCampaignScalarWhereInput = {
+    AND?: DonationCampaignScalarWhereInput | DonationCampaignScalarWhereInput[]
+    OR?: DonationCampaignScalarWhereInput[]
+    NOT?: DonationCampaignScalarWhereInput | DonationCampaignScalarWhereInput[]
+    id?: StringFilter<"DonationCampaign"> | string
+    title?: StringFilter<"DonationCampaign"> | string
+    description?: StringFilter<"DonationCampaign"> | string
+    goalAmount?: FloatNullableFilter<"DonationCampaign"> | number | null
+    currentAmount?: FloatFilter<"DonationCampaign"> | number
+    type?: EnumDonationCampaignTypeFilter<"DonationCampaign"> | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFilter<"DonationCampaign"> | $Enums.DonationCampaignStatus
+    startDate?: DateTimeNullableFilter<"DonationCampaign"> | Date | string | null
+    endDate?: DateTimeNullableFilter<"DonationCampaign"> | Date | string | null
+    isPublic?: BoolFilter<"DonationCampaign"> | boolean
+    allowAnonymous?: BoolFilter<"DonationCampaign"> | boolean
+    imageUrl?: StringNullableFilter<"DonationCampaign"> | string | null
+    createdAt?: DateTimeFilter<"DonationCampaign"> | Date | string
+    updatedAt?: DateTimeFilter<"DonationCampaign"> | Date | string
+    chapterId?: StringFilter<"DonationCampaign"> | string
+    createdById?: StringFilter<"DonationCampaign"> | string
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -44897,6 +49414,106 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type DonationCreateWithoutUserInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapter: ChapterCreateNestedOneWithoutDonationsInput
+    campaign?: DonationCampaignCreateNestedOneWithoutDonationsInput
+    transaction?: TransactionCreateNestedOneWithoutDonationInput
+  }
+
+  export type DonationUncheckedCreateWithoutUserInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapterId: string
+    campaignId?: string | null
+    transaction?: TransactionUncheckedCreateNestedOneWithoutDonationInput
+  }
+
+  export type DonationCreateOrConnectWithoutUserInput = {
+    where: DonationWhereUniqueInput
+    create: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput>
+  }
+
+  export type DonationCreateManyUserInputEnvelope = {
+    data: DonationCreateManyUserInput | DonationCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DonationCampaignCreateWithoutCreatedByInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutDonationCampaignsInput
+    donations?: DonationCreateNestedManyWithoutCampaignInput
+  }
+
+  export type DonationCampaignUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+    donations?: DonationUncheckedCreateNestedManyWithoutCampaignInput
+  }
+
+  export type DonationCampaignCreateOrConnectWithoutCreatedByInput = {
+    where: DonationCampaignWhereUniqueInput
+    create: XOR<DonationCampaignCreateWithoutCreatedByInput, DonationCampaignUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type DonationCampaignCreateManyCreatedByInputEnvelope = {
+    data: DonationCampaignCreateManyCreatedByInput | DonationCampaignCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -45226,6 +49843,38 @@ export namespace Prisma {
     data: XOR<DuesPlanAssignmentUpdateManyMutationInput, DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserInput>
   }
 
+  export type DonationUpsertWithWhereUniqueWithoutUserInput = {
+    where: DonationWhereUniqueInput
+    update: XOR<DonationUpdateWithoutUserInput, DonationUncheckedUpdateWithoutUserInput>
+    create: XOR<DonationCreateWithoutUserInput, DonationUncheckedCreateWithoutUserInput>
+  }
+
+  export type DonationUpdateWithWhereUniqueWithoutUserInput = {
+    where: DonationWhereUniqueInput
+    data: XOR<DonationUpdateWithoutUserInput, DonationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type DonationUpdateManyWithWhereWithoutUserInput = {
+    where: DonationScalarWhereInput
+    data: XOR<DonationUpdateManyMutationInput, DonationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type DonationCampaignUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: DonationCampaignWhereUniqueInput
+    update: XOR<DonationCampaignUpdateWithoutCreatedByInput, DonationCampaignUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<DonationCampaignCreateWithoutCreatedByInput, DonationCampaignUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type DonationCampaignUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: DonationCampaignWhereUniqueInput
+    data: XOR<DonationCampaignUpdateWithoutCreatedByInput, DonationCampaignUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type DonationCampaignUpdateManyWithWhereWithoutCreatedByInput = {
+    where: DonationCampaignScalarWhereInput
+    data: XOR<DonationCampaignUpdateManyMutationInput, DonationCampaignUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
   export type UserCreateWithoutMembershipsInput = {
     id?: string
     name?: string | null
@@ -45251,6 +49900,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -45278,6 +49929,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -45319,6 +49972,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutMembershipsInput = {
@@ -45355,6 +50010,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutMembershipsInput = {
@@ -45432,6 +50089,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutDeactivatedMembershipsInput = {
@@ -45459,6 +50118,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutDeactivatedMembershipsInput = {
@@ -45502,6 +50163,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -45529,6 +50192,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChapterUpsertWithoutMembershipsInput = {
@@ -45576,6 +50241,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutMembershipsInput = {
@@ -45612,6 +50279,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ProfileUpsertWithoutMembershipInput = {
@@ -45701,6 +50370,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDeactivatedMembershipsInput = {
@@ -45728,6 +50399,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type MembershipCreateWithoutProfileInput = {
@@ -45784,6 +50457,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutProfilesInput = {
@@ -45811,6 +50486,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutProfilesInput = {
@@ -45852,6 +50529,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutProfilesInput = {
@@ -45888,6 +50567,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutProfilesInput = {
@@ -45966,6 +50647,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProfilesInput = {
@@ -45993,6 +50676,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChapterUpsertWithoutProfilesInput = {
@@ -46040,6 +50725,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutProfilesInput = {
@@ -46076,6 +50763,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutSubscriptionInput = {
@@ -46112,6 +50801,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutSubscriptionInput = {
@@ -46148,6 +50839,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutSubscriptionInput = {
@@ -46200,6 +50893,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutSubscriptionInput = {
@@ -46236,6 +50931,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -46263,6 +50960,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -46290,6 +50989,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -46333,6 +51034,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -46360,6 +51063,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -46387,6 +51092,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -46414,6 +51121,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -46457,6 +51166,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -46484,6 +51195,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChapterCreateWithoutInvitesInput = {
@@ -46520,6 +51233,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutInvitesInput = {
@@ -46556,6 +51271,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutInvitesInput = {
@@ -46588,6 +51305,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAcceptedInvitesInput = {
@@ -46615,6 +51334,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAcceptedInvitesInput = {
@@ -46647,6 +51368,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedInvitesInput = {
@@ -46674,6 +51397,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedInvitesInput = {
@@ -46726,6 +51451,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutInvitesInput = {
@@ -46762,6 +51489,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutAcceptedInvitesInput = {
@@ -46800,6 +51529,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAcceptedInvitesInput = {
@@ -46827,6 +51558,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutCreatedInvitesInput = {
@@ -46865,6 +51598,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedInvitesInput = {
@@ -46892,6 +51627,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChapterCreateWithoutEventsInput = {
@@ -46928,6 +51665,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutEventsInput = {
@@ -46964,6 +51703,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutEventsInput = {
@@ -46996,6 +51737,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCreatedEventsInput = {
@@ -47023,6 +51766,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCreatedEventsInput = {
@@ -47101,6 +51846,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutEventsInput = {
@@ -47137,6 +51884,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutCreatedEventsInput = {
@@ -47175,6 +51924,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedEventsInput = {
@@ -47202,6 +51953,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type EventRSVPUpsertWithWhereUniqueWithoutEventInput = {
@@ -47282,6 +52035,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRsvpsInput = {
@@ -47309,6 +52064,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRsvpsInput = {
@@ -47395,6 +52152,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRsvpsInput = {
@@ -47422,6 +52181,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutAuditLogsInput = {
@@ -47449,6 +52210,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -47476,6 +52239,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -47517,6 +52282,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutAuditLogsInput = {
@@ -47553,6 +52320,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutAuditLogsInput = {
@@ -47596,6 +52365,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -47623,6 +52394,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChapterUpsertWithoutAuditLogsInput = {
@@ -47670,6 +52443,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutAuditLogsInput = {
@@ -47706,6 +52481,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutGalleryImagesInput = {
@@ -47742,6 +52519,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutGalleryImagesInput = {
@@ -47778,6 +52557,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutGalleryImagesInput = {
@@ -47830,6 +52611,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutGalleryImagesInput = {
@@ -47866,6 +52649,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutContactMessagesInput = {
@@ -47902,6 +52687,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutContactMessagesInput = {
@@ -47938,6 +52725,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutContactMessagesInput = {
@@ -47990,6 +52779,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutContactMessagesInput = {
@@ -48026,6 +52817,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutBudgetsInput = {
@@ -48062,6 +52855,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutBudgetsInput = {
@@ -48098,6 +52893,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutBudgetsInput = {
@@ -48192,6 +52989,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutBudgetsInput = {
@@ -48228,6 +53027,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ExpenseUpsertWithWhereUniqueWithoutBudgetInput = {
@@ -48280,6 +53081,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutExpensesInput = {
@@ -48316,6 +53119,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutExpensesInput = {
@@ -48379,6 +53184,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSubmittedExpensesInput = {
@@ -48406,6 +53213,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSubmittedExpensesInput = {
@@ -48438,6 +53247,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutApprovedExpensesInput = {
@@ -48465,6 +53276,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutApprovedExpensesInput = {
@@ -48482,6 +53295,7 @@ export namespace Prisma {
     processedAt?: Date | string | null
     chapter: ChapterCreateNestedOneWithoutTransactionsInput
     duesPayment?: DuesPaymentCreateNestedOneWithoutTransactionInput
+    donation?: DonationCreateNestedOneWithoutTransactionInput
   }
 
   export type TransactionUncheckedCreateWithoutExpenseInput = {
@@ -48494,6 +53308,7 @@ export namespace Prisma {
     processedAt?: Date | string | null
     chapterId: string
     duesPaymentId?: string | null
+    donationId?: string | null
   }
 
   export type TransactionCreateOrConnectWithoutExpenseInput = {
@@ -48546,6 +53361,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutExpensesInput = {
@@ -48582,6 +53399,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type BudgetUpsertWithoutExpensesInput = {
@@ -48657,6 +53476,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSubmittedExpensesInput = {
@@ -48684,6 +53505,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutApprovedExpensesInput = {
@@ -48722,6 +53545,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutApprovedExpensesInput = {
@@ -48749,6 +53574,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type TransactionUpsertWithoutExpenseInput = {
@@ -48772,6 +53599,7 @@ export namespace Prisma {
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     chapter?: ChapterUpdateOneRequiredWithoutTransactionsNestedInput
     duesPayment?: DuesPaymentUpdateOneWithoutTransactionNestedInput
+    donation?: DonationUpdateOneWithoutTransactionNestedInput
   }
 
   export type TransactionUncheckedUpdateWithoutExpenseInput = {
@@ -48784,6 +53612,7 @@ export namespace Prisma {
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     chapterId?: StringFieldUpdateOperationsInput | string
     duesPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    donationId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ChapterCreateWithoutDuesPlansInput = {
@@ -48820,6 +53649,8 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutDuesPlansInput = {
@@ -48856,6 +53687,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutDuesPlansInput = {
@@ -48982,6 +53815,8 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutDuesPlansInput = {
@@ -49018,6 +53853,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type DuesPaymentUpsertWithWhereUniqueWithoutDuesPlanInput = {
@@ -49086,6 +53923,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutDuesPaymentsInput = {
@@ -49122,6 +53961,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutDuesPaymentsInput = {
@@ -49154,6 +53995,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutDuesPaymentsInput = {
@@ -49181,6 +54024,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutDuesPaymentsInput = {
@@ -49231,6 +54076,7 @@ export namespace Prisma {
     processedAt?: Date | string | null
     chapter: ChapterCreateNestedOneWithoutTransactionsInput
     expense?: ExpenseCreateNestedOneWithoutTransactionInput
+    donation?: DonationCreateNestedOneWithoutTransactionInput
   }
 
   export type TransactionUncheckedCreateWithoutDuesPaymentInput = {
@@ -49243,6 +54089,7 @@ export namespace Prisma {
     processedAt?: Date | string | null
     chapterId: string
     expenseId?: string | null
+    donationId?: string | null
   }
 
   export type TransactionCreateOrConnectWithoutDuesPaymentInput = {
@@ -49295,6 +54142,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutDuesPaymentsInput = {
@@ -49331,6 +54180,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutDuesPaymentsInput = {
@@ -49369,6 +54220,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDuesPaymentsInput = {
@@ -49396,6 +54249,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type DuesPlanUpsertWithoutDuesPaymentsInput = {
@@ -49458,6 +54313,7 @@ export namespace Prisma {
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     chapter?: ChapterUpdateOneRequiredWithoutTransactionsNestedInput
     expense?: ExpenseUpdateOneWithoutTransactionNestedInput
+    donation?: DonationUpdateOneWithoutTransactionNestedInput
   }
 
   export type TransactionUncheckedUpdateWithoutDuesPaymentInput = {
@@ -49470,6 +54326,7 @@ export namespace Prisma {
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     chapterId?: StringFieldUpdateOperationsInput | string
     expenseId?: NullableStringFieldUpdateOperationsInput | string | null
+    donationId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ChapterCreateWithoutTransactionsInput = {
@@ -49506,6 +54363,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutTransactionsInput = {
@@ -49542,6 +54401,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutTransactionsInput = {
@@ -49625,6 +54486,53 @@ export namespace Prisma {
     create: XOR<DuesPaymentCreateWithoutTransactionInput, DuesPaymentUncheckedCreateWithoutTransactionInput>
   }
 
+  export type DonationCreateWithoutTransactionInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapter: ChapterCreateNestedOneWithoutDonationsInput
+    campaign?: DonationCampaignCreateNestedOneWithoutDonationsInput
+    user?: UserCreateNestedOneWithoutDonationsInput
+  }
+
+  export type DonationUncheckedCreateWithoutTransactionInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapterId: string
+    campaignId?: string | null
+    userId?: string | null
+  }
+
+  export type DonationCreateOrConnectWithoutTransactionInput = {
+    where: DonationWhereUniqueInput
+    create: XOR<DonationCreateWithoutTransactionInput, DonationUncheckedCreateWithoutTransactionInput>
+  }
+
   export type ChapterUpsertWithoutTransactionsInput = {
     update: XOR<ChapterUpdateWithoutTransactionsInput, ChapterUncheckedUpdateWithoutTransactionsInput>
     create: XOR<ChapterCreateWithoutTransactionsInput, ChapterUncheckedCreateWithoutTransactionsInput>
@@ -49670,6 +54578,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutTransactionsInput = {
@@ -49706,6 +54616,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ExpenseUpsertWithoutTransactionInput = {
@@ -49796,6 +54708,59 @@ export namespace Prisma {
     duesPlanId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type DonationUpsertWithoutTransactionInput = {
+    update: XOR<DonationUpdateWithoutTransactionInput, DonationUncheckedUpdateWithoutTransactionInput>
+    create: XOR<DonationCreateWithoutTransactionInput, DonationUncheckedCreateWithoutTransactionInput>
+    where?: DonationWhereInput
+  }
+
+  export type DonationUpdateToOneWithWhereWithoutTransactionInput = {
+    where?: DonationWhereInput
+    data: XOR<DonationUpdateWithoutTransactionInput, DonationUncheckedUpdateWithoutTransactionInput>
+  }
+
+  export type DonationUpdateWithoutTransactionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapter?: ChapterUpdateOneRequiredWithoutDonationsNestedInput
+    campaign?: DonationCampaignUpdateOneWithoutDonationsNestedInput
+    user?: UserUpdateOneWithoutDonationsNestedInput
+  }
+
+  export type DonationUncheckedUpdateWithoutTransactionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapterId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type UserCreateWithoutFeedbackRequestsInput = {
     id?: string
     name?: string | null
@@ -49821,6 +54786,8 @@ export namespace Prisma {
     uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutFeedbackRequestsInput = {
@@ -49848,6 +54815,8 @@ export namespace Prisma {
     uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutFeedbackRequestsInput = {
@@ -49891,6 +54860,8 @@ export namespace Prisma {
     uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFeedbackRequestsInput = {
@@ -49918,6 +54889,8 @@ export namespace Prisma {
     uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChapterCreateWithoutFilesInput = {
@@ -49954,6 +54927,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutFilesInput = {
@@ -49990,6 +54965,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutFilesInput = {
@@ -50022,6 +54999,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutUploadedFilesInput = {
@@ -50049,6 +55028,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutUploadedFilesInput = {
@@ -50101,6 +55082,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutFilesInput = {
@@ -50137,6 +55120,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutUploadedFilesInput = {
@@ -50175,6 +55160,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUploadedFilesInput = {
@@ -50202,6 +55189,8 @@ export namespace Prisma {
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChapterCreateWithoutMessageLogsInput = {
@@ -50238,6 +55227,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutMessageLogsInput = {
@@ -50274,6 +55265,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutMessageLogsInput = {
@@ -50326,6 +55319,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutMessageLogsInput = {
@@ -50362,6 +55357,8 @@ export namespace Prisma {
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterCreateWithoutTreasuryTransactionsInput = {
@@ -50398,6 +55395,8 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutTreasuryTransactionsInput = {
@@ -50434,6 +55433,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutTreasuryTransactionsInput = {
@@ -50486,6 +55487,8 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutTreasuryTransactionsInput = {
@@ -50522,6 +55525,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type DuesPlanCreateWithoutAssignmentsInput = {
@@ -50582,6 +55587,8 @@ export namespace Prisma {
     uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutDuesPlanAssignmentsInput = {
@@ -50609,6 +55616,8 @@ export namespace Prisma {
     uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutDuesPlanAssignmentsInput = {
@@ -50650,6 +55659,8 @@ export namespace Prisma {
     transactions?: TransactionCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterUncheckedCreateWithoutDuesPlanAssignmentsInput = {
@@ -50686,6 +55697,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
     duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
     treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
   }
 
   export type ChapterCreateOrConnectWithoutDuesPlanAssignmentsInput = {
@@ -50718,6 +55731,8 @@ export namespace Prisma {
     uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
     feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAssignedDuesPlansInput = {
@@ -50745,6 +55760,8 @@ export namespace Prisma {
     uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
     feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAssignedDuesPlansInput = {
@@ -50827,6 +55844,8 @@ export namespace Prisma {
     uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutDuesPlanAssignmentsInput = {
@@ -50854,6 +55873,8 @@ export namespace Prisma {
     uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChapterUpsertWithoutDuesPlanAssignmentsInput = {
@@ -50901,6 +55922,8 @@ export namespace Prisma {
     transactions?: TransactionUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
   }
 
   export type ChapterUncheckedUpdateWithoutDuesPlanAssignmentsInput = {
@@ -50937,6 +55960,8 @@ export namespace Prisma {
     transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
     duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
     treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
   }
 
   export type UserUpsertWithoutAssignedDuesPlansInput = {
@@ -50975,6 +56000,8 @@ export namespace Prisma {
     uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
     feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedDuesPlansInput = {
@@ -51002,6 +56029,836 @@ export namespace Prisma {
     uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
     feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
     duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type ChapterCreateWithoutDonationCampaignsInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    schoolName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
+    memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionCreateNestedOneWithoutChapterInput
+    invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
+    budgets?: BudgetCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
+    transactions?: TransactionCreateNestedManyWithoutChapterInput
+    duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
+    duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donations?: DonationCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterUncheckedCreateWithoutDonationCampaignsInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    schoolName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
+    memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
+    invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
+    budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
+    duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
+    duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donations?: DonationUncheckedCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterCreateOrConnectWithoutDonationCampaignsInput = {
+    where: ChapterWhereUniqueInput
+    create: XOR<ChapterCreateWithoutDonationCampaignsInput, ChapterUncheckedCreateWithoutDonationCampaignsInput>
+  }
+
+  export type UserCreateWithoutCreatedCampaignsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
+    submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
+    approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
+    feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
+    duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
+    assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCreatedCampaignsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
+    submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
+    feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
+    duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
+    assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    donations?: DonationUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCreatedCampaignsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCreatedCampaignsInput, UserUncheckedCreateWithoutCreatedCampaignsInput>
+  }
+
+  export type DonationCreateWithoutCampaignInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapter: ChapterCreateNestedOneWithoutDonationsInput
+    user?: UserCreateNestedOneWithoutDonationsInput
+    transaction?: TransactionCreateNestedOneWithoutDonationInput
+  }
+
+  export type DonationUncheckedCreateWithoutCampaignInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapterId: string
+    userId?: string | null
+    transaction?: TransactionUncheckedCreateNestedOneWithoutDonationInput
+  }
+
+  export type DonationCreateOrConnectWithoutCampaignInput = {
+    where: DonationWhereUniqueInput
+    create: XOR<DonationCreateWithoutCampaignInput, DonationUncheckedCreateWithoutCampaignInput>
+  }
+
+  export type DonationCreateManyCampaignInputEnvelope = {
+    data: DonationCreateManyCampaignInput | DonationCreateManyCampaignInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ChapterUpsertWithoutDonationCampaignsInput = {
+    update: XOR<ChapterUpdateWithoutDonationCampaignsInput, ChapterUncheckedUpdateWithoutDonationCampaignsInput>
+    create: XOR<ChapterCreateWithoutDonationCampaignsInput, ChapterUncheckedCreateWithoutDonationCampaignsInput>
+    where?: ChapterWhereInput
+  }
+
+  export type ChapterUpdateToOneWithWhereWithoutDonationCampaignsInput = {
+    where?: ChapterWhereInput
+    data: XOR<ChapterUpdateWithoutDonationCampaignsInput, ChapterUncheckedUpdateWithoutDonationCampaignsInput>
+  }
+
+  export type ChapterUpdateWithoutDonationCampaignsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
+    invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUpdateManyWithoutChapterNestedInput
+    duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
+    duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donations?: DonationUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterUncheckedUpdateWithoutDonationCampaignsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
+    duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
+    duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutChapterNestedInput
+  }
+
+  export type UserUpsertWithoutCreatedCampaignsInput = {
+    update: XOR<UserUpdateWithoutCreatedCampaignsInput, UserUncheckedUpdateWithoutCreatedCampaignsInput>
+    create: XOR<UserCreateWithoutCreatedCampaignsInput, UserUncheckedCreateWithoutCreatedCampaignsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCreatedCampaignsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCreatedCampaignsInput, UserUncheckedUpdateWithoutCreatedCampaignsInput>
+  }
+
+  export type UserUpdateWithoutCreatedCampaignsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
+    submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
+    approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
+    feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
+    duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
+    assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCreatedCampaignsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
+    submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
+    feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
+    duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
+    assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    donations?: DonationUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type DonationUpsertWithWhereUniqueWithoutCampaignInput = {
+    where: DonationWhereUniqueInput
+    update: XOR<DonationUpdateWithoutCampaignInput, DonationUncheckedUpdateWithoutCampaignInput>
+    create: XOR<DonationCreateWithoutCampaignInput, DonationUncheckedCreateWithoutCampaignInput>
+  }
+
+  export type DonationUpdateWithWhereUniqueWithoutCampaignInput = {
+    where: DonationWhereUniqueInput
+    data: XOR<DonationUpdateWithoutCampaignInput, DonationUncheckedUpdateWithoutCampaignInput>
+  }
+
+  export type DonationUpdateManyWithWhereWithoutCampaignInput = {
+    where: DonationScalarWhereInput
+    data: XOR<DonationUpdateManyMutationInput, DonationUncheckedUpdateManyWithoutCampaignInput>
+  }
+
+  export type ChapterCreateWithoutDonationsInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    schoolName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
+    memberships?: MembershipCreateNestedManyWithoutChapterInput
+    profiles?: ProfileCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionCreateNestedOneWithoutChapterInput
+    invites?: InviteCreateNestedManyWithoutChapterInput
+    events?: EventCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogCreateNestedManyWithoutChapterInput
+    files?: FileCreateNestedManyWithoutChapterInput
+    budgets?: BudgetCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutChapterInput
+    transactions?: TransactionCreateNestedManyWithoutChapterInput
+    duesPlans?: DuesPlanCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionCreateNestedManyWithoutChapterInput
+    duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterUncheckedCreateWithoutDonationsInput = {
+    id?: string
+    name: string
+    slug: string
+    joinCode?: string
+    publicInfo?: string | null
+    primaryColor?: string | null
+    schoolName?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stripeCustomerId?: string | null
+    chapterTreasuryBalance?: number
+    autoInvestEnabled?: boolean
+    autoInvestStrategy?: string | null
+    walletAddress?: string | null
+    walletPrivateKey?: string | null
+    treasuryLastYield?: number | null
+    treasuryLastYieldDate?: Date | string | null
+    memberships?: MembershipUncheckedCreateNestedManyWithoutChapterInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutChapterInput
+    subscription?: SubscriptionUncheckedCreateNestedOneWithoutChapterInput
+    invites?: InviteUncheckedCreateNestedManyWithoutChapterInput
+    events?: EventUncheckedCreateNestedManyWithoutChapterInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutChapterInput
+    galleryImages?: GalleryImageUncheckedCreateNestedManyWithoutChapterInput
+    contactMessages?: ContactMessageUncheckedCreateNestedManyWithoutChapterInput
+    messageLogs?: MessageLogUncheckedCreateNestedManyWithoutChapterInput
+    files?: FileUncheckedCreateNestedManyWithoutChapterInput
+    budgets?: BudgetUncheckedCreateNestedManyWithoutChapterInput
+    expenses?: ExpenseUncheckedCreateNestedManyWithoutChapterInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutChapterInput
+    transactions?: TransactionUncheckedCreateNestedManyWithoutChapterInput
+    duesPlans?: DuesPlanUncheckedCreateNestedManyWithoutChapterInput
+    treasuryTransactions?: TreasuryTransactionUncheckedCreateNestedManyWithoutChapterInput
+    duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutChapterInput
+    donationCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutChapterInput
+  }
+
+  export type ChapterCreateOrConnectWithoutDonationsInput = {
+    where: ChapterWhereUniqueInput
+    create: XOR<ChapterCreateWithoutDonationsInput, ChapterUncheckedCreateWithoutDonationsInput>
+  }
+
+  export type DonationCampaignCreateWithoutDonationsInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapter: ChapterCreateNestedOneWithoutDonationCampaignsInput
+    createdBy: UserCreateNestedOneWithoutCreatedCampaignsInput
+  }
+
+  export type DonationCampaignUncheckedCreateWithoutDonationsInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    chapterId: string
+    createdById: string
+  }
+
+  export type DonationCampaignCreateOrConnectWithoutDonationsInput = {
+    where: DonationCampaignWhereUniqueInput
+    create: XOR<DonationCampaignCreateWithoutDonationsInput, DonationCampaignUncheckedCreateWithoutDonationsInput>
+  }
+
+  export type UserCreateWithoutDonationsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    memberships?: MembershipCreateNestedManyWithoutUserInput
+    profiles?: ProfileCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipCreateNestedManyWithoutDeactivatedByUserInput
+    submittedExpenses?: ExpenseCreateNestedManyWithoutSubmittedByInput
+    approvedExpenses?: ExpenseCreateNestedManyWithoutApprovedByInput
+    duesPayments?: DuesPaymentCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploaderInput
+    feedbackRequests?: FeedbackRequestCreateNestedManyWithoutUserInput
+    duesPlanAssignments?: DuesPlanAssignmentCreateNestedManyWithoutUserInput
+    assignedDuesPlans?: DuesPlanAssignmentCreateNestedManyWithoutAssignedByUserInput
+    createdCampaigns?: DonationCampaignCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutDonationsInput = {
+    id?: string
+    name?: string | null
+    email?: string | null
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    memberships?: MembershipUncheckedCreateNestedManyWithoutUserInput
+    profiles?: ProfileUncheckedCreateNestedManyWithoutUserInput
+    acceptedInvites?: InviteUncheckedCreateNestedManyWithoutAcceptedByInput
+    createdInvites?: InviteUncheckedCreateNestedManyWithoutCreatedByInput
+    createdEvents?: EventUncheckedCreateNestedManyWithoutCreatedByInput
+    rsvps?: EventRSVPUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    deactivatedMemberships?: MembershipUncheckedCreateNestedManyWithoutDeactivatedByUserInput
+    submittedExpenses?: ExpenseUncheckedCreateNestedManyWithoutSubmittedByInput
+    approvedExpenses?: ExpenseUncheckedCreateNestedManyWithoutApprovedByInput
+    duesPayments?: DuesPaymentUncheckedCreateNestedManyWithoutUserInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploaderInput
+    feedbackRequests?: FeedbackRequestUncheckedCreateNestedManyWithoutUserInput
+    duesPlanAssignments?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutUserInput
+    assignedDuesPlans?: DuesPlanAssignmentUncheckedCreateNestedManyWithoutAssignedByUserInput
+    createdCampaigns?: DonationCampaignUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutDonationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput>
+  }
+
+  export type TransactionCreateWithoutDonationInput = {
+    id?: string
+    amount: number
+    type: $Enums.TransactionType
+    description?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    processedAt?: Date | string | null
+    chapter: ChapterCreateNestedOneWithoutTransactionsInput
+    expense?: ExpenseCreateNestedOneWithoutTransactionInput
+    duesPayment?: DuesPaymentCreateNestedOneWithoutTransactionInput
+  }
+
+  export type TransactionUncheckedCreateWithoutDonationInput = {
+    id?: string
+    amount: number
+    type: $Enums.TransactionType
+    description?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    processedAt?: Date | string | null
+    chapterId: string
+    expenseId?: string | null
+    duesPaymentId?: string | null
+  }
+
+  export type TransactionCreateOrConnectWithoutDonationInput = {
+    where: TransactionWhereUniqueInput
+    create: XOR<TransactionCreateWithoutDonationInput, TransactionUncheckedCreateWithoutDonationInput>
+  }
+
+  export type ChapterUpsertWithoutDonationsInput = {
+    update: XOR<ChapterUpdateWithoutDonationsInput, ChapterUncheckedUpdateWithoutDonationsInput>
+    create: XOR<ChapterCreateWithoutDonationsInput, ChapterUncheckedCreateWithoutDonationsInput>
+    where?: ChapterWhereInput
+  }
+
+  export type ChapterUpdateToOneWithWhereWithoutDonationsInput = {
+    where?: ChapterWhereInput
+    data: XOR<ChapterUpdateWithoutDonationsInput, ChapterUncheckedUpdateWithoutDonationsInput>
+  }
+
+  export type ChapterUpdateWithoutDonationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: MembershipUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUpdateOneWithoutChapterNestedInput
+    invites?: InviteUpdateManyWithoutChapterNestedInput
+    events?: EventUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUpdateManyWithoutChapterNestedInput
+    files?: FileUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUpdateManyWithoutChapterNestedInput
+    duesPlans?: DuesPlanUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUpdateManyWithoutChapterNestedInput
+    duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUpdateManyWithoutChapterNestedInput
+  }
+
+  export type ChapterUncheckedUpdateWithoutDonationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    joinCode?: StringFieldUpdateOperationsInput | string
+    publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    schoolName?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
+    autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
+    autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
+    walletAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    walletPrivateKey?: NullableStringFieldUpdateOperationsInput | string | null
+    treasuryLastYield?: NullableFloatFieldUpdateOperationsInput | number | null
+    treasuryLastYieldDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    memberships?: MembershipUncheckedUpdateManyWithoutChapterNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutChapterNestedInput
+    subscription?: SubscriptionUncheckedUpdateOneWithoutChapterNestedInput
+    invites?: InviteUncheckedUpdateManyWithoutChapterNestedInput
+    events?: EventUncheckedUpdateManyWithoutChapterNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutChapterNestedInput
+    galleryImages?: GalleryImageUncheckedUpdateManyWithoutChapterNestedInput
+    contactMessages?: ContactMessageUncheckedUpdateManyWithoutChapterNestedInput
+    messageLogs?: MessageLogUncheckedUpdateManyWithoutChapterNestedInput
+    files?: FileUncheckedUpdateManyWithoutChapterNestedInput
+    budgets?: BudgetUncheckedUpdateManyWithoutChapterNestedInput
+    expenses?: ExpenseUncheckedUpdateManyWithoutChapterNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutChapterNestedInput
+    transactions?: TransactionUncheckedUpdateManyWithoutChapterNestedInput
+    duesPlans?: DuesPlanUncheckedUpdateManyWithoutChapterNestedInput
+    treasuryTransactions?: TreasuryTransactionUncheckedUpdateManyWithoutChapterNestedInput
+    duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutChapterNestedInput
+    donationCampaigns?: DonationCampaignUncheckedUpdateManyWithoutChapterNestedInput
+  }
+
+  export type DonationCampaignUpsertWithoutDonationsInput = {
+    update: XOR<DonationCampaignUpdateWithoutDonationsInput, DonationCampaignUncheckedUpdateWithoutDonationsInput>
+    create: XOR<DonationCampaignCreateWithoutDonationsInput, DonationCampaignUncheckedCreateWithoutDonationsInput>
+    where?: DonationCampaignWhereInput
+  }
+
+  export type DonationCampaignUpdateToOneWithWhereWithoutDonationsInput = {
+    where?: DonationCampaignWhereInput
+    data: XOR<DonationCampaignUpdateWithoutDonationsInput, DonationCampaignUncheckedUpdateWithoutDonationsInput>
+  }
+
+  export type DonationCampaignUpdateWithoutDonationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutDonationCampaignsNestedInput
+    createdBy?: UserUpdateOneRequiredWithoutCreatedCampaignsNestedInput
+  }
+
+  export type DonationCampaignUncheckedUpdateWithoutDonationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type UserUpsertWithoutDonationsInput = {
+    update: XOR<UserUpdateWithoutDonationsInput, UserUncheckedUpdateWithoutDonationsInput>
+    create: XOR<UserCreateWithoutDonationsInput, UserUncheckedCreateWithoutDonationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDonationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDonationsInput, UserUncheckedUpdateWithoutDonationsInput>
+  }
+
+  export type UserUpdateWithoutDonationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUpdateManyWithoutDeactivatedByUserNestedInput
+    submittedExpenses?: ExpenseUpdateManyWithoutSubmittedByNestedInput
+    approvedExpenses?: ExpenseUpdateManyWithoutApprovedByNestedInput
+    duesPayments?: DuesPaymentUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploaderNestedInput
+    feedbackRequests?: FeedbackRequestUpdateManyWithoutUserNestedInput
+    duesPlanAssignments?: DuesPlanAssignmentUpdateManyWithoutUserNestedInput
+    assignedDuesPlans?: DuesPlanAssignmentUpdateManyWithoutAssignedByUserNestedInput
+    createdCampaigns?: DonationCampaignUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDonationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    memberships?: MembershipUncheckedUpdateManyWithoutUserNestedInput
+    profiles?: ProfileUncheckedUpdateManyWithoutUserNestedInput
+    acceptedInvites?: InviteUncheckedUpdateManyWithoutAcceptedByNestedInput
+    createdInvites?: InviteUncheckedUpdateManyWithoutCreatedByNestedInput
+    createdEvents?: EventUncheckedUpdateManyWithoutCreatedByNestedInput
+    rsvps?: EventRSVPUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    deactivatedMemberships?: MembershipUncheckedUpdateManyWithoutDeactivatedByUserNestedInput
+    submittedExpenses?: ExpenseUncheckedUpdateManyWithoutSubmittedByNestedInput
+    approvedExpenses?: ExpenseUncheckedUpdateManyWithoutApprovedByNestedInput
+    duesPayments?: DuesPaymentUncheckedUpdateManyWithoutUserNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploaderNestedInput
+    feedbackRequests?: FeedbackRequestUncheckedUpdateManyWithoutUserNestedInput
+    duesPlanAssignments?: DuesPlanAssignmentUncheckedUpdateManyWithoutUserNestedInput
+    assignedDuesPlans?: DuesPlanAssignmentUncheckedUpdateManyWithoutAssignedByUserNestedInput
+    createdCampaigns?: DonationCampaignUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type TransactionUpsertWithoutDonationInput = {
+    update: XOR<TransactionUpdateWithoutDonationInput, TransactionUncheckedUpdateWithoutDonationInput>
+    create: XOR<TransactionCreateWithoutDonationInput, TransactionUncheckedCreateWithoutDonationInput>
+    where?: TransactionWhereInput
+  }
+
+  export type TransactionUpdateToOneWithWhereWithoutDonationInput = {
+    where?: TransactionWhereInput
+    data: XOR<TransactionUpdateWithoutDonationInput, TransactionUncheckedUpdateWithoutDonationInput>
+  }
+
+  export type TransactionUpdateWithoutDonationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapter?: ChapterUpdateOneRequiredWithoutTransactionsNestedInput
+    expense?: ExpenseUpdateOneWithoutTransactionNestedInput
+    duesPayment?: DuesPaymentUpdateOneWithoutTransactionNestedInput
+  }
+
+  export type TransactionUncheckedUpdateWithoutDonationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumTransactionTypeFieldUpdateOperationsInput | $Enums.TransactionType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapterId?: StringFieldUpdateOperationsInput | string
+    expenseId?: NullableStringFieldUpdateOperationsInput | string | null
+    duesPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MembershipCreateManyChapterInput = {
@@ -51165,6 +57022,7 @@ export namespace Prisma {
     processedAt?: Date | string | null
     expenseId?: string | null
     duesPaymentId?: string | null
+    donationId?: string | null
   }
 
   export type DuesPlanCreateManyChapterInput = {
@@ -51198,6 +57056,44 @@ export namespace Prisma {
     notes?: string | null
     duesPlanId: string
     userId: string
+  }
+
+  export type DonationCreateManyChapterInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    campaignId?: string | null
+    userId?: string | null
+  }
+
+  export type DonationCampaignCreateManyChapterInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdById: string
   }
 
   export type MembershipUpdateWithoutChapterInput = {
@@ -51673,6 +57569,7 @@ export namespace Prisma {
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expense?: ExpenseUpdateOneWithoutTransactionNestedInput
     duesPayment?: DuesPaymentUpdateOneWithoutTransactionNestedInput
+    donation?: DonationUpdateOneWithoutTransactionNestedInput
   }
 
   export type TransactionUncheckedUpdateWithoutChapterInput = {
@@ -51685,6 +57582,7 @@ export namespace Prisma {
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expenseId?: NullableStringFieldUpdateOperationsInput | string | null
     duesPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    donationId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TransactionUncheckedUpdateManyWithoutChapterInput = {
@@ -51697,6 +57595,7 @@ export namespace Prisma {
     processedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     expenseId?: NullableStringFieldUpdateOperationsInput | string | null
     duesPaymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    donationId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DuesPlanUpdateWithoutChapterInput = {
@@ -51800,6 +57699,124 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     duesPlanId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DonationUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    campaign?: DonationCampaignUpdateOneWithoutDonationsNestedInput
+    user?: UserUpdateOneWithoutDonationsNestedInput
+    transaction?: TransactionUpdateOneWithoutDonationNestedInput
+  }
+
+  export type DonationUncheckedUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction?: TransactionUncheckedUpdateOneWithoutDonationNestedInput
+  }
+
+  export type DonationUncheckedUpdateManyWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DonationCampaignUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutCreatedCampaignsNestedInput
+    donations?: DonationUpdateManyWithoutCampaignNestedInput
+  }
+
+  export type DonationCampaignUncheckedUpdateWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    donations?: DonationUncheckedUpdateManyWithoutCampaignNestedInput
+  }
+
+  export type DonationCampaignUncheckedUpdateManyWithoutChapterInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
   }
 
   export type AccountCreateManyUserInput = {
@@ -52011,6 +58028,44 @@ export namespace Prisma {
     notes?: string | null
     duesPlanId: string
     userId: string
+    chapterId: string
+  }
+
+  export type DonationCreateManyUserInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapterId: string
+    campaignId?: string | null
+  }
+
+  export type DonationCampaignCreateManyCreatedByInput = {
+    id?: string
+    title: string
+    description: string
+    goalAmount?: number | null
+    currentAmount?: number
+    type?: $Enums.DonationCampaignType
+    status?: $Enums.DonationCampaignStatus
+    startDate?: Date | string | null
+    endDate?: Date | string | null
+    isPublic?: boolean
+    allowAnonymous?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     chapterId: string
   }
 
@@ -52662,6 +58717,124 @@ export namespace Prisma {
     chapterId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type DonationUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapter?: ChapterUpdateOneRequiredWithoutDonationsNestedInput
+    campaign?: DonationCampaignUpdateOneWithoutDonationsNestedInput
+    transaction?: TransactionUpdateOneWithoutDonationNestedInput
+  }
+
+  export type DonationUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapterId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction?: TransactionUncheckedUpdateOneWithoutDonationNestedInput
+  }
+
+  export type DonationUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapterId?: StringFieldUpdateOperationsInput | string
+    campaignId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DonationCampaignUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapter?: ChapterUpdateOneRequiredWithoutDonationCampaignsNestedInput
+    donations?: DonationUpdateManyWithoutCampaignNestedInput
+  }
+
+  export type DonationCampaignUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+    donations?: DonationUncheckedUpdateManyWithoutCampaignNestedInput
+  }
+
+  export type DonationCampaignUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    goalAmount?: NullableFloatFieldUpdateOperationsInput | number | null
+    currentAmount?: FloatFieldUpdateOperationsInput | number
+    type?: EnumDonationCampaignTypeFieldUpdateOperationsInput | $Enums.DonationCampaignType
+    status?: EnumDonationCampaignStatusFieldUpdateOperationsInput | $Enums.DonationCampaignStatus
+    startDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    endDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isPublic?: BoolFieldUpdateOperationsInput | boolean
+    allowAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type EventRSVPCreateManyEventInput = {
     id?: string
     status: $Enums.RSVPStatus
@@ -52860,6 +59033,88 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     chapterId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DonationCreateManyCampaignInput = {
+    id?: string
+    amount: number
+    donorName?: string | null
+    donorEmail?: string | null
+    donorPhone?: string | null
+    message?: string | null
+    isAnonymous?: boolean
+    status?: $Enums.DonationStatus
+    stripePaymentIntentId?: string | null
+    stripeCheckoutUrl?: string | null
+    stripeSessionId?: string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    completedAt?: Date | string | null
+    chapterId: string
+    userId?: string | null
+  }
+
+  export type DonationUpdateWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapter?: ChapterUpdateOneRequiredWithoutDonationsNestedInput
+    user?: UserUpdateOneWithoutDonationsNestedInput
+    transaction?: TransactionUpdateOneWithoutDonationNestedInput
+  }
+
+  export type DonationUncheckedUpdateWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapterId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    transaction?: TransactionUncheckedUpdateOneWithoutDonationNestedInput
+  }
+
+  export type DonationUncheckedUpdateManyWithoutCampaignInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: FloatFieldUpdateOperationsInput | number
+    donorName?: NullableStringFieldUpdateOperationsInput | string | null
+    donorEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    donorPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    message?: NullableStringFieldUpdateOperationsInput | string | null
+    isAnonymous?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumDonationStatusFieldUpdateOperationsInput | $Enums.DonationStatus
+    stripePaymentIntentId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeCheckoutUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeSessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    chapterId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

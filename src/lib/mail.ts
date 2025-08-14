@@ -4,7 +4,7 @@ import { Resend } from 'resend';
 export const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Define email template types for type safety
-export type EmailTemplate = 'passwordReset' | 'chapterInvite' | 'memberApproval' | 'chapterBroadcast';
+export type EmailTemplate = 'passwordReset' | 'chapterInvite' | 'memberApproval' | 'chapterBroadcast' | 'donationConfirmation';
 
 // Email templates
 export const emailTemplates = {
@@ -152,6 +152,60 @@ export const emailTemplates = {
       This is an official message from your chapter administrators on GreekDash.
     `
   }),
+  // Donation confirmation template
+  donationConfirmation: (donorName: string, amount: number, chapterName: string, campaignTitle?: string, receiptUrl?: string) => ({
+    subject: `Thank you for your donation to ${chapterName}`,
+    react: null,
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #4f46e5;">Donation Confirmation</h2>
+        <p>Dear ${donorName},</p>
+        <p>Thank you for your generous donation to <strong>${chapterName}</strong>!</p>
+        
+        <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 20px 0;">
+          <h3 style="margin: 0 0 10px 0; color: #1e293b;">Donation Details</h3>
+          <p style="margin: 5px 0;"><strong>Amount:</strong> $${amount.toFixed(2)}</p>
+          ${campaignTitle ? `<p style="margin: 5px 0;"><strong>Campaign:</strong> ${campaignTitle}</p>` : ''}
+          <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
+        </div>
+        
+        <p>Your contribution makes a meaningful difference and helps support our chapter's mission and activities.</p>
+        
+        ${receiptUrl ? `
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${receiptUrl}" style="background-color: #4f46e5; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold;">View Receipt</a>
+        </div>
+        ` : ''}
+        
+        <p>If you have any questions about your donation, please don't hesitate to contact us.</p>
+        
+        <p>With gratitude,<br>The ${chapterName} Team</p>
+        
+        <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
+        <p style="font-size: 12px; color: #666; text-align: center;">This is a confirmation of your donation processed securely through Stripe.</p>
+      </div>
+    `,
+    text: `
+      Donation Confirmation - ${chapterName}
+      
+      Dear ${donorName},
+      
+      Thank you for your generous donation to ${chapterName}!
+      
+      Donation Details:
+      Amount: $${amount.toFixed(2)}
+      ${campaignTitle ? `Campaign: ${campaignTitle}\n` : ''}Date: ${new Date().toLocaleDateString()}
+      
+      Your contribution makes a meaningful difference and helps support our chapter's mission and activities.
+      
+      ${receiptUrl ? `View your receipt: ${receiptUrl}\n\n` : ''}If you have any questions about your donation, please don't hesitate to contact us.
+      
+      With gratitude,
+      The ${chapterName} Team
+      
+      This is a confirmation of your donation processed securely through Stripe.
+    `
+  }),
 };
 
 // Interface for email data
@@ -174,6 +228,12 @@ interface EmailData {
   subject?: string;
   message?: string;
   senderName?: string;
+  
+  // For donation confirmation
+  donorName?: string;
+  amount?: number;
+  campaignTitle?: string;
+  receiptUrl?: string;
 }
 
 /**
@@ -213,6 +273,15 @@ export async function sendEmail(to: string, template: EmailTemplate, data: Email
           data.subject || 'Important Announcement',
           data.message || '',
           data.senderName || 'Chapter Admin'
+        );
+        break;
+      case 'donationConfirmation':
+        emailContent = emailTemplates.donationConfirmation(
+          data.donorName || 'Donor',
+          data.amount || 0,
+          data.chapterName || '',
+          data.campaignTitle,
+          data.receiptUrl
         );
         break;
       default:

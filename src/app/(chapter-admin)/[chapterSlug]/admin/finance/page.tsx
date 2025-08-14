@@ -6,6 +6,9 @@ import { DuesStats } from "@/components/finance/DuesStats";
 import { ExpensesStats } from "@/components/finance/ExpensesStats";
 import { PageHeader } from "@/components/ui/page-header";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import Link from "next/link";
 
 export default async function FinanceDashboardPage({
   params,
@@ -19,8 +22,15 @@ export default async function FinanceDashboardPage({
     <div className="space-y-6">
       <PageHeader
         title="Finance Dashboard"
-        description="Manage your chapter's finances, track dues payments, and expenses."
-      />
+        description="Manage your chapter's finances, track dues payments, expenses, and donations."
+      >
+        <Link href={`/${chapterSlug}/admin/finance/donations`}>
+          <Button variant="outline">
+            <Plus className="mr-2 h-4 w-4" />
+            Manage Donations
+          </Button>
+        </Link>
+      </PageHeader>
       
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
@@ -28,6 +38,7 @@ export default async function FinanceDashboardPage({
           <TabsTrigger value="transactions">Transactions</TabsTrigger>
           <TabsTrigger value="dues">Dues</TabsTrigger>
           <TabsTrigger value="expenses">Expenses</TabsTrigger>
+          <TabsTrigger value="donations">Donations</TabsTrigger>
         </TabsList>
         
         <TabsContent value="overview" className="space-y-4">
@@ -71,6 +82,20 @@ export default async function FinanceDashboardPage({
             <Suspense fallback={<CardSkeleton className="h-[600px]" />}>
               <ExpensesStats chapterSlug={chapterSlug} expanded />
             </Suspense>
+          </div>
+        </TabsContent>
+        
+        <TabsContent value="donations" className="space-y-4">
+          <div className="text-center py-8">
+            <h3 className="text-lg font-medium mb-2">Donation Management</h3>
+            <p className="text-muted-foreground mb-4">
+              Manage donation campaigns and track donations in the dedicated donations section.
+            </p>
+            <Link href={`/${chapterSlug}/admin/finance/donations`}>
+              <Button>
+                Go to Donations
+              </Button>
+            </Link>
           </div>
         </TabsContent>
       </Tabs>

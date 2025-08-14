@@ -1,6 +1,15 @@
 import { db } from "@/lib/db";
-import { BudgetStatus, ExpenseStatus, TransactionType, Prisma } from '@/generated/prisma';
+import { BudgetStatus, ExpenseStatus, TransactionType, DonationStatus, Prisma } from '@/generated/prisma';
 import stripe from "@/lib/stripe";
+import { sendEmail } from '@/lib/mail';
+
+// Reusable user select fields to follow DRY principle
+const userSelectFields = {
+  id: true,
+  name: true,
+  email: true,
+  image: true,
+} as const;
 
 /**
  * Finance Service
@@ -82,20 +91,10 @@ export const financeService = {
       orderBy: { submittedAt: "desc" },
       include: {
         submittedBy: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
+          select: userSelectFields,
         },
         approvedBy: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
+          select: userSelectFields,
         },
         budget: true,
       },
@@ -110,20 +109,10 @@ export const financeService = {
       },
       include: {
         submittedBy: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
+          select: userSelectFields,
         },
         approvedBy: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
+          select: userSelectFields,
         },
         budget: true,
       },
@@ -144,12 +133,7 @@ export const financeService = {
       data,
       include: {
         submittedBy: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
+          select: userSelectFields,
         },
         budget: true,
       },
@@ -179,27 +163,20 @@ export const financeService = {
       data,
       include: {
         submittedBy: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
+          select: userSelectFields,
         },
       },
     });
 
     // Create a transaction record if the expense is paid
     if (data.status === "PAID" && data.paidAt) {
-      await db.transaction.create({
-        data: {
-          amount: -expense.amount, // Negative amount for outgoing expense
-          type: TransactionType.EXPENSE,
-          description: `Expense payment: ${expense.title}`,
-          chapterId,
-          expenseId: expense.id,
-          processedAt: data.paidAt,
-        },
+      await financeService.createTransaction({
+        amount: -expense.amount, // Negative amount for outgoing expense
+        type: TransactionType.EXPENSE,
+        description: `Expense payment: ${expense.title}`,
+        chapterId,
+        expenseId: expense.id,
+        processedAt: data.paidAt,
       });
     }
 
@@ -224,12 +201,7 @@ export const financeService = {
       orderBy: { dueDate: "desc" },
       include: {
         user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
+          select: userSelectFields,
         },
       },
     });
@@ -253,12 +225,7 @@ export const financeService = {
       },
       include: {
         user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
+          select: userSelectFields,
         },
       },
     });
@@ -269,18 +236,13 @@ export const financeService = {
     dueDate: Date;
     chapterId: string;
     userId: string;
-    duesPlanId: string; // Add this required field
+    duesPlanId: string;
   }) => {
     return db.duesPayment.create({
       data,
       include: {
         user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
+          select: userSelectFields,
         },
       },
     });
@@ -292,7 +254,7 @@ export const financeService = {
     dueDate: Date;
     chapterId: string;
     memberIds: string[];
-    duesPlanId: string; // Add this required field
+    duesPlanId: string;
   }) => {
     const { amount, dueDate, chapterId, memberIds, duesPlanId } = data;
     
@@ -300,11 +262,11 @@ export const financeService = {
       memberIds.map((userId) => 
         db.duesPayment.create({
           data: {
-            amount: amount ?? undefined,
+            amount,
             dueDate,
             chapterId,
             userId,
-            duesPlanId, // Add this field
+            duesPlanId,
           },
         })
       )
@@ -332,27 +294,20 @@ export const financeService = {
       data,
       include: {
         user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            image: true,
-          },
+          select: userSelectFields,
         },
       },
     });
 
     // Create a transaction record if the dues payment is completed
     if (data.paidAt && duesPayment.paidAt) {
-      await db.transaction.create({
-        data: {
-          amount: duesPayment.amount, // Positive amount for incoming payment
-          type: TransactionType.DUES_PAYMENT,
-          description: `Dues payment from ${duesPayment.user.name ?? duesPayment.user.email}`,
-          chapterId,
-          duesPaymentId: duesPayment.id,
-          processedAt: data.paidAt,
-        },
+      await financeService.createTransaction({
+        amount: duesPayment.amount, // Positive amount for incoming payment
+        type: TransactionType.DUES_PAYMENT,
+        description: `Dues payment from ${duesPayment.user.name ?? duesPayment.user.email}`,
+        chapterId,
+        duesPaymentId: duesPayment.id,
+        processedAt: data.paidAt,
       });
     }
 
@@ -475,11 +430,17 @@ export const financeService = {
         duesPayment: {
           include: {
             user: {
+              select: userSelectFields,
+            },
+          },
+        },
+        donation: {
+          include: {
+            campaign: {
               select: {
                 id: true,
-                name: true,
-                email: true,
-                image: true,
+                title: true,
+                type: true,
               },
             },
           },
@@ -496,6 +457,7 @@ export const financeService = {
     chapterId: string;
     expenseId?: string | null;
     duesPaymentId?: string | null;
+    donationId?: string | null;
     processedAt?: Date | null;
   }) => {
     // Handle JSON null values correctly for Prisma
@@ -532,6 +494,15 @@ export const financeService = {
       _sum: { amount: true },
     });
 
+    // Get total donations
+    const totalDonationsResult = await db.donation.aggregate({
+      where: {
+        chapterId,
+        status: "COMPLETED",
+      },
+      _sum: { amount: true },
+    });
+
     // Get unpaid dues
     const unpaidDuesResult = await db.duesPayment.aggregate({
       where: {
@@ -560,13 +531,14 @@ export const financeService = {
       },
     });
 
-    const totalIncome = totalDuesResult._sum.amount || 0;
+    const totalIncome = (totalDuesResult._sum.amount || 0) + (totalDonationsResult._sum.amount || 0);
     const totalExpenses = totalExpensesResult._sum.amount || 0;
 
     return {
       totalIncome,
       totalExpenses,
       balance: totalIncome - totalExpenses,
+      totalDonations: totalDonationsResult._sum.amount || 0,
       unpaidDues: {
         amount: unpaidDuesResult._sum.amount || 0,
         count: unpaidDuesResult._count,
@@ -578,6 +550,7 @@ export const financeService = {
       activeBudgetsCount,
     };
   },
+
   // Add method to check if user can pay specific dues
   canUserPayDues: async (duesPaymentId: string, userId: string, chapterId: string) => {
     const duesPayment = await db.duesPayment.findFirst({
@@ -604,5 +577,220 @@ export const financeService = {
   
     // Allow payment if it's a manual assignment (no plan) or user has active assignment
     return !duesPayment.duesPlan || duesPayment.duesPlan.assignments.length > 0;
+  },
+
+  /**
+   * Donation Management
+   */
+  getDonations: async (chapterId: string) => {
+    return db.donation.findMany({
+      where: { chapterId },
+      include: {
+        campaign: {
+          select: {
+            id: true,
+            title: true,
+            type: true,
+          },
+        },
+        user: {
+          select: userSelectFields,
+        },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+  },
+
+  getDonation: async (donationId: string, chapterId: string) => {
+    return db.donation.findFirst({
+      where: {
+        id: donationId,
+        chapterId,
+      },
+      include: {
+        campaign: {
+          select: {
+            id: true,
+            title: true,
+            type: true,
+          },
+        },
+        user: {
+          select: userSelectFields,
+        },
+      },
+    });
+  },
+
+  updateDonation: async (
+    donationId: string,
+    chapterId: string,
+    data: {
+      status?: DonationStatus;
+      completedAt?: Date | null;
+      stripePaymentIntentId?: string | null;
+      stripeSessionId?: string | null;
+      stripeCheckoutUrl?: string | null;
+    }
+  ) => {
+    const donation = await db.donation.update({
+      where: {
+        id: donationId,
+        chapterId,
+      },
+      data,
+      include: {
+        campaign: true,
+        chapter: {
+          select: {
+            id: true,
+            name: true,
+            slug: true,
+          },
+        },
+        user: {
+          select: userSelectFields,
+        },
+      },
+    });
+
+    // Create a transaction record if the donation is completed
+    if (data.status === "COMPLETED" && data.completedAt) {
+      await db.transaction.create({
+        data: {
+          amount: donation.amount,
+          type: TransactionType.DONATION,
+          description: `Donation${donation.campaign ? ` for ${donation.campaign.title}` : ''} from ${donation.donorName || donation.donorEmail || 'Anonymous'}`,
+          chapterId,
+          donationId: donation.id,
+          processedAt: data.completedAt,
+        },
+      });
+
+      // Update campaign current amount if applicable
+      if (donation.campaignId) {
+        await db.donationCampaign.update({
+          where: { id: donation.campaignId },
+          data: {
+            currentAmount: {
+              increment: donation.amount,
+            },
+          },
+        });
+      }
+    }
+
+    return donation;
+  },
+
+  /**
+   * Donation Stripe Processing
+   */
+  createDonationCheckoutSession: async (donationId: string, chapterId: string) => {
+    // Get the donation
+    const donation = await db.donation.findFirst({
+      where: {
+        id: donationId,
+        chapterId,
+      },
+      include: {
+        campaign: true,
+        chapter: true,
+      },
+    });
+
+    if (!donation) {
+      throw new Error("Donation not found");
+    }
+
+    // Create product name and description
+    const productName = donation.campaign
+      ? `${donation.campaign.title} - ${donation.chapter.name}`
+      : `Donation to ${donation.chapter.name}`;
+    
+    const description = donation.campaign
+      ? `Support ${donation.campaign.title}`
+      : `General donation to ${donation.chapter.name}`;
+
+    // Create a Stripe checkout session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      customer_email: donation.donorEmail ?? undefined,
+      metadata: {
+        donationId: donation.id,
+        chapterId: donation.chapterId,
+        campaignId: donation.campaignId || '',
+        type: 'donation',
+      },
+      line_items: [
+        {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: productName,
+              description: description,
+            },
+            unit_amount: Math.round(donation.amount * 100), // Convert to cents
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/${donation.chapter.slug}/donate/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/${donation.chapter.slug}/donate`,
+    });
+
+    return { sessionId: session.id, url: session.url };
+  },
+
+  // Process successful donation payment webhook
+  processDonationPayment: async (sessionId: string) => {
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {
+      expand: ["payment_intent"],
+    });
+
+    if (!session.metadata?.donationId || !session.metadata?.chapterId) {
+      throw new Error("Missing metadata in Stripe session");
+    }
+
+    const { donationId, chapterId } = session.metadata;
+    const paymentIntentId = typeof session.payment_intent === 'string'
+      ? session.payment_intent
+      : session.payment_intent?.id;
+
+    if (!paymentIntentId) {
+      throw new Error("Payment intent not found");
+    }
+
+    // Update donation
+    const updatedDonation = await financeService.updateDonation(donationId, chapterId, {
+      status: "COMPLETED",
+      completedAt: new Date(),
+      stripePaymentIntentId: paymentIntentId,
+    });
+
+    // Send confirmation email to donor
+    if (updatedDonation.donorEmail) {
+      try {
+        await sendEmail(
+          updatedDonation.donorEmail,
+          'donationConfirmation',
+          {
+            donorName: updatedDonation.donorName || 'Donor',
+            amount: updatedDonation.amount,
+            chapterName: updatedDonation.chapter?.name || 'Chapter',
+            campaignTitle: updatedDonation.campaign?.title,
+            // Note: Stripe receipt URL would need to be retrieved from payment intent if needed
+          }
+        );
+        
+        console.log(`Donation confirmation email sent to ${updatedDonation.donorEmail}`);
+      } catch (emailError) {
+        // Log email error but don't fail the donation processing
+        console.error('Failed to send donation confirmation email:', emailError);
+      }
+    }
+
+    return updatedDonation;
   },
 };
