@@ -128,23 +128,23 @@ export const authOptions: NextAuthOptions = {
         initialToken: JSON.stringify(token).substring(0, 100),
       });
       
-      if (user) {
-        // For OAuth sign-ins, we ALWAYS prioritize the email from the OAuth provider
-        // This is critical for proper account linking
-        const userEmail = user.email;
-        console.log('AUTH DEBUG - User Object:', {
-          id: user.id,
-          email: user.email,
-          provider: account?.provider,
-        });
+      // Handle both initial sign-in (with user) and session updates (without user)
+      const userId = user?.id || token?.id;
+      const userEmail = user?.email || token?.email;
+      
+      if (userId) {
+        // Store user ID and email on token (for initial sign-in)
+        if (user) {
+          token.id = user.id;
+          token.email = userEmail;
+        }
         
-        // Store user ID and primary email on token
-        token.id = user.id;
-        token.email = userEmail;
+        // ALWAYS refresh memberships - this is key for session updates
+        console.log(`Refreshing memberships for user ${userId}`);
         
         // STEP 1: Find direct memberships by user ID
         let userMemberships = await prisma.membership.findMany({
-          where: { userId: user.id },
+          where: { userId: userId },
           include: { chapter: true }
         });
         
@@ -158,7 +158,7 @@ export const authOptions: NextAuthOptions = {
             where: { 
               email: userEmail,
               // Don't include the current user
-              NOT: { id: user.id }
+              NOT: { id: userId }
             },
             include: {
               memberships: { include: { chapter: true } }
@@ -173,14 +173,14 @@ export const authOptions: NextAuthOptions = {
             
             // For each user with memberships, transfer them to the current user
             for (const existingUser of usersWithMemberships) {
-              console.log(`Auth: Linking accounts by transferring ${existingUser.memberships.length} memberships from user ${existingUser.id} to ${user.id}`);
+              console.log(`Auth: Linking accounts by transferring ${existingUser.memberships.length} memberships from user ${existingUser.id} to ${userId}`);
               
               // Transfer each membership to the current user
               for (const membership of existingUser.memberships) {
                 try {
                   await prisma.membership.update({
                     where: { id: membership.id },
-                    data: { userId: user.id }
+                    data: { userId: userId }
                   });
                 } catch (error) {
                   console.error(`Error transferring membership ${membership.id}:`, error);
@@ -190,7 +190,7 @@ export const authOptions: NextAuthOptions = {
             
             // After transferring, get the updated memberships
             userMemberships = await prisma.membership.findMany({
-              where: { userId: user.id },
+              where: { userId: userId },
               include: { chapter: true }
             });
           }
@@ -230,7 +230,7 @@ export const authOptions: NextAuthOptions = {
         
         // Set new user flag based on whether we found any memberships
         console.log('Setting user token info', { 
-          userId: user.id, 
+          userId: userId, 
           email: userEmail,
           provider: account?.provider,
           hasMemberships: userMemberships.length > 0,
@@ -240,29 +240,37 @@ export const authOptions: NextAuthOptions = {
         });
         
         // Determine if this is a new user from a social login
-        // 1. Must have no memberships
-        // 2. Must be from an OAuth provider (not credentials)
-        // 3. Check if the account was just created
-        const isNewUser = 
-          userMemberships.length === 0 && 
-          account?.provider && 
-          account.provider !== 'credentials';
-        
-        if (isNewUser) {
-          console.log(`New social user detected from ${account?.provider}`, { userId: user.id, email: userEmail });
-        }
-        
-        token.isNewUser = isNewUser;
-        
-        console.log('isNewUser flag set to:', isNewUser, 
-          isNewUser ? '(will be sent to signup)' : '(has existing memberships)');
-        if (isNewUser) {
-          console.log(`Found 0 existing memberships for ${userEmail}`);
+        // Only set this flag during initial sign-in (when user object is present)
+        if (user) {
+          const isNewUser = 
+            userMemberships.length === 0 && 
+            account?.provider && 
+            account.provider !== 'credentials';
+          
+          if (isNewUser) {
+            console.log(`New social user detected from ${account?.provider}`, { userId: userId, email: userEmail });
+          }
+          
+          token.isNewUser = isNewUser ? true : false;
+          
+          console.log('isNewUser flag set to:', isNewUser, 
+            isNewUser ? '(will be sent to signup)' : '(has existing memberships)');
+          if (isNewUser) {
+            console.log(`Found 0 existing memberships for ${userEmail}`);
+          } else {
+            console.log(`Found ${userMemberships.length} existing membership(s) for ${userEmail}`);
+          }
         } else {
-          console.log(`Found ${userMemberships.length} existing membership(s) for ${userEmail}`);
+          // For session updates, clear the isNewUser flag if user now has memberships
+          if (userMemberships.length > 0) {
+            token.isNewUser = false;
+            console.log('Clearing isNewUser flag - user now has memberships');
+          }
+          // Ensure we don't leave isNewUser as undefined when it should be explicitly false
+          else if (token.isNewUser === undefined) {
+            token.isNewUser = false;
+          }
         }
-        
-        // Note: We don't need to set token.memberships again as we already did this above
       }
       return token;
     },

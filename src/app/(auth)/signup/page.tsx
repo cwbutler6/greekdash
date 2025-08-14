@@ -118,15 +118,30 @@ function SignupContent() {
     // Only run this effect if session is loaded
     if (status === 'loading') return;
     
-    // If this is a user coming from Google sign-in
-    if (isGoogleRedirect && session?.user) {
-      setIsGoogleUser(true);
+    // Pre-fill form for any authenticated user (Google or regular)
+    if (session?.user) {
+      // Check if this is a Google user (either from redirect or existing session)
+      const isGoogleAccount = isGoogleRedirect || 
+        session.user.image?.includes('googleusercontent.com') || // Google profile images
+        (session.user.email && session.user.name && !isGoogleRedirect && session.user.image); // Has OAuth profile data
       
-      // Pre-populate the form with data from session
-      createChapterForm.setValue('fullName', session.user.name || '');
-      createChapterForm.setValue('email', session.user.email || '');
+      if (isGoogleAccount) {
+        setIsGoogleUser(true);
+      }
       
-      // Generate a suggested slug from the name if available
+      // Pre-populate both forms with data from session for any authenticated user
+      const userName = session.user.name || '';
+      const userEmail = session.user.email || '';
+      
+      // Pre-fill create chapter form
+      createChapterForm.setValue('fullName', userName);
+      createChapterForm.setValue('email', userEmail);
+      
+      // Pre-fill join chapter form
+      joinChapterForm.setValue('fullName', userName);
+      joinChapterForm.setValue('email', userEmail);
+      
+      // Generate a suggested slug from the name if available (for create form)
       if (session.user.name) {
         const suggestedSlug = session.user.name
           .toLowerCase()
@@ -140,7 +155,7 @@ function SignupContent() {
       // Note: We no longer generate passwords on the client side
       // The server will handle password generation securely
     }
-  }, [session, status, isGoogleRedirect, createChapterForm]);
+  }, [session, status, isGoogleRedirect, createChapterForm, joinChapterForm]);
   
   // Check slug availability with the server
   useEffect(() => {
@@ -491,6 +506,8 @@ function SignupContent() {
                     placeholder="you@example.com"
                     {...createChapterForm.register("email")}
                     aria-invalid={!!createChapterForm.formState.errors.email}
+                    disabled={isGoogleUser}
+                    className={isGoogleUser ? "bg-muted" : ""}
                   />
                   {createChapterForm.formState.errors.email && (
                     <p className="text-sm text-destructive">{createChapterForm.formState.errors.email.message}</p>
@@ -642,6 +659,8 @@ function SignupContent() {
                     placeholder="John Doe"
                     {...joinChapterForm.register("fullName")}
                     aria-invalid={!!joinChapterForm.formState.errors.fullName}
+                    disabled={isGoogleUser}
+                    className={isGoogleUser ? "bg-muted" : ""}
                   />
                   {joinChapterForm.formState.errors.fullName && (
                     <p className="text-sm text-destructive">{joinChapterForm.formState.errors.fullName.message}</p>
@@ -656,6 +675,8 @@ function SignupContent() {
                     placeholder="you@example.com"
                     {...joinChapterForm.register("email")}
                     aria-invalid={!!joinChapterForm.formState.errors.email}
+                    disabled={isGoogleUser}
+                    className={isGoogleUser ? "bg-muted" : ""}
                   />
                   {joinChapterForm.formState.errors.email && (
                     <p className="text-sm text-destructive">{joinChapterForm.formState.errors.email.message}</p>
@@ -698,33 +719,50 @@ function SignupContent() {
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="join-password">Password</Label>
-                    <Input
-                      id="join-password"
-                      type="password"
-                      {...joinChapterForm.register("password")}
-                      aria-invalid={!!joinChapterForm.formState.errors.password}
-                    />
-                    {joinChapterForm.formState.errors.password && (
-                      <p className="text-sm text-destructive">{joinChapterForm.formState.errors.password.message}</p>
-                    )}
-                  </div>
+                {!isGoogleUser && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="join-password">Password</Label>
+                      <Input
+                        id="join-password"
+                        type="password"
+                        {...joinChapterForm.register("password")}
+                        aria-invalid={!!joinChapterForm.formState.errors.password}
+                      />
+                      {joinChapterForm.formState.errors.password && (
+                        <p className="text-sm text-destructive">{joinChapterForm.formState.errors.password.message}</p>
+                      )}
+                    </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="join-confirmPassword">Confirm Password</Label>
-                    <Input
-                      id="join-confirmPassword"
-                      type="password"
-                      {...joinChapterForm.register("confirmPassword")}
-                      aria-invalid={!!joinChapterForm.formState.errors.confirmPassword}
-                    />
-                    {joinChapterForm.formState.errors.confirmPassword && (
-                      <p className="text-sm text-destructive">{joinChapterForm.formState.errors.confirmPassword.message}</p>
-                    )}
+                    <div className="space-y-2">
+                      <Label htmlFor="join-confirmPassword">Confirm Password</Label>
+                      <Input
+                        id="join-confirmPassword"
+                        type="password"
+                        {...joinChapterForm.register("confirmPassword")}
+                        aria-invalid={!!joinChapterForm.formState.errors.confirmPassword}
+                      />
+                      {joinChapterForm.formState.errors.confirmPassword && (
+                        <p className="text-sm text-destructive">{joinChapterForm.formState.errors.confirmPassword.message}</p>
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
+                
+                {isGoogleUser && (
+                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 rounded-lg mb-4">
+                    <h3 className="font-medium flex items-center gap-2 text-green-700 dark:text-green-400">
+                      Google Account Connected
+                    </h3>
+                    <p className="text-sm text-green-600 dark:text-green-500">
+                      You&apos;ve successfully signed in with Google. Your email and name are pre-filled from your Google account.
+                    </p>
+                    
+                    {/* Hidden password fields for Google users */}
+                    <input type="hidden" {...joinChapterForm.register("password")} />
+                    <input type="hidden" {...joinChapterForm.register("confirmPassword")} />
+                  </div>
+                )}
 
                 <Button
                   type="submit"
@@ -739,7 +777,7 @@ function SignupContent() {
                   ) : (
                     <>
                       <Users className="mr-2 h-4 w-4" />
-                      Request to Join Chapter
+                      {isGoogleUser ? 'Request to Join Chapter with Google Account' : 'Request to Join Chapter'}
                     </>
                   )}
                 </Button>

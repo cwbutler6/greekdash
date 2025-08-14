@@ -19,7 +19,10 @@
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
     "db:seed": "tsx prisma/seed.ts",
-    "db:reset": "prisma migrate reset --force && pnpm db:seed"
+    "db:reset": "prisma migrate reset --force",
+    "db:reset:seed": "prisma migrate reset --force && pnpm db:seed",
+    "supabase:dashboard": "open http://localhost:54323",
+    "supabase:start": "pnpm dlx supabase start"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.9.1",

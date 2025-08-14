@@ -11,6 +11,12 @@ export default withAuth(
     
     // Get the pathname from the URL
     const { pathname } = request.nextUrl;
+    
+    // Check if this request is coming from a session refresh or OAuth callback
+    const referer = request.headers.get('referer');
+    const isFromSessionRefresh = referer && referer.includes('/api/auth/refresh-session');
+    const isFromOAuthCallback = referer && referer.includes('/api/auth/callback/');
+    const isOAuthFlow = pathname.includes('/api/auth/') || isFromOAuthCallback;
 
     // Allow public routes
     // Check if the path is just a chapterSlug (e.g., /alpha-beta-gamma) - this should be public
@@ -20,13 +26,21 @@ export default withAuth(
       pathname === "/" || 
       pathname === "/login" || 
       pathname === "/signup" || 
+      pathname === "/social-signup" ||
       pathname === "/forgot-password" ||
       pathname === "/reset-password" ||
       pathname === "/api/auth" ||
-      isChapterPublicPage;
+      isChapterPublicPage ||
+      isOAuthFlow;
+      
+    // Special handling for OAuth flows and session refreshes
+    if (isOAuthFlow || isFromSessionRefresh) {
+      console.log('Allowing OAuth flow or session refresh to proceed');
+      return NextResponse.next();
+    }
       
     // Redirect authenticated users away from login/signup pages
-    if (isAuthenticated && (pathname === "/login" || pathname === "/signup")) {
+    if (isAuthenticated && (pathname === "/login" || pathname === "/signup" || pathname === "/social-signup")) {
       if (token.memberships && token.memberships.length > 0) {
         // User has memberships - redirect to their dashboard
         const membership = token.memberships[0];
@@ -34,21 +48,19 @@ export default withAuth(
           ? `/${membership.chapterSlug}/admin`
           : `/${membership.chapterSlug}/portal`;
         
+        console.log('Redirecting authenticated user with memberships to:', redirectPath);
         return NextResponse.redirect(new URL(redirectPath, request.url));
       } else {
-        // User is authenticated but has no memberships
-        if (pathname === "/login") {
-          // Allow access to login page - they might want to sign in as different user
-          // or there might be a UI element to help them join a chapter
-          return NextResponse.next();
-        }
-        // If they're trying to access signup, redirect them there
-        return NextResponse.redirect(new URL("/signup", request.url));
+        // User is authenticated but has no memberships - allow access to auth pages
+        // This prevents redirect loops with AuthGuard
+        console.log('Allowing authenticated user without memberships to access auth pages');
+        return NextResponse.next();
       }
     }
     
     if (!isAuthenticated && !isPublicRoute) {
       // Redirect to login if trying to access protected route without authentication
+      console.log('Redirecting unauthenticated user to login');
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
@@ -78,28 +90,25 @@ export default withAuth(
           const availableChapter = token.memberships[0].chapterSlug;
           // Maintain the same section (admin/portal) they were trying to access
           const section = chapterRouteMatch ? chapterRouteMatch[2] : 'admin';
+          console.log('Redirecting to available chapter:', `/${availableChapter}/${section}`);
           return NextResponse.redirect(new URL(`/${availableChapter}/${section}`, request.url));
         } else {
           // If user has no memberships, redirect to signup
+          console.log('No memberships found, redirecting to signup');
           return NextResponse.redirect(new URL("/signup", request.url));
         }
       }
     }
     
-    // We're removing the automatic redirect from the home page
-    // to allow all users to access it, even when authenticated
-    // Uncomment these lines if you want to redirect authenticated users away from the homepage
-    /*
-    if (pathname === '/' && isAuthenticated && token.memberships && token.memberships.length > 0) {
-      const membership = token.memberships[0];
-      const redirectPath = membership.role === 'ADMIN' || membership.role === 'OWNER' 
-        ? `/${membership.chapterSlug}/admin`
-        : `/${membership.chapterSlug}/portal`;
-      
-      return NextResponse.redirect(new URL(redirectPath, request.url));
+    // Special handling for chapter routes when user has no memberships but might be in OAuth flow
+    if (chapterSlugFromUrl && isAuthenticated && (!token.memberships || token.memberships.length === 0)) {
+      // If this might be part of an OAuth flow or recent session update, allow it to proceed
+      // The AuthGuard will handle the final redirect logic
+      console.log('Allowing chapter access for user without memberships (may be in OAuth flow)');
+      return NextResponse.next();
     }
-    */
 
+    console.log('Middleware allowing request to proceed');
     return NextResponse.next();
   },
   {
@@ -122,14 +131,13 @@ export const config = {
     "/:chapterSlug/join/:path*", // Join workflow is protected
     "/:chapterSlug/pending/:path*", // Pending approval workflow is protected
     
-    // Only check login page to prevent logged-in users from going there
-    // Skip signup, social-signup, and other auth pages to prevent redirect loops
+    // Check auth pages to prevent logged-in users from going there
     "/login",
+    "/signup",
+    "/social-signup",
     "/settings/:path*",
     
     // Skip authentication check for API routes, public routes, and static files
-    // Note: We explicitly exclude the base chapterSlug route (e.g., /alpha-beta-gamma)
-    // as these are public chapter pages accessible without authentication
-    "/((?!login|signup|social-signup|forgot-password|reset-password|api/auth|api/chapters/check-slug|api/contact|_next/static|_next/image|images|favicon.ico|[a-zA-Z0-9-]+$).*)",
+    "/((?!forgot-password|reset-password|api/auth|api/chapters/check-slug|api/contact|_next/static|_next/image|images|favicon.ico|[a-zA-Z0-9-]+$).*)",
   ],
 };

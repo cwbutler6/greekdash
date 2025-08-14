@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import LogoImage from "../../greekdash-icon.svg";
-import { SocialChapterForm } from "@/components/auth/social-chapter-form";
+import { SocialSignupOptions } from "@/components/auth/social-signup-options";
 
 export default function SocialSignupPage() {
   const router = useRouter();
@@ -49,7 +49,7 @@ export default function SocialSignupPage() {
       <div className="flex min-h-screen flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="w-full max-w-md space-y-8 text-center">
           <div className="flex flex-col items-center justify-center">
-            <Image src={LogoImage} alt="GreekDash Logo" width={56} height={56} />
+            <Image src={LogoImage} alt="GreekDash Logo" width={100} height={100} />
             <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
               Loading...
             </h2>
@@ -64,17 +64,17 @@ export default function SocialSignupPage() {
       <div className="w-full max-w-md space-y-8">
         <div className="flex flex-col items-center justify-center">
           <Link href="/">
-            <Image src={LogoImage} alt="GreekDash Logo" width={56} height={56} />
+            <Image src={LogoImage} alt="GreekDash Logo" width={80} height={80} />
           </Link>
           <h2 className="mt-6 text-3xl font-bold tracking-tight text-gray-900">
             Complete Your {provider.charAt(0).toUpperCase() + provider.slice(1)} Signup
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            You&apos;re almost there! Just create your chapter to get started.
+            Choose how you&apos;d like to get started with GreekDash
           </p>
         </div>
 
-        <SocialChapterForm />
+        <SocialSignupOptions />
       </div>
     </div>
   );

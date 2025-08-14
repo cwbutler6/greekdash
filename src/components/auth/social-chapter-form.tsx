@@ -33,11 +33,12 @@ type SocialChapterFormValues = z.infer<typeof socialChapterSchema>;
 
 export function SocialChapterForm() {
 
-  const { data: session } = useSession();
+  const { data: session, update } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [slugAvailable, setSlugAvailable] = useState<boolean | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const initialValuesSet = useRef(false); // Add this ref
 
   // Generate a suggested slug from the name if available
   const generateSuggestedSlug = (name: string | null | undefined) => {
@@ -77,14 +78,16 @@ export function SocialChapterForm() {
   
   // Update form values if session changes
   useEffect(() => {
-    if (session?.user) {
+    if (session?.user && !initialValuesSet.current) {
       if (session.user.name) setValue('fullName', session.user.name);
       if (session.user.email) setValue('email', session.user.email);
-      if (!watch('chapterSlug') && session.user.name) {
+      const currentSlug = watch('chapterSlug');
+      if (!currentSlug && session.user.name) {
         setValue('chapterSlug', generateSuggestedSlug(session.user.name));
       }
+      initialValuesSet.current = true;
     }
-  }, [session, setValue, watch]);
+  }, [session, setValue]);
 
   // Watch for chapter slug changes
   const chapterSlug = watch("chapterSlug");
@@ -134,20 +137,33 @@ export function SocialChapterForm() {
     try {
       // First, check if the slug is available
       if (chapterSlug) {
-        await checkSlugAvailability(chapterSlug);
+        // Wait for the slug availability check to complete
+        const response = await fetch(`/api/chapters/check-slug?slug=${encodeURIComponent(chapterSlug)}`);
+        const data = await response.json();
         
-        if (!slugAvailable) {
+        if (!data.available) {
           setError("The chapter URL is already taken. Please choose a different one.");
           setIsLoading(false);
           return;
         }
       }
 
+      // Get form data using the form ref instead of e.currentTarget
+      if (!formRef.current) {
+        throw new Error('Form reference not found');
+      }
+
       // For social users, we use server actions which handle the logic server-side
-      const formData = new FormData(e.currentTarget);
+      const formData = new FormData(formRef.current);
       await createChapterForGoogleUser(formData);
-      
-      // The server action handles the redirect, so we shouldn't reach this point
+  
+      // Force session update to include new membership
+      await update();
+  
+      // Small delay to ensure session is fully updated before AuthGuard processes redirect
+      await new Promise(resolve => setTimeout(resolve, 500));
+  
+      // The AuthGuard will now handle the redirect with updated session
     } catch (err) {
       console.error('Error in social chapter creation:', err);
       setError(err instanceof Error ? err.message : 'An unexpected error occurred');
@@ -171,31 +187,30 @@ export function SocialChapterForm() {
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Create Your Chapter</CardTitle>
-        <CardDescription>
-          Welcome! Let&apos;s set up your chapter to complete your account creation.
-        </CardDescription>
+        <CardDescription>Set up your chapter profile to get started</CardDescription>
       </CardHeader>
-      <CardContent>
-        {error && (
-          <Alert variant="destructive" className="mb-4">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
-        
-        <form ref={formRef} onSubmit={onSubmit} className="space-y-4">
-          {/* Full Name (read-only) */}
-          <div className="space-y-2">
-            <Label htmlFor="fullName">Full Name</Label>
-            <Input
-              id="fullName"
-              {...register('fullName')}
-              readOnly
-              disabled
-              className="bg-gray-50"
-            />
-            <p className="text-xs text-gray-500">Name from your social account</p>
-          </div>
+      <CardContent className="space-y-4">
+      {error && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
+      
+      <form ref={formRef} onSubmit={onSubmit} className="space-y-4">
+        {/* Full Name (editable) */}
+        <div className="space-y-2">
+          <Label htmlFor="fullName">Full Name</Label>
+          <Input
+            id="fullName"
+            {...register('fullName')}
+            placeholder="Enter your full name"
+          />
+          {errors.fullName && (
+            <p className="text-sm text-red-500">{errors.fullName.message}</p>
+          )}
+          <p className="text-xs text-gray-500">You can edit the name from your social account</p>
+        </div>
           
           {/* Email Address (read-only) */}
           <div className="space-y-2">

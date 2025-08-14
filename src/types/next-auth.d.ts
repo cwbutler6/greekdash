@@ -7,6 +7,7 @@ declare module "next-auth" {
       name?: string | null;
       email?: string | null;
       image?: string | null;
+      isNewUser?: boolean;
       memberships: {
         id: string;
         role: string;
@@ -20,6 +21,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     id: string;
+    isNewUser?: boolean;
     memberships: {
       id: string;
       role: string;

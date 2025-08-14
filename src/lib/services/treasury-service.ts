@@ -10,7 +10,7 @@ const POLYGON_ADDRESS_EXPLORER_URL = "https://polygonscan.com/address/";
 const PROVIDER = new JsonRpcProvider(POLYGON_RPC_URL);
 
 // Encryption settings
-const ENCRYPTION_KEY = process.env.WALLET_ENCRYPTION_KEY || "defaultEncryptionKey123456789012345678901234"; // 32 bytes key
+const ENCRYPTION_KEY = process.env.WALLET_ENCRYPTION_KEY as string; // 32 bytes key
 const ENCRYPTION_ALGORITHM = "aes-256-cbc";
 
 // Utility functions for encrypting/decrypting wallet private keys
@@ -48,19 +48,6 @@ const decryptPrivateKey = (encryptedKey: string): string => {
 interface TreasuryServiceOptions {
   chapterSlug: string;
 }
-
-// Contract addresses and ABIs for real blockchain integration
-// These are included for reference but not directly used in this demo implementation
-// They would be used in a production environment to interact with the actual contracts
-// USDC token on Polygon Mainnet
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const USDC_ADDRESS = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const USDC_ABI = [
-  "function approve(address spender, uint256 amount) returns (bool)",
-  "function balanceOf(address account) view returns (uint256)",
-  "function transfer(address to, uint256 amount) returns (bool)",
-];
 
 export const treasuryService = ({ chapterSlug }: TreasuryServiceOptions) => {
   /**

@@ -72,6 +72,7 @@ function LoginForm() {
       
       if (!sessionResponse.ok) {
         console.log('Session response not OK:', sessionResponse.status);
+        setIsLoading(false);
         router.push('/signup');
         return;
       }
@@ -87,6 +88,7 @@ function LoginForm() {
       // Check if this is a new Google user who needs to create a chapter
       if (sessionData.user?.isNewUser === true) {
         console.log('New user detected, redirecting to social signup flow');
+        setIsLoading(false);
         router.push('/social-signup?provider=credentials');
         return;
       }
@@ -97,6 +99,7 @@ function LoginForm() {
       if (memberships.length === 0) {
         console.log('No memberships found, redirecting to signup');
         // If user has no memberships, send to the signup page to create or join a chapter
+        setIsLoading(false);
         router.push('/signup');
         return;
       }
@@ -112,20 +115,24 @@ function LoginForm() {
         // If user has an active membership and is an admin/owner, redirect to admin
         if (activeMembership.role === 'ADMIN' || activeMembership.role === 'OWNER') {
           console.log(`Redirecting admin to /${activeMembership.chapterSlug}/admin`);
+          setIsLoading(false);
           router.push(`/${activeMembership.chapterSlug}/admin`);
         } else {
           // Regular members go to the portal
           console.log(`Redirecting member to /${activeMembership.chapterSlug}/portal`);
+          setIsLoading(false);
           router.push(`/${activeMembership.chapterSlug}/portal`);
         }
       } else if (memberships.length > 0) {
         // If user only has pending memberships, redirect to their pending page
         console.log(`Redirecting pending member to /${memberships[0].chapterSlug}/pending`);
+        setIsLoading(false);
         router.push(`/${memberships[0].chapterSlug}/pending`);
       }
     } catch (error) {
       console.error('Error getting session data:', error);
       // Fallback to signup if there's any error in the process
+      setIsLoading(false);
       router.push('/signup');
     }
   };
@@ -160,13 +167,19 @@ function LoginForm() {
       // If there's a specific callback URL, respect it
       if (callbackUrl) {
         console.log(`Redirecting to callback URL: ${callbackUrl}`);
+        setIsLoading(false);
         router.push(callbackUrl);
         return;
       }
 
       // Handle redirects based on user session data
+      // Note: handleSessionRedirect now manages its own loading state
       await handleSessionRedirect();
-    } catch {
+      
+      // Ensure loading state is reset after handleSessionRedirect completes
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Login error:', error);
       setError("An unexpected error occurred. Please try again.");
       setIsLoading(false);
     }
