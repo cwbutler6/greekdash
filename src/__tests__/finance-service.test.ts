@@ -377,6 +377,7 @@ describe('financeService', () => {
           createdAt: new Date('2024-01-10'),
           metadata: {},
           duesPaymentId: null,
+          donationId: null,
         };
         
         mockDb.expense.update.mockResolvedValue(mockExpense);

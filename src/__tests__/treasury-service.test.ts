@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Chapter, TreasuryTransaction, TreasuryTransactionType, Prisma } from '@/generated/prisma';
 import { treasuryService } from '@/lib/services/treasury-service';
 import { db } from '@/lib/db';
@@ -14,8 +14,8 @@ vi.mock('ethers', () => {
   };
   
   // Create a proper Wallet mock that can be used as both constructor and has static methods
-  const MockWallet = vi.fn().mockImplementation(() => mockWallet) as vi.MockedFunction<new (...args: unknown[]) => typeof mockWallet> & {
-    createRandom: vi.MockedFunction<() => typeof mockWallet>;
+  const MockWallet = vi.fn().mockImplementation(() => mockWallet) as unknown as typeof vi.fn & {
+    createRandom: () => typeof mockWallet;
   };
   // Add the static createRandom method directly to the mock function
   MockWallet.createRandom = vi.fn().mockReturnValue(mockWallet);
@@ -214,7 +214,7 @@ describe('treasuryService', () => {
     it('should return treasury details for a chapter', async () => {
       const mockTreasuryData = createMockTreasuryDataForSelect();
       // Fix: Use type assertion to satisfy the mock while maintaining type safety
-      (mockDb.chapter.findUnique as vi.Mock).mockResolvedValue(mockTreasuryData);
+      mockDb.chapter.findUnique.mockResolvedValue(mockTreasuryData as Chapter);
       
       const result = await service.getTreasuryDetails();
       
