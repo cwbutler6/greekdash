@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { toast } from "sonner"
 import { useSession } from "next-auth/react"
+import { createComponentLogger } from '@/lib/logger';
 
 import { Button } from "@/components/ui/button"
 import {
@@ -42,6 +43,7 @@ interface FeedbackFormProps {
 }
 
 export default function FeedbackForm({ onClose }: FeedbackFormProps) {
+  const logger = createComponentLogger('FeedbackForm');
   // Make session optional to avoid errors when SessionProvider is not available
   const { data: session } = useSession({ required: false })
 
@@ -85,9 +87,17 @@ export default function FeedbackForm({ onClose }: FeedbackFormProps) {
       toast.success("Feedback submitted successfully! Thank you for your input.")
       onClose()
       form.reset()
-    } catch (error) {
-      console.error("Error submitting feedback:", error)
-      toast.error("Failed to submit feedback. Please try again.")
+    } catch (error: unknown) {
+      const errorObj = error instanceof Error ? error : new Error(String(error));
+      logger.error('Failed to submit feedback', errorObj, {
+        userId: session?.user?.id,
+        chapterSlug: window.location.pathname.startsWith("/[") ? window.location.pathname.split("/")[1] : undefined,
+        metadata: {
+          feedbackType: data.type,
+        },
+        action: 'submit_feedback'
+      });
+      toast.error("Failed to submit feedback. Please try again.");
     }
   }
 

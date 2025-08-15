@@ -49,11 +49,14 @@ import {
 } from '@/components/ui/dialog';
 import { toast } from 'sonner';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { createComponentLogger } from '@/lib/logger';
 
 interface DuesListProps {
   chapterSlug: string;
   status?: 'pending' | 'paid';
 }
+
+const logger = createComponentLogger('DuesList');
 
 export function DuesList({ chapterSlug, status }: DuesListProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -102,7 +105,13 @@ export function DuesList({ chapterSlug, status }: DuesListProps) {
       refetch();
     } catch (error) {
       toast.error('Error deleting dues payment');
-      console.error(error);
+      logger.error('Failed to delete dues payment', error instanceof Error ? error : new Error('Unknown error'), {
+        chapterSlug,
+        action: 'deleteDuesPayment',
+        metadata: {
+          duesId: selectedDuesId
+        }
+      });
     } finally {
       setDeleteDialogOpen(false);
       setSelectedDuesId(null);
@@ -139,7 +148,13 @@ export function DuesList({ chapterSlug, status }: DuesListProps) {
       }
     } catch (error) {
       toast.error('Error creating payment session');
-      console.error(error);
+      logger.error('Failed to create payment session', error instanceof Error ? error : new Error('Unknown error'), {
+        chapterSlug,
+        action: 'createPaymentSession',
+        metadata: {
+          duesId: selectedDuesId
+        }
+      });
       setPayDialogOpen(false);
     } finally {
       setPaymentProcessing(false);

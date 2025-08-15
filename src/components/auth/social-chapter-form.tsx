@@ -17,6 +17,9 @@ import { AlertCircle, Check, Loader2 } from "lucide-react";
 // Import server actions
 import { createChapterForGoogleUser } from "@/app/actions/auth";
 
+// Import structured logging
+import { createComponentLogger } from "@/lib/logger";
+
 // Schema for creating a new chapter for social users (simplified)
 const socialChapterSchema = z.object({
   fullName: z.string().min(3, "Full name must be at least 3 characters"),
@@ -32,7 +35,7 @@ const socialChapterSchema = z.object({
 type SocialChapterFormValues = z.infer<typeof socialChapterSchema>;
 
 export function SocialChapterForm() {
-
+  const logger = createComponentLogger('SocialChapterForm');
   const { data: session, update } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -52,11 +55,13 @@ export function SocialChapterForm() {
   };
 
   // Debug the session data to troubleshoot
-  console.log('Social Chapter Form - Session Data:', {
-    userName: session?.user?.name,
-    userEmail: session?.user?.email,
-    userId: session?.user?.id,
-    isNewUser: session?.user?.isNewUser
+  logger.info('Session data loaded', {
+    metadata: {
+      userName: session?.user?.name,
+      userEmail: session?.user?.email,
+      userId: session?.user?.id,
+      isNewUser: session?.user?.isNewUser
+    }
   });
 
   // Form for creating a new chapter (for social login users)
@@ -124,7 +129,9 @@ export function SocialChapterForm() {
         clearErrors('chapterSlug');
       }
     } catch (error) {
-      console.error('Error checking slug availability:', error);
+      logger.error('Failed to check slug availability', error instanceof Error ? error : undefined, {
+        metadata: { slug }
+      });
     }
   };
 
@@ -165,7 +172,9 @@ export function SocialChapterForm() {
   
       // The AuthGuard will now handle the redirect with updated session
     } catch (err) {
-      console.error('Error in social chapter creation:', err);
+      logger.error('Chapter creation failed', err instanceof Error ? err : undefined, {
+        metadata: { chapterSlug }
+      });
       setError(err instanceof Error ? err.message : 'An unexpected error occurred');
     } finally {
       setIsLoading(false);

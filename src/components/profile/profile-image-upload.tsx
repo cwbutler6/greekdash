@@ -16,6 +16,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
+import { createComponentLogger } from '@/lib/logger';
 
 interface ProfileImageUploadProps {
   chapterSlug: string;
@@ -34,8 +35,19 @@ export function ProfileImageUpload({
   size = 'md',
   editable = true,
 }: ProfileImageUploadProps) {
+  const logger = createComponentLogger('ProfileImageUpload');
+  
   // Debug logging for profile image
-  console.log('ProfileImageUpload received profileImage:', profileImage, 'at', new Date().toISOString());
+  logger.info('Profile image component initialized', {
+    chapterSlug,
+    metadata: {
+      profileImage: !!profileImage,
+      userName: !!userName,
+      size,
+      editable,
+      timestamp: new Date().toISOString()
+    }
+  });
   
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -50,10 +62,15 @@ export function ProfileImageUpload({
   useEffect(() => {
     // When profile image prop changes, update component state
     if (profileImage) {
-      console.log('ProfileImageUpload useEffect - Updating from props:', profileImage);
+      logger.info('Profile image updated from props', {
+        chapterSlug,
+        metadata: {
+          profileImage: !!profileImage
+        }
+      });
       setPreviewUrl(null); // Clear preview so we use the updated profile image
     }
-  }, [profileImage]); // Intentionally removing imageSrc from deps to avoid circular updates
+  }, [profileImage, logger, chapterSlug]); // Added chapterSlug to deps
 
   // Size mapping
   const sizeMap = {
@@ -182,7 +199,13 @@ export function ProfileImageUpload({
             src={previewUrl || imageSrc || ''}
             alt={userName || 'User profile'}
             onError={(e) => {
-              console.error('Image failed to load:', e);
+              logger.error('Profile image failed to load', new Error('Image load failed'), {
+                chapterSlug,
+                metadata: {
+                  src: (e.target as HTMLImageElement).src,
+                  userName
+                }
+              });
               // If image fails to load, set src to null to show fallback
               (e.target as HTMLImageElement).src = '';
             }}
@@ -218,6 +241,9 @@ export function ProfileImageUpload({
 
       {/* Hidden file input */}
       <input
+        aria-label="Upload profile image"
+        title="Choose a profile image to upload"
+        placeholder="Choose a profile image"
         type="file"
         ref={fileInputRef}
         className="hidden"

@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { createComponentLogger } from "@/lib/logger";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -19,40 +20,48 @@ export default function AuthGuard({ children }: AuthGuardProps) {
   const [lastRefreshTime, setLastRefreshTime] = useState<number | null>(null);
 
   useEffect(() => {
-    console.log('AuthGuard - Session status:', status);
-    console.log('AuthGuard - Current path:', pathname);
-    console.log('AuthGuard - Session data:', session);
-
+    const logger = createComponentLogger('AuthGuard');
+    
+    // Replace console.log statements with structured logging
+    logger.debug('Session status check', {
+      userId: session?.user?.id,
+      metadata: { status, pathname, hasSession: !!session } // Move status to metadata since it's not a direct LogContext property
+    });
+    
     if (status === 'loading') return;
 
     // If not authenticated, redirect to login
     if (status === 'unauthenticated') {
-      console.log('AuthGuard - User not authenticated, redirecting to login');
+      logger.info('Redirecting unauthenticated user to login', { metadata: { pathname } });
       router.push('/login');
       return;
     }
 
     // If authenticated but no session data, wait
     if (!session?.user) {
-      console.log('AuthGuard - No session user data available');
+      logger.debug('No session user data available');
       return;
     }
 
     const memberships = session.user.memberships || [];
     const hasValidMemberships = memberships.length > 0;
     
-    console.log('AuthGuard - User memberships:', memberships);
-    console.log('AuthGuard - Has valid memberships:', hasValidMemberships);
+    logger.debug('User memberships check', { 
+      metadata: { 
+        memberships, 
+        hasValidMemberships
+      }
+    });
 
     // If user has memberships but is on auth pages, redirect them to their dashboard
     if (hasValidMemberships && (pathname === '/signup' || pathname === '/social-signup')) {
-      console.log('AuthGuard - User has memberships but is on auth page, redirecting to dashboard');
+      logger.info('User has memberships but is on auth page, redirecting to dashboard');
       const firstMembership = memberships[0];
       const targetPath = firstMembership.role === 'ADMIN' || firstMembership.role === 'OWNER' 
         ? `/${firstMembership.chapterSlug}/admin`
         : `/${firstMembership.chapterSlug}/portal`;
       
-      console.log('AuthGuard - Redirecting to:', targetPath);
+      logger.info('Redirecting to dashboard', { metadata: { targetPath } });
       router.push(targetPath);
       return;
     }
@@ -60,19 +69,19 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     // If user has no memberships and is on a chapter-specific route, try refreshing session first
     if (!hasValidMemberships && (pathname.includes('/admin') || pathname.includes('/portal'))) {
       if (!isRefreshing) {
-        console.log('AuthGuard - No memberships found on chapter route, attempting session refresh');
+        logger.info('No memberships found on chapter route, attempting session refresh');
         setIsRefreshing(true);
         update().then(() => {
-          console.log('AuthGuard - Session refresh completed');
+          logger.info('Session refresh completed');
           setIsRefreshing(false);
         }).catch((error) => {
-          console.error('AuthGuard - Session refresh failed:', error);
+          logger.error('Session refresh failed', error);
           setIsRefreshing(false);
         });
         return;
       } else {
         // After refresh attempt, if still no memberships, redirect to signup
-        console.log('AuthGuard - Still no memberships after refresh, redirecting to signup');
+        logger.info('Still no memberships after refresh, redirecting to signup');
         router.push('/signup');
         return;
       }
@@ -87,16 +96,20 @@ export default function AuthGuard({ children }: AuthGuardProps) {
       // If we're on social-signup and haven't refreshed recently, try refreshing the session
       // This handles the case where a user just created a chapter but the session hasn't updated yet
       if (pathname === '/social-signup' && refreshAttempts < 3 && timeSinceLastRefresh > 2000) {
-        console.log('AuthGuard - On social-signup without memberships, attempting session refresh (attempt', refreshAttempts + 1, ')');
+        logger.info('On social-signup without memberships, attempting session refresh', {
+          metadata: {
+            attempt: refreshAttempts + 1
+          }
+        });
         setIsRefreshing(true);
         setRefreshAttempts(prev => prev + 1);
         setLastRefreshTime(now);
         
         update().then(() => {
-          console.log('AuthGuard - Session refresh completed');
+          logger.info('Session refresh completed');
           setIsRefreshing(false);
         }).catch((error) => {
-          console.error('AuthGuard - Session refresh failed:', error);
+          logger.error('Session refresh failed', error);
           setIsRefreshing(false);
         });
         return;
@@ -105,7 +118,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
 
     // If user has no memberships and is not on signup/social-signup or chapter routes, redirect appropriately
     if (!hasValidMemberships && pathname !== '/signup' && pathname !== '/social-signup' && !pathname.includes('/admin') && !pathname.includes('/portal')) {
-      console.log('AuthGuard - No memberships, determining redirect target');
+      logger.info('No memberships, determining redirect target');
       
       // Check if this is a social user (Google, etc.)
       const isSocialUser = session.user.isNewUser === true || 
@@ -113,7 +126,13 @@ export default function AuthGuard({ children }: AuthGuardProps) {
         (session.user.email && session.user.name && session.user.image && !session.user.isNewUser);
       
       const redirectTarget = isSocialUser ? '/social-signup' : '/signup';
-      console.log('AuthGuard - Redirecting to:', redirectTarget, { isSocialUser, isNewUser: session.user.isNewUser });
+      logger.info('Redirecting user', { 
+        metadata: {
+          redirectTarget, 
+          isSocialUser, 
+          isNewUser: session.user.isNewUser 
+        }
+      });
       router.push(redirectTarget);
       return;
     }
@@ -126,13 +145,13 @@ export default function AuthGuard({ children }: AuthGuardProps) {
       if (currentMembership) {
         // User is on their chapter's route
         if (pathname.includes('/admin') && currentMembership.role !== 'ADMIN' && currentMembership.role !== 'OWNER') {
-          console.log('AuthGuard - Non-admin trying to access admin, redirecting to portal');
+          logger.info('Non-admin trying to access admin, redirecting to portal');
           router.push(`/${currentChapterSlug}/portal`);
           return;
         }
         
         if (pathname.includes('/portal') && (currentMembership.role === 'ADMIN' || currentMembership.role === 'OWNER')) {
-          console.log('AuthGuard - Admin trying to access portal, redirecting to admin');
+          logger.info('Admin trying to access portal, redirecting to admin');
           router.push(`/${currentChapterSlug}/admin`);
           return;
         }
@@ -142,7 +161,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
       }
     }
 
-    console.log('AuthGuard - All checks passed, rendering children');
+    logger.debug('All checks passed, rendering children');
   }, [session, status, pathname, router, update, isRefreshing, refreshAttempts, lastRefreshTime]);
 
   // Show loading state

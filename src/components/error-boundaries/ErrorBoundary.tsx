@@ -4,6 +4,7 @@ import React, { Component, ReactNode } from 'react';
 import * as Sentry from '@sentry/nextjs';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import { createComponentLogger } from '@/lib/logger';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
@@ -16,6 +17,8 @@ interface ErrorBoundaryState {
   hasError: boolean;
   error?: Error;
 }
+
+const logger = createComponentLogger('ErrorBoundary');
 
 export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
@@ -41,7 +44,16 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     // Call custom error handler if provided
     this.props.onError?.(error, errorInfo);
 
-    console.error('Error caught by boundary:', error, errorInfo);
+    // Replace console.error with structured logging
+    logger.error('Error caught by boundary', error, {
+      action: 'componentDidCatch',
+      metadata: {
+        context: this.props.context || 'unknown',
+        componentStack: errorInfo.componentStack,
+        errorMessage: error.message,
+        errorName: error.name
+      }
+    });
   }
 
   handleRetry = () => {

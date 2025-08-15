@@ -26,6 +26,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { BudgetStatus } from '@/generated/prisma';
+import { createComponentLogger } from '@/lib/logger';
 
 interface Budget {
   id: string;
@@ -57,6 +58,7 @@ const statusColors: Record<BudgetStatus, string> = {
 };
 
 export function BudgetsList({ chapterSlug }: BudgetsListProps) {
+  const logger = createComponentLogger('BudgetsList');
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedBudgetId, setSelectedBudgetId] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<BudgetStatus | 'ALL'>('ALL');
@@ -100,7 +102,11 @@ export function BudgetsList({ chapterSlug }: BudgetsListProps) {
       refetch();
     } catch (error) {
       toast.error('Error deleting budget');
-      console.error(error);
+      logger.error('Failed to delete budget', error instanceof Error ? error : new Error('Unknown error'), {
+        chapterSlug,
+        metadata: { budgetId: selectedBudgetId },
+        action: 'delete'
+      });
     } finally {
       setDeleteDialogOpen(false);
       setSelectedBudgetId(null);

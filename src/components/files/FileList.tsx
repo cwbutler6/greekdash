@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { formatBytes } from '@/lib/utils/formatters';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { createComponentLogger } from '@/lib/logger';
 
 interface File {
   id: string;
@@ -40,6 +41,7 @@ interface FileListProps {
 }
 
 export function FileList({ chapterSlug, userId, initialFolderPath = '/' }: FileListProps) {
+  const logger = createComponentLogger('FileList');
   const [currentPage, setCurrentPage] = useState(1);
   const [fileToDelete, setFileToDelete] = useState<File | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -129,7 +131,14 @@ export function FileList({ chapterSlug, userId, initialFolderPath = '/' }: FileL
         description: 'Folder created successfully',
       });
     } catch (error: unknown) {
-      console.error('Create folder error:', error);
+      logger.error('Failed to create folder', error instanceof Error ? error : new Error('Unknown error'), {
+        chapterSlug,
+        metadata: {
+          folderName: newFolderName,
+          currentFolder,
+        },
+        action: 'create_folder'
+      });
       toast.error('Error creating folder', {
         description: error instanceof Error ? error.message : 'Folder creation failed',
       });
@@ -152,7 +161,13 @@ export function FileList({ chapterSlug, userId, initialFolderPath = '/' }: FileL
       // Open the download URL in a new tab
       window.open(url, '_blank');
     } catch (err: unknown) {
-      console.error('Download error:', err);
+      logger.error('Failed to download file', err instanceof Error ? err : new Error('Unknown error'), {
+        chapterSlug,
+        metadata: {
+          fileId,
+        },
+        action: 'download'
+      });
       toast.error(err instanceof Error ? err.message : 'Could not download file', {
         description: 'Download failed',
       });
@@ -186,7 +201,14 @@ export function FileList({ chapterSlug, userId, initialFolderPath = '/' }: FileL
       // Invalidate and refetch
       window.location.reload();
     } catch (err) {
-      console.error('Delete error:', err);
+      logger.error('Failed to delete file', err instanceof Error ? err : new Error('Unknown error'), {
+        chapterSlug,
+        metadata: {
+          fileId: fileToDelete.id,
+          fileName: fileToDelete.name,
+        },
+        action: 'delete'
+      });
       toast.error(err instanceof Error ? err.message : 'Could not delete file', {
         description: 'Delete failed',
       });

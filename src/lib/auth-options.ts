@@ -7,6 +7,7 @@ import { compare } from "bcrypt";
 import { MembershipRole } from "@/generated/prisma";
 
 import { prisma } from "@/lib/db";
+import { createComponentLogger } from "@/lib/logger";
 
 // Extend the built-in next-auth types
 declare module "next-auth" {
@@ -28,6 +29,8 @@ declare module "next-auth" {
 }
 
 // NextAuth configuration options moved to a separate file for Next.js 15 compatibility
+const logger = createComponentLogger('NextAuth');
+
 export const authOptions: NextAuthOptions = {
   // Use PrismaAdapter to enable account linking between providers
   adapter: PrismaAdapter(prisma),
@@ -91,32 +94,29 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ user, account }) {
-      // Track sign-ins for debugging and enhance social login detection
+      // Replace: console.log(`Social sign-in detected from ${account.provider}`, {...});
       if (account?.provider && account.provider !== 'credentials') {
-        console.log(`Social sign-in detected from ${account.provider}`, { 
-          userId: user.id,
-          email: user.email,
-          name: user.name,
-          provider: account.provider
-        });
-        
-        // For social logins, we'll check if this user needs the special onboarding flow
-        try {
-          // Check if user has any memberships
-          const existingMemberships = await prisma.membership.findMany({
-            where: { userId: user.id }
-          });
-          
-          if (existingMemberships.length === 0) {
-            console.log(`Social user ${user.id} has no memberships - will use social onboarding`);
+        logger.info('Social sign-in detected', {
+          metadata: {
+            provider: account.provider,
+            userId: user.id,
+            userEmail: user.email
           }
-        } catch (error) {
-          console.error('Error checking memberships during signIn:', error);
-        }
+        });
       }
       return true;
     },
     async jwt({ token, user, account }) {
+      // Replace console.log statements with structured logging
+      logger.debug('JWT callback received', {
+        metadata: {
+          hasToken: !!token,
+          hasUser: !!user,
+          hasAccount: !!account,
+          userId: user?.id || token?.sub
+        }
+      });
+      
       // Add extensive debug logging to trace the issue
       console.log('JWT CALLBACK RECEIVED:', {
         hasUser: !!user,

@@ -26,6 +26,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ExpenseStatus } from '@/generated/prisma';
+import { createComponentLogger } from '@/lib/logger';
 
 interface Expense {
   id: string;
@@ -81,6 +82,7 @@ export function ExpensesList({ chapterSlug }: ExpensesListProps) {
   const [denyDialogOpen, setDenyDialogOpen] = useState(false);
   const [selectedExpenseId, setSelectedExpenseId] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<ExpenseStatus | 'ALL'>('ALL');
+  const logger = createComponentLogger('ExpensesList');
 
   // Fetch expenses data
   const { data: expenses, isLoading, error, refetch } = useQuery({
@@ -121,7 +123,13 @@ export function ExpensesList({ chapterSlug }: ExpensesListProps) {
       refetch();
     } catch (error) {
       toast.error('Error deleting expense');
-      console.error(error);
+      logger.error('Error deleting expense', error instanceof Error ? error : new Error(String(error)), {
+        chapterSlug,
+        metadata: {
+          expenseId: selectedExpenseId,
+          action: 'delete_expense'
+        }
+      });
     } finally {
       setDeleteDialogOpen(false);
       setSelectedExpenseId(null);
@@ -153,7 +161,13 @@ export function ExpensesList({ chapterSlug }: ExpensesListProps) {
       refetch();
     } catch (error) {
       toast.error('Error approving expense');
-      console.error(error);
+      logger.error('Error approving expense', error instanceof Error ? error : new Error(String(error)), {
+        chapterSlug,
+        metadata: {
+          expenseId: selectedExpenseId,
+          action: 'approve_expense'
+        }
+      });
     } finally {
       setApproveDialogOpen(false);
       setSelectedExpenseId(null);
@@ -185,7 +199,13 @@ export function ExpensesList({ chapterSlug }: ExpensesListProps) {
       refetch();
     } catch (error) {
       toast.error('Error updating expense');
-      console.error(error);
+      logger.error('Error denying expense', error instanceof Error ? error : new Error(String(error)), {
+        chapterSlug,
+        metadata: {
+          expenseId: selectedExpenseId,
+          action: 'deny_expense'
+        }
+      });
     } finally {
       setDenyDialogOpen(false);
       setSelectedExpenseId(null);

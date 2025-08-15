@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { requireChapterAccess } from "@/lib/auth";
+import { withApiLogging } from "@/lib/api-logger";
+import { createChapterLogger } from "@/lib/logger";
 
 // Define Transaction type for the response
 type TransactionRecord = {
@@ -24,14 +26,15 @@ enum MembershipRoleEnum {
 }
 
 // API route to get billing information for a chapter
-export async function GET(
+export const GET = withApiLogging(async (
   request: Request,
   { params }: { params: Promise<{ chapterSlug: string }> }
-) {
-  try {
-    // In Next.js 15, params is a Promise that needs to be awaited
-    const { chapterSlug } = await params;
+) => {
+  // In Next.js 15, params is a Promise that needs to be awaited
+  const { chapterSlug } = await params;
+  const logger = createChapterLogger(chapterSlug);
 
+  try {
     if (!chapterSlug) {
       return NextResponse.json(
         { error: "Chapter slug is required" },
@@ -96,13 +99,17 @@ export async function GET(
         take: 5,
       });
     } catch (error) {
-      console.error("Error fetching pending invoices:", error);
+      logger.error(
+        'Failed to fetch pending invoices',
+        error instanceof Error ? error : new Error('Unknown error'),
+        { action: 'fetch_pending_invoices' }
+      );
       // Keep pendingInvoices as empty array in case of error
       // This allows the page to load even if there's an issue with the TransactionType enum
     }
     
     // Get finance module usage statistics
-    const financeStats = await getFinanceStats(chapter.id);
+    const financeStats = await getFinanceStats(chapter.id, logger);
     
     // Return the chapter with enhanced billing information
     return NextResponse.json({
@@ -119,23 +126,23 @@ export async function GET(
       financeStats,
     });
   } catch (error) {
-    console.error("Error fetching chapter billing information:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch billing information" },
-      { status: 500 }
+    logger.error(
+      'Failed to fetch chapter billing information',
+      error instanceof Error ? error : new Error('Unknown error'),
+      { action: 'fetch_billing_info' }
     );
+    throw error;
   }
-}
+}, 'chapters/[chapterSlug]/billing');
 
-// POST /api/chapters/[chapterSlug]/billing - Update subscription plan
-export async function POST(
+export const POST = withApiLogging(async (
   request: Request,
   { params }: { params: Promise<{ chapterSlug: string }> }
-) {
+) => {
+  const { chapterSlug } = await params;
+  const logger = createChapterLogger(chapterSlug);
+  
   try {
-    // Get chapter slug from params
-    const { chapterSlug } = await params;
-
     if (!chapterSlug) {
       return NextResponse.json(
         { error: "Chapter slug is required" },
@@ -181,7 +188,10 @@ export async function POST(
       // Downgrading to FREE plan
       if (chapter.subscription?.stripeSubscriptionId) {
         // In a real implementation, cancel the Stripe subscription here
-        console.log(`Would cancel subscription: ${chapter.subscription.stripeSubscriptionId}`);
+        logger.info('Subscription cancellation requested', {
+          action: 'cancel_subscription',
+          metadata: { stripeSubscriptionId: chapter.subscription.stripeSubscriptionId }
+        });
       }
       
       // Update subscription in database
@@ -247,21 +257,14 @@ export async function POST(
       });
     }
   } catch (error) {
-    console.error("Error updating subscription plan:", error);
-    
-    if (error instanceof z.ZodError) {
-      return NextResponse.json(
-        { error: "Invalid plan data", issues: error.issues },
-        { status: 400 }
-      );
-    }
-    
-    return NextResponse.json(
-      { error: "Failed to update subscription plan" },
-      { status: 500 }
+    logger.error(
+      'Failed to update subscription plan',
+      error instanceof Error ? error : new Error('Unknown error'),
+      { action: 'update_subscription_plan' }
     );
+    throw error;
   }
-}
+}, 'chapters/[chapterSlug]/billing');
 
 // Helper function to get finance features available for a given plan
 function getFinanceFeatures(plan: string): Record<string, boolean> {
@@ -310,7 +313,7 @@ function getFinanceFeatures(plan: string): Record<string, boolean> {
 }
 
 // Helper function to get finance module usage statistics
-async function getFinanceStats(chapterId: string) {
+async function getFinanceStats(chapterId: string, logger: ReturnType<typeof createChapterLogger>) {
   try {
     // Get financial stats for the chapter
     const budgetCount = await prisma.budget.count({ where: { chapterId } });
@@ -331,7 +334,11 @@ async function getFinanceStats(chapterId: string) {
       });
       totalDuesAmount = totalDuesResult._sum.amount || 0;
     } catch (error) {
-      console.error("Error getting dues payments with paidAt filter:", error);
+      logger.error(
+        'Error getting dues payments with paidAt filter',
+        error instanceof Error ? error : new Error('Unknown error'),
+        { action: 'get_paid_dues' }
+      );
       // Fallback: sum all dues payments regardless of paid status
       try {
         const allDuesResult = await prisma.duesPayment.aggregate({
@@ -340,7 +347,11 @@ async function getFinanceStats(chapterId: string) {
         });
         totalDuesAmount = allDuesResult._sum.amount || 0;
       } catch (innerError) {
-        console.error("Error getting all dues payments:", innerError);
+        logger.error(
+          'Error getting all dues payments',
+          innerError instanceof Error ? innerError : new Error('Unknown error'),
+          { action: 'get_all_dues' }
+        );
       }
     }
     
@@ -355,7 +366,11 @@ async function getFinanceStats(chapterId: string) {
       });
       totalExpensesAmount = totalExpensesResult._sum.amount || 0;
     } catch (error) {
-      console.error("Error getting paid expenses:", error);
+      logger.error(
+        'Error getting paid expenses',
+        error instanceof Error ? error : new Error('Unknown error'),
+        { action: 'get_paid_expenses' }
+      );
       // If ExpenseStatus enum doesn't exist, try querying all expenses instead
       try {
         const allExpensesResult = await prisma.expense.aggregate({
@@ -364,7 +379,11 @@ async function getFinanceStats(chapterId: string) {
         });
         totalExpensesAmount = allExpensesResult._sum.amount || 0;
       } catch (innerError) {
-        console.error("Error getting all expenses:", innerError);
+        logger.error(
+          'Error getting all expenses',
+          innerError instanceof Error ? innerError : new Error('Unknown error'),
+          { action: 'get_all_expenses' }
+        );
       }
     }
     
@@ -377,7 +396,11 @@ async function getFinanceStats(chapterId: string) {
       balance: totalDuesAmount - totalExpensesAmount,
     };
   } catch (error) {
-    console.error("Error getting finance stats:", error);
+    logger.error(
+      'Error getting finance stats',
+      error instanceof Error ? error : new Error('Unknown error'),
+      { action: 'get_finance_stats' }
+    );
     return {
       budgetCount: 0,
       expenseCount: 0,

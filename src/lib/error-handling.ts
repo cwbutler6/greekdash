@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import { redirect } from 'next/navigation';
+import { logger } from './logger';
 
 export interface ServerActionError {
   message: string;
@@ -15,7 +16,14 @@ export function handleServerActionError(
     userId?: string;
   }
 ): ServerActionError {
-  console.error(`Server action error in ${context.action}:`, error);
+  const errorInstance = error instanceof Error ? error : new Error(String(error));
+  
+  // Use structured logging instead of console.error
+  logger.error(`Server action error in ${context.action}`, errorInstance, {
+    chapterSlug: context.chapterSlug,
+    userId: context.userId,
+    action: context.action,
+  });
 
   // Log to Sentry with context
   Sentry.withScope((scope) => {
@@ -30,44 +38,36 @@ export function handleServerActionError(
       scope.setUser({ id: context.userId });
     }
     
-    Sentry.captureException(error);
+    Sentry.captureException(errorInstance);
   });
 
   // Handle different error types
-  if (error instanceof Error) {
-    if (error.message.includes('Unauthorized')) {
-      return {
-        message: 'You are not authorized to perform this action.',
-        code: 'UNAUTHORIZED',
-        statusCode: 401,
-      };
-    }
-    
-    if (error.message.includes('Not found')) {
-      return {
-        message: 'The requested resource was not found.',
-        code: 'NOT_FOUND',
-        statusCode: 404,
-      };
-    }
-    
-    if (error.message.includes('Validation')) {
-      return {
-        message: 'Invalid input provided.',
-        code: 'VALIDATION_ERROR',
-        statusCode: 400,
-      };
-    }
-    
+  if (errorInstance.message.includes('Unauthorized')) {
     return {
-      message: error.message,
-      code: 'UNKNOWN_ERROR',
-      statusCode: 500,
+      message: 'You are not authorized to perform this action.',
+      code: 'UNAUTHORIZED',
+      statusCode: 401,
     };
   }
-
+  
+  if (errorInstance.message.includes('Not found')) {
+    return {
+      message: 'The requested resource was not found.',
+      code: 'NOT_FOUND',
+      statusCode: 404,
+    };
+  }
+  
+  if (errorInstance.message.includes('Validation')) {
+    return {
+      message: 'Invalid input provided.',
+      code: 'VALIDATION_ERROR',
+      statusCode: 400,
+    };
+  }
+  
   return {
-    message: 'An unexpected error occurred.',
+    message: errorInstance.message,
     code: 'UNKNOWN_ERROR',
     statusCode: 500,
   };
