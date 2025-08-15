@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -41,7 +41,6 @@ export function SocialChapterForm() {
   const [error, setError] = useState<string | null>(null);
   const [slugAvailable, setSlugAvailable] = useState<boolean | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const initialValuesSet = useRef(false); // Add this ref
 
   // Generate a suggested slug from the name if available
   const generateSuggestedSlug = (name: string | null | undefined) => {
@@ -66,12 +65,10 @@ export function SocialChapterForm() {
 
   // Form for creating a new chapter (for social login users)
   const { 
-    register, 
-    watch,
+    register,
+    handleSubmit,
     formState: { errors },
-    setError: setFormError,
-    clearErrors,
-    setValue
+    watch
   } = useForm<SocialChapterFormValues>({
     resolver: zodResolver(socialChapterSchema),
     defaultValues: {
@@ -80,107 +77,56 @@ export function SocialChapterForm() {
       chapterSlug: generateSuggestedSlug(session?.user?.name),
     },
   });
-  
-  // Update form values if session changes
-  useEffect(() => {
-    if (session?.user && !initialValuesSet.current) {
-      if (session.user.name) setValue('fullName', session.user.name);
-      if (session.user.email) setValue('email', session.user.email);
-      const currentSlug = watch('chapterSlug');
-      if (!currentSlug && session.user.name) {
-        setValue('chapterSlug', generateSuggestedSlug(session.user.name));
-      }
-      initialValuesSet.current = true;
-    }
-  }, [session, setValue]);
 
-  // Watch for chapter slug changes
-  const chapterSlug = watch("chapterSlug");
+  // Watch chapterSlug for validation display
+  const chapterSlug = watch('chapterSlug');
 
-  // Check slug availability in real-time
+  // Function to check slug availability
   const checkSlugAvailability = async (slug: string) => {
-    if (!slug || slug.length < 3) {
-      setSlugAvailable(null);
-      return;
-    }
-    
-    // Only proceed with API validation if the format is valid
-    const isValidFormat = /^[a-z0-9-]+$/.test(slug) && 
-                         slug.length >= 3 && 
-                         slug.length <= 30;
-    
-    if (!isValidFormat) {
-      setSlugAvailable(null);
-      return;
-    }
-    
     try {
       const response = await fetch(`/api/chapters/check-slug?slug=${encodeURIComponent(slug)}`);
       const data = await response.json();
-      
       setSlugAvailable(data.available);
-      
-      if (!data.available) {
-        setFormError('chapterSlug', { 
-          type: 'manual', 
-          message: 'This chapter URL is already taken' 
-        });
-      } else {
-        clearErrors('chapterSlug');
-      }
     } catch (error) {
-      logger.error('Failed to check slug availability', error instanceof Error ? error : undefined, {
-        metadata: { slug }
-      });
+      logger.error('Failed to check slug availability', error instanceof Error ? error : undefined);
+      setSlugAvailable(null);
     }
   };
-
+  
   // Handler for social users creating a new chapter
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async (data: SocialChapterFormValues) => {
     setIsLoading(true);
     setError(null);
-
+  
     try {
-      // First, check if the slug is available
-      if (chapterSlug) {
-        // Wait for the slug availability check to complete
-        const response = await fetch(`/api/chapters/check-slug?slug=${encodeURIComponent(chapterSlug)}`);
-        const data = await response.json();
-        
-        if (!data.available) {
-          setError("The chapter URL is already taken. Please choose a different one.");
-          setIsLoading(false);
-          return;
-        }
+      // Check slug availability
+      const response = await fetch(`/api/chapters/check-slug?slug=${encodeURIComponent(data.chapterSlug)}`);
+      const slugData = await response.json();
+      
+      if (!slugData.available) {
+        setError("The chapter URL is already taken. Please choose a different one.");
+        setIsLoading(false);
+        return;
       }
-
-      // Get form data using the form ref instead of e.currentTarget
-      if (!formRef.current) {
-        throw new Error('Form reference not found');
-      }
-
-      // For social users, we use server actions which handle the logic server-side
-      const formData = new FormData(formRef.current);
+  
+      // Create FormData for server action
+      const formData = new FormData();
+      formData.append('fullName', data.fullName);
+      formData.append('email', data.email);
+      formData.append('chapterSlug', data.chapterSlug);
+  
       await createChapterForGoogleUser(formData);
-  
-      // Force session update to include new membership
       await update();
-  
-      // Small delay to ensure session is fully updated before AuthGuard processes redirect
       await new Promise(resolve => setTimeout(resolve, 500));
   
-      // The AuthGuard will now handle the redirect with updated session
     } catch (err) {
-      logger.error('Chapter creation failed', err instanceof Error ? err : undefined, {
-        metadata: { chapterSlug }
-      });
+      logger.error('Chapter creation failed', err instanceof Error ? err : undefined);
       setError(err instanceof Error ? err.message : 'An unexpected error occurred');
     } finally {
       setIsLoading(false);
     }
   };
-
+  
   // If no session, show loading or redirect
   if (!session?.user) {
     return (
@@ -206,7 +152,8 @@ export function SocialChapterForm() {
         </Alert>
       )}
       
-      <form ref={formRef} onSubmit={onSubmit} className="space-y-4">
+      {/* Update the form element */}
+      <form ref={formRef} onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* Full Name (editable) */}
         <div className="space-y-2">
           <Label htmlFor="fullName">Full Name</Label>
