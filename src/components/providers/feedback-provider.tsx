@@ -1,15 +1,8 @@
-"use client"
+"use client";
 
-import React from "react"
-import dynamic from "next/dynamic"
+import { PropsWithChildren } from "react";
 
-// Dynamically import FeedbackBubble with no SSR to avoid hydration issues
-// since it uses window.location which is only available on the client
-const FeedbackBubble = dynamic(
-  () => import("@/components/feedback/feedback-bubble"),
-  { ssr: false }
-)
-
-export default function FeedbackProvider() {
-  return <FeedbackBubble />
+// Simple feedback provider - can be expanded later
+export function FeedbackProvider({ children }: PropsWithChildren) {
+  return <>{children}</>;
 }
