@@ -15,9 +15,14 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
+  // Move outputFileTracingIncludes to top level (not in experimental)
+  outputFileTracingIncludes: {
+    '/api/**/*': ['./src/generated/prisma/**/*'],
+  },
+  
   // Enable experimental instrumentation
   experimental: {},
-};
+}
 
 // Sentry configuration options
 const sentryWebpackPluginOptions = {
