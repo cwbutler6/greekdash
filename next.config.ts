@@ -21,7 +21,19 @@ const nextConfig: NextConfig = {
   },
   
   // Enable experimental instrumentation
-  experimental: {},
+  experimental: {
+    serverComponentsExternalPackages: ['@prisma/client', '@prisma/engines'],
+  },
+  
+  // Add webpack configuration to handle Prisma engines
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals.push({
+        '@prisma/client': '@prisma/client',
+      });
+    }
+    return config;
+  },
 }
 
 // Sentry configuration options
