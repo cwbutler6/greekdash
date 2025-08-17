@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
   // Move outputFileTracingIncludes to top level (not in experimental)
   outputFileTracingIncludes: {
     '/api/**/*': ['./src/generated/prisma/**/*'],
+    '/**/*': ['./node_modules/.prisma/client/**/*'],
   },
   
   // Enable experimental instrumentation
@@ -25,12 +26,17 @@ const nextConfig: NextConfig = {
     serverComponentsExternalPackages: ['@prisma/client', '@prisma/engines'],
   },
   
-  // Add webpack configuration to handle Prisma engines
+  // Enhanced webpack configuration to handle Prisma engines
   webpack: (config, { isServer }) => {
     if (isServer) {
-      config.externals.push({
-        '@prisma/client': '@prisma/client',
-      });
+      // Externalize Prisma client to prevent bundling issues
+      config.externals.push('@prisma/client');
+      
+      // Ensure Prisma engines are copied to the output
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js',
+      };
     }
     return config;
   },
