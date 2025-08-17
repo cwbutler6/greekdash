@@ -22,10 +22,8 @@ const nextConfig: NextConfig = {
     '/**/*': ['./node_modules/.prisma/client/**/*'],
   },
   
-  // Enable experimental instrumentation
-  experimental: {
-    serverComponentsExternalPackages: ['@prisma/client', '@prisma/engines'],
-  },
+  // Updated: moved from experimental.serverComponentsExternalPackages to serverExternalPackages
+  serverExternalPackages: ['@prisma/client', '@prisma/engines'],
   
   // Enhanced webpack configuration to handle Prisma engines
   webpack: (config, { isServer }) => {
