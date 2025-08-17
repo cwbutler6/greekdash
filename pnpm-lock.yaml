@@ -150,6 +150,9 @@ importers:
       '@playwright/test':
         specifier: ^1.41.0
         version: 1.53.1
+      '@prisma/nextjs-monorepo-workaround-plugin':
+        specifier: ^6.14.0
+        version: 6.14.0
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.11
@@ -1125,6 +1128,9 @@ packages:
     resolution: {integrity: sha512-b97b0sBycGh89RQcqobSgjGl3jwPaC5cQIOFod6EX1v0zIxlXPmL3ckSXxoHpy+Js0QV/tgCzFvqicMJCtezBA==}
     peerDependencies:
       '@opentelemetry/api': ^1.8
+
+  '@prisma/nextjs-monorepo-workaround-plugin@6.14.0':
+    resolution: {integrity: sha512-eZ9XTmL+r6TbTSlqLTrXaBha0PYLUIMqvbx+T3VSHxjeZYR7bURTDwPHrfNJWLTPKOYSR8RBFkGLOx4OwZ51Ug==}
 
   '@radix-ui/number@1.1.1':
     resolution: {integrity: sha512-MkKCwxlXTgz6CFoJx3pCwn07GKp36+aZyu/u2Ln2VrA5DcdyCZkASEDBTd8x5whTQQL5CiYf4prXKLcgQdv29g==}
@@ -5776,6 +5782,8 @@ snapshots:
       '@opentelemetry/instrumentation': 0.57.2(@opentelemetry/api@1.9.0)
     transitivePeerDependencies:
       - supports-color
+
+  '@prisma/nextjs-monorepo-workaround-plugin@6.14.0': {}
 
   '@radix-ui/number@1.1.1': {}
 
