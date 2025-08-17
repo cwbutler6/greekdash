@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ContactForm from './contact-form';
 import { Metadata } from 'next';
+import { AdminLinkButton } from './admin-link-button';
 
 type PublicChapterPageProps = {
   params: Promise<{ chapterSlug: string }>;
@@ -155,6 +156,7 @@ export default async function PublicChapterPage({ params }: PublicChapterPagePro
               </span>
             </div>
             <div className="flex items-center space-x-4">
+              <AdminLinkButton chapterSlug={chapterSlug} primaryColor={primaryColor} />
               <Link
                 href={`/${chapter.slug}/portal`}
                 className="px-4 py-2 rounded-md text-white font-medium transition-colors"

@@ -71,6 +71,15 @@ export default async function ChapterLayout({ children, params }: ChapterLayoutP
               primaryColor={primaryColor}
               secondaryColor={secondaryColor}
             />
+            <Link 
+              href={`/${chapterSlug}`} 
+              className="hidden md:block text-sm px-3 py-1 rounded-md transition-colors"
+              style={{
+                backgroundColor: `${primaryColor}dd`, // Slightly darker than primary
+                color: secondaryColor
+              }}>
+              Public Website
+            </Link>
             {isAdmin && (
               <Link 
                 href={`/${chapterSlug}/admin`} 

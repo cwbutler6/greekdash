@@ -63,6 +63,11 @@ export default async function AdminLayout({ children, params }: AdminLayoutProps
           </div>
           <div className="flex items-center space-x-4">
             <Link 
+              href={`/${chapterSlug}`} 
+              className="text-sm px-3 py-1 bg-emerald-700 hover:bg-emerald-800 rounded-md transition-colors">
+              Public Website
+            </Link>
+            <Link 
               href={`/${chapterSlug}/portal`} 
               className="text-sm px-3 py-1 bg-emerald-700 hover:bg-emerald-800 rounded-md transition-colors">
               Member Portal
