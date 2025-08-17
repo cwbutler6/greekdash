@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from '@sentry/nextjs';
+import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -29,6 +30,9 @@ const nextConfig: NextConfig = {
   // Enhanced webpack configuration to handle Prisma engines
   webpack: (config, { isServer }) => {
     if (isServer) {
+      // Add PrismaPlugin to handle engine bundling
+      config.plugins = [...config.plugins, new PrismaPlugin()];
+      
       // Externalize Prisma client to prevent bundling issues
       config.externals.push('@prisma/client');
       
