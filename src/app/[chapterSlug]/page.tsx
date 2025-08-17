@@ -189,13 +189,14 @@ export default async function PublicChapterPage({ params }: PublicChapterPagePro
 
         {/* About Section */}
         {chapter.publicInfo && (
-          <section className="py-16 bg-white">
-            <div className="max-w-4xl mx-auto px-4">
-              <h2 className="text-3xl font-bold text-center mb-8 text-gray-900">
-                About Our Chapter
-              </h2>
-              <div className="prose prose-lg mx-auto text-gray-700">
-                <p className="whitespace-pre-wrap">{chapter.publicInfo}</p>
+          <section className="py-16">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto">
+                <h2 className="text-3xl font-bold text-center mb-8">About Our Chapter</h2>
+                <div 
+                  className="prose prose-lg max-w-none text-gray-600 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: chapter.publicInfo }}
+                />
               </div>
             </div>
           </section>

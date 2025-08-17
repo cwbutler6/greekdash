@@ -24,9 +24,9 @@ import {
 } from '@/components/ui/form';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { Paintbrush, RefreshCw } from 'lucide-react';
+import { RichTextEditor } from '@/components/ui/rich-text-editor';
 
 // Define the form schema
 const formSchema = z.object({
@@ -256,14 +256,16 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
                   <FormItem>
                     <FormLabel>Public Information</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        {...field}
-                        placeholder="Tell visitors about your chapter. This information will be displayed on your public page..."
-                        className="min-h-[120px] resize-none"
+                      <RichTextEditor
+                        content={field.value || ''}
+                        onChange={field.onChange}
+                        placeholder="Enter public information about your chapter that will be displayed on your public page..."
+                        maxLength={5000}
+                        className="w-full"
                       />
                     </FormControl>
                     <FormDescription>
-                      This information will be displayed on your chapter&apos;s public page. Describe your chapter&apos;s mission, values, and what makes it special. (Max 1000 characters)
+                      This information will be displayed on your chapter&apos;s public page. You can use formatting, links, and emojis.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

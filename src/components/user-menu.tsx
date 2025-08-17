@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
@@ -25,6 +25,24 @@ export default function UserMenu({
 }: UserMenuProps) {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Handle click outside to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
   if (!session?.user) {
     return (
@@ -46,7 +64,7 @@ export default function UserMenu({
   }
 
   return (
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <button
         className="flex items-center space-x-2 rounded-full focus:outline-none focus:ring-2 focus:ring-white px-4 py-1"
         onClick={() => setIsOpen(!isOpen)}
