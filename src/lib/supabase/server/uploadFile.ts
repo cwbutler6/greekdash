@@ -59,16 +59,38 @@ export async function uploadFile({
   if (!isSupabaseConfigured()) {
     console.warn('Supabase not configured - skipping storage upload');
   } else {
-    // Upload to Supabase Storage
-    const { error } = await supabaseAdmin.storage
-      .from('chapter-files')
-      .upload(filePath, fileBuffer, {
-        contentType: mimeType,
-        cacheControl: '3600',
-      });
+    try {
+      // Try to ensure the bucket exists
+      const { data: buckets } = await supabaseAdmin.storage.listBuckets();
+      const bucketExists = buckets?.some(bucket => bucket.name === 'chapter-files');
+      
+      if (!bucketExists) {
+        console.log('Creating chapter-files bucket in Supabase...');
+        await supabaseAdmin.storage.createBucket('chapter-files', {
+          public: true,
+          fileSizeLimit: 52428800, // 50MB in bytes
+        });
+        console.log('Bucket created successfully');
+      }
 
-    if (error) {
-      throw new Error(`Supabase storage error: ${error.message}`);
+      // Upload to Supabase Storage
+      const { error } = await supabaseAdmin.storage
+        .from('chapter-files')
+        .upload(filePath, fileBuffer, {
+          contentType: mimeType,
+          cacheControl: '3600',
+        });
+
+      if (error) {
+        if (error.message?.includes('Bucket not found')) {
+          console.error('Bucket not found even after creation attempt');
+          throw new Error('Unable to create or access storage bucket');
+        }
+        throw new Error(`Supabase storage error: ${error.message}`);
+      }
+    } catch (err) {
+      console.error('Error with Supabase storage operation:', err);
+      throw new Error(`Storage operation failed: ${err instanceof Error ? err.message : 'Unknown error'}`);
     }
   }
 

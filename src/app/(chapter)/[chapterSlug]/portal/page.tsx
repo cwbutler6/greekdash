@@ -2,6 +2,7 @@ import { requireChapterAccess } from '@/lib/auth';
 import { getCurrentUser } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import Link from 'next/link';
+import Image from 'next/image';
 import { format } from 'date-fns';
 import { ArrowRight, CalendarDays, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -36,10 +37,15 @@ export default async function PortalPage(props: { params: Promise<{ chapterSlug:
   // Get current user for display
   const currentUser = await getCurrentUser();
 
-  // Get chapter details
+  // Get chapter details including logoUrl
   const chapter = await prisma.chapter.findUnique({
     where: {
       slug: chapterSlug,
+    },
+    select: {
+      id: true,
+      name: true,
+      logoUrl: true,
     },
   });
 
@@ -78,7 +84,22 @@ export default async function PortalPage(props: { params: Promise<{ chapterSlug:
     <div className="space-y-8">
       <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold">Member Portal - {chapter.name}</h1>
+          <div className="flex items-center gap-4">
+            {chapter.logoUrl && (
+              <div className="relative h-16 w-16 flex-shrink-0">
+                <Image
+                  src={chapter.logoUrl}
+                  alt={`${chapter.name} logo`}
+                  fill
+                  className="object-contain rounded-lg"
+                  unoptimized
+                />
+              </div>
+            )}
+            <div>
+              <h1 className="text-2xl font-bold">Member Portal - {chapter.name}</h1>
+            </div>
+          </div>
         </div>
 
         <div className="mb-8 rounded-md bg-gray-50 p-4">

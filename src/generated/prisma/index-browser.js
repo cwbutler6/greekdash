@@ -127,6 +127,7 @@ exports.Prisma.ChapterScalarFieldEnum = {
   joinCode: 'joinCode',
   publicInfo: 'publicInfo',
   primaryColor: 'primaryColor',
+  logoUrl: 'logoUrl',
   schoolName: 'schoolName',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',

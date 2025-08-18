@@ -35,7 +35,18 @@ export async function GET(
       // Admin can see all chapter details including sensitive fields
       const chapter = await prisma.chapter.findUnique({
         where: { slug: chapterSlug },
-        include: {}, // Get all fields
+        select: {
+          id: true,
+          name: true,
+          slug: true,
+          joinCode: true,
+          primaryColor: true,
+          publicInfo: true,
+          logoUrl: true,
+          schoolName: true,
+          createdAt: true,
+          updatedAt: true,
+        },
       });
       
       if (!chapter) {
@@ -55,6 +66,10 @@ export async function GET(
         id: true,
         name: true,
         slug: true,
+        logoUrl: true,
+        primaryColor: true,
+        publicInfo: true,
+        schoolName: true,
         createdAt: true,
         // Don't expose joinCode in public API response
       },

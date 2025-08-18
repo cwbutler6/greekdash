@@ -6,6 +6,20 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     remotePatterns: [
+      // Supabase production URLs
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+        pathname: '/storage/v1/object/public/**',
+      },
+      // Supabase local development
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '54321',
+        pathname: '/storage/v1/object/public/**',
+      },
+      // Keep wildcard as fallback for other image sources if needed
       {
         protocol: 'https',
         hostname: '**',
@@ -22,19 +36,12 @@ const nextConfig: NextConfig = {
     '/**/*': ['./node_modules/.prisma/client/**/*'],
   },
   
-  // Updated: moved from experimental.serverComponentsExternalPackages to serverExternalPackages
   serverExternalPackages: ['@prisma/client', '@prisma/engines'],
   
-  // Enhanced webpack configuration to handle Prisma engines
   webpack: (config, { isServer }) => {
     if (isServer) {
-      // Add PrismaPlugin to handle engine bundling
       config.plugins = [...config.plugins, new PrismaPlugin()];
-      
-      // Externalize Prisma client to prevent bundling issues
       config.externals.push('@prisma/client');
-      
-      // Ensure Prisma engines are copied to the output
       config.resolve.alias = {
         ...config.resolve.alias,
         '.prisma/client/index-browser': './node_modules/.prisma/client/index-browser.js',

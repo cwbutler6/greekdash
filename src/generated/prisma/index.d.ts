@@ -3981,6 +3981,7 @@ export namespace Prisma {
     joinCode: string | null
     publicInfo: string | null
     primaryColor: string | null
+    logoUrl: string | null
     schoolName: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4001,6 +4002,7 @@ export namespace Prisma {
     joinCode: string | null
     publicInfo: string | null
     primaryColor: string | null
+    logoUrl: string | null
     schoolName: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -4021,6 +4023,7 @@ export namespace Prisma {
     joinCode: number
     publicInfo: number
     primaryColor: number
+    logoUrl: number
     schoolName: number
     createdAt: number
     updatedAt: number
@@ -4053,6 +4056,7 @@ export namespace Prisma {
     joinCode?: true
     publicInfo?: true
     primaryColor?: true
+    logoUrl?: true
     schoolName?: true
     createdAt?: true
     updatedAt?: true
@@ -4073,6 +4077,7 @@ export namespace Prisma {
     joinCode?: true
     publicInfo?: true
     primaryColor?: true
+    logoUrl?: true
     schoolName?: true
     createdAt?: true
     updatedAt?: true
@@ -4093,6 +4098,7 @@ export namespace Prisma {
     joinCode?: true
     publicInfo?: true
     primaryColor?: true
+    logoUrl?: true
     schoolName?: true
     createdAt?: true
     updatedAt?: true
@@ -4200,6 +4206,7 @@ export namespace Prisma {
     joinCode: string
     publicInfo: string | null
     primaryColor: string | null
+    logoUrl: string | null
     schoolName: string | null
     createdAt: Date
     updatedAt: Date
@@ -4239,6 +4246,7 @@ export namespace Prisma {
     joinCode?: boolean
     publicInfo?: boolean
     primaryColor?: boolean
+    logoUrl?: boolean
     schoolName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4279,6 +4287,7 @@ export namespace Prisma {
     joinCode?: boolean
     publicInfo?: boolean
     primaryColor?: boolean
+    logoUrl?: boolean
     schoolName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4299,6 +4308,7 @@ export namespace Prisma {
     joinCode?: boolean
     publicInfo?: boolean
     primaryColor?: boolean
+    logoUrl?: boolean
     schoolName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4319,6 +4329,7 @@ export namespace Prisma {
     joinCode?: boolean
     publicInfo?: boolean
     primaryColor?: boolean
+    logoUrl?: boolean
     schoolName?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -4332,7 +4343,7 @@ export namespace Prisma {
     treasuryLastYieldDate?: boolean
   }
 
-  export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "publicInfo" | "primaryColor" | "schoolName" | "createdAt" | "updatedAt" | "stripeCustomerId" | "chapterTreasuryBalance" | "autoInvestEnabled" | "autoInvestStrategy" | "walletAddress" | "walletPrivateKey" | "treasuryLastYield" | "treasuryLastYieldDate", ExtArgs["result"]["chapter"]>
+  export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "publicInfo" | "primaryColor" | "logoUrl" | "schoolName" | "createdAt" | "updatedAt" | "stripeCustomerId" | "chapterTreasuryBalance" | "autoInvestEnabled" | "autoInvestStrategy" | "walletAddress" | "walletPrivateKey" | "treasuryLastYield" | "treasuryLastYieldDate", ExtArgs["result"]["chapter"]>
   export type ChapterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     memberships?: boolean | Chapter$membershipsArgs<ExtArgs>
     profiles?: boolean | Chapter$profilesArgs<ExtArgs>
@@ -4388,6 +4399,7 @@ export namespace Prisma {
       joinCode: string
       publicInfo: string | null
       primaryColor: string | null
+      logoUrl: string | null
       schoolName: string | null
       createdAt: Date
       updatedAt: Date
@@ -4847,6 +4859,7 @@ export namespace Prisma {
     readonly joinCode: FieldRef<"Chapter", 'String'>
     readonly publicInfo: FieldRef<"Chapter", 'String'>
     readonly primaryColor: FieldRef<"Chapter", 'String'>
+    readonly logoUrl: FieldRef<"Chapter", 'String'>
     readonly schoolName: FieldRef<"Chapter", 'String'>
     readonly createdAt: FieldRef<"Chapter", 'DateTime'>
     readonly updatedAt: FieldRef<"Chapter", 'DateTime'>
@@ -36412,6 +36425,7 @@ export namespace Prisma {
     joinCode: 'joinCode',
     publicInfo: 'publicInfo',
     primaryColor: 'primaryColor',
+    logoUrl: 'logoUrl',
     schoolName: 'schoolName',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -37177,6 +37191,7 @@ export namespace Prisma {
     joinCode?: StringFilter<"Chapter"> | string
     publicInfo?: StringNullableFilter<"Chapter"> | string | null
     primaryColor?: StringNullableFilter<"Chapter"> | string | null
+    logoUrl?: StringNullableFilter<"Chapter"> | string | null
     schoolName?: StringNullableFilter<"Chapter"> | string | null
     createdAt?: DateTimeFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
@@ -37216,6 +37231,7 @@ export namespace Prisma {
     joinCode?: SortOrder
     publicInfo?: SortOrderInput | SortOrder
     primaryColor?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
     schoolName?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -37258,6 +37274,7 @@ export namespace Prisma {
     joinCode?: StringFilter<"Chapter"> | string
     publicInfo?: StringNullableFilter<"Chapter"> | string | null
     primaryColor?: StringNullableFilter<"Chapter"> | string | null
+    logoUrl?: StringNullableFilter<"Chapter"> | string | null
     schoolName?: StringNullableFilter<"Chapter"> | string | null
     createdAt?: DateTimeFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
@@ -37297,6 +37314,7 @@ export namespace Prisma {
     joinCode?: SortOrder
     publicInfo?: SortOrderInput | SortOrder
     primaryColor?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
     schoolName?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -37325,6 +37343,7 @@ export namespace Prisma {
     joinCode?: StringWithAggregatesFilter<"Chapter"> | string
     publicInfo?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
     primaryColor?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
+    logoUrl?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
     schoolName?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Chapter"> | Date | string
@@ -39608,6 +39627,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -39647,6 +39667,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -39686,6 +39707,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39725,6 +39747,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39764,6 +39787,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -39784,6 +39808,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39804,6 +39829,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -42531,6 +42557,7 @@ export namespace Prisma {
     joinCode?: SortOrder
     publicInfo?: SortOrder
     primaryColor?: SortOrder
+    logoUrl?: SortOrder
     schoolName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42556,6 +42583,7 @@ export namespace Prisma {
     joinCode?: SortOrder
     publicInfo?: SortOrder
     primaryColor?: SortOrder
+    logoUrl?: SortOrder
     schoolName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -42576,6 +42604,7 @@ export namespace Prisma {
     joinCode?: SortOrder
     publicInfo?: SortOrder
     primaryColor?: SortOrder
+    logoUrl?: SortOrder
     schoolName?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -49945,6 +49974,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -49983,6 +50013,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -50214,6 +50245,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50252,6 +50284,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50502,6 +50535,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -50540,6 +50574,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -50698,6 +50733,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50736,6 +50772,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50774,6 +50811,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -50812,6 +50850,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -50866,6 +50905,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -50904,6 +50944,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51206,6 +51247,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -51244,6 +51286,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -51424,6 +51467,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51462,6 +51506,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51638,6 +51683,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -51676,6 +51722,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -51819,6 +51866,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -51857,6 +51905,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52255,6 +52304,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52293,6 +52343,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52416,6 +52467,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52454,6 +52506,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52492,6 +52545,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52530,6 +52584,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52584,6 +52639,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52622,6 +52678,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52660,6 +52717,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52698,6 +52756,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52752,6 +52811,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52790,6 +52850,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -52828,6 +52889,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52866,6 +52928,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -52962,6 +53025,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53000,6 +53064,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53054,6 +53119,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53092,6 +53158,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53334,6 +53401,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53372,6 +53440,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53622,6 +53691,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53660,6 +53730,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53788,6 +53859,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53826,6 +53898,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -53896,6 +53969,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -53934,6 +54008,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54115,6 +54190,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54153,6 +54229,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54336,6 +54413,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54374,6 +54452,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54551,6 +54630,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54589,6 +54669,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -54900,6 +54981,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -54938,6 +55020,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55055,6 +55138,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55093,6 +55177,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55200,6 +55285,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55238,6 +55324,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55292,6 +55379,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55330,6 +55418,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55368,6 +55457,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55406,6 +55496,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55460,6 +55551,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55498,6 +55590,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55632,6 +55725,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55670,6 +55764,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -55895,6 +55990,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -55933,6 +56029,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56040,6 +56137,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56078,6 +56176,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56247,6 +56346,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56285,6 +56385,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56408,6 +56509,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56446,6 +56548,7 @@ export namespace Prisma {
     joinCode?: string
     publicInfo?: string | null
     primaryColor?: string | null
+    logoUrl?: string | null
     schoolName?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -56637,6 +56740,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -56675,6 +56779,7 @@ export namespace Prisma {
     joinCode?: StringFieldUpdateOperationsInput | string
     publicInfo?: NullableStringFieldUpdateOperationsInput | string | null
     primaryColor?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     schoolName?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string

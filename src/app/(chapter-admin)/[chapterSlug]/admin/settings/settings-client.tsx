@@ -27,6 +27,7 @@ import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { Paintbrush, RefreshCw } from 'lucide-react';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
+import { LogoUpload } from '@/components/ui/logo-upload';
 
 // Define the form schema
 const formSchema = z.object({
@@ -38,11 +39,11 @@ const formSchema = z.object({
   }),
   publicInfo: z.string().max(1000, {
     message: "Public information must be less than 1000 characters.",
-  }).optional()
+  }).optional(),
+  logoUrl: z.string().nullable().optional(),
 });
 
-type FormValues = z.infer<typeof formSchema>;
-
+// Single ChapterSettings interface with consistent typing
 interface ChapterSettings {
   id: string;
   name: string;
@@ -50,7 +51,12 @@ interface ChapterSettings {
   joinCode: string;
   primaryColor?: string;
   publicInfo?: string;
+  logoUrl?: string | null; // Keep this as is
 }
+
+type FormValues = z.infer<typeof formSchema>;
+
+// Remove the duplicate interface definition that was here
 
 // Server action to update chapter settings
 async function updateChapterSettings(formData: FormData) {
@@ -106,8 +112,9 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: '',
-      primaryColor: '#4F46E5', // Default indigo color
+      primaryColor: '#4F46E5',
       publicInfo: '',
+      logoUrl: null,
     }
   });
   
@@ -127,6 +134,7 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
           name: data.chapter.name,
           primaryColor: data.chapter.primaryColor || '#4F46E5',
           publicInfo: data.chapter.publicInfo || '',
+          logoUrl: data.chapter.logoUrl || null, // Changed to use null instead of empty string
         });
       } catch (error) {
         toast.error('Failed to load chapter settings');
@@ -139,6 +147,17 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
     fetchChapter();
   }, [chapterSlug, form]);
 
+  // Update local state with proper typing
+  const updateChapterState = (values: FormValues) => {
+    setChapter(prev => prev ? { 
+      ...prev, 
+      name: values.name,
+      primaryColor: values.primaryColor,
+      publicInfo: values.publicInfo,
+      logoUrl: values.logoUrl 
+    } : null);
+  };
+
   // Handle form submission
   const onSubmit = async (values: FormValues) => {
     try {
@@ -148,12 +167,13 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
       formData.append('name', values.name);
       formData.append('primaryColor', values.primaryColor);
       formData.append('publicInfo', values.publicInfo || '');
+      formData.append('logoUrl', values.logoUrl || '');
       formData.append('chapterSlug', chapterSlug);
 
       await updateChapterSettings(formData);
       
-      // Update local state
-      setChapter(prev => prev ? { ...prev, ...values } : null);
+      // Update local state with proper typing
+      updateChapterState(values);
       
       toast.success('Chapter settings updated');
       router.refresh();
@@ -220,6 +240,30 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
                     </FormControl>
                     <FormDescription>
                       The name of your chapter as it will appear throughout the platform.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="logoUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Chapter Logo</FormLabel>
+                    <FormControl>
+                      <LogoUpload
+                        chapterSlug={chapterSlug}
+                        logoUrl={field.value}
+                        onLogoUpdate={(logoUrl: string | null) => {
+                          field.onChange(logoUrl);
+                          setChapter(prev => prev ? { ...prev, logoUrl: logoUrl } : null);
+                        }}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Upload a logo to represent your chapter. This will be displayed on your public page and throughout the platform.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

@@ -103,6 +103,7 @@ export default async function PublicChapterPage({ params }: PublicChapterPagePro
       slug: true,
       publicInfo: true,
       primaryColor: true,
+      logoUrl: true, // Add this line
       schoolName: true,
       createdAt: true,
       galleryImages: {
@@ -151,9 +152,20 @@ export default async function PublicChapterPage({ params }: PublicChapterPagePro
                 GreekDash
               </Link>
               <span className="ml-4 text-gray-500">|</span>
-              <span className="ml-4 text-lg font-medium text-gray-700">
-                {chapter.name}
-              </span>
+              <div className="ml-4 flex items-center space-x-3">
+                {chapter.logoUrl && (
+                  <Image
+                    src={chapter.logoUrl}
+                    alt={`${chapter.name} logo`}
+                    width={32}
+                    height={32}
+                    className="object-contain"
+                  />
+                )}
+                <span className="text-lg font-medium text-gray-700">
+                  {chapter.name}
+                </span>
+              </div>
             </div>
             <div className="flex items-center space-x-4">
               <AdminLinkButton chapterSlug={chapterSlug} primaryColor={primaryColor} />
@@ -177,6 +189,17 @@ export default async function PublicChapterPage({ params }: PublicChapterPagePro
           style={{ backgroundColor: primaryColor }}
         >
           <div className="max-w-4xl mx-auto px-4">
+            {chapter.logoUrl && (
+              <div className="mb-6">
+                <Image
+                  src={chapter.logoUrl}
+                  alt={`${chapter.name} logo`}
+                  width={120}
+                  height={120}
+                  className="mx-auto object-contain bg-white/10 rounded-lg p-4"
+                />
+              </div>
+            )}
             <h1 className="text-5xl font-bold mb-4">{chapter.name}</h1>
             {chapter.schoolName && (
               <p className="text-xl mb-6 opacity-90">{chapter.schoolName}</p>
