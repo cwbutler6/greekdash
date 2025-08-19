@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useSession, getSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,13 +17,6 @@ import { createChapterForGoogleUser } from "@/app/actions/auth";
 
 import { createComponentLogger } from "@/lib/logger";
 import Link from "next/link";
-
-// Proper TypeScript interfaces
-interface CreateChapterResult {
-  success: boolean;
-  chapterSlug: string;
-  redirectUrl: string;
-}
 
 interface SlugAvailabilityResponse {
   available: boolean;
@@ -112,7 +105,7 @@ export function SocialChapterForm() {
     console.log('Router:', router);
   };
   
-  // Handler for social users creating a new chapter
+  // Simplified handler for social users creating a new chapter
   const onSubmit = async (data: SocialChapterFormValues): Promise<void> => {
     console.log('🚀 Form submission started with data:', data);
     
@@ -144,75 +137,30 @@ export function SocialChapterForm() {
         chapterSlug: data.chapterSlug
       });
   
-      const result = await createChapterForGoogleUser(formData) as CreateChapterResult;
+      const result = await createChapterForGoogleUser(formData);
       
-      console.log('📥 Server action result:', result);
+      console.log('🎉 Chapter created successfully!');
+      logger.info('Chapter created successfully', { 
+        chapterSlug: result.chapterSlug,
+        metadata: {
+          redirectUrl: result.redirectUrl
+        }
+      });
       
-      // In the onSubmit function, replace the session update logic (lines 160-180)
-      if (result.success) {
-        console.log('🎉 Chapter created successfully!');
-        logger.info('Chapter created successfully', { 
-          chapterSlug: result.chapterSlug,
-          metadata: {
-            redirectUrl: result.redirectUrl
-          }
-        });
-        
-        console.log('🔄 Updating session and waiting for membership data...');
-        
-        // Update session and poll until we have membership data
-        await update();
-        
-        // Poll for session update with membership data (max 10 seconds)
-        let attempts = 0;
-        const maxAttempts = 20; // 20 attempts * 500ms = 10 seconds max
-        let sessionHasMembership = false;
-        
-        while (attempts < maxAttempts && !sessionHasMembership) {
-          await new Promise(resolve => setTimeout(resolve, 500));
-          
-          const updatedSession = await getSession();
-          sessionHasMembership = Boolean(updatedSession?.user?.memberships?.length);
-          
-          console.log(`📋 Session check attempt ${attempts + 1}:`, {
-            hasMemberships: sessionHasMembership,
-            membershipCount: updatedSession?.user?.memberships?.length
-          });
-          
-          if (sessionHasMembership) {
-            console.log('✅ Session updated with membership data!');
-            break;
-          }
-          
-          attempts++;
-          
-          // Trigger another session update every few attempts
-          if (attempts % 4 === 0) {
-            console.log('🔄 Triggering additional session update...');
-            await update();
-          }
-        }
-        
-        if (sessionHasMembership) {
-          console.log('🚀 Redirecting to:', result.redirectUrl);
-          // Use window.location.href for a hard redirect that bypasses client-side routing
-          window.location.href = result.redirectUrl;
-        } else {
-          console.warn('⚠️ Session update timed out, using fallback redirect');
-          // Fallback: construct the URL manually and redirect
-          const fallbackUrl = `/${result.chapterSlug}/admin`;
-          window.location.href = fallbackUrl;
-        }
-        
-      } else {
-        console.error('❌ Chapter creation failed:', result);
-        setError('Failed to create chapter. Please try again.');
-      }
+      console.log('🔄 Updating session...');
+      
+      // Update the session once to refresh user data
+      await update();
+      
+      // Direct redirect - the server action has already created the membership
+      console.log('🚀 Redirecting to:', result.redirectUrl);
+      window.location.href = result.redirectUrl;
   
-    } catch (err: unknown) {
-      console.error('💥 Chapter creation error:', err);
-      logger.error('Chapter creation failed', err instanceof Error ? err : undefined);
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+    } catch (error: unknown) {
+      console.error('💥 Chapter creation error:', error);
+      logger.error('Chapter creation failed', error instanceof Error ? error : undefined);
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
       console.log('✅ Form submission completed');
