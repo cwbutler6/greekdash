@@ -46,6 +46,7 @@ model Chapter {
   joinCode       String         @default(uuid())
   publicInfo     String?        @db.Text
   primaryColor   String?        
+  secondaryColor String?        // Secondary color for chapter branding
   logoUrl        String?        // Chapter logo for branding
   schoolName     String?        // Name of the university/college
   createdAt      DateTime       @default(now())

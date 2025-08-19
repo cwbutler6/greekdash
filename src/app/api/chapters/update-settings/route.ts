@@ -8,6 +8,7 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     const name = formData.get('name') as string;
     const primaryColor = formData.get('primaryColor') as string;
+    const secondaryColor = formData.get('secondaryColor') as string;
     const publicInfo = formData.get('publicInfo') as string;
     const chapterSlug = formData.get('chapterSlug') as string;
 
@@ -18,10 +19,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Validate color format if provided
-    if (primaryColor && !/^#([0-9A-F]{6})$/i.test(primaryColor)) {
+    // Validate both color formats if provided
+    const colorRegex = /^#([0-9A-F]{6})$/i;
+    if (primaryColor && !colorRegex.test(primaryColor)) {
       return NextResponse.json(
-        { error: "Invalid color format. Please use hex format (e.g. #123ABC)" },
+        { error: "Invalid primary color format. Please use hex format (e.g. #123ABC)" },
+        { status: 400 }
+      );
+    }
+    if (secondaryColor && !colorRegex.test(secondaryColor)) {
+      return NextResponse.json(
+        { error: "Invalid secondary color format. Please use hex format (e.g. #123ABC)" },
         { status: 400 }
       );
     }
@@ -59,6 +67,7 @@ export async function POST(request: NextRequest) {
         name,
         // Include fields if they are provided
         ...(primaryColor && { primaryColor }),
+        ...(secondaryColor && { secondaryColor }),
         ...(publicInfo !== undefined && { publicInfo })
       }
     });

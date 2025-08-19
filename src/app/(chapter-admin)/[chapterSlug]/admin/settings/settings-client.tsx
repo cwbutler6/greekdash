@@ -28,6 +28,7 @@ import { toast } from 'sonner';
 import { Paintbrush, RefreshCw } from 'lucide-react';
 import { RichTextEditor } from '@/components/ui/rich-text-editor';
 import { LogoUpload } from '@/components/ui/logo-upload';
+import { ColorPicker } from '@/components/ui/color-picker';
 
 // Define the form schema
 const formSchema = z.object({
@@ -35,6 +36,9 @@ const formSchema = z.object({
     message: "Chapter name must be at least 2 characters.",
   }),
   primaryColor: z.string().regex(/^#([0-9A-F]{6})$/i, {
+    message: "Please enter a valid hex color code (e.g. #123ABC)",
+  }),
+  secondaryColor: z.string().regex(/^#([0-9A-F]{6})$/i, {
     message: "Please enter a valid hex color code (e.g. #123ABC)",
   }),
   publicInfo: z.string().max(1000, {
@@ -50,6 +54,7 @@ interface ChapterSettings {
   slug: string;
   joinCode: string;
   primaryColor?: string;
+  secondaryColor?: string;
   publicInfo?: string;
   logoUrl?: string | null; // Keep this as is
 }
@@ -113,6 +118,7 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
     defaultValues: {
       name: '',
       primaryColor: '#4F46E5',
+      secondaryColor: '#10B981', // Added missing secondaryColor
       publicInfo: '',
       logoUrl: null,
     }
@@ -133,8 +139,9 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
         form.reset({
           name: data.chapter.name,
           primaryColor: data.chapter.primaryColor || '#4F46E5',
+          secondaryColor: data.chapter.secondaryColor || '#10B981', // Added missing secondaryColor
           publicInfo: data.chapter.publicInfo || '',
-          logoUrl: data.chapter.logoUrl || null, // Changed to use null instead of empty string
+          logoUrl: data.chapter.logoUrl || null,
         });
       } catch (error) {
         toast.error('Failed to load chapter settings');
@@ -153,6 +160,7 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
       ...prev, 
       name: values.name,
       primaryColor: values.primaryColor,
+      secondaryColor: values.secondaryColor, // Added missing secondaryColor
       publicInfo: values.publicInfo,
       logoUrl: values.logoUrl 
     } : null);
@@ -166,6 +174,7 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
       const formData = new FormData();
       formData.append('name', values.name);
       formData.append('primaryColor', values.primaryColor);
+      formData.append('secondaryColor', values.secondaryColor); // Added missing secondaryColor
       formData.append('publicInfo', values.publicInfo || '');
       formData.append('logoUrl', values.logoUrl || '');
       formData.append('chapterSlug', chapterSlug);
@@ -270,6 +279,7 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
                 )}
               />
               
+              {/* Color picker sections */}
               <FormField
                 control={form.control}
                 name="primaryColor"
@@ -277,16 +287,37 @@ export default function SettingsClient({ chapterSlug }: { chapterSlug: string })
                   <FormItem>
                     <FormLabel>Primary Color</FormLabel>
                     <FormControl>
-                      <div className="flex gap-2">
-                        <div 
-                          className="w-10 h-10 rounded-md border"
-                          style={{ backgroundColor: field.value }}
-                        />
-                        <Input {...field} placeholder="#4F46E5" />
-                      </div>
+                      <ColorPicker
+                        value={field.value}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        disabled={isLoading}
+                      />
                     </FormControl>
                     <FormDescription>
-                      Enter a hex color code (e.g. #123ABC) for your chapter&apos;s brand color.
+                      Choose your chapter&apos;s primary brand color. This will be used for headers, buttons, and key UI elements.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              
+              <FormField
+                control={form.control}
+                name="secondaryColor"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Secondary Color</FormLabel>
+                    <FormControl>
+                      <ColorPicker
+                        value={field.value}
+                        onChange={field.onChange}
+                        onBlur={field.onBlur}
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Choose your chapter&apos;s secondary brand color. This will be used for accents, backgrounds, and complementary elements.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

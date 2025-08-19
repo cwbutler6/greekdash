@@ -5,6 +5,7 @@ import { MembershipRole } from '@/generated/prisma';
 import UserMenu from '@/components/user-menu';
 import { prisma } from '@/lib/db';
 import { MobileNavigation } from '@/components/ui/mobile-navigation';
+import { getChapterColors } from '@/lib/utils/colors';
 
 type ChapterLayoutProps = {
   children: ReactNode;
@@ -12,43 +13,45 @@ type ChapterLayoutProps = {
 };
 
 export default async function ChapterLayout({ children, params }: ChapterLayoutProps) {
-  // In Next.js 15, params is now a Promise that needs to be awaited
   const { chapterSlug } = await params;
   
   // This will redirect if user isn't authenticated or doesn't have access to this chapter
   const { membership } = await requireChapterAccess(chapterSlug);
   
-  // Fetch the chapter data including primary color
+  // Fetch the chapter data including both colors
   const chapter = await prisma.chapter.findUnique({
     where: { slug: chapterSlug },
     select: {
       name: true,
       primaryColor: true,
+      secondaryColor: true,
     }
   });
   
-  // Default color if not set (blue)
-  const primaryColor = chapter?.primaryColor || '#1d4ed8';
-  // Secondary color (usually white or a light shade)
-  const secondaryColor = '#ffffff';
+  // Get intelligent color scheme
+  const colors = getChapterColors(chapter?.primaryColor, chapter?.secondaryColor);
   
-  // Check if user has admin privileges for conditional UI elements
+  // Derive user permissions from membership
   const isAdmin = membership.role === MembershipRole.ADMIN || membership.role === MembershipRole.OWNER;
-
+  
+  // Define navigation links
   const navigationLinks = [
-    { href: `/${chapterSlug}/portal`, label: 'Dashboard', isActive: true },
+    { href: `/${chapterSlug}/portal`, label: 'Dashboard' },
     { href: `/${chapterSlug}/portal/events`, label: 'Events' },
     { href: `/${chapterSlug}/portal/members`, label: 'Members' },
     { href: `/${chapterSlug}/portal/finance/dues`, label: 'Dues' },
     { href: `/${chapterSlug}/portal/files`, label: 'Files' },
   ];
-
+  
   return (
     <div className="flex min-h-screen flex-col">
       {/* Top Navigation Header */}
       <header 
-        className="sticky top-0 z-10 text-white shadow-md"
-        style={{ backgroundColor: primaryColor }}
+        className="sticky top-0 z-10 shadow-md"
+        style={{
+          backgroundColor: colors.primary,
+          color: colors.primaryText
+        }}
       >
         <div className="flex h-16 items-center justify-between px-4 md:px-6">
           <div className="flex items-center space-x-8">
@@ -68,15 +71,15 @@ export default async function ChapterLayout({ children, params }: ChapterLayoutP
               chapterSlug={chapterSlug}
               navigationLinks={navigationLinks}
               isAdmin={isAdmin}
-              primaryColor={primaryColor}
-              secondaryColor={secondaryColor}
+              primaryColor={colors.primary}
+              secondaryColor={colors.secondary}
             />
             <Link 
               href={`/${chapterSlug}`} 
               className="hidden md:block text-sm px-3 py-1 rounded-md transition-colors"
               style={{
-                backgroundColor: `${primaryColor}dd`, // Slightly darker than primary
-                color: secondaryColor
+                backgroundColor: colors.secondary,
+                color: colors.secondaryText
               }}>
               Public Website
             </Link>
@@ -85,16 +88,16 @@ export default async function ChapterLayout({ children, params }: ChapterLayoutP
                 href={`/${chapterSlug}/admin`} 
                 className="hidden md:block text-sm px-3 py-1 rounded-md transition-colors"
                 style={{
-                  backgroundColor: `${primaryColor}dd`, // Slightly darker than primary
-                  color: secondaryColor
+                  backgroundColor: colors.secondary,
+                  color: colors.secondaryText
                 }}>
                 Admin Dashboard
               </Link>
             )}
             <div className="hidden md:block">
               <UserMenu 
-                primaryColor={primaryColor}
-                secondaryColor={secondaryColor}
+                primaryColor={colors.primary}
+                secondaryColor={colors.secondary}
               />
             </div>
           </div>
@@ -102,7 +105,7 @@ export default async function ChapterLayout({ children, params }: ChapterLayoutP
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 p-6 bg-slate-50">
+      <main className="flex-1 p-6" style={{ backgroundColor: colors.secondary }}>
         <div className="max-w-7xl mx-auto">
           {children}
         </div>

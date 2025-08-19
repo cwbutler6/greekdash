@@ -41,6 +41,7 @@ export async function GET(
           slug: true,
           joinCode: true,
           primaryColor: true,
+          secondaryColor: true, // Add this line
           publicInfo: true,
           logoUrl: true,
           schoolName: true,
@@ -68,6 +69,7 @@ export async function GET(
         slug: true,
         logoUrl: true,
         primaryColor: true,
+        secondaryColor: true, // Add this line
         publicInfo: true,
         schoolName: true,
         createdAt: true,
