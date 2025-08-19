@@ -7,64 +7,123 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 import { MembershipRole } from '@/generated/prisma';
 
-// Validation schema for Google user chapter creation
+// Shared validation schemas
+const chapterSlugSchema = z
+  .string()
+  .min(3, "Chapter URL must be at least 3 characters")
+  .max(30, "Chapter URL must be at most 30 characters")
+  .regex(/^[a-z0-9-]+$/, "Chapter URL must only contain lowercase letters, numbers, and hyphens")
+  .transform(val => val.toLowerCase());
+
+// Validation schema for Google user chapter creation (fullName now optional)
 const googleChapterSchema = z.object({
-  chapterSlug: z
-    .string()
-    .min(3, "Chapter URL must be at least 3 characters")
-    .max(30, "Chapter URL must be at most 30 characters")
-    .regex(/^[a-z0-9-]+$/, "Chapter URL must only contain lowercase letters, numbers, and hyphens")
-    .transform(val => val.toLowerCase()),
-  fullName: z.string().min(3, "Full name must be at least 3 characters"),
+  chapterSlug: chapterSlugSchema,
+  fullName: z.string().min(3, "Full name must be at least 3 characters").optional(),
 });
 
-// Add proper interface for form validation
+// Validation schema for joining chapter
+const joinChapterSchema = z.object({
+  chapterSlug: chapterSlugSchema,
+  joinCode: z.string().min(1, "Join code is required"),
+});
+
+// Interfaces
 interface GoogleChapterFormData {
   chapterSlug: string;
-  fullName: string;
+  fullName?: string;
 }
 
-// Add proper return type for validation function
-function validateGoogleChapterData(formData: FormData): GoogleChapterFormData {
-  const result = googleChapterSchema.safeParse({
-    chapterSlug: formData.get('chapterSlug'),
-    fullName: formData.get('fullName'),
-  });
+interface JoinChapterFormData {
+  chapterSlug: string;
+  joinCode: string;
+}
 
+interface ChapterAvailabilityResult {
+  available: boolean;
+  message: string;
+}
+
+interface CreateChapterResult {
+  success: boolean;
+  chapterSlug: string;
+  redirectUrl: string;
+}
+
+// Type-safe form data extraction
+function extractFormDataSafely<T extends Record<string, unknown>>(
+  formData: FormData, 
+  schema: z.ZodSchema<T>
+): T {
+  const rawData: Record<string, FormDataEntryValue> = {};
+  
+  // Extract form data entries with proper typing
+  for (const [key, value] of formData.entries()) {
+    rawData[key] = value;
+  }
+  
+  const result = schema.safeParse(rawData);
+  
   if (!result.success) {
     const errorMessage = result.error.errors[0]?.message || 'Invalid form data';
     throw new Error(errorMessage);
   }
-
+  
   return result.data;
 }
 
-/**
- * Server action to create a chapter for Google users
- * This handles all server-side business logic and validation
- */
-// Extract common slug validation logic
-function validateSlugFormat(slug: string): { isValid: boolean; message: string } {
-  if (!slug || slug.length < 3) {
-    return { isValid: false, message: 'Slug must be at least 3 characters' };
-  }
-  
-  if (!/^[a-z0-9-]+$/.test(slug)) {
-    return { isValid: false, message: 'Slug can only contain lowercase letters, numbers, and hyphens' };
-  }
-  
-  return { isValid: true, message: 'Valid format' };
+function validateGoogleChapterData(formData: FormData): GoogleChapterFormData {
+  return extractFormDataSafely(formData, googleChapterSchema);
 }
 
-// Extract common chapter lookup logic
+function validateJoinChapterData(formData: FormData): JoinChapterFormData {
+  return extractFormDataSafely(formData, joinChapterSchema);
+}
+
+function validateSlugFormat(slug: string): { isValid: boolean; message: string } {
+  const result = chapterSlugSchema.safeParse(slug);
+  return {
+    isValid: result.success,
+    message: result.success ? 'Valid format' : (result.error.errors[0]?.message || 'Invalid format')
+  };
+}
+
 async function findChapterBySlug(slug: string) {
   return await prisma.chapter.findUnique({
     where: { slug }
   });
 }
 
-// Refactor checkChapterSlugAvailability to use extracted functions
-export async function checkChapterSlugAvailability(slug: string) {
+async function findChapterBySlugAndJoinCode(slug: string, joinCode: string) {
+  return await prisma.chapter.findFirst({
+    where: {
+      slug,
+      joinCode
+    }
+  });
+}
+
+async function checkExistingMembership(userId: string, chapterId: string) {
+  return await prisma.membership.findFirst({
+    where: {
+      userId,
+      chapterId
+    }
+  });
+}
+
+function generateSecurePassword(): string {
+  return `G${Math.random().toString(36).slice(2, 10)}${Math.floor(Math.random() * 10)}A`;
+}
+
+function generateChapterName(fullName?: string): string {
+  if (!fullName) {
+    return "New Chapter";
+  }
+  return fullName.split(' ')[0] + "'s Chapter";
+}
+
+// Exported functions
+export async function checkChapterSlugAvailability(slug: string): Promise<ChapterAvailabilityResult> {
   const validation = validateSlugFormat(slug);
   if (!validation.isValid) {
     return { available: false, message: validation.message };
@@ -78,8 +137,7 @@ export async function checkChapterSlugAvailability(slug: string) {
   };
 }
 
-// Use in createChapterForGoogleUser
-export async function createChapterForGoogleUser(formData: FormData) {
+export async function createChapterForGoogleUser(formData: FormData): Promise<CreateChapterResult> {
   try {
     console.log('Starting social chapter creation process');
     const session = await getSession();
@@ -92,9 +150,7 @@ export async function createChapterForGoogleUser(formData: FormData) {
     const validatedData = validateGoogleChapterData(formData);
     
     // Check if slug is available
-    const existingChapter = await prisma.chapter.findUnique({
-      where: { slug: validatedData.chapterSlug }
-    });
+    const existingChapter = await findChapterBySlug(validatedData.chapterSlug);
     
     if (existingChapter) {
       console.error(`Social chapter creation failed: Slug '${validatedData.chapterSlug}' is already taken`);
@@ -102,7 +158,7 @@ export async function createChapterForGoogleUser(formData: FormData) {
     }
     
     // Generate secure random password on the server
-    const securePassword = `G${Math.random().toString(36).slice(2, 10)}${Math.floor(Math.random() * 10)}A`;
+    const securePassword = generateSecurePassword();
     const hashedPassword = await hash(securePassword, 10);
     
     console.log(`Setting password for social user ${session.user.id}`);
@@ -120,11 +176,8 @@ export async function createChapterForGoogleUser(formData: FormData) {
       }
     });
     
-    // Construct chapter name from full name
-    let chapterName = validatedData.fullName.split(' ')[0] + "'s Chapter";
-    if (chapterName.length < 3) {
-      chapterName = "New Greek Chapter";
-    }
+    // Construct chapter name from full name or use default
+    const chapterName = generateChapterName(validatedData.fullName);
     
     console.log(`Creating chapter '${chapterName}' with slug '${validatedData.chapterSlug}'`);
     
@@ -163,40 +216,28 @@ export async function createChapterForGoogleUser(formData: FormData) {
   }
 }
 
-export async function joinChapterForSocialUser(formData: FormData) {
+export async function joinChapterForSocialUser(formData: FormData): Promise<void> {
   const session = await getSession();
   
   if (!session?.user?.id) {
     throw new Error('You must be logged in to join a chapter');
   }
 
-  const chapterSlug = formData.get('chapterSlug') as string;
-  const joinCode = formData.get('joinCode') as string;
-
-  if (!chapterSlug || !joinCode) {
-    throw new Error('Chapter URL and join code are required');
-  }
+  const validatedData = validateJoinChapterData(formData);
 
   try {
     // Find the chapter and validate join code
-    const chapter = await prisma.chapter.findFirst({
-      where: {
-        slug: chapterSlug,
-        joinCode: joinCode
-      }
-    });
+    const chapter = await findChapterBySlugAndJoinCode(
+      validatedData.chapterSlug, 
+      validatedData.joinCode
+    );
 
     if (!chapter) {
       throw new Error('Invalid chapter URL or join code');
     }
 
     // Check if user already has a membership with this chapter
-    const existingMembership = await prisma.membership.findFirst({
-      where: {
-        userId: session.user.id,
-        chapterId: chapter.id
-      }
-    });
+    const existingMembership = await checkExistingMembership(session.user.id, chapter.id);
 
     if (existingMembership) {
       throw new Error('You are already a member or have a pending request for this chapter');
@@ -212,7 +253,7 @@ export async function joinChapterForSocialUser(formData: FormData) {
     });
 
     // Redirect to the chapter's pending page
-    redirect(`/${chapterSlug}/pending`);
+    redirect(`/${validatedData.chapterSlug}/pending`);
     
   } catch (error) {
     console.error('Error joining chapter for social user:', error);

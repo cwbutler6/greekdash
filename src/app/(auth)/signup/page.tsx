@@ -74,7 +74,7 @@ type JoinChapterFormValues = z.infer<typeof joinChapterSchema>;
 function SignupContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
   const isGoogleRedirect = searchParams?.get('google') === 'true';
   const [activeTab, setActiveTab] = useState<string>(searchParams.get('tab') === 'join' ? 'join' : 'create');
   const [isLoading, setIsLoading] = useState(false);
@@ -241,19 +241,27 @@ function SignupContent() {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
-
+  
     try {
-      // For Google users, we use server actions which handle all the logic server-side
-      // The form should be valid already from React Hook Form's validation
-      const formData = new FormData(e.currentTarget);
-      await createChapterForGoogleUser(formData);
+      console.log('🚀 Starting Google chapter creation...');
       
-      // Note: The server action handles the redirect, so we shouldn't reach this point
-      // If we do, we'll show a success message
-      setError(null);
-    } catch (err) {
-      console.error('Error in Google chapter creation:', err);
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      const formData = new FormData(e.currentTarget);
+      const result = await createChapterForGoogleUser(formData);
+      
+      console.log('🎉 Chapter created successfully!');
+      
+      // Update the session once to refresh user data
+      await update();
+      
+      // Direct redirect - the server action has already created the membership
+      console.log('🚀 Redirecting to:', result.redirectUrl);
+      window.location.href = result.redirectUrl;
+      
+    } catch (error) {
+      console.error('❌ Chapter creation failed:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to create chapter';
+      setError(errorMessage);
+    } finally {
       setIsLoading(false);
     }
   };
