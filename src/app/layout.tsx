@@ -29,7 +29,7 @@ export const metadata: Metadata = {
         url: "https://greekdash.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "GreekDash",
+        alt: "GreekDash - Complete Greek Life Management Platform",
       },
     ],
   },

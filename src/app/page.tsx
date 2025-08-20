@@ -92,14 +92,14 @@ export default function Home() {
             <div className="lg:w-1/2">
               <div className="aspect-video bg-emerald-600/10 rounded-xl border-2 border-emerald-200 overflow-hidden relative shadow-lg">
                 <Image 
-                  src="/images/hero/dashboard-preview.svg" 
-                  alt="GreekDash Dashboard Preview" 
+                  src="/images/hero/dashboard.png" 
+                  alt="GreekDash Platform Overview" 
                   fill 
                   className="object-cover" 
-                  priority 
+                  priority
                 />
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white/90 to-transparent p-4 text-sm text-emerald-800 font-medium text-center">
-                  Admin dashboard shown above — member portal also included
+                  Streamline your Greek life management
                 </div>
               </div>
             </div>
