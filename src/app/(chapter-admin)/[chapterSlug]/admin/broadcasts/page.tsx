@@ -3,7 +3,6 @@ import { prisma } from "@/lib/db";
 import { requireChapterAccess } from "@/lib/auth";
 import { BroadcastForm } from "./broadcast-form";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -92,16 +91,10 @@ export default async function BroadcastPage({
   const memberCount = chapter._count.memberships;
   
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-6">
       <div className="mb-6">
-        <Button variant="ghost" asChild className="mb-2">
-          <Link href={`/${chapterSlug}/admin`} className="flex items-center">
-            <ChevronLeft className="mr-1 h-4 w-4" />
-            Back to Admin
-          </Link>
-        </Button>
         <h1 className="text-3xl font-bold">Send Chapter Broadcast</h1>
-        <p className="text-gray-600 dark:text-gray-400 mt-1">
+        <p className="text-muted-foreground mt-2">
           Compose an email to send to all {memberCount} members of {chapter.name}
         </p>
       </div>
