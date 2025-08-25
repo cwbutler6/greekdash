@@ -1,0 +1,242 @@
+---
+title: "Inviting Members"
+description: "Step-by-step guide to inviting new members to your chapter"
+section: "admin-guide"
+subsection: "members"
+author: "GreekDash Team"
+tags: ["invites", "members", "onboarding"]
+prerequisites: ["getting-started/chapter-setup"]
+planRequired: "FREE"
+lastUpdated: "2025-01-25"
+relatedPages: ["admin-guide/members/pending", "admin-guide/members/directory"]
+---
+
+# Inviting Members
+
+Learn how to invite new members to your chapter, manage invitations, and ensure a smooth onboarding process.
+
+## Accessing the Invites Section
+
+1. **Navigate to the admin dashboard**
+2. **Click on "Members" in the sidebar**
+3. **Select "Invites" from the submenu**
+
+You'll see the invites management interface with options to send new invitations and track existing ones.
+
+## Sending Individual Invitations
+
+### Step 1: Start a New Invitation
+
+1. **Click the "Invite Member" button**
+2. **Enter the member's email address**
+3. **Select the appropriate role** (Member, Admin, or Owner)
+4. **Add a personal message** (optional but recommended)
+
+### Step 2: Configure Invitation Settings
+
+**Role Selection Guidelines:**
+- **Member**: Standard chapter member access
+- **Admin**: Administrative privileges for chapter management
+- **Owner**: Full access including billing (use sparingly)
+
+**Personal Message Tips:**
+- Welcome the new member warmly
+- Explain what GreekDash is and why you're using it
+- Provide any chapter-specific context
+- Include your contact information for questions
+
+### Step 3: Send the Invitation
+
+1. **Review all information** for accuracy
+2. **Click "Send Invitation"**
+3. **Confirm the invitation** was sent successfully
+
+The system will display a confirmation message and add the invitation to your tracking list.
+
+## Bulk Invitations
+
+For inviting multiple members at once:
+
+### Preparing Your Member List
+
+Create a CSV file with the following columns:
+- `email` (required): Member's email address
+- `role` (optional): Member, Admin, or Owner (defaults to Member)
+- `first_name` (optional): Member's first name
+- `last_name` (optional): Member's last name
+
+**Example CSV format:**
+```csv
+email,role,first_name,last_name
+john.doe@university.edu,Member,John,Doe
+jane.smith@university.edu,Admin,Jane,Smith
+```
+
+### Uploading Bulk Invitations
+
+1. **Click "Bulk Invite" button**
+2. **Upload your CSV file**
+3. **Review the preview** of members to be invited
+4. **Add a group message** (optional)
+5. **Click "Send All Invitations"**
+
+The system will process each invitation and provide a summary of successful and failed invitations.
+
+## Managing Existing Invitations
+
+### Invitation Status Types
+
+**Pending**: Invitation sent but not yet accepted
+**Accepted**: Member has created account and joined
+**Expired**: Invitation has passed expiration date
+**Failed**: Invitation could not be delivered
+
+### Tracking Invitations
+
+The invitations list shows:
+- Member email address
+- Invitation status
+- Date sent
+- Assigned role
+- Actions available
+
+### Available Actions
+
+**Resend Invitation**
+- Use for expired or failed invitations
+- Updates expiration date
+- Sends fresh invitation email
+
+**Cancel Invitation**
+- Removes pending invitation
+- Prevents future acceptance
+- Use for incorrect invitations
+
+**Change Role**
+- Modify role before acceptance
+- Useful for correcting mistakes
+- Takes effect when member joins
+
+## Invitation Email Content
+
+### What Members Receive
+
+The invitation email includes:
+- Welcome message from your chapter
+- Link to create their account
+- Information about GreekDash
+- Your personal message (if added)
+- Instructions for getting started
+
+### Customizing Email Templates
+
+Admins can customize:
+- Chapter welcome message
+- Contact information
+- Additional instructions
+- Branding elements
+
+## Troubleshooting Invitations
+
+### Common Issues and Solutions
+
+**Member didn't receive invitation**
+1. Check email address for typos
+2. Ask member to check spam/junk folder
+3. Verify email server isn't blocking invitations
+4. Resend invitation if necessary
+
+**Invitation link doesn't work**
+1. Check if invitation has expired
+2. Ensure link wasn't modified by email client
+3. Resend fresh invitation
+4. Contact support if issue persists
+
+**Member can't complete registration**
+1. Verify invitation is still pending
+2. Check for account conflicts (existing email)
+3. Ensure member is using correct email
+4. Guide member through registration process
+
+### Invitation Limits
+
+Different plans have different invitation limits:
+- **Free Plan**: 50 active members
+- **Basic Plan**: 200 active members
+- **Pro Plan**: 500 active members
+- **Enterprise**: Unlimited members
+
+## Best Practices
+
+### Before Sending Invitations
+
+- **Verify email addresses** are correct and current
+- **Choose appropriate roles** based on member responsibilities
+- **Prepare welcome materials** for new members
+- **Coordinate with other admins** to avoid duplicate invitations
+
+### Writing Effective Invitation Messages
+
+- **Be welcoming and enthusiastic**
+- **Explain the purpose** of using GreekDash
+- **Provide context** about your chapter's adoption
+- **Include contact information** for questions
+- **Set expectations** for next steps
+
+### After Sending Invitations
+
+- **Monitor invitation status** regularly
+- **Follow up** with members who haven't responded
+- **Provide support** during the registration process
+- **Welcome new members** once they join
+
+## Advanced Invitation Features
+
+### Conditional Invitations
+
+Set up invitations that:
+- Require approval before activation
+- Include specific onboarding tasks
+- Assign to particular groups or committees
+- Include custom fields for additional information
+
+### Integration with External Systems
+
+- Import member lists from university systems
+- Sync with existing member databases
+- Connect with recruitment management tools
+- Export invitation data for reporting
+
+### Automation Options
+
+- Schedule invitation campaigns
+- Set up automatic follow-up reminders
+- Create invitation templates for different member types
+- Configure approval workflows for sensitive roles
+
+## Security Considerations
+
+### Role Assignment Security
+
+- **Limit Owner roles** to essential personnel only
+- **Review Admin assignments** regularly
+- **Use Member role** as default for most invitations
+- **Document role decisions** for audit purposes
+
+### Invitation Security
+
+- **Monitor invitation activity** through audit logs
+- **Set appropriate expiration times** for invitations
+- **Revoke unused invitations** promptly
+- **Verify member identity** before approving sensitive roles
+
+## Getting Help
+
+If you encounter issues with invitations:
+
+- **Check the troubleshooting section** above
+- **Contact support** through the help widget
+- **Review invitation logs** for error details
+- **Consult with other admins** about best practices
+
+Ready to manage member responses? Learn about [handling pending members](/docs/admin-guide/members/pending) next.

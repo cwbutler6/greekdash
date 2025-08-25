@@ -22,7 +22,7 @@ export default function InvitingMembersPage() {
         <ul>
           <li>Breadcrumbs showing: Documentation → Admin Guide → Members → Inviting Members</li>
           <li>The Members section expanded in the sidebar</li>
-          <li>The "Inviting Members" item highlighted as active</li>
+          <li>The &quot;Inviting Members&quot; item highlighted as active</li>
         </ul>
         
         <h2>Navigation Features</h2>
