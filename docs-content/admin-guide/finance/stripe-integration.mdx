@@ -1,0 +1,554 @@
+---
+title: "Stripe Integration and Payment Processing"
+description: "Complete guide to setting up Stripe integration, troubleshooting payment issues, and following best practices"
+section: "admin-guide"
+subsection: "finance"
+author: "GreekDash Team"
+tags: ["stripe", "payments", "integration", "troubleshooting", "security"]
+prerequisites: ["getting-started/chapter-setup", "admin-guide/finance/index"]
+planRequired: "BASIC"
+lastUpdated: "2025-01-25"
+relatedPages: ["admin-guide/finance/dues-setup", "admin-guide/finance/donations", "admin-guide/settings/billing"]
+---
+
+# Stripe Integration and Payment Processing
+
+Stripe integration enables secure, reliable payment processing for your chapter's dues collection, donations, and other financial transactions. This guide covers setup, configuration, troubleshooting, and best practices for Stripe integration.
+
+## Overview
+
+**What You'll Learn:**
+- How to set up and configure Stripe integration
+- Understanding payment processing workflows
+- Troubleshooting common payment issues
+- Security best practices and compliance
+- Advanced Stripe features and optimization
+
+**Key Benefits:**
+- Secure payment processing with industry-leading security
+- Multiple payment methods (cards, ACH, digital wallets)
+- Automated payment handling and reconciliation
+- Comprehensive fraud protection
+- Detailed transaction reporting and analytics
+
+## Initial Stripe Setup
+
+### Prerequisites
+
+**Before You Begin:**
+- Chapter admin access to GreekDash
+- Valid business information for your chapter
+- Bank account for receiving payments
+- Tax identification number (EIN or SSN)
+- Legal authorization to process payments
+
+**Required Information:**
+- Chapter legal name and address
+- Bank account and routing numbers
+- Tax ID and business type
+- Authorized representative details
+- Chapter contact information
+
+### Step-by-Step Setup Process
+
+**Step 1: Access Stripe Integration**
+1. **Navigate to Billing Settings**
+   - Go to Chapter Settings
+   - Click "Billing" in the sidebar
+   - Find "Payment Processing" section
+
+2. **Initiate Stripe Connection**
+   - Click "Connect Stripe Account"
+   - You'll be redirected to Stripe's secure onboarding
+
+**Step 2: Complete Stripe Onboarding**
+1. **Business Information**
+   - Enter chapter legal name
+   - Provide business address
+   - Select business type (typically "Non-profit")
+   - Enter tax identification number
+
+2. **Bank Account Setup**
+   - Add bank account for deposits
+   - Verify account ownership
+   - Set deposit schedule preferences
+   - Configure currency settings
+
+3. **Identity Verification**
+   - Upload required documents
+   - Verify authorized representative identity
+   - Complete background checks
+   - Await approval confirmation
+
+<StepGuide
+  title="Stripe Account Verification Process"
+  steps={[
+    {
+      title: "Business Details",
+      description: "Provide accurate chapter information and legal details",
+      screenshot: "/images/docs/finance/stripe-business-info.png",
+      tips: ["Use official chapter name", "Ensure address matches bank records"]
+    },
+    {
+      title: "Bank Account",
+      description: "Connect your chapter's bank account for receiving payments",
+      screenshot: "/images/docs/finance/stripe-bank-setup.png",
+      warnings: ["Double-check account numbers", "Ensure account is in chapter's name"]
+    },
+    {
+      title: "Identity Verification",
+      description: "Upload required documents and verify authorized representatives",
+      screenshot: "/images/docs/finance/stripe-verification.png",
+      tips: ["Have documents ready", "Process can take 1-2 business days"]
+    },
+    {
+      title: "Account Activation",
+      description: "Complete final setup and activate payment processing",
+      screenshot: "/images/docs/finance/stripe-activation.png"
+    }
+  ]}
+/>
+
+**Step 3: Configure Payment Settings**
+1. **Payment Methods**
+   - Enable credit/debit cards
+   - Set up ACH bank transfers (US only)
+   - Configure digital wallets (Apple Pay, Google Pay)
+   - Set payment method preferences
+
+2. **Security Settings**
+   - Enable 3D Secure authentication
+   - Configure fraud detection rules
+   - Set up dispute handling
+   - Enable webhook notifications
+
+3. **Branding and Checkout**
+   - Upload chapter logo
+   - Customize checkout appearance
+   - Set up receipt branding
+   - Configure email notifications
+
+## Payment Processing Workflows
+
+### Dues Payment Processing
+
+**Payment Flow Overview:**
+1. **Payment Initiation**
+   - Member receives dues notification
+   - Clicks payment link in email or portal
+   - Redirected to Stripe checkout page
+
+2. **Secure Payment Processing**
+   - Member enters payment information
+   - Stripe processes payment securely
+   - Real-time fraud detection applied
+   - Payment confirmation generated
+
+3. **Automatic Reconciliation**
+   - Payment status updated in GreekDash
+   - Member account credited
+   - Receipt sent automatically
+   - Transaction recorded in financial logs
+
+**Payment Methods Supported:**
+- **Credit/Debit Cards**: Visa, Mastercard, American Express, Discover
+- **ACH Bank Transfers**: Direct bank account debits (US only)
+- **Digital Wallets**: Apple Pay, Google Pay, Link
+- **International Cards**: Support for global payment methods
+
+### Donation Processing
+
+**Donation Payment Flow:**
+1. **Donation Initiation**
+   - Donor visits chapter donation page
+   - Selects donation amount and campaign
+   - Provides donor information
+
+2. **Payment Processing**
+   - Secure Stripe checkout process
+   - Payment method validation
+   - Fraud detection screening
+   - Payment confirmation
+
+3. **Post-Payment Actions**
+   - Donation recorded in system
+   - Thank you email sent to donor
+   - Campaign totals updated
+   - Tax receipt generated (if applicable)
+
+<AnnotatedScreenshot
+  src="/images/docs/finance/stripe-checkout.png"
+  alt="Stripe checkout interface for dues payment"
+  annotations={[
+    { x: 200, y: 80, text: "Chapter branding and logo" },
+    { x: 250, y: 180, text: "Secure payment form" },
+    { x: 180, y: 280, text: "Multiple payment method options" },
+    { x: 220, y: 350, text: "Security badges and trust indicators" }
+  ]}
+/>
+
+## Advanced Stripe Configuration
+
+### Webhook Configuration
+
+**Webhook Setup:**
+1. **Automatic Configuration**
+   - GreekDash automatically configures webhooks
+   - Endpoints are secured and validated
+   - Events are processed in real-time
+   - Retry logic handles temporary failures
+
+2. **Monitored Events**
+   - `payment_intent.succeeded`: Successful payments
+   - `payment_intent.payment_failed`: Failed payments
+   - `invoice.payment_succeeded`: Subscription payments
+   - `customer.subscription.updated`: Plan changes
+   - `charge.dispute.created`: Payment disputes
+
+**Webhook Security:**
+- Signature verification for all events
+- Encrypted communication channels
+- Idempotency handling for duplicate events
+- Comprehensive error logging and monitoring
+
+### Fraud Prevention
+
+**Built-in Fraud Protection:**
+- **Radar**: Stripe's machine learning fraud detection
+- **3D Secure**: Additional authentication for cards
+- **Address Verification**: AVS checks for card payments
+- **CVC Verification**: Card security code validation
+- **Velocity Checks**: Unusual payment pattern detection
+
+**Custom Fraud Rules:**
+- Block payments from specific countries
+- Require additional verification for large amounts
+- Flag unusual payment patterns
+- Set up custom risk scoring rules
+- Configure automatic decline thresholds
+
+### Payment Retry Logic
+
+**Failed Payment Handling:**
+1. **Automatic Retries**
+   - Smart retry timing based on failure reason
+   - Multiple retry attempts over several days
+   - Exponential backoff to avoid overwhelming systems
+   - Member notification of retry attempts
+
+2. **Dunning Management**
+   - Automated email sequences for failed payments
+   - Escalating notification frequency
+   - Grace period before account restrictions
+   - Manual intervention options for admins
+
+## Troubleshooting Common Issues
+
+### Payment Failures
+
+**Common Failure Reasons:**
+
+**Insufficient Funds:**
+- *Symptoms*: Payment declined with "insufficient funds" message
+- *Solutions*:
+  1. Contact member to verify account balance
+  2. Suggest alternative payment method
+  3. Offer payment plan options
+  4. Retry payment after member confirms funds available
+
+**Expired or Invalid Cards:**
+- *Symptoms*: "Your card was declined" or "Invalid card number"
+- *Solutions*:
+  1. Ask member to verify card details
+  2. Check expiration date
+  3. Confirm card is activated
+  4. Try different payment method
+  5. Contact card issuer if problems persist
+
+**Bank Restrictions:**
+- *Symptoms*: Payment blocked by member's bank
+- *Solutions*:
+  1. Member should contact their bank
+  2. Verify transaction is legitimate
+  3. Ask bank to whitelist GreekDash/Stripe
+  4. Use alternative payment method temporarily
+  5. Retry payment after bank approval
+
+**3D Secure Authentication Issues:**
+- *Symptoms*: Payment fails during authentication step
+- *Solutions*:
+  1. Ensure member completes authentication
+  2. Check for popup blockers
+  3. Try different browser or device
+  4. Contact card issuer for authentication issues
+  5. Use alternative payment method if needed
+
+<QuickReferenceCard
+  title="Payment Troubleshooting Quick Actions"
+  items={[
+    { action: "Check Payment Status", shortcut: "Finance → Transactions → Search Payment ID" },
+    { action: "Retry Failed Payment", shortcut: "Member Profile → Payments → Retry" },
+    { action: "Issue Refund", shortcut: "Transaction → Actions → Process Refund" },
+    { action: "Contact Member", shortcut: "Payment → Actions → Send Message" },
+    { action: "View Stripe Logs", shortcut: "Settings → Integrations → Stripe Logs" }
+  ]}
+/>
+
+### Integration Issues
+
+**Webhook Delivery Failures:**
+
+*Symptoms:*
+- Payments processed but not reflected in GreekDash
+- Delayed payment status updates
+- Missing transaction records
+
+*Solutions:*
+1. Check webhook endpoint status in Stripe dashboard
+2. Verify webhook signature validation
+3. Review error logs for failed deliveries
+4. Manually sync payment status if needed
+5. Contact support for persistent issues
+
+**Account Connection Problems:**
+
+*Symptoms:*
+- "Stripe account not connected" errors
+- Payment processing unavailable
+- Integration settings not accessible
+
+*Solutions:*
+1. Verify Stripe account is fully activated
+2. Check for pending verification requirements
+3. Reconnect Stripe account in settings
+4. Ensure proper permissions are granted
+5. Contact Stripe support for account issues
+
+### Dispute and Chargeback Management
+
+**Handling Payment Disputes:**
+
+**Dispute Process:**
+1. **Notification**: Automatic alert when dispute is filed
+2. **Evidence Collection**: Gather supporting documentation
+3. **Response Submission**: Submit evidence through Stripe
+4. **Resolution**: Await decision from card network
+5. **Follow-up**: Handle outcome and prevent future disputes
+
+**Evidence Documentation:**
+- Payment confirmation emails
+- Member communication records
+- Service delivery proof
+- Chapter policies and terms
+- Previous payment history
+
+**Dispute Prevention:**
+- Clear payment descriptions
+- Prompt customer service
+- Detailed receipts and confirmations
+- Proactive member communication
+- Regular policy updates and communication
+
+## Security Best Practices
+
+### PCI Compliance
+
+**Automatic Compliance:**
+- Stripe handles PCI DSS compliance
+- No sensitive card data stored in GreekDash
+- Secure tokenization for all payments
+- Regular security audits and updates
+- Compliance certification maintenance
+
+**Chapter Responsibilities:**
+- Secure admin account access
+- Regular password updates
+- Limited access to financial data
+- Proper user permission management
+- Security awareness training
+
+### Data Protection
+
+**Payment Data Security:**
+- End-to-end encryption for all transactions
+- Secure API communication
+- No storage of sensitive payment information
+- Regular security monitoring and alerts
+- Compliance with data protection regulations
+
+**Access Control:**
+- Role-based permissions for financial features
+- Multi-factor authentication requirements
+- Regular access reviews and updates
+- Audit logging for all financial actions
+- Secure session management
+
+### Fraud Prevention Best Practices
+
+**Member Education:**
+- Inform members about secure payment practices
+- Provide guidance on recognizing phishing attempts
+- Educate about legitimate payment communications
+- Share security tips and best practices
+- Regular security awareness updates
+
+**Administrative Controls:**
+- Monitor unusual payment patterns
+- Review large or suspicious transactions
+- Implement approval workflows for refunds
+- Regular reconciliation procedures
+- Maintain detailed audit trails
+
+## Performance Optimization
+
+### Payment Processing Speed
+
+**Optimization Strategies:**
+- Use Stripe's optimized checkout flows
+- Implement payment method preferences
+- Enable express checkout options
+- Optimize page loading speeds
+- Use progressive web app features
+
+**Member Experience Improvements:**
+- Save payment methods for future use
+- Provide multiple payment options
+- Clear error messages and guidance
+- Mobile-optimized payment flows
+- Real-time payment status updates
+
+### Cost Management
+
+**Fee Optimization:**
+- Understand Stripe's pricing structure
+- Encourage ACH payments for lower fees
+- Implement minimum payment amounts
+- Consider payment method surcharges (where legal)
+- Monitor and analyze transaction costs
+
+**Volume Discounts:**
+- Track payment volume for potential discounts
+- Negotiate rates for high-volume processing
+- Consider Stripe's non-profit pricing
+- Evaluate alternative pricing models
+- Regular fee structure reviews
+
+## Reporting and Analytics
+
+### Stripe Dashboard Analytics
+
+**Key Metrics:**
+- Payment success rates
+- Average transaction amounts
+- Payment method preferences
+- Geographic payment distribution
+- Fraud detection statistics
+
+**Custom Reports:**
+- Revenue trends and forecasting
+- Payment method performance
+- Member payment behavior analysis
+- Seasonal payment patterns
+- Cost analysis and optimization
+
+### Integration with GreekDash Reporting
+
+**Unified Financial Reporting:**
+- Combined Stripe and GreekDash data
+- Real-time payment status updates
+- Comprehensive transaction histories
+- Automated reconciliation reports
+- Export capabilities for external analysis
+
+**Advanced Analytics:**
+- Payment conversion rates
+- Member payment journey analysis
+- Revenue optimization insights
+- Predictive payment modeling
+- Custom dashboard creation
+
+## Compliance and Legal Considerations
+
+### Regulatory Compliance
+
+**Payment Processing Regulations:**
+- PCI DSS compliance (handled by Stripe)
+- Anti-money laundering (AML) requirements
+- Know Your Customer (KYC) regulations
+- State and federal payment processing laws
+- International payment regulations
+
+**Non-Profit Considerations:**
+- Donation receipt requirements
+- Tax-exempt status implications
+- Charitable giving regulations
+- Transparency and reporting requirements
+- Board oversight and approval processes
+
+### Terms of Service and Privacy
+
+**Payment Terms:**
+- Clear payment policies and procedures
+- Refund and cancellation terms
+- Late payment and fee policies
+- Dispute resolution procedures
+- Member rights and responsibilities
+
+**Privacy Protection:**
+- Payment data privacy policies
+- Member information protection
+- Third-party data sharing disclosures
+- Consent and opt-out procedures
+- Data retention and deletion policies
+
+## Getting Help and Support
+
+### Support Resources
+
+**GreekDash Support:**
+- Comprehensive documentation and guides
+- Video tutorials for setup and troubleshooting
+- Email support for integration issues
+- Live chat for urgent payment problems
+- Community forums for best practices
+
+**Stripe Support:**
+- 24/7 technical support for payment issues
+- Comprehensive developer documentation
+- Integration guides and best practices
+- Fraud prevention resources
+- Compliance and security guidance
+
+### Common Support Scenarios
+
+**When to Contact GreekDash Support:**
+- Integration setup and configuration issues
+- GreekDash-specific payment problems
+- Reporting and analytics questions
+- Member account and permission issues
+- Custom integration requirements
+
+**When to Contact Stripe Support:**
+- Payment processing failures
+- Account verification problems
+- Fraud and dispute issues
+- Technical API problems
+- Compliance and security questions
+
+### Emergency Procedures
+
+**Payment Processing Outages:**
+1. Check Stripe status page for known issues
+2. Verify GreekDash system status
+3. Communicate with affected members
+4. Implement alternative payment collection methods
+5. Monitor for resolution and resume normal operations
+
+**Security Incidents:**
+1. Immediately secure affected accounts
+2. Contact both GreekDash and Stripe support
+3. Document incident details and timeline
+4. Implement additional security measures
+5. Communicate with members as appropriate
+
+Ready to optimize your payment processing? Learn about [financial reporting](/docs/admin-guide/finance/reports) or explore [donation management](/docs/admin-guide/finance/donations).

@@ -1,0 +1,485 @@
+---
+title: "Expense Tracking and Budget Management"
+description: "Complete guide to managing chapter expenses, budgets, and reimbursement workflows"
+section: "admin-guide"
+subsection: "finance"
+author: "GreekDash Team"
+tags: ["expenses", "budgets", "reimbursements", "tracking"]
+prerequisites: ["getting-started/chapter-setup", "admin-guide/finance/index"]
+planRequired: "BASIC"
+lastUpdated: "2025-01-25"
+relatedPages: ["admin-guide/finance/dues-setup", "admin-guide/finance/reports", "admin-guide/finance/budgets"]
+---
+
+# Expense Tracking and Budget Management
+
+Effective expense management is crucial for maintaining your chapter's financial health. GreekDash provides comprehensive tools to track expenses, manage budgets, handle reimbursements, and maintain financial transparency.
+
+## Overview
+
+**What You'll Learn:**
+- How to create and manage expense categories
+- Setting up approval workflows for expenses
+- Creating and monitoring budgets
+- Processing reimbursements efficiently
+- Generating expense reports and analytics
+
+**Key Features:**
+- Expense submission and approval system
+- Receipt management and storage
+- Budget creation and monitoring
+- Automated approval workflows
+- Comprehensive reporting and analytics
+
+## Expense Categories and Setup
+
+### Creating Expense Categories
+
+**Standard Categories:**
+- **Events & Social**: Parties, mixers, formal events
+- **Administrative**: Office supplies, software, communications
+- **Facility**: Rent, utilities, maintenance, cleaning
+- **Equipment**: Furniture, technology, chapter property
+- **Charitable**: Donations, philanthropy events, community service
+- **Travel**: Transportation, lodging, conference fees
+- **Marketing**: Recruitment materials, advertising, promotional items
+- **Food & Beverage**: Catering, groceries, dining events
+
+**Custom Categories:**
+1. **Access Category Management**
+   - Go to Finance Dashboard
+   - Navigate to Expenses section
+   - Click "Manage Categories"
+
+2. **Create New Category**
+   - Enter category name and description
+   - Set budget allocation (optional)
+   - Configure approval requirements
+   - Assign category managers
+
+### Category Configuration
+
+**Budget Limits:**
+- Set spending limits per category
+- Configure alert thresholds (75%, 90%, 100%)
+- Enable automatic approval for small amounts
+- Require additional approval for large expenses
+
+**Approval Workflows:**
+- **Under $50**: Automatic approval
+- **$50-$200**: Single admin approval required
+- **$200-$500**: Treasurer approval required
+- **Over $500**: President and treasurer approval required
+
+<AnnotatedScreenshot
+  src="/images/docs/finance/expense-categories.png"
+  alt="Expense category management interface"
+  annotations={[
+    { x: 100, y: 80, text: "Create new expense categories" },
+    { x: 250, y: 150, text: "Set budget limits and alerts" },
+    { x: 180, y: 220, text: "Configure approval workflows" }
+  ]}
+/>
+
+## Expense Submission Process
+
+### For Members Submitting Expenses
+
+**Step 1: Submit Expense Request**
+1. **Access Expense Submission**
+   - Go to member portal
+   - Click "Submit Expense" or "Request Reimbursement"
+   - Fill out expense details form
+
+2. **Required Information**
+   - Expense title and description
+   - Amount and date of expense
+   - Category selection
+   - Receipt upload (required)
+   - Business justification
+
+**Step 2: Receipt Management**
+- **Supported Formats**: PDF, JPG, PNG, HEIC
+- **File Size Limit**: 10MB per receipt
+- **Multiple Receipts**: Upload multiple files for single expense
+- **Receipt Requirements**: Clear, legible, showing date and amount
+
+**Step 3: Submission Review**
+- Review all information for accuracy
+- Confirm expense category is correct
+- Verify receipt matches expense details
+- Submit for approval
+
+<StepGuide
+  title="Expense Submission Workflow"
+  steps={[
+    {
+      title: "Fill Expense Details",
+      description: "Enter expense information including title, amount, and category",
+      screenshot: "/images/docs/finance/expense-form.png",
+      tips: ["Be specific in descriptions", "Choose the most appropriate category"]
+    },
+    {
+      title: "Upload Receipt",
+      description: "Attach clear photos or scans of receipts",
+      screenshot: "/images/docs/finance/receipt-upload.png",
+      tips: ["Ensure receipt is legible", "Include all pages for multi-page receipts"]
+    },
+    {
+      title: "Review and Submit",
+      description: "Double-check all information before submitting",
+      screenshot: "/images/docs/finance/expense-review.png",
+      warnings: ["Cannot edit after submission", "Ensure all required fields are complete"]
+    }
+  ]}
+/>
+
+### For Admins Managing Expenses
+
+**Expense Review Dashboard:**
+- View all pending expenses
+- Filter by category, amount, or date
+- Sort by submission date or priority
+- Bulk approval for multiple expenses
+
+**Approval Process:**
+1. **Review Expense Details**
+   - Verify expense legitimacy
+   - Check receipt authenticity
+   - Confirm budget availability
+   - Validate category assignment
+
+2. **Make Approval Decision**
+   - Approve: Move to payment queue
+   - Request Changes: Send back with comments
+   - Deny: Reject with explanation
+   - Hold: Mark for further review
+
+## Budget Creation and Management
+
+### Creating Annual Budgets
+
+**Budget Planning Process:**
+1. **Assess Previous Year Performance**
+   - Review last year's expenses
+   - Identify spending patterns
+   - Analyze category performance
+   - Note seasonal variations
+
+2. **Set Revenue Projections**
+   - Estimate dues collection
+   - Project fundraising income
+   - Account for donations
+   - Include other revenue sources
+
+3. **Allocate Expense Budgets**
+   - Distribute funds across categories
+   - Set realistic spending limits
+   - Include contingency reserves
+   - Plan for capital expenditures
+
+### Budget Configuration
+
+**Budget Types:**
+- **Annual Chapter Budget**: Overall yearly financial plan
+- **Event Budgets**: Specific event planning and tracking
+- **Committee Budgets**: Department-specific allocations
+- **Project Budgets**: Special initiatives or capital projects
+
+**Budget Components:**
+- **Revenue Projections**: Expected income sources
+- **Fixed Expenses**: Rent, insurance, recurring costs
+- **Variable Expenses**: Events, supplies, discretionary spending
+- **Reserve Funds**: Emergency funds and savings goals
+
+<QuickReferenceCard
+  title="Budget Management Quick Actions"
+  items={[
+    { action: "Create New Budget", shortcut: "Finance → Budgets → New Budget" },
+    { action: "View Budget Performance", shortcut: "Budget → Performance Tab" },
+    { action: "Adjust Budget Allocation", shortcut: "Budget → Edit → Reallocate" },
+    { action: "Generate Budget Report", shortcut: "Budget → Reports → Export" },
+    { action: "Set Budget Alerts", shortcut: "Budget → Settings → Notifications" }
+  ]}
+/>
+
+### Budget Monitoring
+
+**Real-Time Tracking:**
+- Current spending vs. budget
+- Remaining budget by category
+- Spending velocity analysis
+- Projected year-end performance
+
+**Alert System:**
+- **75% Threshold**: Warning notification
+- **90% Threshold**: Urgent alert to admins
+- **100% Threshold**: Automatic approval holds
+- **Over Budget**: Immediate admin notification
+
+**Budget Adjustments:**
+- Mid-year budget modifications
+- Category reallocation
+- Emergency budget increases
+- Seasonal adjustment planning
+
+## Reimbursement Processing
+
+### Payment Workflow
+
+**Approved Expense Processing:**
+1. **Payment Queue Management**
+   - Review approved expenses awaiting payment
+   - Verify payment information accuracy
+   - Batch similar payments for efficiency
+   - Schedule payment processing dates
+
+2. **Payment Methods**
+   - **Direct Deposit**: Fastest option for members
+   - **Check Payment**: Traditional reimbursement method
+   - **Venmo/PayPal**: Quick digital payments
+   - **Cash**: For small, immediate reimbursements
+
+**Payment Tracking:**
+- Payment status updates
+- Transaction confirmation
+- Member notification system
+- Payment history records
+
+### Reimbursement Policies
+
+**Eligible Expenses:**
+- Pre-approved chapter activities
+- Authorized purchases with receipts
+- Business-related travel expenses
+- Approved emergency expenditures
+
+**Ineligible Expenses:**
+- Personal purchases
+- Unauthorized spending
+- Expenses without receipts
+- Non-chapter related activities
+
+**Reimbursement Limits:**
+- Maximum reimbursement amounts
+- Time limits for submission (typically 30-60 days)
+- Required documentation standards
+- Approval hierarchy requirements
+
+## Expense Reporting and Analytics
+
+### Standard Reports
+
+**Monthly Expense Summary:**
+- Total expenses by category
+- Budget vs. actual spending
+- Top expense categories
+- Spending trends analysis
+
+**Detailed Expense Reports:**
+- Individual expense listings
+- Receipt attachments
+- Approval history
+- Payment status tracking
+
+**Budget Performance Reports:**
+- Budget utilization by category
+- Variance analysis
+- Projected year-end performance
+- Recommended adjustments
+
+### Custom Analytics
+
+**Spending Pattern Analysis:**
+- Seasonal spending variations
+- Event cost analysis
+- Member spending behavior
+- Category efficiency metrics
+
+**Financial Health Indicators:**
+- Expense-to-revenue ratios
+- Budget adherence rates
+- Reimbursement processing times
+- Cost per member metrics
+
+<FeatureShowcase
+  title="Advanced Expense Analytics"
+  features={[
+    {
+      title: "Spending Trends",
+      description: "Visualize spending patterns over time with interactive charts",
+      icon: "TrendingUp",
+      planRequired: "PRO"
+    },
+    {
+      title: "Budget Forecasting",
+      description: "Predict future spending based on historical data",
+      icon: "BarChart",
+      planRequired: "PRO"
+    },
+    {
+      title: "Cost Analysis",
+      description: "Break down costs by events, committees, and activities",
+      icon: "PieChart",
+      planRequired: "BASIC"
+    },
+    {
+      title: "Export Options",
+      description: "Export data to Excel, CSV, or accounting software",
+      icon: "Download",
+      planRequired: "BASIC"
+    }
+  ]}
+/>
+
+## Advanced Expense Management
+
+### Automated Workflows
+
+**Approval Automation:**
+- Rule-based automatic approvals
+- Escalation for large expenses
+- Time-based approval reminders
+- Bulk approval capabilities
+
+**Notification System:**
+- Expense submission alerts
+- Approval request notifications
+- Payment confirmation messages
+- Budget threshold warnings
+
+### Integration Features
+
+**Accounting Software Integration:**
+- QuickBooks synchronization
+- Xero compatibility
+- Custom export formats
+- Automated categorization
+
+**Receipt Processing:**
+- OCR text extraction
+- Automatic data population
+- Duplicate receipt detection
+- Smart categorization suggestions
+
+## Troubleshooting Common Issues
+
+### Expense Submission Problems
+
+**Receipt Upload Issues:**
+
+*Symptoms:*
+- File won't upload
+- Receipt image unclear
+- File size too large
+
+*Solutions:*
+1. Check file format (PDF, JPG, PNG only)
+2. Reduce file size (under 10MB)
+3. Ensure clear, legible image
+4. Try different browser or device
+5. Contact support if issues persist
+
+**Approval Delays:**
+
+*Symptoms:*
+- Expenses stuck in pending status
+- No response from approvers
+- Approval notifications not received
+
+*Solutions:*
+1. Check approval workflow settings
+2. Verify approver availability
+3. Send manual approval reminders
+4. Escalate to higher approval level
+5. Review and update approval policies
+
+### Budget Management Issues
+
+**Budget Overruns:**
+
+*Symptoms:*
+- Category spending exceeds budget
+- Unexpected large expenses
+- Poor budget tracking
+
+*Solutions:*
+1. Implement stricter approval controls
+2. Increase budget monitoring frequency
+3. Set up automated alerts
+4. Review and adjust budget allocations
+5. Improve expense forecasting
+
+**Reconciliation Problems:**
+
+*Symptoms:*
+- Expenses don't match bank statements
+- Missing expense records
+- Duplicate entries
+
+*Solutions:*
+1. Regular reconciliation procedures
+2. Detailed transaction tracking
+3. Proper expense categorization
+4. Bank statement comparison
+5. Audit trail maintenance
+
+## Best Practices
+
+### Expense Management
+
+**Documentation:**
+- Require receipts for all expenses
+- Maintain detailed expense descriptions
+- Document approval decisions
+- Keep digital copies of all records
+
+**Approval Process:**
+- Clear approval hierarchies
+- Reasonable approval timeframes
+- Documented approval criteria
+- Regular policy reviews
+
+### Budget Planning
+
+**Realistic Budgeting:**
+- Base budgets on historical data
+- Include contingency funds
+- Plan for seasonal variations
+- Regular budget reviews and adjustments
+
+**Monitoring and Control:**
+- Monthly budget reviews
+- Real-time spending tracking
+- Proactive budget management
+- Regular financial reporting
+
+### Member Education
+
+**Training Programs:**
+- Expense submission training
+- Budget awareness sessions
+- Financial responsibility education
+- Policy update communications
+
+**Clear Policies:**
+- Written expense policies
+- Approval process documentation
+- Reimbursement procedures
+- Budget guidelines
+
+## Getting Help
+
+**Support Resources:**
+- **Documentation**: Detailed setup and usage guides
+- **Video Tutorials**: Step-by-step expense management
+- **Support Team**: Financial management specialists
+- **Best Practices**: Learn from successful chapters
+
+**Common Questions:**
+- How to handle disputed expenses
+- Setting up automated approval workflows
+- Integrating with accounting software
+- Managing complex budget structures
+
+Ready to streamline your expense management? Learn about [financial reporting](/docs/admin-guide/finance/reports) or explore [budget planning strategies](/docs/admin-guide/finance/budgets).

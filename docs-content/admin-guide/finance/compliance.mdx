@@ -1,0 +1,511 @@
+---
+title: "Financial Compliance and Security"
+description: "Essential guide to maintaining financial compliance, security best practices, and regulatory requirements"
+section: "admin-guide"
+subsection: "finance"
+author: "GreekDash Team"
+tags: ["compliance", "security", "regulations", "audit", "best-practices"]
+prerequisites: ["admin-guide/finance/index", "admin-guide/finance/stripe-integration"]
+planRequired: "BASIC"
+lastUpdated: "2025-01-25"
+relatedPages: ["admin-guide/finance/reports", "admin-guide/settings/security", "admin-guide/audit-logs"]
+---
+
+# Financial Compliance and Security
+
+Maintaining financial compliance and security is crucial for protecting your chapter's assets, ensuring regulatory adherence, and building trust with members and stakeholders. This guide covers essential compliance requirements, security best practices, and audit procedures.
+
+## Overview
+
+**What You'll Learn:**
+- Understanding financial compliance requirements
+- Implementing security best practices
+- Managing audit trails and documentation
+- Handling sensitive financial data
+- Preparing for financial audits and reviews
+
+**Key Areas:**
+- Regulatory compliance and reporting
+- Data security and privacy protection
+- Internal controls and segregation of duties
+- Audit preparation and documentation
+- Risk management and fraud prevention
+
+## Regulatory Compliance Framework
+
+### Non-Profit Compliance Requirements
+
+**Tax-Exempt Status Maintenance:**
+- Annual filing requirements (Form 990, state reports)
+- Unrelated business income tax (UBIT) considerations
+- Charitable solicitation registration requirements
+- Public disclosure and transparency obligations
+- Board governance and oversight requirements
+
+**Financial Reporting Standards:**
+- Generally Accepted Accounting Principles (GAAP)
+- Financial statement preparation and presentation
+- Revenue recognition and expense classification
+- Asset valuation and depreciation methods
+- Cash flow reporting and analysis
+
+**Donor Compliance:**
+- Charitable contribution acknowledgments
+- Donor privacy and confidentiality
+- Gift acceptance policies and procedures
+- Planned giving compliance requirements
+- International donation regulations
+
+### University and National Organization Requirements
+
+**University Compliance:**
+- Student organization financial policies
+- University audit and reporting requirements
+- Risk management and insurance compliance
+- Facility use and financial agreements
+- Academic year financial reporting
+
+**National Organization Standards:**
+- Financial reporting to national headquarters
+- Audit requirements and procedures
+- Insurance and liability compliance
+- Financial policy adherence
+- Chapter financial health assessments
+
+<AnnotatedScreenshot
+  src="/images/docs/finance/compliance-dashboard.png"
+  alt="Compliance monitoring dashboard showing key requirements and deadlines"
+  annotations={[
+    { x: 150, y: 80, text: "Compliance status overview" },
+    { x: 280, y: 150, text: "Upcoming deadlines and requirements" },
+    { x: 200, y: 250, text: "Audit trail and documentation links" }
+  ]}
+/>
+
+## Internal Controls and Governance
+
+### Segregation of Duties
+
+**Financial Role Separation:**
+- **Authorization**: Approval of transactions and expenditures
+- **Recording**: Entry and maintenance of financial records
+- **Custody**: Physical control of assets and funds
+- **Reconciliation**: Independent verification and review
+
+**Implementation Strategies:**
+- Multiple signature requirements for large transactions
+- Independent review of financial statements
+- Rotation of financial responsibilities
+- Regular internal audit procedures
+- Board oversight and approval processes
+
+### Approval Hierarchies
+
+**Transaction Approval Levels:**
+- **Under $100**: Committee chair or treasurer approval
+- **$100-$500**: Treasurer and president approval
+- **$500-$2,000**: Executive board approval
+- **Over $2,000**: Full membership or board approval
+- **Emergency expenses**: Post-approval ratification required
+
+**Documentation Requirements:**
+- Written approval for all expenditures
+- Supporting documentation and receipts
+- Business purpose justification
+- Conflict of interest disclosures
+- Audit trail maintenance
+
+<StepGuide
+  title="Implementing Financial Controls"
+  steps={[
+    {
+      title: "Define Approval Matrix",
+      description: "Establish clear approval levels and requirements for different transaction types",
+      screenshot: "/images/docs/finance/approval-matrix.png",
+      tips: ["Include emergency procedures", "Define clear dollar thresholds"]
+    },
+    {
+      title: "Set Up Dual Controls",
+      description: "Implement multiple signature requirements and independent verification",
+      screenshot: "/images/docs/finance/dual-controls.png",
+      warnings: ["Avoid single person control", "Ensure backup approvers available"]
+    },
+    {
+      title: "Document Procedures",
+      description: "Create written policies and procedures for all financial processes",
+      screenshot: "/images/docs/finance/procedure-documentation.png"
+    },
+    {
+      title: "Train Personnel",
+      description: "Ensure all financial personnel understand and follow established controls",
+      screenshot: "/images/docs/finance/training-compliance.png"
+    }
+  ]}
+/>
+
+### Financial Policy Development
+
+**Essential Financial Policies:**
+- **Expense Reimbursement Policy**: Clear guidelines for allowable expenses
+- **Cash Handling Policy**: Procedures for cash receipts and deposits
+- **Investment Policy**: Guidelines for surplus fund investment
+- **Conflict of Interest Policy**: Disclosure and management procedures
+- **Document Retention Policy**: Record keeping and disposal guidelines
+
+**Policy Components:**
+- Purpose and scope of the policy
+- Specific procedures and requirements
+- Approval and authorization levels
+- Monitoring and compliance procedures
+- Violation consequences and remediation
+
+## Data Security and Privacy
+
+### Financial Data Protection
+
+**Data Classification:**
+- **Highly Sensitive**: Bank account numbers, payment card data
+- **Sensitive**: Member financial information, transaction details
+- **Internal**: Budget information, financial reports
+- **Public**: General financial summaries, transparency reports
+
+**Security Measures by Classification:**
+- Encryption requirements for sensitive data
+- Access controls and authentication
+- Audit logging and monitoring
+- Backup and recovery procedures
+- Secure disposal and destruction
+
+### Access Control Management
+
+**Role-Based Access Control:**
+- **Financial Administrator**: Full access to all financial features
+- **Treasurer**: Access to reports and transaction management
+- **Committee Chairs**: Limited access to relevant budget categories
+- **Members**: Read-only access to appropriate financial information
+- **Auditors**: Temporary access for audit purposes
+
+**Access Management Procedures:**
+- Regular access reviews and updates
+- Immediate revocation for departing personnel
+- Strong authentication requirements
+- Session management and timeouts
+- Failed login attempt monitoring
+
+<QuickReferenceCard
+  title="Security Best Practices Checklist"
+  items={[
+    { action: "Enable Two-Factor Authentication", shortcut: "Settings → Security → 2FA Setup" },
+    { action: "Review User Access Quarterly", shortcut: "Settings → Users → Access Review" },
+    { action: "Monitor Audit Logs", shortcut: "Admin → Audit Logs → Review Activity" },
+    { action: "Update Passwords Regularly", shortcut: "Profile → Security → Change Password" },
+    { action: "Backup Financial Data", shortcut: "Settings → Data → Backup Options" }
+  ]}
+/>
+
+### Privacy Compliance
+
+**Member Financial Privacy:**
+- Confidentiality of payment information
+- Limited access to financial records
+- Consent for financial data sharing
+- Right to access and correction
+- Secure communication of financial information
+
+**Regulatory Privacy Requirements:**
+- FERPA compliance for student information
+- State privacy law compliance
+- Payment card industry (PCI) requirements
+- International privacy regulations (GDPR)
+- Breach notification requirements
+
+## Audit Trail and Documentation
+
+### Transaction Documentation
+
+**Required Documentation:**
+- **Original Receipts**: All expense supporting documentation
+- **Approval Records**: Written authorization for expenditures
+- **Bank Statements**: Monthly reconciliation and review
+- **Payment Records**: Check copies, electronic payment confirmations
+- **Contract Documentation**: Vendor agreements and service contracts
+
+**Documentation Standards:**
+- Legible and complete information
+- Proper categorization and coding
+- Timely recording and filing
+- Secure storage and retention
+- Easy retrieval and access
+
+### Audit Trail Maintenance
+
+**Automated Audit Logging:**
+- User login and logout activities
+- Financial transaction entries and modifications
+- Report generation and access
+- System configuration changes
+- Data export and backup activities
+
+**Manual Documentation:**
+- Meeting minutes for financial decisions
+- Policy changes and approvals
+- Exception handling and explanations
+- Corrective actions and remediation
+- Training and compliance activities
+
+### Record Retention Policies
+
+**Retention Schedules:**
+- **Financial Records**: 7 years minimum
+- **Tax Documents**: 7 years after filing
+- **Audit Reports**: Permanent retention
+- **Bank Records**: 7 years minimum
+- **Electronic Records**: Same as paper equivalents
+
+**Secure Storage Requirements:**
+- Fireproof and waterproof storage for critical documents
+- Encrypted digital storage with regular backups
+- Access controls and monitoring
+- Regular integrity checks and verification
+- Disaster recovery and business continuity planning
+
+## Fraud Prevention and Detection
+
+### Common Fraud Risks
+
+**Internal Fraud Risks:**
+- Unauthorized expense reimbursements
+- Fictitious vendor payments
+- Cash theft and skimming
+- Payroll fraud and ghost employees
+- Asset misappropriation
+
+**External Fraud Risks:**
+- Payment card fraud and chargebacks
+- Check fraud and forgery
+- Identity theft and impersonation
+- Phishing and social engineering
+- Vendor fraud and overbilling
+
+### Fraud Prevention Measures
+
+**Preventive Controls:**
+- Segregation of duties and dual controls
+- Regular reconciliation procedures
+- Surprise audits and reviews
+- Background checks for financial personnel
+- Fraud awareness training and education
+
+**Detective Controls:**
+- Exception reporting and analysis
+- Trend analysis and variance investigation
+- Regular audit procedures
+- Whistleblower policies and procedures
+- Continuous monitoring and alerting
+
+<FeatureShowcase
+  title="Fraud Detection Features"
+  features={[
+    {
+      title: "Automated Alerts",
+      description: "Real-time notifications for unusual transactions and patterns",
+      icon: "AlertTriangle",
+      planRequired: "PRO"
+    },
+    {
+      title: "Duplicate Detection",
+      description: "Identify potential duplicate payments and transactions",
+      icon: "Copy",
+      planRequired: "BASIC"
+    },
+    {
+      title: "Variance Analysis",
+      description: "Automated analysis of budget and spending variances",
+      icon: "TrendingDown",
+      planRequired: "BASIC"
+    },
+    {
+      title: "Audit Reporting",
+      description: "Comprehensive audit trails and compliance reporting",
+      icon: "FileText",
+      planRequired: "BASIC"
+    }
+  ]}
+/>
+
+### Incident Response Procedures
+
+**Fraud Investigation Process:**
+1. **Initial Assessment**: Evaluate the scope and severity of suspected fraud
+2. **Evidence Preservation**: Secure relevant documents and electronic records
+3. **Investigation**: Conduct thorough investigation with appropriate personnel
+4. **Reporting**: Notify relevant authorities and stakeholders as required
+5. **Remediation**: Implement corrective actions and process improvements
+
+**Communication Protocols:**
+- Internal notification procedures
+- External reporting requirements
+- Member and stakeholder communication
+- Media relations and public statements
+- Legal counsel consultation
+
+## Audit Preparation and Management
+
+### Internal Audit Procedures
+
+**Regular Internal Reviews:**
+- Monthly financial reconciliations
+- Quarterly compliance assessments
+- Annual comprehensive reviews
+- Special purpose investigations
+- Continuous monitoring procedures
+
+**Internal Audit Checklist:**
+- Bank reconciliation accuracy and timeliness
+- Expense documentation and approval compliance
+- Revenue recognition and recording accuracy
+- Asset safeguarding and inventory verification
+- Policy compliance and adherence
+
+### External Audit Preparation
+
+**Pre-Audit Preparation:**
+- Organize financial records and documentation
+- Prepare supporting schedules and analyses
+- Review internal controls and procedures
+- Identify potential issues and explanations
+- Coordinate with audit team and schedule
+
+**Audit Support Activities:**
+- Provide requested documentation promptly
+- Respond to auditor inquiries and requests
+- Facilitate access to personnel and records
+- Review draft findings and recommendations
+- Implement agreed-upon corrective actions
+
+### Audit Follow-Up and Remediation
+
+**Management Response:**
+- Develop corrective action plans
+- Assign responsibility and timelines
+- Implement process improvements
+- Monitor progress and effectiveness
+- Report on remediation status
+
+**Continuous Improvement:**
+- Regular policy and procedure updates
+- Training and education programs
+- System and process enhancements
+- Best practice implementation
+- Ongoing monitoring and assessment
+
+## Risk Management
+
+### Financial Risk Assessment
+
+**Risk Identification:**
+- Operational risks (fraud, errors, system failures)
+- Compliance risks (regulatory violations, policy breaches)
+- Strategic risks (budget shortfalls, revenue declines)
+- Reputational risks (financial scandals, transparency issues)
+- Technology risks (data breaches, system outages)
+
+**Risk Evaluation:**
+- Probability assessment and likelihood
+- Impact analysis and consequences
+- Risk tolerance and appetite
+- Cost-benefit analysis of mitigation
+- Prioritization and resource allocation
+
+### Risk Mitigation Strategies
+
+**Risk Reduction:**
+- Implementation of internal controls
+- Staff training and education
+- Process standardization and automation
+- Regular monitoring and review
+- Continuous improvement initiatives
+
+**Risk Transfer:**
+- Insurance coverage and protection
+- Contractual risk allocation
+- Outsourcing and third-party services
+- Bonding and fidelity coverage
+- Legal protections and indemnification
+
+**Risk Acceptance:**
+- Documented risk tolerance decisions
+- Regular monitoring and reassessment
+- Contingency planning and preparation
+- Reserve fund maintenance
+- Crisis management procedures
+
+## Compliance Monitoring and Reporting
+
+### Ongoing Compliance Monitoring
+
+**Regular Assessments:**
+- Monthly compliance checklists
+- Quarterly policy reviews
+- Annual comprehensive assessments
+- Special purpose evaluations
+- Continuous monitoring procedures
+
+**Key Performance Indicators:**
+- Compliance violation rates
+- Audit finding resolution times
+- Training completion rates
+- Policy update frequencies
+- Risk assessment scores
+
+### Regulatory Reporting
+
+**Required Reports:**
+- Annual tax filings and returns
+- State registration renewals
+- University compliance reports
+- National organization submissions
+- Grant and funding reports
+
+**Reporting Best Practices:**
+- Accurate and complete information
+- Timely submission and filing
+- Proper documentation and support
+- Regular review and verification
+- Professional preparation and presentation
+
+## Getting Help and Resources
+
+### Compliance Support
+
+**Professional Services:**
+- Certified Public Accountants (CPAs)
+- Legal counsel and attorneys
+- Compliance consultants and specialists
+- Internal audit services
+- Risk management advisors
+
+**Educational Resources:**
+- Non-profit financial management courses
+- Compliance training and certification
+- Industry conferences and workshops
+- Professional association resources
+- Online training and webinars
+
+### Emergency Procedures
+
+**Compliance Violations:**
+- Immediate assessment and containment
+- Legal counsel consultation
+- Regulatory notification as required
+- Corrective action implementation
+- Ongoing monitoring and reporting
+
+**Security Incidents:**
+- Incident response team activation
+- Evidence preservation and investigation
+- Stakeholder notification procedures
+- Remediation and recovery actions
+- Lessons learned and improvement
+
+Ready to strengthen your financial compliance? Learn about [audit preparation](/docs/admin-guide/audit-logs) or explore [security settings](/docs/admin-guide/settings/security).

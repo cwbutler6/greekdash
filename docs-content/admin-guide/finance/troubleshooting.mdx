@@ -1,0 +1,587 @@
+---
+title: "Financial Management Troubleshooting"
+description: "Common financial management issues and their solutions, including payment problems, reporting errors, and system integration issues"
+section: "admin-guide"
+subsection: "finance"
+author: "GreekDash Team"
+tags: ["troubleshooting", "support", "issues", "solutions", "finance"]
+prerequisites: ["admin-guide/finance/index"]
+planRequired: "BASIC"
+lastUpdated: "2025-01-25"
+relatedPages: ["admin-guide/finance/stripe-integration", "admin-guide/finance/reports", "admin-guide/finance/dues-setup"]
+---
+
+# Financial Management Troubleshooting
+
+This comprehensive troubleshooting guide helps you resolve common financial management issues quickly and effectively. Find solutions to payment problems, reporting errors, integration issues, and more.
+
+## Quick Diagnostic Tools
+
+### Financial Health Check
+
+**System Status Verification:**
+1. **Check Stripe Connection Status**
+   - Go to Settings → Billing → Payment Processing
+   - Verify "Connected" status with green indicator
+   - Test with small transaction if needed
+
+2. **Verify Data Synchronization**
+   - Compare GreekDash totals with bank statements
+   - Check recent transaction timestamps
+   - Ensure webhook delivery is functioning
+
+3. **Review Recent Error Logs**
+   - Check Admin → System Logs for errors
+   - Look for payment processing failures
+   - Identify recurring issues or patterns
+
+<QuickReferenceCard
+  title="Emergency Diagnostic Checklist"
+  items={[
+    { action: "Check System Status", shortcut: "Admin → System Status → All Green" },
+    { action: "Verify Stripe Connection", shortcut: "Settings → Billing → Connection Status" },
+    { action: "Test Payment Processing", shortcut: "Finance → Test Transaction" },
+    { action: "Review Error Logs", shortcut: "Admin → Logs → Recent Errors" },
+    { action: "Contact Support", shortcut: "Help → Contact Support → Urgent Issue" }
+  ]}
+/>
+
+## Payment Processing Issues
+
+### Payment Failures
+
+**Issue: Member payments are being declined**
+
+*Common Symptoms:*
+- "Payment failed" notifications
+- Members report successful payment but system shows unpaid
+- Multiple failed payment attempts
+- Error messages during checkout process
+
+*Diagnostic Steps:*
+1. **Check Payment Method Validity**
+   ```
+   Verify: Card expiration date, CVV, billing address
+   Test: Try different payment method
+   Confirm: Sufficient funds available
+   ```
+
+2. **Review Stripe Dashboard**
+   - Log into Stripe dashboard
+   - Check recent failed payments
+   - Review decline reasons and codes
+   - Identify patterns in failures
+
+*Solutions by Decline Reason:*
+
+**Insufficient Funds:**
+- Contact member to verify account balance
+- Suggest alternative payment method
+- Offer payment plan if appropriate
+- Retry payment after member confirms funds
+
+**Card Declined by Issuer:**
+- Member should contact their bank
+- Verify transaction is legitimate
+- Request bank to whitelist GreekDash/Stripe
+- Try alternative payment method
+
+**Expired Card:**
+- Request updated card information
+- Update payment method in system
+- Retry payment with new card
+- Set up automatic card updater if available
+
+**Fraud Prevention Triggered:**
+- Review transaction for suspicious activity
+- Contact member to verify legitimacy
+- Provide additional verification if needed
+- Work with Stripe support for complex cases
+
+### Webhook Delivery Issues
+
+**Issue: Payments processed but not reflected in GreekDash**
+
+*Symptoms:*
+- Stripe shows successful payment
+- GreekDash still shows payment as pending
+- Member charged but account not credited
+- Delayed payment status updates
+
+*Diagnostic Process:*
+1. **Check Webhook Status**
+   - Go to Stripe Dashboard → Webhooks
+   - Verify endpoint is active and receiving events
+   - Check recent delivery attempts and responses
+   - Look for failed deliveries or errors
+
+2. **Review GreekDash Logs**
+   - Check webhook processing logs
+   - Identify any error messages or exceptions
+   - Verify payment ID matching between systems
+   - Look for duplicate or missing events
+
+*Resolution Steps:*
+1. **Manual Sync (Immediate Fix)**
+   - Go to Finance → Transactions
+   - Find the Stripe payment ID
+   - Click "Sync Payment Status"
+   - Verify member account is updated
+
+2. **Webhook Repair (Long-term Fix)**
+   - Contact GreekDash support
+   - Provide Stripe payment ID and timestamp
+   - Request webhook endpoint verification
+   - Test webhook delivery after repair
+
+### Duplicate Payments
+
+**Issue: Member charged multiple times for same dues**
+
+*Symptoms:*
+- Multiple charges on member's card
+- Duplicate transaction records
+- Overpayment showing in member account
+- Member complaints about double billing
+
+*Investigation Steps:*
+1. **Identify Duplicate Transactions**
+   - Search by member name and amount
+   - Check transaction timestamps
+   - Compare Stripe payment IDs
+   - Verify actual vs. perceived duplicates
+
+2. **Determine Root Cause**
+   - Member clicked payment button multiple times
+   - System error during processing
+   - Webhook delivered multiple times
+   - Manual payment entry error
+
+*Resolution Process:*
+1. **Process Refund**
+   - Go to duplicate transaction
+   - Click "Process Refund"
+   - Select refund amount (usually full duplicate)
+   - Add refund reason and notes
+   - Confirm refund processing
+
+2. **Update Member Account**
+   - Adjust member payment balance
+   - Add account credit if appropriate
+   - Document resolution in member notes
+   - Send confirmation to member
+
+3. **Prevent Future Duplicates**
+   - Implement payment button disable after click
+   - Add duplicate detection logic
+   - Improve webhook idempotency handling
+   - Train members on proper payment process
+
+## Reporting and Data Issues
+
+### Incorrect Financial Totals
+
+**Issue: Dashboard totals don't match bank statements**
+
+*Common Causes:*
+- Transactions not properly categorized
+- Missing or duplicate entries
+- Timing differences in recording
+- Currency conversion issues
+- Manual entry errors
+
+*Reconciliation Process:*
+1. **Gather Source Documents**
+   - Bank statements for reconciliation period
+   - Stripe transaction reports
+   - Manual payment records
+   - Adjustment and correction entries
+
+2. **Compare Transaction by Transaction**
+   - Export GreekDash transaction report
+   - Match each entry with bank statement
+   - Identify missing or extra transactions
+   - Note timing differences and explanations
+
+3. **Investigate Discrepancies**
+   - Check transaction categorization
+   - Verify payment method recording
+   - Review manual adjustments
+   - Confirm currency and amount accuracy
+
+*Resolution Steps:*
+1. **Correct Data Entry Errors**
+   - Update incorrect transaction amounts
+   - Fix categorization mistakes
+   - Add missing transactions
+   - Remove duplicate entries
+
+2. **Document Reconciliation**
+   - Create reconciliation worksheet
+   - Explain all differences and adjustments
+   - Maintain supporting documentation
+   - Update financial records accordingly
+
+### Missing Transaction Data
+
+**Issue: Transactions missing from reports**
+
+*Diagnostic Questions:*
+- Are transactions missing from specific date ranges?
+- Do missing transactions involve specific payment methods?
+- Are certain transaction types affected?
+- Is the issue recent or historical?
+
+*Investigation Steps:*
+1. **Check Data Filters**
+   - Verify report date range settings
+   - Confirm transaction type filters
+   - Check member or category filters
+   - Ensure proper permission levels
+
+2. **Review Transaction Status**
+   - Check if transactions are in "pending" status
+   - Verify completion of payment processing
+   - Confirm webhook delivery for online payments
+   - Review manual entry completeness
+
+*Recovery Methods:*
+1. **Data Synchronization**
+   - Run manual sync with payment processors
+   - Import missing transactions from backups
+   - Reconcile with external data sources
+   - Update transaction status as needed
+
+2. **Manual Data Entry**
+   - Add missing transactions manually
+   - Include all required fields and documentation
+   - Verify accuracy with source documents
+   - Update related accounts and balances
+
+### Export and Integration Problems
+
+**Issue: Data exports are incomplete or corrupted**
+
+*Common Problems:*
+- Files won't open in Excel/accounting software
+- Missing columns or data fields
+- Formatting issues and character encoding
+- Large file size causing timeouts
+
+*Troubleshooting Steps:*
+1. **Verify Export Settings**
+   - Check selected date ranges
+   - Confirm included data fields
+   - Verify file format selection
+   - Review filter criteria
+
+2. **Test Alternative Formats**
+   - Try CSV instead of Excel format
+   - Use smaller date ranges
+   - Export specific data subsets
+   - Test with different browsers
+
+*Solutions:*
+1. **File Format Issues**
+   - Use UTF-8 encoding for special characters
+   - Try different file formats (CSV, Excel, PDF)
+   - Split large exports into smaller files
+   - Use compression for large datasets
+
+2. **Integration Problems**
+   - Verify accounting software compatibility
+   - Check import mapping and field matching
+   - Test with sample data first
+   - Contact software vendor for support
+
+## Budget and Expense Issues
+
+### Budget Tracking Inaccuracies
+
+**Issue: Budget vs. actual reports show incorrect data**
+
+*Potential Causes:*
+- Incorrect expense categorization
+- Budget period misalignment
+- Missing or duplicate transactions
+- Currency or calculation errors
+
+*Verification Process:*
+1. **Review Budget Setup**
+   - Confirm budget period dates
+   - Verify category definitions
+   - Check budget allocation amounts
+   - Validate calculation methods
+
+2. **Audit Expense Categorization**
+   - Review recent expense assignments
+   - Check for miscategorized transactions
+   - Verify automatic categorization rules
+   - Update incorrect category assignments
+
+*Correction Steps:*
+1. **Fix Categorization Errors**
+   - Bulk update miscategorized expenses
+   - Create or update categorization rules
+   - Train users on proper categorization
+   - Implement approval workflows
+
+2. **Adjust Budget Allocations**
+   - Reallocate funds between categories
+   - Update budget amounts if necessary
+   - Document changes and reasons
+   - Communicate updates to stakeholders
+
+### Expense Approval Workflow Issues
+
+**Issue: Expenses stuck in approval process**
+
+*Common Scenarios:*
+- Approver unavailable or unresponsive
+- Approval notifications not received
+- System errors preventing approval
+- Unclear approval requirements
+
+*Diagnostic Steps:*
+1. **Check Approval Status**
+   - Review expense approval history
+   - Identify current approval step
+   - Verify approver availability
+   - Check notification delivery
+
+2. **Review Approval Rules**
+   - Confirm approval hierarchy setup
+   - Verify amount thresholds
+   - Check category-specific rules
+   - Validate user permissions
+
+*Resolution Options:*
+1. **Manual Intervention**
+   - Escalate to next approval level
+   - Assign temporary approver
+   - Override approval if authorized
+   - Document exception and reason
+
+2. **Process Improvement**
+   - Update approval workflows
+   - Add backup approvers
+   - Implement time-based escalation
+   - Improve notification systems
+
+## Member Account Issues
+
+### Payment History Discrepancies
+
+**Issue: Member payment records don't match actual payments**
+
+*Investigation Process:*
+1. **Gather Payment Evidence**
+   - Bank/card statements from member
+   - Email receipts and confirmations
+   - Stripe transaction records
+   - GreekDash payment history
+
+2. **Compare All Sources**
+   - Match payment amounts and dates
+   - Verify payment method details
+   - Check for processing delays
+   - Identify any missing payments
+
+*Resolution Steps:*
+1. **Correct Payment Records**
+   - Add missing payment entries
+   - Update incorrect payment amounts
+   - Fix payment date discrepancies
+   - Adjust member account balances
+
+2. **Prevent Future Issues**
+   - Improve payment confirmation process
+   - Enhance record keeping procedures
+   - Implement regular reconciliation
+   - Train staff on proper documentation
+
+### Dues Assignment Problems
+
+**Issue: Members assigned incorrect dues amounts**
+
+*Common Causes:*
+- Wrong dues plan assignment
+- Proration calculation errors
+- Membership status changes
+- Manual entry mistakes
+
+*Correction Process:*
+1. **Review Member Status**
+   - Verify current membership level
+   - Check membership start/end dates
+   - Confirm dues plan eligibility
+   - Review any special circumstances
+
+2. **Recalculate Dues**
+   - Apply correct dues plan
+   - Calculate proper proration
+   - Adjust for membership changes
+   - Update payment schedules
+
+*Implementation:*
+1. **Update Member Records**
+   - Change dues plan assignment
+   - Adjust payment amounts
+   - Update due dates if necessary
+   - Process refunds or additional charges
+
+2. **Communicate Changes**
+   - Notify affected members
+   - Explain reason for changes
+   - Provide updated payment information
+   - Offer assistance if needed
+
+## System Integration Issues
+
+### Accounting Software Sync Problems
+
+**Issue: Data not syncing properly with QuickBooks/Xero**
+
+*Troubleshooting Steps:*
+1. **Check Connection Status**
+   - Verify integration is active
+   - Test authentication credentials
+   - Check for expired tokens
+   - Review permission settings
+
+2. **Identify Sync Errors**
+   - Review sync logs and error messages
+   - Check for data format issues
+   - Verify account mapping
+   - Look for duplicate entries
+
+*Resolution Methods:*
+1. **Reconnect Integration**
+   - Refresh authentication tokens
+   - Update permission settings
+   - Reconfigure account mapping
+   - Test with sample data
+
+2. **Manual Data Correction**
+   - Export data for manual import
+   - Correct formatting issues
+   - Update account classifications
+   - Reconcile differences manually
+
+### Bank Feed Integration Issues
+
+**Issue: Bank transactions not importing correctly**
+
+*Common Problems:*
+- Bank connection expired or broken
+- Transaction categorization errors
+- Duplicate transaction imports
+- Missing transaction details
+
+*Resolution Process:*
+1. **Reconnect Bank Account**
+   - Update bank login credentials
+   - Refresh account permissions
+   - Verify account selection
+   - Test connection stability
+
+2. **Clean Up Transaction Data**
+   - Remove duplicate imports
+   - Correct categorization errors
+   - Add missing transaction details
+   - Reconcile with bank statements
+
+## Performance and System Issues
+
+### Slow Report Generation
+
+**Issue: Financial reports take too long to generate**
+
+*Optimization Strategies:*
+1. **Reduce Data Scope**
+   - Use shorter date ranges
+   - Limit included categories
+   - Filter by specific criteria
+   - Generate summary reports first
+
+2. **Improve System Performance**
+   - Clear browser cache and cookies
+   - Use latest browser version
+   - Check internet connection speed
+   - Try during off-peak hours
+
+### Data Loading Problems
+
+**Issue: Financial data not loading or displaying errors**
+
+*Troubleshooting Steps:*
+1. **Browser and Cache Issues**
+   - Clear browser cache and cookies
+   - Try incognito/private browsing mode
+   - Test with different browser
+   - Disable browser extensions
+
+2. **Network and Connectivity**
+   - Check internet connection stability
+   - Test from different network
+   - Verify firewall settings
+   - Check for proxy issues
+
+*Advanced Solutions:*
+1. **System-Level Issues**
+   - Contact GreekDash support
+   - Provide error messages and screenshots
+   - Share browser console logs
+   - Test with support team guidance
+
+## Getting Additional Help
+
+### When to Contact Support
+
+**Immediate Support Needed:**
+- Payment processing completely down
+- Data corruption or loss
+- Security breach or unauthorized access
+- Critical system errors affecting operations
+
+**Standard Support Requests:**
+- Complex integration issues
+- Recurring data synchronization problems
+- Advanced reporting requirements
+- Custom workflow configuration
+
+### Information to Provide
+
+**For Payment Issues:**
+- Stripe payment ID or transaction reference
+- Member name and contact information
+- Error messages and screenshots
+- Timeline of events and actions taken
+
+**For Data Issues:**
+- Specific report or data affected
+- Date ranges and filters used
+- Expected vs. actual results
+- Steps to reproduce the problem
+
+**For Integration Issues:**
+- Third-party system details and versions
+- Error messages from both systems
+- Configuration settings and mappings
+- Recent changes or updates made
+
+### Self-Service Resources
+
+**Documentation and Guides:**
+- Comprehensive setup and configuration guides
+- Step-by-step troubleshooting procedures
+- Best practices and optimization tips
+- Video tutorials and walkthroughs
+
+**Community Support:**
+- User forums and discussion groups
+- Peer-to-peer assistance and advice
+- Shared solutions and workarounds
+- Best practice sharing and learning
+
+Ready to resolve your financial management issues? Contact our [support team](/contact) or explore our [comprehensive guides](/docs/admin-guide/finance) for additional assistance.

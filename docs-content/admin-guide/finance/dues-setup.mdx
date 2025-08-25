@@ -1,0 +1,447 @@
+---
+title: "Dues Setup and Payment Processing"
+description: "Complete guide to setting up dues plans, payment processing, and managing member payments"
+section: "admin-guide"
+subsection: "finance"
+author: "GreekDash Team"
+tags: ["dues", "payments", "stripe", "billing"]
+prerequisites: ["getting-started/chapter-setup", "admin-guide/finance/index"]
+planRequired: "BASIC"
+lastUpdated: "2025-01-25"
+relatedPages: ["admin-guide/finance/expenses", "admin-guide/finance/reports", "admin-guide/finance/stripe-integration"]
+---
+
+# Dues Setup and Payment Processing
+
+Setting up dues collection is essential for maintaining your chapter's financial health. GreekDash provides comprehensive tools to create flexible dues plans, process payments securely, and track member payment status.
+
+## Overview
+
+**What You'll Learn:**
+- How to create and configure dues plans
+- Setting up payment processing with Stripe
+- Managing member payment assignments
+- Tracking payment status and handling overdue payments
+- Automating payment reminders and late fees
+
+**Prerequisites:**
+- Chapter setup completed
+- Stripe account connected (for payment processing)
+- Basic financial management permissions
+
+## Creating Dues Plans
+
+### Step 1: Access Dues Management
+
+1. **Navigate to Finance Dashboard**
+   - Go to your admin dashboard
+   - Click "Finance" in the sidebar
+   - Select "Dues" tab or visit `/admin/finance/dues`
+
+2. **Create New Dues Plan**
+   - Click "New Dues Plan" button
+   - The dues plan creation dialog will open
+
+### Step 2: Configure Dues Plan Details
+
+**Basic Information:**
+- **Plan Name**: Choose a descriptive name (e.g., "Fall 2024 Semester Dues")
+- **Description**: Add details about what the dues cover
+- **Amount**: Set the total dues amount per member
+- **Frequency**: Choose payment schedule:
+  - One-time payment
+  - Monthly installments
+  - Semester payments
+  - Annual payments
+
+**Payment Options:**
+- **Due Date**: Set when payments are due
+- **Late Fee**: Configure automatic late fees (optional)
+- **Grace Period**: Allow time before late fees apply
+- **Payment Methods**: Enable credit cards, ACH transfers, or both
+
+### Step 3: Advanced Configuration
+
+**Eligibility Settings:**
+- **Member Types**: Specify which member roles can be assigned
+- **Status Requirements**: Set member status requirements
+- **Custom Criteria**: Add specific eligibility rules
+
+**Payment Processing:**
+- **Auto-Assignment**: Automatically assign to new members
+- **Proration**: Handle mid-period member additions
+- **Refund Policy**: Set refund rules and procedures
+
+<AnnotatedScreenshot
+  src="/images/docs/finance/dues-plan-creation.png"
+  alt="Dues plan creation form"
+  annotations={[
+    { x: 150, y: 100, text: "Enter plan name and description" },
+    { x: 300, y: 200, text: "Set amount and payment frequency" },
+    { x: 250, y: 350, text: "Configure due dates and late fees" }
+  ]}
+/>
+
+## Assigning Dues to Members
+
+### Individual Assignment
+
+1. **Select Members**
+   - Go to the "Plan Assignments" tab
+   - Click "Assign Dues to Members"
+   - Choose individual members from the list
+
+2. **Bulk Assignment**
+   - Select multiple members using checkboxes
+   - Choose the appropriate dues plan
+   - Set assignment effective date
+   - Click "Assign Selected Members"
+
+### Automatic Assignment Rules
+
+**New Member Auto-Assignment:**
+- Enable automatic assignment for new members
+- Set default dues plan for new joiners
+- Configure proration for mid-period additions
+
+**Role-Based Assignment:**
+- Assign different plans based on member roles
+- Set up executive vs. general member dues
+- Handle special member categories
+
+<StepGuide
+  title="Bulk Dues Assignment Process"
+  steps={[
+    {
+      title: "Select Members",
+      description: "Choose members who need dues assigned",
+      screenshot: "/images/docs/finance/member-selection.png"
+    },
+    {
+      title: "Choose Dues Plan",
+      description: "Select the appropriate dues plan from dropdown",
+      screenshot: "/images/docs/finance/plan-selection.png"
+    },
+    {
+      title: "Set Effective Date",
+      description: "Choose when the dues assignment takes effect",
+      screenshot: "/images/docs/finance/effective-date.png"
+    },
+    {
+      title: "Review and Confirm",
+      description: "Review assignments and confirm bulk operation",
+      screenshot: "/images/docs/finance/assignment-confirmation.png"
+    }
+  ]}
+/>
+
+## Payment Processing Setup
+
+### Stripe Integration
+
+**Initial Setup:**
+1. **Connect Stripe Account**
+   - Go to Chapter Settings > Billing
+   - Click "Connect Stripe Account"
+   - Complete Stripe onboarding process
+   - Verify bank account information
+
+2. **Configure Payment Methods**
+   - Enable credit/debit cards
+   - Set up ACH bank transfers (US only)
+   - Configure digital wallets (Apple Pay, Google Pay)
+   - Set payment method preferences
+
+**Security Configuration:**
+- Enable fraud detection
+- Set up 3D Secure authentication
+- Configure payment retry logic
+- Set up webhook endpoints
+
+### Payment Processing Flow
+
+**Member Payment Process:**
+1. Member receives payment notification
+2. Clicks payment link in email or portal
+3. Redirected to secure Stripe checkout
+4. Completes payment with chosen method
+5. Receives confirmation and receipt
+6. Payment status updated in GreekDash
+
+**Admin Monitoring:**
+- Real-time payment notifications
+- Payment status dashboard
+- Failed payment alerts
+- Reconciliation reports
+
+## Managing Payment Status
+
+### Payment Tracking Dashboard
+
+**Overview Metrics:**
+- Total outstanding dues
+- Payment completion rate
+- Average payment time
+- Late payment statistics
+
+**Individual Member Status:**
+- Payment history per member
+- Outstanding balances
+- Payment method preferences
+- Communication history
+
+### Handling Overdue Payments
+
+**Automated Reminders:**
+1. **Initial Reminder** (3 days before due date)
+2. **Due Date Reminder** (on due date)
+3. **Overdue Notice** (3 days after due date)
+4. **Final Notice** (7 days after due date)
+
+**Manual Follow-up:**
+- Send personalized payment reminders
+- Schedule payment plan meetings
+- Document payment agreements
+- Track resolution progress
+
+<QuickReferenceCard
+  title="Payment Status Quick Actions"
+  items={[
+    { action: "Send Payment Reminder", shortcut: "Select member → Actions → Send Reminder" },
+    { action: "Mark Payment Received", shortcut: "Payment row → Mark as Paid" },
+    { action: "Set Up Payment Plan", shortcut: "Member profile → Payment Plan" },
+    { action: "Apply Late Fee", shortcut: "Overdue payment → Add Late Fee" },
+    { action: "Process Refund", shortcut: "Paid payment → Request Refund" }
+  ]}
+/>
+
+## Late Fees and Penalties
+
+### Automatic Late Fee Configuration
+
+**Setup Process:**
+1. **Define Late Fee Structure**
+   - Fixed amount or percentage
+   - Escalating fee schedule
+   - Maximum late fee caps
+   - Grace period settings
+
+2. **Configure Application Rules**
+   - Days after due date to apply
+   - Member notification requirements
+   - Waiver approval process
+   - Appeal procedures
+
+### Manual Late Fee Management
+
+**Applying Late Fees:**
+- Review overdue payments
+- Apply late fees individually or in bulk
+- Send late fee notifications
+- Document fee application reasons
+
+**Waiving Late Fees:**
+- Review waiver requests
+- Document approval reasons
+- Update payment records
+- Notify affected members
+
+## Payment Plans and Installments
+
+### Creating Payment Plans
+
+**Flexible Payment Options:**
+- Split large dues into smaller payments
+- Custom payment schedules
+- Interest-free installment plans
+- Emergency payment assistance
+
+**Setup Process:**
+1. **Assess Member Situation**
+   - Review financial hardship requests
+   - Determine appropriate payment schedule
+   - Set realistic payment amounts
+   - Document agreement terms
+
+2. **Configure Payment Plan**
+   - Create custom payment schedule
+   - Set up automated reminders
+   - Monitor compliance
+   - Handle missed payments
+
+### Managing Installment Plans
+
+**Monitoring Progress:**
+- Track payment plan compliance
+- Send automated reminders
+- Handle missed installments
+- Adjust plans as needed
+
+**Plan Modifications:**
+- Extend payment periods
+- Adjust payment amounts
+- Handle emergency situations
+- Document all changes
+
+## Reporting and Analytics
+
+### Payment Reports
+
+**Standard Reports:**
+- Payment completion summary
+- Outstanding dues report
+- Late payment analysis
+- Payment method breakdown
+- Member payment history
+
+**Custom Reports:**
+- Filter by date ranges
+- Group by member categories
+- Compare payment periods
+- Export to Excel/CSV
+
+### Financial Analytics
+
+**Key Metrics:**
+- Collection efficiency rates
+- Average payment processing time
+- Payment method preferences
+- Seasonal payment patterns
+- Member payment behavior
+
+**Trend Analysis:**
+- Payment completion trends
+- Late payment patterns
+- Collection improvement areas
+- Member engagement correlation
+
+## Troubleshooting Common Issues
+
+### Payment Processing Problems
+
+**Failed Payments:**
+
+*Symptoms:*
+- Payment shows as failed in dashboard
+- Member reports payment didn't go through
+- Stripe webhook errors in logs
+
+*Solutions:*
+1. Check payment method validity
+2. Verify sufficient funds
+3. Review fraud detection settings
+4. Contact member for updated payment info
+5. Manually retry payment if appropriate
+
+**Duplicate Payments:**
+
+*Symptoms:*
+- Member charged twice for same dues
+- Multiple payment records for single transaction
+- Overpayment showing in member account
+
+*Solutions:*
+1. Identify duplicate transactions
+2. Process refund for excess payment
+3. Update payment records
+4. Implement duplicate prevention measures
+
+### Member Payment Issues
+
+**Payment Not Reflecting:**
+
+*Symptoms:*
+- Member paid but status shows unpaid
+- Payment processed but not recorded
+- Webhook delivery failures
+
+*Solutions:*
+1. Check Stripe webhook logs
+2. Manually sync payment status
+3. Verify webhook endpoint configuration
+4. Update payment record manually if needed
+
+**Refund Requests:**
+
+*Process:*
+1. Review refund eligibility
+2. Verify original payment
+3. Process refund through Stripe
+4. Update member payment records
+5. Send refund confirmation
+
+## Best Practices
+
+### Payment Collection
+
+**Timing:**
+- Send dues notices 30 days in advance
+- Set reasonable due dates
+- Provide multiple payment reminders
+- Offer early payment incentives
+
+**Communication:**
+- Clear payment instructions
+- Multiple contact methods
+- Personalized follow-up
+- Transparent fee policies
+
+### Financial Management
+
+**Record Keeping:**
+- Maintain detailed payment logs
+- Document all fee waivers
+- Track payment plan agreements
+- Regular reconciliation with bank statements
+
+**Member Relations:**
+- Flexible payment options
+- Confidential financial discussions
+- Fair and consistent policies
+- Prompt issue resolution
+
+## Advanced Features
+
+### Automated Workflows
+
+**Payment Reminder Sequences:**
+- Customizable email templates
+- SMS notification options
+- Escalation procedures
+- Integration with member communications
+
+**Late Fee Automation:**
+- Automatic fee calculation
+- Scheduled fee application
+- Member notification system
+- Waiver request handling
+
+### Integration Capabilities
+
+**Accounting Software:**
+- QuickBooks integration
+- Xero compatibility
+- Custom export formats
+- Automated reconciliation
+
+**Member Management:**
+- Payment status in member profiles
+- Dues-based access controls
+- Financial standing reports
+- Membership renewal integration
+
+## Getting Help
+
+**Support Resources:**
+- **Documentation**: Comprehensive setup guides
+- **Video Tutorials**: Step-by-step payment setup
+- **Support Team**: Financial specialists available
+- **Community**: Best practices from other chapters
+
+**Common Questions:**
+- How to handle payment disputes
+- Setting up international payments
+- Managing tax reporting requirements
+- Integrating with existing financial systems
+
+Ready to set up your dues collection? Start with [Stripe integration](/docs/admin-guide/finance/stripe-integration) or learn about [expense management](/docs/admin-guide/finance/expenses).
