@@ -1,0 +1,374 @@
+---
+title: "Member Roles and Permissions"
+description: "Complete guide to managing member roles, permissions, and access controls in your chapter"
+section: "admin-guide"
+subsection: "members"
+author: "GreekDash Team"
+tags: ["roles", "permissions", "access", "security"]
+prerequisites: ["admin-guide/members/directory"]
+planRequired: "FREE"
+lastUpdated: "2025-01-25"
+relatedPages: ["admin-guide/members/directory", "admin-guide/members/communication", "admin-guide/settings"]
+---
+
+# Member Roles and Permissions
+
+Learn how to effectively manage member roles and permissions to maintain proper access control and chapter security.
+
+## Overview
+
+GreekDash uses a role-based permission system that allows you to control what members can see and do within your chapter. Understanding and properly managing these roles is crucial for maintaining security and ensuring members have appropriate access to chapter features.
+
+## Understanding Member Roles
+
+### Role Hierarchy
+
+**Owner**
+- Highest level of access
+- Full chapter control including billing
+- Can manage all other roles
+- Typically limited to 1-2 people per chapter
+
+**Admin**
+- Administrative privileges for chapter management
+- Can manage members and most chapter features
+- Cannot access billing or manage other Owners
+- Suitable for officers and trusted members
+
+**Member**
+- Standard chapter member access
+- Can view chapter information and participate in activities
+- Limited administrative capabilities
+- Default role for most chapter members
+
+### Role Capabilities Matrix
+
+| Feature | Owner | Admin | Member |
+|---------|-------|-------|--------|
+| View Member Directory | ✅ | ✅ | ✅ |
+| Edit Own Profile | ✅ | ✅ | ✅ |
+| Edit Other Profiles | ✅ | ✅ | ❌ |
+| Invite Members | ✅ | ✅ | ❌ |
+| Approve Members | ✅ | ✅ | ❌ |
+| Manage Roles | ✅ | ✅* | ❌ |
+| Send Broadcasts | ✅ | ✅ | ❌ |
+| Create Events | ✅ | ✅ | ❌ |
+| Manage Finances | ✅ | ✅ | ❌ |
+| Access Billing | ✅ | ❌ | ❌ |
+| Chapter Settings | ✅ | ✅** | ❌ |
+
+*Admins can manage Member roles but not Admin or Owner roles
+**Admins have limited access to certain settings
+
+## Managing Member Roles
+
+### Assigning Roles
+
+**Individual Role Assignment**
+1. Navigate to Member Directory
+2. Click on member's name
+3. Select "Edit Role" or "Change Role"
+4. Choose new role from dropdown
+5. Add reason for change (optional)
+6. Confirm role assignment
+
+**Bulk Role Assignment**
+1. Select multiple members in directory
+2. Click "Bulk Actions"
+3. Choose "Change Roles"
+4. Select new role for all selected members
+5. Confirm bulk role change
+
+### Role Change Considerations
+
+**Before Changing Roles**
+- Consider the member's responsibilities
+- Evaluate their trustworthiness and experience
+- Review current workload and availability
+- Discuss role expectations with the member
+
+**Security Implications**
+- Higher roles grant more sensitive access
+- Role changes are logged for audit purposes
+- Consider principle of least privilege
+- Regular role reviews are recommended
+
+## Permission Details
+
+### Owner Permissions
+
+**Full Administrative Access**
+- Complete member management
+- All financial operations
+- Billing and subscription management
+- Chapter settings and configuration
+- Audit log access
+
+**Exclusive Capabilities**
+- Manage other Owner accounts
+- Access billing information
+- Delete chapter (with safeguards)
+- Transfer ownership
+- Configure advanced security settings
+
+### Admin Permissions
+
+**Member Management**
+- Invite and approve new members
+- Edit member profiles and information
+- Manage Member role assignments
+- Send communications and broadcasts
+- Access member activity reports
+
+**Chapter Operations**
+- Create and manage events
+- Handle financial operations (non-billing)
+- Manage files and documents
+- Configure most chapter settings
+- Access operational reports
+
+**Limitations**
+- Cannot access billing information
+- Cannot manage Admin or Owner roles
+- Cannot delete chapter
+- Limited access to security settings
+
+### Member Permissions
+
+**Personal Management**
+- Edit own profile information
+- Update contact preferences
+- Manage notification settings
+- Access personal activity history
+- Update privacy preferences
+
+**Chapter Participation**
+- View member directory (based on privacy settings)
+- RSVP to events
+- Pay dues and fees
+- Access shared files and documents
+- Participate in chapter activities
+
+**Communication**
+- Receive broadcasts and notifications
+- Contact other members (based on privacy settings)
+- Provide feedback and suggestions
+- Access help and support resources
+
+## Advanced Permission Management
+
+### Custom Permissions
+
+**Committee-Based Permissions**
+- Assign additional permissions for committee work
+- Grant temporary elevated access
+- Create committee-specific roles
+- Manage project-based permissions
+
+**Feature-Specific Access**
+- Control access to specific features
+- Manage financial permission levels
+- Configure event management access
+- Set communication permissions
+
+### Temporary Role Assignments
+
+**Temporary Elevation**
+- Grant temporary Admin access for specific tasks
+- Set automatic role reversion dates
+- Monitor temporary permission usage
+- Maintain audit trail of temporary changes
+
+**Use Cases**
+- Event planning committees
+- Financial audit periods
+- Transition periods for new officers
+- Special project management
+
+## Role Transition Management
+
+### Officer Transitions
+
+**Planning Role Changes**
+1. Identify incoming and outgoing officers
+2. Plan transition timeline
+3. Prepare handover documentation
+4. Schedule role change dates
+
+**Executing Transitions**
+1. Assign new roles to incoming officers
+2. Provide training and orientation
+3. Remove roles from outgoing officers
+4. Update contact information and responsibilities
+
+### Succession Planning
+
+**Owner Succession**
+- Identify potential successors
+- Provide gradual access and training
+- Document critical processes
+- Plan for emergency succession
+
+**Admin Backup**
+- Maintain multiple Admin accounts
+- Cross-train on critical functions
+- Document key procedures
+- Regular capability assessments
+
+## Security Best Practices
+
+### Role Assignment Security
+
+**Principle of Least Privilege**
+- Grant minimum necessary permissions
+- Regular review of role assignments
+- Remove unnecessary access promptly
+- Document role assignment decisions
+
+**Access Reviews**
+- Quarterly role audits
+- Annual comprehensive reviews
+- Event-triggered reviews (graduations, etc.)
+- Continuous monitoring of access patterns
+
+### Account Security
+
+**Strong Authentication**
+- Require strong passwords for elevated roles
+- Enable two-factor authentication when available
+- Monitor login patterns and anomalies
+- Regular password updates
+
+**Activity Monitoring**
+- Review audit logs regularly
+- Monitor for unusual activity patterns
+- Set up alerts for sensitive operations
+- Investigate suspicious activities promptly
+
+## Troubleshooting Role Issues
+
+### Common Problems
+
+**Permission Denied Errors**
+- Verify current role assignments
+- Check for recent role changes
+- Confirm feature availability in current plan
+- Review temporary permission expirations
+
+**Role Assignment Failures**
+- Verify you have permission to assign roles
+- Check for conflicting role assignments
+- Ensure target member account is active
+- Review system status and connectivity
+
+### Access Issues
+
+**Members Can't Access Features**
+- Verify role permissions for specific features
+- Check account status and activation
+- Review privacy settings and restrictions
+- Confirm chapter subscription includes feature
+
+**Unexpected Access Levels**
+- Review recent role changes
+- Check for temporary permission grants
+- Verify inheritance from committee assignments
+- Investigate potential system issues
+
+## Audit and Compliance
+
+### Role Change Auditing
+
+**Audit Log Information**
+- Who made the role change
+- When the change occurred
+- Previous and new role assignments
+- Reason for change (if provided)
+- IP address and session information
+
+**Compliance Reporting**
+- Generate role assignment reports
+- Track permission changes over time
+- Monitor access pattern compliance
+- Document security reviews
+
+### Regular Reviews
+
+**Monthly Reviews**
+- Check for inactive accounts with elevated roles
+- Review recent role changes
+- Monitor unusual access patterns
+- Update role assignments as needed
+
+**Annual Audits**
+- Comprehensive role and permission review
+- Validate all Owner and Admin assignments
+- Document role assignment rationale
+- Update security policies and procedures
+
+## Integration with Chapter Operations
+
+### Event Management
+
+**Event-Specific Roles**
+- Temporary event coordinator permissions
+- Committee-based event access
+- Volunteer management roles
+- Post-event access cleanup
+
+### Financial Operations
+
+**Financial Role Management**
+- Treasurer-specific permissions
+- Audit committee access
+- Payment processing roles
+- Financial reporting access
+
+### Communication Management
+
+**Communication Roles**
+- Broadcast permission management
+- Newsletter and announcement roles
+- Social media management access
+- External communication permissions
+
+## Best Practices for Role Management
+
+### Organizational Guidelines
+
+**Clear Role Definitions**
+- Document role responsibilities clearly
+- Communicate expectations to role holders
+- Provide training for new role assignments
+- Regular role effectiveness reviews
+
+**Change Management**
+- Plan role changes in advance
+- Communicate changes to affected members
+- Provide transition support and training
+- Monitor effectiveness of role changes
+
+### Security Guidelines
+
+**Regular Maintenance**
+- Remove access for departed members immediately
+- Review and update roles quarterly
+- Monitor for unused elevated permissions
+- Maintain current contact information
+
+**Documentation**
+- Keep records of all role assignments
+- Document reasons for role changes
+- Maintain emergency contact procedures
+- Update role documentation regularly
+
+## Getting Help
+
+For assistance with role and permission management:
+
+- **Documentation**: Detailed guides for all role management features
+- **Support Team**: Contact through help widget for technical issues
+- **Training Resources**: Video tutorials on effective role management
+- **Security Guidance**: Best practices for maintaining chapter security
+
+Ready to explore other member management features? Learn about [Member Communication](/docs/admin-guide/members/communication) or check out [Chapter Security Settings](/docs/admin-guide/settings/security).

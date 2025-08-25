@@ -12,7 +12,8 @@ import {
   UserPlus,
   ArrowRight,
   Clock,
-  CheckCircle
+  CheckCircle,
+  AlertCircle
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -248,6 +249,60 @@ const quickReferenceItems: QuickReferenceItem[] = [
     estimatedTime: '8 min',
     difficulty: 'easy',
     tips: ['Use high-quality logos', 'Keep information current']
+  },
+  {
+    id: 'member-broadcast-detailed',
+    title: 'Send Broadcast Message',
+    description: 'Communicate with all or selected chapter members',
+    icon: <MessageSquare className="h-4 w-4" />,
+    category: 'members',
+    steps: [
+      'Navigate to Management → Broadcasts',
+      'Click "Create Broadcast"',
+      'Select target audience',
+      'Compose your message',
+      'Schedule or send immediately'
+    ],
+    href: '/docs/admin-guide/members/communication',
+    estimatedTime: '5 min',
+    difficulty: 'easy',
+    tips: ['Keep messages concise', 'Use templates for common messages']
+  },
+  {
+    id: 'member-roles-detailed',
+    title: 'Manage Member Roles',
+    description: 'Assign and modify member roles and permissions',
+    icon: <Shield className="h-4 w-4" />,
+    category: 'members',
+    steps: [
+      'Navigate to Members → Directory',
+      'Find the member to update',
+      'Click "Edit Role" or three dots menu',
+      'Select new role (Member, Admin, Owner)',
+      'Confirm role change'
+    ],
+    href: '/docs/admin-guide/members/roles-permissions',
+    estimatedTime: '3 min',
+    difficulty: 'easy',
+    tips: ['Use principle of least privilege', 'Document role changes']
+  },
+  {
+    id: 'troubleshoot-invites',
+    title: 'Fix Invitation Issues',
+    description: 'Resolve common invitation and member access problems',
+    icon: <AlertCircle className="h-4 w-4" />,
+    category: 'members',
+    steps: [
+      'Check invitation status in Members → Invites',
+      'Verify email addresses are correct',
+      'Resend failed invitations',
+      'Check spam folders with members',
+      'Contact support if issues persist'
+    ],
+    href: '/docs/admin-guide/members/troubleshooting',
+    estimatedTime: '10 min',
+    difficulty: 'medium',
+    tips: ['Keep member contact info updated', 'Monitor delivery reports']
   },
   {
     id: 'privacy-settings',

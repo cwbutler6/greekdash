@@ -1,0 +1,488 @@
+---
+title: "Member Management Troubleshooting"
+description: "Solutions to common member management issues and problems"
+section: "admin-guide"
+subsection: "members"
+author: "GreekDash Team"
+tags: ["troubleshooting", "support", "issues", "solutions"]
+prerequisites: ["admin-guide/members/directory"]
+planRequired: "FREE"
+lastUpdated: "2025-01-25"
+relatedPages: ["admin-guide/members/invites", "admin-guide/members/pending", "admin-guide/members/communication"]
+---
+
+# Member Management Troubleshooting
+
+Find solutions to common member management issues and learn how to resolve problems quickly and effectively.
+
+## Common Invitation Issues
+
+### Members Not Receiving Invitations
+
+**Symptoms:**
+- Members report not receiving invitation emails
+- Invitations show as "Sent" but members can't find them
+- Multiple members affected simultaneously
+
+**Troubleshooting Steps:**
+
+1. **Check Email Addresses**
+   - Verify email addresses are spelled correctly
+   - Look for common typos (.com vs .edu)
+   - Confirm no extra spaces or characters
+
+2. **Email Delivery Issues**
+   - Ask members to check spam/junk folders
+   - Verify your domain isn't blacklisted
+   - Check if university email systems are blocking invitations
+
+3. **System Status**
+   - Check GreekDash system status page
+   - Verify email service is operational
+   - Look for any reported outages
+
+**Solutions:**
+- Resend invitations with corrected email addresses
+- Contact members through alternative channels
+- Whitelist GreekDash email domains with IT departments
+- Use bulk resend feature for multiple affected invitations
+
+### Invitation Links Not Working
+
+**Symptoms:**
+- Members click invitation links but get error pages
+- Links appear broken or modified
+- "Invalid invitation" error messages
+
+**Common Causes:**
+- Email clients modifying URLs
+- Expired invitation links
+- Already accepted invitations
+- Browser security settings
+
+**Solutions:**
+
+1. **Check Invitation Status**
+   - Verify invitation hasn't expired
+   - Confirm invitation hasn't been accepted already
+   - Check if invitation was cancelled
+
+2. **Resend Fresh Invitation**
+   - Generate new invitation link
+   - Use shorter expiration times if needed
+   - Provide direct signup instructions
+
+3. **Browser Troubleshooting**
+   - Try different browsers
+   - Disable browser extensions
+   - Clear browser cache and cookies
+
+### Bulk Invitation Failures
+
+**Symptoms:**
+- CSV upload fails or shows errors
+- Some invitations succeed while others fail
+- Formatting error messages
+
+**Troubleshooting:**
+
+1. **CSV Format Issues**
+   - Verify CSV headers match required format
+   - Check for special characters in names/emails
+   - Ensure proper encoding (UTF-8)
+
+2. **Data Validation Errors**
+   - Remove duplicate email addresses
+   - Verify all email addresses are valid format
+   - Check for missing required fields
+
+3. **System Limits**
+   - Verify you haven't exceeded invitation limits
+   - Check plan restrictions on bulk operations
+   - Consider breaking large uploads into smaller batches
+
+## Member Account Issues
+
+### Members Can't Log In
+
+**Symptoms:**
+- "Invalid credentials" errors
+- Account locked messages
+- Password reset not working
+
+**Troubleshooting Steps:**
+
+1. **Account Status Verification**
+   - Check if member account is active
+   - Verify email address is confirmed
+   - Ensure account hasn't been suspended
+
+2. **Password Issues**
+   - Guide member through password reset process
+   - Check if password meets requirements
+   - Verify reset emails aren't going to spam
+
+3. **Account Conflicts**
+   - Check for duplicate accounts with same email
+   - Verify member is using correct email address
+   - Look for typos in email during registration
+
+**Solutions:**
+- Manually activate accounts if needed
+- Resend email verification links
+- Merge duplicate accounts
+- Reset passwords from admin panel
+
+### Missing Member Permissions
+
+**Symptoms:**
+- Members can't access expected features
+- "Permission denied" error messages
+- Features appear grayed out or hidden
+
+**Diagnosis:**
+
+1. **Role Verification**
+   - Check member's assigned role
+   - Verify role permissions are correct
+   - Look for recent role changes
+
+2. **Account Status**
+   - Confirm account is fully activated
+   - Check for pending approval status
+   - Verify no temporary suspensions
+
+3. **Plan Limitations**
+   - Check if feature is included in current plan
+   - Verify member count limits
+   - Review feature availability
+
+**Solutions:**
+- Update member roles as needed
+- Complete member approval process
+- Upgrade plan if necessary
+- Contact support for permission issues
+
+### Profile Information Problems
+
+**Symptoms:**
+- Member information not saving
+- Profile fields showing as blank
+- Data appearing incorrectly
+
+**Common Causes:**
+- Browser compatibility issues
+- Network connectivity problems
+- Data validation errors
+- System synchronization delays
+
+**Solutions:**
+
+1. **Browser Troubleshooting**
+   - Try different browsers
+   - Clear browser cache
+   - Disable ad blockers temporarily
+
+2. **Data Validation**
+   - Check field format requirements
+   - Verify required fields are completed
+   - Look for character limits or restrictions
+
+3. **System Issues**
+   - Refresh page and try again
+   - Wait for system synchronization
+   - Contact support if problems persist
+
+## Communication Issues
+
+### Broadcast Messages Not Delivered
+
+**Symptoms:**
+- Members report not receiving broadcasts
+- Low open rates on email campaigns
+- SMS messages not being delivered
+
+**Troubleshooting:**
+
+1. **Delivery Status Check**
+   - Review broadcast delivery reports
+   - Check for bounce notifications
+   - Verify recipient list accuracy
+
+2. **Content Issues**
+   - Check for spam trigger words
+   - Verify message formatting
+   - Ensure attachments aren't too large
+
+3. **Member Preferences**
+   - Verify members haven't opted out
+   - Check communication preferences
+   - Confirm contact information is current
+
+**Solutions:**
+- Update member contact information
+- Resend to failed recipients
+- Adjust message content to avoid spam filters
+- Use alternative communication channels
+
+### SMS Delivery Problems
+
+**Symptoms:**
+- SMS messages not reaching members
+- Delivery failures in SMS reports
+- Members reporting delayed messages
+
+**Common Issues:**
+- Invalid phone number formats
+- Carrier blocking messages
+- SMS credit exhaustion
+- International delivery restrictions
+
+**Solutions:**
+
+1. **Phone Number Validation**
+   - Verify phone numbers are in correct format
+   - Remove invalid or disconnected numbers
+   - Update member contact information
+
+2. **Delivery Settings**
+   - Check SMS credit balance
+   - Verify carrier compatibility
+   - Review message content for compliance
+
+3. **Alternative Methods**
+   - Use email for non-urgent communications
+   - Provide multiple contact options
+   - Consider push notifications if available
+
+## Data Management Issues
+
+### Duplicate Member Records
+
+**Symptoms:**
+- Same person appears multiple times in directory
+- Conflicting information for same member
+- Issues with role assignments
+
+**Identification:**
+- Search for similar names or email addresses
+- Look for variations in contact information
+- Check registration dates for patterns
+
+**Resolution:**
+
+1. **Data Comparison**
+   - Compare all information between duplicates
+   - Identify the most complete/accurate record
+   - Note any unique information to preserve
+
+2. **Account Merging**
+   - Contact support for account merging assistance
+   - Backup important data before merging
+   - Update any references to old accounts
+
+3. **Prevention**
+   - Implement duplicate checking procedures
+   - Train admins on proper member creation
+   - Regular data cleanup and validation
+
+### Missing or Incorrect Member Data
+
+**Symptoms:**
+- Member information appears blank or incorrect
+- Historical data is missing
+- Inconsistent data across different sections
+
+**Troubleshooting:**
+
+1. **Data Source Verification**
+   - Check original invitation information
+   - Review member registration details
+   - Look for import/export issues
+
+2. **System Synchronization**
+   - Refresh member data
+   - Check for pending updates
+   - Verify database connectivity
+
+3. **Manual Correction**
+   - Update information directly in member profiles
+   - Import corrected data if available
+   - Document changes for audit purposes
+
+## Performance Issues
+
+### Slow Member Directory Loading
+
+**Symptoms:**
+- Directory takes long time to load
+- Search results are delayed
+- Page timeouts or errors
+
+**Causes:**
+- Large member count
+- Complex filtering
+- Network connectivity issues
+- Browser performance problems
+
+**Solutions:**
+
+1. **Optimize Viewing**
+   - Use pagination instead of loading all members
+   - Simplify search criteria
+   - Clear browser cache
+
+2. **System Performance**
+   - Check internet connection speed
+   - Try accessing during off-peak hours
+   - Use different devices or browsers
+
+3. **Data Management**
+   - Archive inactive members
+   - Clean up unnecessary data
+   - Optimize member information
+
+### Search Functionality Problems
+
+**Symptoms:**
+- Search returns no results
+- Incorrect search results
+- Search feature not working
+
+**Troubleshooting:**
+
+1. **Search Criteria**
+   - Verify search terms are spelled correctly
+   - Try broader search terms
+   - Check for special characters
+
+2. **Index Issues**
+   - Clear search cache
+   - Refresh member directory
+   - Wait for search index updates
+
+3. **Browser Issues**
+   - Try different browsers
+   - Disable browser extensions
+   - Clear cookies and cache
+
+## Integration Issues
+
+### Import/Export Problems
+
+**Symptoms:**
+- CSV imports failing
+- Export files are incomplete or corrupted
+- Data formatting issues
+
+**Common Solutions:**
+
+1. **File Format Issues**
+   - Verify CSV format and encoding
+   - Check column headers and data types
+   - Remove special characters
+
+2. **Data Validation**
+   - Ensure all required fields are present
+   - Verify data meets validation requirements
+   - Check for duplicate entries
+
+3. **System Limits**
+   - Break large files into smaller chunks
+   - Check file size limitations
+   - Verify plan includes import/export features
+
+### External System Integration
+
+**Symptoms:**
+- Data not syncing with external systems
+- Authentication errors with integrations
+- Outdated information from connected systems
+
+**Troubleshooting:**
+
+1. **Connection Status**
+   - Verify integration is still active
+   - Check authentication credentials
+   - Test connection manually
+
+2. **Data Mapping**
+   - Verify field mappings are correct
+   - Check for changes in external system
+   - Update integration settings if needed
+
+3. **Sync Frequency**
+   - Check sync schedule and frequency
+   - Manually trigger sync if needed
+   - Review sync logs for errors
+
+## Getting Additional Help
+
+### When to Contact Support
+
+**Immediate Support Needed:**
+- Security breaches or unauthorized access
+- Data loss or corruption
+- System-wide functionality failures
+- Billing or payment issues
+
+**Standard Support Requests:**
+- Feature questions or training
+- Configuration assistance
+- Best practice guidance
+- Non-urgent technical issues
+
+### Information to Provide
+
+**For Faster Resolution:**
+- Detailed description of the problem
+- Steps you've already tried
+- Screenshots or error messages
+- Member information (if relevant)
+- Browser and device information
+
+### Self-Service Resources
+
+**Available Resources:**
+- Comprehensive documentation library
+- Video tutorials and guides
+- Community forums and discussions
+- FAQ and knowledge base
+
+**Troubleshooting Tools:**
+- System status page
+- Connection testing tools
+- Data validation utilities
+- Performance monitoring
+
+## Prevention Best Practices
+
+### Regular Maintenance
+
+**Weekly Tasks:**
+- Review pending invitations
+- Check for delivery failures
+- Monitor member activity
+- Update contact information
+
+**Monthly Tasks:**
+- Audit member roles and permissions
+- Clean up inactive accounts
+- Review communication effectiveness
+- Update documentation and procedures
+
+### Training and Documentation
+
+**Admin Training:**
+- Regular training on new features
+- Best practice sharing sessions
+- Troubleshooting skill development
+- Documentation maintenance
+
+**Member Education:**
+- Clear onboarding instructions
+- Regular feature updates
+- Self-service resources
+- Support contact information
+
+Ready to explore other aspects of member management? Check out [Member Analytics](/docs/admin-guide/members/analytics) or learn about [Advanced Member Features](/docs/admin-guide/members/advanced).

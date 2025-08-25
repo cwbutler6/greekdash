@@ -22,7 +22,8 @@ import {
   Image,
   Wallet,
   Lock,
-  ShieldCheck
+  ShieldCheck,
+  AlertCircle
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { NavigationSection, NavigationItem } from '@/types/docs';
@@ -75,6 +76,24 @@ const navigationSections: NavigationSection[] = [
             title: 'Member Directory',
             href: '/docs/admin-guide/members/directory',
             icon: <Users className="h-4 w-4" />,
+          },
+          {
+            title: 'Communication & Broadcasts',
+            href: '/docs/admin-guide/members/communication',
+            badge: 'New',
+            icon: <MessageSquare className="h-4 w-4" />,
+          },
+          {
+            title: 'Roles & Permissions',
+            href: '/docs/admin-guide/members/roles-permissions',
+            badge: 'New',
+            icon: <Shield className="h-4 w-4" />,
+          },
+          {
+            title: 'Troubleshooting',
+            href: '/docs/admin-guide/members/troubleshooting',
+            badge: 'New',
+            icon: <AlertCircle className="h-4 w-4" />,
           },
         ],
       },
