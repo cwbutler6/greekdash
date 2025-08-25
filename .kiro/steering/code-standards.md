@@ -3,12 +3,14 @@
 ## TypeScript Standards
 
 ### Strict Configuration
+
 - **Strict Mode**: Always enabled in `tsconfig.json`
 - **No Implicit Any**: All variables must have explicit types
 - **Strict Null Checks**: Handle null/undefined explicitly
 - **No Unused Locals**: Remove unused variables and imports
 
 ### Type Safety Rules
+
 - Use `const assertions` for immutable data
 - Prefer `interface` over `type` for object shapes
 - Use generic constraints for reusable components
@@ -16,6 +18,7 @@
 - Use discriminated unions for state management
 
 ### Required Type Patterns
+
 ```typescript
 // API responses
 interface ApiResponse<T> {
@@ -41,6 +44,7 @@ interface ComponentProps {
 ## DRY Principles
 
 ### Code Reusability
+
 - Extract common logic into custom hooks
 - Create reusable utility functions in `/lib/utils`
 - Use shared validation schemas across client/server
@@ -52,12 +56,14 @@ ed Components Strategy
 - Implement consistent prop interfaces across similar components
 
 ### Data Layer Patterns
+
 - Single source of truth for database schemas (Prisma)
 - Shared type definitions generated from Prisma models
 - Consistent API response formats across all endpoints
 - Reusable database query functions in service layers
 
 ### Configuration Management
+
 - Centralized environment variable validation
 - Shared constants in dedicated files
 - Consistent error messages and status codes
@@ -66,18 +72,21 @@ ed Components Strategy
 ## Enforcement Rules
 
 ### Pre-commit Checks
+
 - TypeScript compilation must pass without errors
 - ESLint rules enforced for type safety
 - No `any` types allowed without explicit justification
 - All imports must be used
 
 ### Code Review Standards
+
 - Functions should have single responsibility
 - Complex logic must be extracted into testable units
 - Type definitions should be co-located with usage
 - Shared utilities must have comprehensive tests
 
 ### Refactoring Guidelines
+
 - Identify duplicate code patterns during reviews
 - Extract common functionality into shared modules
 - Maintain backward compatibility when updating shared code
