@@ -1,9 +1,16 @@
 import type { NextConfig } from "next";
 import { withSentryConfig } from '@sentry/nextjs';
 import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
+import createMDX from '@next/mdx';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeSlug from 'rehype-slug';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  
+  // Configure MDX
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   
   images: {
     remotePatterns: [
@@ -70,4 +77,12 @@ const sentryWebpackPluginOptions = {
   automaticVercelMonitors: true,
 };
 
-export default withSentryConfig(nextConfig, sentryWebpackPluginOptions);
+// Configure MDX with plugins
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypeHighlight, rehypeSlug],
+  },
+});
+
+export default withSentryConfig(withMDX(nextConfig), sentryWebpackPluginOptions);
