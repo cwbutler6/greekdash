@@ -1,6 +1,7 @@
 // This file is used by Vitest to set up the test environment
 import React from 'react';
 import { vi } from 'vitest';
+import '@testing-library/jest-dom';
 
 // Make React available globally for tests
 global.React = React;

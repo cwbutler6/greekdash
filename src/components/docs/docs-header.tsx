@@ -1,29 +1,25 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DocsSearch } from './docs-search';
+import { DocsMobileSidebarToggle } from './docs-mobile-sidebar-toggle';
 
 interface DocsHeaderProps {
   onMenuToggle: () => void;
   sidebarOpen: boolean;
 }
 
-export function DocsHeader({ onMenuToggle }: DocsHeaderProps) {
+export function DocsHeader({ onMenuToggle, sidebarOpen }: DocsHeaderProps) {
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
         {/* Mobile menu button */}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="mr-2 lg:hidden"
-          onClick={onMenuToggle}
-        >
-          <Menu className="h-5 w-5" />
-          <span className="sr-only">Toggle menu</span>
-        </Button>
+        <DocsMobileSidebarToggle
+          isOpen={sidebarOpen}
+          onToggle={onMenuToggle}
+          className="mr-2"
+        />
 
         {/* Logo */}
         <Link href="/docs" className="mr-6 flex items-center space-x-2">
