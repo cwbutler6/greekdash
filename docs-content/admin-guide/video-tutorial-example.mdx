@@ -1,0 +1,98 @@
+# Video Tutorial Integration Example
+
+This document demonstrates how to use the video tutorial components in documentation.
+
+## Basic Video Embed
+
+<VideoEmbed 
+  videoId="dQw4w9WgXcQ" 
+  title="Basic Member Management Overview"
+  description="A quick overview of the member management features in GreekDash."
+  duration="3:45"
+/>
+
+## Inline Video Tutorial
+
+For simpler inline videos, use the InlineVideoTutorial component:
+
+<InlineVideoTutorial
+  videoId="dQw4w9WgXcQ"
+  title="Quick Setup Guide"
+  description="Get started with your chapter setup in under 5 minutes."
+  duration="4:30"
+/>
+
+## Full Video Tutorial with All Features
+
+<VideoTutorial
+  videoId="dQw4w9WgXcQ"
+  title="Complete Member Management Tutorial"
+  description="Learn everything about managing chapter members, from invitations to role assignments."
+  difficulty="intermediate"
+  duration="12:45"
+  audience={["Chapter Admins", "Officers"]}
+  prerequisites={["Basic admin access", "Chapter setup completed"]}
+  transcript="Welcome to this comprehensive tutorial on member management in GreekDash. In this video, we'll cover everything you need to know about managing your chapter members effectively..."
+  relatedLinks={[
+    {
+      title: "Member Management Documentation",
+      url: "/docs/admin-guide/members",
+      type: "internal",
+      description: "Complete written guide for member management features"
+    },
+    {
+      title: "GreekDash Support Center",
+      url: "https://support.greekdash.com",
+      type: "external",
+      description: "Get additional help and support"
+    }
+  ]}
+/>
+
+## Video with Transcript and Related Links
+
+<VideoEmbed
+  videoId="dQw4w9WgXcQ"
+  title="Financial Management Walkthrough"
+  description="Learn how to set up dues collection and manage chapter finances."
+  duration="8:20"
+  transcript="In this tutorial, we'll walk through setting up your chapter's financial management system. First, let's navigate to the Finance section in your admin dashboard..."
+  relatedLinks={[
+    {
+      title: "Finance Setup Guide",
+      url: "/docs/admin-guide/finance",
+      type: "internal",
+      description: "Step-by-step written instructions for finance setup"
+    },
+    {
+      title: "Stripe Integration Guide",
+      url: "/docs/admin-guide/finance/stripe-setup",
+      type: "internal",
+      description: "How to connect your Stripe account for payment processing"
+    }
+  ]}
+/>
+
+## Features Demonstrated
+
+The video tutorial integration includes:
+
+- **Responsive video embedding** with YouTube support
+- **Accessibility features** including transcript display
+- **Related content links** to connect videos with documentation
+- **Engagement tracking** to understand which tutorials are most helpful
+- **Multiple difficulty levels** and audience targeting
+- **Prerequisites display** to help users prepare
+- **Error handling** for failed video loads
+- **Mobile-responsive design** that works on all devices
+
+## Analytics and Tracking
+
+All video interactions are automatically tracked, including:
+
+- Video start and completion events
+- Transcript usage
+- Related link clicks
+- Watch time and engagement metrics
+
+This data helps improve the documentation experience by identifying which tutorials are most valuable and where users might need additional support.

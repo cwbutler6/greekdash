@@ -1,6 +1,8 @@
 import type { MDXComponents } from 'mdx/types';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { VideoEmbed } from './video-embed';
+import { VideoTutorial, InlineVideoTutorial } from './video-tutorial';
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -181,6 +183,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {...props}
       />
     ),
+    
+    // Video Components
+    VideoEmbed,
+    VideoTutorial,
+    InlineVideoTutorial,
     
     ...components,
   };
