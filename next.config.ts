@@ -5,12 +5,6 @@ import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin';
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   
-  // Enable experimental Partial Prerendering for faster first paint
-  experimental: {
-    ppr: 'incremental',
-    dynamicIO: true, // Enable dynamic IO for better caching control
-  },
-  
   images: {
     remotePatterns: [
       // Supabase production URLs

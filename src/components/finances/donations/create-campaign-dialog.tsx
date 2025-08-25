@@ -32,7 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { DonationCampaignStatus } from '@/generated/prisma';
 
 const createCampaignSchema = z.object({
@@ -52,7 +52,6 @@ export function CreateCampaignDialog({ children }: CreateCampaignDialogProps) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { toast } = useToast();
 
   const form = useForm<CreateCampaignForm>({
     resolver: zodResolver(createCampaignSchema),
@@ -80,20 +79,13 @@ export function CreateCampaignDialog({ children }: CreateCampaignDialogProps) {
         throw new Error(error.message || 'Failed to create campaign');
       }
 
-      toast({
-        title: 'Success',
-        description: 'Donation campaign created successfully',
-      });
+      toast.success('Donation campaign created successfully');
 
       setOpen(false);
       form.reset();
       router.refresh();
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to create campaign',
-        variant: 'destructive',
-      });
+      toast.error(error instanceof Error ? error.message : 'Failed to create campaign');
     } finally {
       setIsLoading(false);
     }

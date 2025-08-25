@@ -12,7 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { DonationCampaign } from '@/generated/prisma';
 
 interface DeleteCampaignDialogProps {
@@ -24,7 +24,6 @@ interface DeleteCampaignDialogProps {
 export function DeleteCampaignDialog({ campaign, open, onOpenChange }: DeleteCampaignDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { toast } = useToast();
 
   const handleDelete = async () => {
     setIsLoading(true);
@@ -41,19 +40,14 @@ export function DeleteCampaignDialog({ campaign, open, onOpenChange }: DeleteCam
         throw new Error(error.message || 'Failed to delete campaign');
       }
 
-      toast({
-        title: 'Success',
-        description: 'Campaign deleted successfully',
-      });
+      toast.success('Campaign deleted successfully');
 
       onOpenChange(false);
       router.refresh();
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to delete campaign',
-        variant: 'destructive',
-      });
+      toast.error(
+        error instanceof Error ? error.message : 'Failed to delete campaign'
+      );
     } finally {
       setIsLoading(false);
     }

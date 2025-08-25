@@ -3965,11 +3965,15 @@ export namespace Prisma {
   }
 
   export type ChapterAvgAggregateOutputType = {
+    stripeAvailableBalance: number | null
+    stripePendingBalance: number | null
     chapterTreasuryBalance: number | null
     treasuryLastYield: number | null
   }
 
   export type ChapterSumAggregateOutputType = {
+    stripeAvailableBalance: number | null
+    stripePendingBalance: number | null
     chapterTreasuryBalance: number | null
     treasuryLastYield: number | null
   }
@@ -3987,6 +3991,10 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     stripeCustomerId: string | null
+    stripeAvailableBalance: number | null
+    stripePendingBalance: number | null
+    stripeBalanceLastUpdated: Date | null
+    stripeConnectAccountId: string | null
     chapterTreasuryBalance: number | null
     autoInvestEnabled: boolean | null
     autoInvestStrategy: string | null
@@ -4009,6 +4017,10 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     stripeCustomerId: string | null
+    stripeAvailableBalance: number | null
+    stripePendingBalance: number | null
+    stripeBalanceLastUpdated: Date | null
+    stripeConnectAccountId: string | null
     chapterTreasuryBalance: number | null
     autoInvestEnabled: boolean | null
     autoInvestStrategy: string | null
@@ -4031,6 +4043,10 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     stripeCustomerId: number
+    stripeAvailableBalance: number
+    stripePendingBalance: number
+    stripeBalanceLastUpdated: number
+    stripeConnectAccountId: number
     chapterTreasuryBalance: number
     autoInvestEnabled: number
     autoInvestStrategy: number
@@ -4043,11 +4059,15 @@ export namespace Prisma {
 
 
   export type ChapterAvgAggregateInputType = {
+    stripeAvailableBalance?: true
+    stripePendingBalance?: true
     chapterTreasuryBalance?: true
     treasuryLastYield?: true
   }
 
   export type ChapterSumAggregateInputType = {
+    stripeAvailableBalance?: true
+    stripePendingBalance?: true
     chapterTreasuryBalance?: true
     treasuryLastYield?: true
   }
@@ -4065,6 +4085,10 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
+    stripeAvailableBalance?: true
+    stripePendingBalance?: true
+    stripeBalanceLastUpdated?: true
+    stripeConnectAccountId?: true
     chapterTreasuryBalance?: true
     autoInvestEnabled?: true
     autoInvestStrategy?: true
@@ -4087,6 +4111,10 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
+    stripeAvailableBalance?: true
+    stripePendingBalance?: true
+    stripeBalanceLastUpdated?: true
+    stripeConnectAccountId?: true
     chapterTreasuryBalance?: true
     autoInvestEnabled?: true
     autoInvestStrategy?: true
@@ -4109,6 +4137,10 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     stripeCustomerId?: true
+    stripeAvailableBalance?: true
+    stripePendingBalance?: true
+    stripeBalanceLastUpdated?: true
+    stripeConnectAccountId?: true
     chapterTreasuryBalance?: true
     autoInvestEnabled?: true
     autoInvestStrategy?: true
@@ -4218,6 +4250,10 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     stripeCustomerId: string | null
+    stripeAvailableBalance: number | null
+    stripePendingBalance: number | null
+    stripeBalanceLastUpdated: Date | null
+    stripeConnectAccountId: string | null
     chapterTreasuryBalance: number
     autoInvestEnabled: boolean
     autoInvestStrategy: string | null
@@ -4259,6 +4295,10 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
+    stripeAvailableBalance?: boolean
+    stripePendingBalance?: boolean
+    stripeBalanceLastUpdated?: boolean
+    stripeConnectAccountId?: boolean
     chapterTreasuryBalance?: boolean
     autoInvestEnabled?: boolean
     autoInvestStrategy?: boolean
@@ -4301,6 +4341,10 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
+    stripeAvailableBalance?: boolean
+    stripePendingBalance?: boolean
+    stripeBalanceLastUpdated?: boolean
+    stripeConnectAccountId?: boolean
     chapterTreasuryBalance?: boolean
     autoInvestEnabled?: boolean
     autoInvestStrategy?: boolean
@@ -4323,6 +4367,10 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
+    stripeAvailableBalance?: boolean
+    stripePendingBalance?: boolean
+    stripeBalanceLastUpdated?: boolean
+    stripeConnectAccountId?: boolean
     chapterTreasuryBalance?: boolean
     autoInvestEnabled?: boolean
     autoInvestStrategy?: boolean
@@ -4345,6 +4393,10 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     stripeCustomerId?: boolean
+    stripeAvailableBalance?: boolean
+    stripePendingBalance?: boolean
+    stripeBalanceLastUpdated?: boolean
+    stripeConnectAccountId?: boolean
     chapterTreasuryBalance?: boolean
     autoInvestEnabled?: boolean
     autoInvestStrategy?: boolean
@@ -4354,7 +4406,7 @@ export namespace Prisma {
     treasuryLastYieldDate?: boolean
   }
 
-  export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "publicInfo" | "primaryColor" | "secondaryColor" | "logoUrl" | "schoolName" | "createdAt" | "updatedAt" | "stripeCustomerId" | "chapterTreasuryBalance" | "autoInvestEnabled" | "autoInvestStrategy" | "walletAddress" | "walletPrivateKey" | "treasuryLastYield" | "treasuryLastYieldDate", ExtArgs["result"]["chapter"]>
+  export type ChapterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "slug" | "joinCode" | "publicInfo" | "primaryColor" | "secondaryColor" | "logoUrl" | "schoolName" | "createdAt" | "updatedAt" | "stripeCustomerId" | "stripeAvailableBalance" | "stripePendingBalance" | "stripeBalanceLastUpdated" | "stripeConnectAccountId" | "chapterTreasuryBalance" | "autoInvestEnabled" | "autoInvestStrategy" | "walletAddress" | "walletPrivateKey" | "treasuryLastYield" | "treasuryLastYieldDate", ExtArgs["result"]["chapter"]>
   export type ChapterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     memberships?: boolean | Chapter$membershipsArgs<ExtArgs>
     profiles?: boolean | Chapter$profilesArgs<ExtArgs>
@@ -4416,6 +4468,10 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       stripeCustomerId: string | null
+      stripeAvailableBalance: number | null
+      stripePendingBalance: number | null
+      stripeBalanceLastUpdated: Date | null
+      stripeConnectAccountId: string | null
       chapterTreasuryBalance: number
       autoInvestEnabled: boolean
       autoInvestStrategy: string | null
@@ -4877,6 +4933,10 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Chapter", 'DateTime'>
     readonly updatedAt: FieldRef<"Chapter", 'DateTime'>
     readonly stripeCustomerId: FieldRef<"Chapter", 'String'>
+    readonly stripeAvailableBalance: FieldRef<"Chapter", 'Int'>
+    readonly stripePendingBalance: FieldRef<"Chapter", 'Int'>
+    readonly stripeBalanceLastUpdated: FieldRef<"Chapter", 'DateTime'>
+    readonly stripeConnectAccountId: FieldRef<"Chapter", 'String'>
     readonly chapterTreasuryBalance: FieldRef<"Chapter", 'Float'>
     readonly autoInvestEnabled: FieldRef<"Chapter", 'Boolean'>
     readonly autoInvestStrategy: FieldRef<"Chapter", 'String'>
@@ -36444,6 +36504,10 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     stripeCustomerId: 'stripeCustomerId',
+    stripeAvailableBalance: 'stripeAvailableBalance',
+    stripePendingBalance: 'stripePendingBalance',
+    stripeBalanceLastUpdated: 'stripeBalanceLastUpdated',
+    stripeConnectAccountId: 'stripeConnectAccountId',
     chapterTreasuryBalance: 'chapterTreasuryBalance',
     autoInvestEnabled: 'autoInvestEnabled',
     autoInvestStrategy: 'autoInvestStrategy',
@@ -36948,6 +37012,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Int'
+   */
+  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+  /**
+   * Reference to a field of type 'Int[]'
+   */
+  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -36979,20 +37057,6 @@ export namespace Prisma {
    * Reference to a field of type 'MembershipRole[]'
    */
   export type ListEnumMembershipRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MembershipRole[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int'
-   */
-  export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-  /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
 
@@ -37211,6 +37275,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableFilter<"Chapter"> | string | null
+    stripeAvailableBalance?: IntNullableFilter<"Chapter"> | number | null
+    stripePendingBalance?: IntNullableFilter<"Chapter"> | number | null
+    stripeBalanceLastUpdated?: DateTimeNullableFilter<"Chapter"> | Date | string | null
+    stripeConnectAccountId?: StringNullableFilter<"Chapter"> | string | null
     chapterTreasuryBalance?: FloatFilter<"Chapter"> | number
     autoInvestEnabled?: BoolFilter<"Chapter"> | boolean
     autoInvestStrategy?: StringNullableFilter<"Chapter"> | string | null
@@ -37252,6 +37320,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrderInput | SortOrder
+    stripeAvailableBalance?: SortOrderInput | SortOrder
+    stripePendingBalance?: SortOrderInput | SortOrder
+    stripeBalanceLastUpdated?: SortOrderInput | SortOrder
+    stripeConnectAccountId?: SortOrderInput | SortOrder
     chapterTreasuryBalance?: SortOrder
     autoInvestEnabled?: SortOrder
     autoInvestStrategy?: SortOrderInput | SortOrder
@@ -37296,6 +37368,10 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableFilter<"Chapter"> | string | null
+    stripeAvailableBalance?: IntNullableFilter<"Chapter"> | number | null
+    stripePendingBalance?: IntNullableFilter<"Chapter"> | number | null
+    stripeBalanceLastUpdated?: DateTimeNullableFilter<"Chapter"> | Date | string | null
+    stripeConnectAccountId?: StringNullableFilter<"Chapter"> | string | null
     chapterTreasuryBalance?: FloatFilter<"Chapter"> | number
     autoInvestEnabled?: BoolFilter<"Chapter"> | boolean
     autoInvestStrategy?: StringNullableFilter<"Chapter"> | string | null
@@ -37337,6 +37413,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrderInput | SortOrder
+    stripeAvailableBalance?: SortOrderInput | SortOrder
+    stripePendingBalance?: SortOrderInput | SortOrder
+    stripeBalanceLastUpdated?: SortOrderInput | SortOrder
+    stripeConnectAccountId?: SortOrderInput | SortOrder
     chapterTreasuryBalance?: SortOrder
     autoInvestEnabled?: SortOrder
     autoInvestStrategy?: SortOrderInput | SortOrder
@@ -37367,6 +37447,10 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Chapter"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Chapter"> | Date | string
     stripeCustomerId?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
+    stripeAvailableBalance?: IntNullableWithAggregatesFilter<"Chapter"> | number | null
+    stripePendingBalance?: IntNullableWithAggregatesFilter<"Chapter"> | number | null
+    stripeBalanceLastUpdated?: DateTimeNullableWithAggregatesFilter<"Chapter"> | Date | string | null
+    stripeConnectAccountId?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
     chapterTreasuryBalance?: FloatWithAggregatesFilter<"Chapter"> | number
     autoInvestEnabled?: BoolWithAggregatesFilter<"Chapter"> | boolean
     autoInvestStrategy?: StringNullableWithAggregatesFilter<"Chapter"> | string | null
@@ -39652,6 +39736,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -39693,6 +39781,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -39734,6 +39826,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39775,6 +39871,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39816,6 +39916,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -39838,6 +39942,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39860,6 +39968,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42348,6 +42460,28 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type FloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -42373,17 +42507,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type MembershipListRelationFilter = {
@@ -42589,6 +42712,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
+    stripeAvailableBalance?: SortOrder
+    stripePendingBalance?: SortOrder
+    stripeBalanceLastUpdated?: SortOrder
+    stripeConnectAccountId?: SortOrder
     chapterTreasuryBalance?: SortOrder
     autoInvestEnabled?: SortOrder
     autoInvestStrategy?: SortOrder
@@ -42599,6 +42726,8 @@ export namespace Prisma {
   }
 
   export type ChapterAvgOrderByAggregateInput = {
+    stripeAvailableBalance?: SortOrder
+    stripePendingBalance?: SortOrder
     chapterTreasuryBalance?: SortOrder
     treasuryLastYield?: SortOrder
   }
@@ -42616,6 +42745,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
+    stripeAvailableBalance?: SortOrder
+    stripePendingBalance?: SortOrder
+    stripeBalanceLastUpdated?: SortOrder
+    stripeConnectAccountId?: SortOrder
     chapterTreasuryBalance?: SortOrder
     autoInvestEnabled?: SortOrder
     autoInvestStrategy?: SortOrder
@@ -42638,6 +42771,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     stripeCustomerId?: SortOrder
+    stripeAvailableBalance?: SortOrder
+    stripePendingBalance?: SortOrder
+    stripeBalanceLastUpdated?: SortOrder
+    stripeConnectAccountId?: SortOrder
     chapterTreasuryBalance?: SortOrder
     autoInvestEnabled?: SortOrder
     autoInvestStrategy?: SortOrder
@@ -42648,6 +42785,8 @@ export namespace Prisma {
   }
 
   export type ChapterSumOrderByAggregateInput = {
+    stripeAvailableBalance?: SortOrder
+    stripePendingBalance?: SortOrder
     chapterTreasuryBalance?: SortOrder
     treasuryLastYield?: SortOrder
   }
@@ -42702,6 +42841,36 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type FloatWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -42740,20 +42909,6 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type AccountListRelationFilter = {
@@ -42907,17 +43062,6 @@ export namespace Prisma {
     _max?: NestedEnumMembershipRoleFilter<$PrismaModel>
   }
 
-  export type IntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type MembershipScalarRelationFilter = {
     is?: MembershipWhereInput
     isNot?: MembershipWhereInput
@@ -42992,22 +43136,6 @@ export namespace Prisma {
 
   export type ProfileSumOrderByAggregateInput = {
     gradYear?: SortOrder
-  }
-
-  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type EnumPlanTypeFilter<$PrismaModel = never> = {
@@ -44621,6 +44749,18 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type FloatFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -44639,10 +44779,6 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
   }
 
   export type MembershipUpdateManyWithoutChapterNestedInput = {
@@ -46065,14 +46201,6 @@ export namespace Prisma {
     connect?: ChapterWhereUniqueInput
   }
 
-  export type NullableIntFieldUpdateOperationsInput = {
-    set?: number | null
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type MembershipUpdateOneRequiredWithoutProfileNestedInput = {
     create?: XOR<MembershipCreateWithoutProfileInput, MembershipUncheckedCreateWithoutProfileInput>
     connectOrCreate?: MembershipCreateOrConnectWithoutProfileInput
@@ -47096,6 +47224,28 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
     in?: number[] | ListFloatFieldRefInput<$PrismaModel>
@@ -47121,17 +47271,6 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
@@ -47179,17 +47318,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -47202,6 +47330,36 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -47244,20 +47402,6 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
   export type NestedEnumMembershipRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.MembershipRole | EnumMembershipRoleFieldRefInput<$PrismaModel>
     in?: $Enums.MembershipRole[] | ListEnumMembershipRoleFieldRefInput<$PrismaModel>
@@ -47273,22 +47417,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMembershipRoleFilter<$PrismaModel>
     _max?: NestedEnumMembershipRoleFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumPlanTypeFilter<$PrismaModel = never> = {
@@ -50009,6 +50137,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -50049,6 +50181,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -50282,6 +50418,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50322,6 +50462,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50574,6 +50718,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -50614,6 +50762,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -50774,6 +50926,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50814,6 +50970,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50854,6 +51014,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -50894,6 +51058,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -50950,6 +51118,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50990,6 +51162,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51294,6 +51470,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -51334,6 +51514,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -51516,6 +51700,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51556,6 +51744,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51734,6 +51926,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -51774,6 +51970,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -51919,6 +52119,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51959,6 +52163,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52359,6 +52567,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -52399,6 +52611,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -52524,6 +52740,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52564,6 +52784,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52604,6 +52828,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -52644,6 +52872,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -52700,6 +52932,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52740,6 +52976,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52780,6 +53020,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -52820,6 +53064,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -52876,6 +53124,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52916,6 +53168,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52956,6 +53212,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -52996,6 +53256,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -53094,6 +53358,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53134,6 +53402,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53190,6 +53462,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -53230,6 +53506,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -53474,6 +53754,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53514,6 +53798,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53766,6 +54054,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -53806,6 +54098,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -53936,6 +54232,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53976,6 +54276,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54048,6 +54352,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -54088,6 +54396,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -54271,6 +54583,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54311,6 +54627,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54496,6 +54816,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -54536,6 +54860,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -54715,6 +55043,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54755,6 +55087,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55068,6 +55404,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -55108,6 +55448,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -55227,6 +55571,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55267,6 +55615,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55376,6 +55728,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -55416,6 +55772,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -55472,6 +55832,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55512,6 +55876,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55552,6 +55920,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -55592,6 +55964,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -55648,6 +56024,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55688,6 +56068,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55824,6 +56208,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -55864,6 +56252,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -56091,6 +56483,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56131,6 +56527,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56240,6 +56640,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -56280,6 +56684,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -56451,6 +56859,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56491,6 +56903,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56616,6 +57032,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -56656,6 +57076,10 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     stripeCustomerId?: string | null
+    stripeAvailableBalance?: number | null
+    stripePendingBalance?: number | null
+    stripeBalanceLastUpdated?: Date | string | null
+    stripeConnectAccountId?: string | null
     chapterTreasuryBalance?: number
     autoInvestEnabled?: boolean
     autoInvestStrategy?: string | null
@@ -56849,6 +57273,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null
@@ -56889,6 +57317,10 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     stripeCustomerId?: NullableStringFieldUpdateOperationsInput | string | null
+    stripeAvailableBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripePendingBalance?: NullableIntFieldUpdateOperationsInput | number | null
+    stripeBalanceLastUpdated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    stripeConnectAccountId?: NullableStringFieldUpdateOperationsInput | string | null
     chapterTreasuryBalance?: FloatFieldUpdateOperationsInput | number
     autoInvestEnabled?: BoolFieldUpdateOperationsInput | boolean
     autoInvestStrategy?: NullableStringFieldUpdateOperationsInput | string | null

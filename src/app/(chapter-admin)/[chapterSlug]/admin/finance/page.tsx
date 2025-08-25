@@ -4,6 +4,7 @@ import { FinanceSummary } from "@/components/finance/FinanceSummary";
 import { RecentTransactions } from "@/components/finance/RecentTransactions";
 import { DuesStats } from "@/components/finance/DuesStats";
 import { ExpensesStats } from "@/components/finance/ExpensesStats";
+import { FundsDashboard } from "@/components/admin/funds-dashboard";
 import { PageHeader } from "@/components/ui/page-header";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ export default async function FinanceDashboardPage({
       <Tabs defaultValue="overview" className="space-y-4">
         <TabsList>
           <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="funds">Funds</TabsTrigger>
           <TabsTrigger value="transactions">Transactions</TabsTrigger>
           <TabsTrigger value="dues">Dues</TabsTrigger>
           <TabsTrigger value="expenses">Expenses</TabsTrigger>
@@ -61,6 +63,12 @@ export default async function FinanceDashboardPage({
               <ExpensesStats chapterSlug={chapterSlug} />
             </Suspense>
           </div>
+        </TabsContent>
+        
+        <TabsContent value="funds" className="space-y-4">
+          <Suspense fallback={<CardSkeleton className="h-[600px]" />}>
+            <FundsDashboard chapterSlug={chapterSlug} />
+          </Suspense>
         </TabsContent>
         
         <TabsContent value="transactions" className="space-y-4">

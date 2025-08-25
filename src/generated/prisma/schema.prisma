@@ -52,6 +52,12 @@ model Chapter {
   updatedAt        DateTime @updatedAt
   stripeCustomerId String?
 
+  // Stripe Balance fields
+  stripeAvailableBalance   Int?      @default(0) // Available balance in cents
+  stripePendingBalance     Int?      @default(0) // Pending balance in cents
+  stripeBalanceLastUpdated DateTime? // Last time balance was fetched
+  stripeConnectAccountId   String? // For future Connect implementation
+
   // Treasury DeFi fields
   chapterTreasuryBalance Float     @default(0)
   autoInvestEnabled      Boolean   @default(false)

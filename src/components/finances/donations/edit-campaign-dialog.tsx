@@ -31,7 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { DonationCampaign, DonationCampaignStatus } from '@/generated/prisma';
 
 const editCampaignSchema = z.object({
@@ -52,7 +52,6 @@ interface EditCampaignDialogProps {
 export function EditCampaignDialog({ campaign, open, onOpenChange }: EditCampaignDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { toast } = useToast();
 
   const form = useForm<EditCampaignForm>({
     resolver: zodResolver(editCampaignSchema),
@@ -94,19 +93,12 @@ export function EditCampaignDialog({ campaign, open, onOpenChange }: EditCampaig
         throw new Error(error.message || 'Failed to update campaign');
       }
 
-      toast({
-        title: 'Success',
-        description: 'Campaign updated successfully',
-      });
+      toast.success('Campaign updated successfully');
 
       onOpenChange(false);
       router.refresh();
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: error instanceof Error ? error.message : 'Failed to update campaign',
-        variant: 'destructive',
-      });
+      toast.error(error instanceof Error ? error.message : 'Failed to update campaign');
     } finally {
       setIsLoading(false);
     }
