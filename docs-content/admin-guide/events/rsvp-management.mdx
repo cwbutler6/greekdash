@@ -1,0 +1,309 @@
+# RSVP Management
+
+Master the art of managing event RSVPs, tracking attendance, and optimizing member participation with GreekDash's comprehensive RSVP tools.
+
+## Understanding RSVP System
+
+### RSVP Response Types
+- **Yes**: Member confirms attendance
+- **No**: Member declines to attend
+- **Maybe**: Member is uncertain about attendance
+- **No Response**: Member hasn't responded to the invitation
+
+### RSVP Status Tracking
+- **Confirmed**: Member has RSVP'd yes and is expected to attend
+- **Waitlisted**: Member wants to attend but event is at capacity
+- **Declined**: Member has indicated they cannot attend
+- **Pending**: Invitation sent but no response received
+
+## Setting Up RSVP Configuration
+
+<StepGuide
+  title="Configuring Event RSVPs"
+  steps={[
+    {
+      title: "Enable RSVP Tracking",
+      description: "When creating or editing an event, toggle on 'Require RSVP' to enable response tracking.",
+      screenshot: "/images/docs/rsvp/enable-rsvp.png"
+    },
+    {
+      title: "Set Capacity Limits",
+      description: "Define the maximum number of attendees based on venue capacity and event requirements.",
+      screenshot: "/images/docs/rsvp/capacity-settings.png",
+      tips: [
+        "Consider venue fire safety limits",
+        "Account for food and beverage planning",
+        "Leave buffer for last-minute additions"
+      ]
+    },
+    {
+      title: "Configure RSVP Deadline",
+      description: "Set a deadline for responses to allow proper event planning and preparation.",
+      screenshot: "/images/docs/rsvp/rsvp-deadline.png",
+      tips: [
+        "Allow at least 48 hours for planning",
+        "Consider catering deadlines",
+        "Account for weekend and holiday delays"
+      ]
+    },
+    {
+      title: "Enable Waitlist",
+      description: "Turn on waitlist functionality to capture interest when events reach capacity.",
+      screenshot: "/images/docs/rsvp/waitlist-settings.png"
+    },
+    {
+      title: "Set Guest Policies",
+      description: "Define whether members can bring guests and any associated requirements.",
+      screenshot: "/images/docs/rsvp/guest-policy.png"
+    }
+  ]}
+/>
+
+## Managing RSVP Responses
+
+### Viewing RSVP Status
+
+<AnnotatedScreenshot
+  src="/images/docs/rsvp/rsvp-dashboard.png"
+  alt="RSVP management dashboard"
+  annotations={[
+    { x: 100, y: 80, text: "Total RSVP count" },
+    { x: 250, y: 120, text: "Response breakdown" },
+    { x: 400, y: 160, text: "Waitlist status" },
+    { x: 150, y: 300, text: "Individual responses" },
+    { x: 350, y: 340, text: "Action buttons" }
+  ]}
+/>
+
+### RSVP Actions Available
+- **View Details**: See individual member responses and timestamps
+- **Send Reminders**: Prompt non-respondents to RSVP
+- **Manage Waitlist**: Move members from waitlist to confirmed
+- **Export Lists**: Download attendee information for planning
+- **Update Capacity**: Adjust limits based on venue changes
+
+### Bulk RSVP Operations
+- **Select Multiple**: Use checkboxes to select multiple members
+- **Bulk Messaging**: Send targeted messages to selected groups
+- **Status Updates**: Change RSVP status for multiple members
+- **Waitlist Management**: Batch promote waitlisted members
+
+## Waitlist Management
+
+### How Waitlists Work
+1. Event reaches maximum capacity
+2. Additional RSVPs are automatically waitlisted
+3. Members receive waitlist confirmation
+4. Admins can promote waitlisted members when spots open
+5. Automatic notifications sent when promoted
+
+### Managing the Waitlist
+
+<StepGuide
+  title="Waitlist Management Process"
+  steps={[
+    {
+      title: "Monitor Waitlist",
+      description: "Regularly check the waitlist to see member interest and manage expectations.",
+      screenshot: "/images/docs/rsvp/waitlist-monitor.png"
+    },
+    {
+      title: "Handle Cancellations",
+      description: "When confirmed members cancel, immediately promote waitlisted members.",
+      screenshot: "/images/docs/rsvp/handle-cancellations.png",
+      tips: [
+        "Promote in order of waitlist signup",
+        "Send immediate notifications to promoted members",
+        "Update event capacity if venue changes"
+      ]
+    },
+    {
+      title: "Communicate Status",
+      description: "Keep waitlisted members informed about their status and likelihood of promotion.",
+      screenshot: "/images/docs/rsvp/waitlist-communication.png"
+    },
+    {
+      title: "Final Confirmation",
+      description: "Send final confirmations to all attendees 24-48 hours before the event.",
+      screenshot: "/images/docs/rsvp/final-confirmation.png"
+    }
+  ]}
+/>
+
+## RSVP Communication and Reminders
+
+### Automatic Reminder Schedule
+- **Initial Invitation**: Sent when event is published
+- **First Reminder**: 1 week before RSVP deadline
+- **Final Reminder**: 24 hours before RSVP deadline
+- **Confirmation**: 24 hours before event start time
+
+### Custom Reminder Messages
+
+<CodeExample
+  title="Custom RSVP Reminder Template"
+  language="text"
+  code={`Subject: Don't forget to RSVP - [Event Name]
+
+Hi [Member Name],
+
+We're excited about our upcoming [Event Name] on [Event Date] at [Event Time].
+
+We still need your RSVP! Please let us know if you can join us by [RSVP Deadline].
+
+Event Details:
+📅 Date: [Event Date]
+🕐 Time: [Event Time]
+📍 Location: [Event Location]
+👔 Dress Code: [Dress Code]
+
+[RSVP Button]
+
+Questions? Contact [Contact Person] at [Contact Email].
+
+Best regards,
+[Chapter Name] Leadership`}
+/>
+
+### Targeted Messaging Options
+- **Non-respondents**: Members who haven't RSVP'd
+- **Confirmed attendees**: Members who RSVP'd yes
+- **Waitlisted members**: Members on the waitlist
+- **Declined members**: Members who can't attend
+- **Specific roles**: Target by member role or status
+
+## Attendance Tracking
+
+### Check-in Process
+1. **Digital Check-in**: Use mobile app or web interface
+2. **Manual Check-in**: Mark attendance in admin dashboard
+3. **QR Code Scanning**: Quick check-in with generated codes
+4. **Bulk Check-in**: Mark multiple members present simultaneously
+
+### Attendance Analytics
+- **Attendance Rate**: Percentage of RSVP'd members who attended
+- **No-show Rate**: Members who RSVP'd yes but didn't attend
+- **Walk-in Rate**: Members who attended without RSVP
+- **Punctuality**: On-time arrival patterns
+
+<AnnotatedScreenshot
+  src="/images/docs/rsvp/attendance-tracking.png"
+  alt="Attendance tracking interface"
+  annotations={[
+    { x: 120, y: 100, text: "Check-in status" },
+    { x: 280, y: 140, text: "Arrival time" },
+    { x: 420, y: 180, text: "Manual check-in" },
+    { x: 200, y: 320, text: "Attendance summary" }
+  ]}
+/>
+
+## Guest Management
+
+### Guest RSVP Process
+1. Member indicates they're bringing guests during RSVP
+2. Guest information collected (name, contact, dietary restrictions)
+3. Guest count applied to event capacity
+4. Guest notifications sent if configured
+
+### Guest Policies and Settings
+- **Guest Limit**: Maximum guests per member
+- **Guest Approval**: Require admin approval for guests
+- **Guest Fees**: Additional costs for guest attendance
+- **Guest Information**: Required details for planning
+
+### Managing Guest Lists
+- **View All Guests**: Complete list of expected guests
+- **Guest Check-in**: Separate check-in process for guests
+- **Guest Communications**: Send information to guests
+- **Guest Restrictions**: Manage guest access and permissions
+
+## RSVP Analytics and Reporting
+
+### Key RSVP Metrics
+- **Response Rate**: Percentage of invited members who responded
+- **Confirmation Rate**: Percentage who RSVP'd yes
+- **Waitlist Conversion**: Waitlisted members who got promoted and attended
+- **Last-minute Changes**: RSVPs changed within 24 hours of event
+
+### RSVP Timeline Analysis
+Track how RSVPs come in over time to optimize future event planning:
+- **Early Birds**: Members who RSVP immediately
+- **Procrastinators**: Members who wait until deadline
+- **Peak Response Times**: When most RSVPs are submitted
+- **Reminder Effectiveness**: Response rates after reminders
+
+### Reporting Features
+- **RSVP Summary Report**: Complete event RSVP overview
+- **Attendee List Export**: Downloadable attendee information
+- **Dietary Restrictions**: Summary of special requirements
+- **Contact Information**: Emergency contacts and phone numbers
+
+## Best Practices for RSVP Management
+
+### Setting Realistic Expectations
+- **Historical Data**: Use past event data to predict attendance
+- **Seasonal Patterns**: Account for academic calendar and holidays
+- **Member Preferences**: Consider member feedback and preferences
+- **Venue Constraints**: Always respect venue capacity limits
+
+### Communication Strategy
+- **Clear Deadlines**: Set and communicate firm RSVP deadlines
+- **Multiple Reminders**: Send strategic reminders without overwhelming
+- **Personal Touch**: Include personal messages from leadership
+- **Easy Process**: Make RSVP process simple and accessible
+
+### Waitlist Management
+- **Transparent Communication**: Keep waitlisted members informed
+- **Fair Process**: Use first-come, first-served for promotions
+- **Alternative Options**: Offer alternatives for waitlisted members
+- **Future Planning**: Use waitlist data for future event sizing
+
+## Troubleshooting RSVP Issues
+
+### Common Problems and Solutions
+
+#### Low Response Rates
+- **Check timing**: Avoid busy academic periods
+- **Improve messaging**: Make invitations more compelling
+- **Simplify process**: Reduce barriers to RSVP
+- **Follow up personally**: Have officers reach out individually
+
+#### Technical Issues
+- **RSVP not working**: Check member permissions and email delivery
+- **Duplicate responses**: Verify system settings and member accounts
+- **Notification failures**: Review communication preferences
+- **Capacity errors**: Check event settings and member eligibility
+
+#### Last-minute Changes
+- **Cancellation policy**: Establish clear cancellation procedures
+- **Waitlist promotion**: Have system for quick waitlist management
+- **Communication plan**: Prepare templates for urgent updates
+- **Backup planning**: Always have contingency plans ready
+
+<PlanBadge plan="BASIC" feature="Advanced RSVP Analytics" />
+
+Detailed RSVP analytics and custom reporting are available with Basic plans and above.
+
+## Integration with Other Features
+
+### Member Management
+- RSVP data integrates with member profiles
+- Attendance history tracked for engagement scoring
+- Role-based RSVP permissions and visibility
+
+### Communication Tools
+- RSVP responses trigger automated workflows
+- Targeted messaging based on RSVP status
+- Integration with broadcast and announcement systems
+
+### Financial Management
+- Event fees collected during RSVP process
+- Guest charges automatically calculated
+- Payment tracking linked to attendance
+
+## Related Topics
+
+- [Event Creation & Management](/docs/admin-guide/events/event-creation)
+- [Communication Tools](/docs/admin-guide/events/communication-tools)
+- [Engagement Analytics](/docs/admin-guide/events/engagement-analytics)
+- [Member Management](/docs/admin-guide/members/)

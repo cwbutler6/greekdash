@@ -1,0 +1,399 @@
+# Communication Tools
+
+Master GreekDash's comprehensive communication suite to keep your chapter informed, engaged, and connected through targeted messaging, broadcasts, and automated notifications.
+
+## Communication Overview
+
+### Available Communication Channels
+- **Email**: Rich HTML emails with templates and personalization
+- **SMS**: Text messages for urgent and time-sensitive communications
+- **Push Notifications**: In-app notifications for real-time updates
+- **Announcements**: Chapter-wide announcements visible in member portal
+
+### Message Types
+- **Broadcasts**: Mass communications to all or selected members
+- **Targeted Messages**: Communications to specific member groups
+- **Event Notifications**: Automated event-related communications
+- **System Alerts**: Important system and administrative notifications
+
+## Setting Up Communication Preferences
+
+<StepGuide
+  title="Configuring Chapter Communication Settings"
+  steps={[
+    {
+      title: "Access Communication Settings",
+      description: "Navigate to Settings > Communication to configure your chapter's communication preferences.",
+      screenshot: "/images/docs/communication/settings-navigation.png"
+    },
+    {
+      title: "Configure Default Channels",
+      description: "Set default communication channels for different types of messages.",
+      screenshot: "/images/docs/communication/default-channels.png",
+      tips: [
+        "Use email for detailed information and announcements",
+        "Reserve SMS for urgent and time-sensitive messages",
+        "Enable push notifications for real-time engagement"
+      ]
+    },
+    {
+      title: "Set Up Message Templates",
+      description: "Create reusable templates for common communications to maintain consistency.",
+      screenshot: "/images/docs/communication/message-templates.png"
+    },
+    {
+      title: "Configure Sender Information",
+      description: "Set up sender names, reply-to addresses, and chapter branding for communications.",
+      screenshot: "/images/docs/communication/sender-settings.png"
+    },
+    {
+      title: "Establish Communication Policies",
+      description: "Define guidelines for communication frequency, content, and approval processes.",
+      screenshot: "/images/docs/communication/communication-policies.png"
+    }
+  ]}
+/>
+
+## Creating and Sending Broadcasts
+
+### Broadcast Creation Process
+
+<AnnotatedScreenshot
+  src="/images/docs/communication/broadcast-creation.png"
+  alt="Broadcast creation interface"
+  annotations={[
+    { x: 100, y: 80, text: "Message subject line" },
+    { x: 250, y: 120, text: "Audience selection" },
+    { x: 400, y: 160, text: "Channel selection" },
+    { x: 150, y: 300, text: "Message content editor" },
+    { x: 350, y: 400, text: "Send options" }
+  ]}
+/>
+
+### Audience Targeting Options
+
+#### By Member Role
+- **All Members**: Send to entire chapter membership
+- **Active Members**: Only currently active members
+- **Officers**: Leadership team and officers only
+- **New Members**: Recently joined or pledging members
+- **Alumni**: Former members and alumni network
+
+#### By Member Status
+- **Active**: Currently active chapter members
+- **Pending**: Members awaiting approval or activation
+- **Inactive**: Temporarily inactive members
+- **Custom Groups**: User-defined member segments
+
+#### By Engagement Level
+- **Highly Engaged**: Members with high participation rates
+- **Moderately Engaged**: Average participation members
+- **Low Engagement**: Members needing re-engagement
+- **At Risk**: Members showing declining participation
+
+### Message Content Creation
+
+#### Rich Text Editor Features
+- **Formatting**: Bold, italic, underline, and text styling
+- **Lists**: Bulleted and numbered lists for organization
+- **Links**: Hyperlinks to external resources and internal pages
+- **Images**: Embedded images and chapter branding
+- **Tables**: Structured data presentation
+
+#### Template Variables
+Use dynamic content to personalize messages:
+
+<CodeExample
+  title="Message Template with Variables"
+  language="text"
+  code={`Subject: Important Update for {{member.firstName}}
+
+Dear {{member.firstName}},
+
+We hope you're having a great {{current.semester}}! 
+
+Your chapter, {{chapter.name}}, has an important announcement:
+
+{{message.content}}
+
+Event Details:
+📅 Date: {{event.date}}
+🕐 Time: {{event.time}}
+📍 Location: {{event.location}}
+
+Please RSVP by {{event.rsvpDeadline}}.
+
+Best regards,
+{{sender.name}}
+{{sender.title}}
+{{chapter.name}}`}
+/>
+
+### Scheduling and Delivery Options
+
+#### Send Timing
+- **Send Now**: Immediate delivery to selected audience
+- **Schedule Send**: Deliver at optimal engagement times
+- **Recurring Messages**: Set up automated recurring communications
+- **Time Zone Optimization**: Deliver based on member time zones
+
+#### Delivery Preferences
+- **Multi-channel**: Send via multiple channels simultaneously
+- **Fallback Options**: Use alternative channels if primary fails
+- **Delivery Confirmation**: Track message delivery and engagement
+- **Retry Logic**: Automatic retry for failed deliveries
+
+## Targeted Messaging Strategies
+
+### Event-Based Communications
+
+#### Pre-Event Messaging
+- **Save the Date**: Early event announcements
+- **Detailed Invitations**: Complete event information and RSVP
+- **Reminders**: Multiple reminder sequence leading to event
+- **Last-Minute Updates**: Changes, directions, or important notes
+
+#### During-Event Communications
+- **Live Updates**: Real-time event information and updates
+- **Emergency Notifications**: Important safety or logistical information
+- **Engagement Prompts**: Encourage participation and interaction
+- **Social Media Integration**: Promote event hashtags and sharing
+
+#### Post-Event Follow-up
+- **Thank You Messages**: Appreciation for attendance and participation
+- **Event Recap**: Highlights, photos, and key moments
+- **Feedback Requests**: Gather input for future event improvement
+- **Next Steps**: Information about upcoming events and opportunities
+
+### Member Lifecycle Communications
+
+#### New Member Onboarding
+- **Welcome Series**: Multi-part introduction to chapter
+- **Orientation Information**: Important dates, requirements, and expectations
+- **Mentor Assignments**: Introduction to big/little or buddy systems
+- **Resource Sharing**: Access to important documents and information
+
+#### Ongoing Engagement
+- **Monthly Updates**: Regular chapter news and announcements
+- **Achievement Recognition**: Celebrating member accomplishments
+- **Opportunity Alerts**: Leadership, volunteer, and participation opportunities
+- **Birthday and Anniversary**: Personal milestone recognition
+
+#### Re-engagement Campaigns
+- **Check-in Messages**: Personal outreach to less active members
+- **Interest Surveys**: Understanding member preferences and availability
+- **Flexible Participation**: Alternative ways to stay involved
+- **Exit Interviews**: Feedback from departing members
+
+## Automated Communication Workflows
+
+### Trigger-Based Messaging
+
+<CodeExample
+  title="Automated Workflow Configuration"
+  language="json"
+  code={`{
+  "workflows": [
+    {
+      "name": "New Member Welcome Series",
+      "trigger": "member_status_change",
+      "condition": "status == 'ACTIVE'",
+      "messages": [
+        {
+          "delay": "immediate",
+          "template": "welcome_message",
+          "channels": ["email", "push"]
+        },
+        {
+          "delay": "3_days",
+          "template": "orientation_reminder",
+          "channels": ["email", "sms"]
+        },
+        {
+          "delay": "1_week",
+          "template": "first_event_invitation",
+          "channels": ["email"]
+        }
+      ]
+    },
+    {
+      "name": "Event RSVP Reminders",
+      "trigger": "event_created",
+      "messages": [
+        {
+          "delay": "1_week_before_deadline",
+          "template": "rsvp_reminder",
+          "audience": "no_response"
+        },
+        {
+          "delay": "24_hours_before_deadline",
+          "template": "final_rsvp_reminder",
+          "audience": "no_response"
+        }
+      ]
+    }
+  ]
+}`}
+/>
+
+### Automated Message Types
+- **Welcome Messages**: New member onboarding sequences
+- **Event Reminders**: RSVP and attendance reminders
+- **Payment Notifications**: Dues and fee payment reminders
+- **Birthday Messages**: Automated birthday and anniversary wishes
+- **Engagement Alerts**: Notifications for low participation
+
+## Communication Analytics and Tracking
+
+### Message Performance Metrics
+
+#### Delivery Metrics
+- **Delivery Rate**: Percentage of messages successfully delivered
+- **Bounce Rate**: Messages that failed to deliver
+- **Spam Rate**: Messages marked as spam by recipients
+- **Unsubscribe Rate**: Members opting out of communications
+
+#### Engagement Metrics
+- **Open Rate**: Percentage of recipients who opened the message
+- **Click-Through Rate**: Recipients who clicked links in the message
+- **Response Rate**: Members who replied or took requested action
+- **Conversion Rate**: Completed desired actions (RSVP, payment, etc.)
+
+### Analytics Dashboard
+
+<AnnotatedScreenshot
+  src="/images/docs/communication/analytics-dashboard.png"
+  alt="Communication analytics dashboard"
+  annotations={[
+    { x: 100, y: 80, text: "Overall engagement metrics" },
+    { x: 300, y: 120, text: "Channel performance" },
+    { x: 450, y: 160, text: "Message timeline" },
+    { x: 200, y: 300, text: "Audience insights" },
+    { x: 400, y: 340, text: "Optimization suggestions" }
+  ]}
+/>
+
+### A/B Testing Capabilities
+- **Subject Line Testing**: Compare different subject lines
+- **Content Variations**: Test different message content
+- **Send Time Optimization**: Find optimal delivery times
+- **Channel Effectiveness**: Compare performance across channels
+
+## Member Communication Preferences
+
+### Individual Preference Management
+Members can control their communication preferences:
+- **Channel Preferences**: Choose preferred communication methods
+- **Frequency Settings**: Control how often they receive messages
+- **Content Categories**: Select types of communications to receive
+- **Quiet Hours**: Set times when they don't want to receive messages
+
+### Preference Categories
+- **Essential Communications**: Critical chapter information (cannot opt out)
+- **Event Notifications**: Event invitations and updates
+- **Social Updates**: Social events and casual communications
+- **Administrative**: Dues, payments, and administrative notices
+- **Marketing**: Promotional content and external opportunities
+
+### Compliance and Opt-out Management
+- **Easy Unsubscribe**: One-click unsubscribe options
+- **Granular Control**: Opt out of specific communication types
+- **Preference Center**: Centralized preference management
+- **Compliance Tracking**: Maintain records of consent and preferences
+
+## Best Practices for Effective Communication
+
+### Message Content Guidelines
+
+#### Writing Effective Subject Lines
+- **Clear and Specific**: Clearly indicate message content and urgency
+- **Action-Oriented**: Use action words when appropriate
+- **Personalization**: Include member names or relevant details
+- **Urgency Indicators**: Use sparingly for truly urgent communications
+
+#### Content Structure
+- **Scannable Format**: Use headers, bullets, and short paragraphs
+- **Clear Call-to-Action**: Make desired actions obvious and easy
+- **Mobile-Friendly**: Ensure content displays well on mobile devices
+- **Consistent Branding**: Maintain chapter voice and visual identity
+
+### Timing and Frequency
+
+#### Optimal Send Times
+- **Weekday Evenings**: 6-8 PM for highest engagement
+- **Weekend Mornings**: 10 AM - 12 PM for casual communications
+- **Avoid Late Night**: Respect member sleep schedules
+- **Consider Time Zones**: Account for members in different locations
+
+#### Communication Frequency Guidelines
+- **Weekly Maximum**: No more than 2-3 communications per week
+- **Event Clustering**: Group related event communications
+- **Seasonal Adjustments**: Reduce frequency during exams and breaks
+- **Quality over Quantity**: Focus on valuable, relevant content
+
+### Personalization Strategies
+- **Member Segmentation**: Group members by interests and engagement
+- **Dynamic Content**: Use member data for personalized messaging
+- **Behavioral Triggers**: Send messages based on member actions
+- **Preference Respect**: Honor individual communication preferences
+
+## Troubleshooting Communication Issues
+
+### Common Delivery Problems
+
+#### Email Delivery Issues
+- **Spam Filters**: Ensure proper sender authentication
+- **Bounce Management**: Clean email lists regularly
+- **Content Filtering**: Avoid spam trigger words and phrases
+- **Reputation Management**: Monitor sender reputation scores
+
+#### SMS Delivery Problems
+- **Carrier Blocking**: Verify SMS compliance and content
+- **Opt-in Requirements**: Ensure proper SMS consent
+- **Message Length**: Keep messages under carrier limits
+- **Timing Restrictions**: Respect quiet hours and time zones
+
+### Engagement Troubleshooting
+
+#### Low Open Rates
+- **Subject Line Testing**: Experiment with different approaches
+- **Send Time Optimization**: Test different delivery times
+- **Sender Name Recognition**: Use recognizable sender names
+- **List Hygiene**: Remove inactive or invalid addresses
+
+#### Poor Response Rates
+- **Clear Call-to-Action**: Make desired actions obvious
+- **Message Relevance**: Ensure content matches audience interests
+- **Mobile Optimization**: Verify mobile-friendly formatting
+- **Follow-up Strategy**: Implement appropriate follow-up sequences
+
+<PlanBadge plan="BASIC" feature="Advanced Communication Analytics" />
+
+Detailed communication analytics and A/B testing features are available with Basic plans and above.
+
+## Integration with Other Systems
+
+### Event Management Integration
+- Automatic event notifications and reminders
+- RSVP-based communication targeting
+- Post-event follow-up automation
+- Attendance-based messaging
+
+### Member Management Integration
+- Role-based communication permissions
+- Engagement scoring and targeting
+- Lifecycle-based automated messaging
+- Preference synchronization
+
+### Financial Management Integration
+- Payment reminder automation
+- Dues collection communications
+- Financial report distribution
+- Billing notification management
+
+## Related Topics
+
+- [Event Creation & Management](/docs/admin-guide/events/event-creation)
+- [RSVP Management](/docs/admin-guide/events/rsvp-management)
+- [Member Management](/docs/admin-guide/members/)
+- [Engagement Analytics](/docs/admin-guide/events/engagement-analytics)

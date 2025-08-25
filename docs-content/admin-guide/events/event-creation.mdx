@@ -1,0 +1,230 @@
+# Event Creation & Management
+
+Learn how to create, manage, and organize successful chapter events using GreekDash's comprehensive event management tools.
+
+## Creating Your First Event
+
+<StepGuide
+  title="Step-by-Step Event Creation"
+  steps={[
+    {
+      title: "Navigate to Events",
+      description: "From your admin dashboard, click on 'Events' in the main navigation menu.",
+      screenshot: "/images/docs/events/events-navigation.png"
+    },
+    {
+      title: "Click Create Event",
+      description: "Click the 'Create Event' button in the top right corner of the events page.",
+      screenshot: "/images/docs/events/create-event-button.png"
+    },
+    {
+      title: "Fill Event Details",
+      description: "Complete the event form with all necessary information including title, description, date, time, and location.",
+      screenshot: "/images/docs/events/event-form.png",
+      tips: [
+        "Use descriptive titles that clearly indicate the event type",
+        "Include detailed descriptions with expectations and requirements",
+        "Add location details including address and parking information"
+      ]
+    },
+    {
+      title: "Configure RSVP Settings",
+      description: "Set up RSVP options, capacity limits, deadlines, and automated reminders.",
+      screenshot: "/images/docs/events/rsvp-settings.png",
+      tips: [
+        "Enable RSVPs for events requiring attendance tracking",
+        "Set realistic capacity limits based on venue constraints",
+        "Configure RSVP deadlines to allow proper planning"
+      ]
+    },
+    {
+      title: "Set Privacy and Permissions",
+      description: "Choose who can view and RSVP to your event based on member roles and status.",
+      screenshot: "/images/docs/events/event-privacy.png"
+    },
+    {
+      title: "Review and Publish",
+      description: "Review all event details and click 'Create Event' to publish it to your chapter.",
+      screenshot: "/images/docs/events/event-review.png"
+    }
+  ]}
+/>
+
+## Event Types and Categories
+
+### Chapter Meetings
+- **Regular meetings**: Weekly or monthly chapter meetings
+- **Executive meetings**: Leadership and officer meetings
+- **Committee meetings**: Specific committee gatherings
+
+### Social Events
+- **Mixers**: Social gatherings with other organizations
+- **Formals**: Formal dinner and dance events
+- **Casual socials**: Informal member gatherings
+
+### Service Events
+- **Community service**: Volunteer opportunities and service projects
+- **Fundraisers**: Charity events and fundraising activities
+- **Philanthropy**: Philanthropic events and campaigns
+
+### Educational Events
+- **Workshops**: Skill-building and educational sessions
+- **Guest speakers**: Professional development presentations
+- **Study sessions**: Academic support and study groups
+
+## Event Information Fields
+
+### Required Information
+- **Event Title**: Clear, descriptive name for the event
+- **Date and Time**: Start and end times with timezone
+- **Location**: Venue name, address, and directions
+- **Description**: Detailed event information and expectations
+
+### Optional Information
+- **Event Image**: Visual representation or promotional image
+- **Dress Code**: Attire requirements and guidelines
+- **Cost**: Event fees or contribution requirements
+- **Contact Person**: Point person for questions and coordination
+
+### RSVP Configuration
+- **RSVP Required**: Whether members must RSVP to attend
+- **Capacity Limit**: Maximum number of attendees
+- **RSVP Deadline**: Last date/time for responses
+- **Waitlist**: Enable waitlist when capacity is reached
+- **Guest Policy**: Whether members can bring guests
+
+## Managing Existing Events
+
+### Editing Events
+1. Navigate to the Events page
+2. Find your event in the list
+3. Click the edit icon or event title
+4. Make necessary changes
+5. Save your updates
+
+<AnnotatedScreenshot
+  src="/images/docs/events/edit-event.png"
+  alt="Event editing interface"
+  annotations={[
+    { x: 150, y: 100, text: "Click to edit event details" },
+    { x: 300, y: 200, text: "Update RSVP settings" },
+    { x: 450, y: 300, text: "Manage attendee list" }
+  ]}
+/>
+
+### Event Status Management
+- **Draft**: Event is being prepared but not visible to members
+- **Published**: Event is live and visible to eligible members
+- **Cancelled**: Event has been cancelled with notifications sent
+- **Completed**: Event has occurred and is archived
+
+### Bulk Operations
+- **Duplicate Events**: Copy event details for recurring events
+- **Bulk Notifications**: Send messages to multiple event attendees
+- **Export Data**: Download attendee lists and event reports
+
+## Event Communication
+
+### Automatic Notifications
+GreekDash automatically sends notifications for:
+- Event creation announcements
+- RSVP confirmations
+- Event reminders (24 hours and 2 hours before)
+- Event updates and changes
+- Post-event follow-ups
+
+### Custom Communications
+Send targeted messages to:
+- All eligible members
+- RSVP'd attendees only
+- Non-respondents
+- Waitlisted members
+- Specific member roles
+
+<CodeExample
+  title="Event Notification Settings"
+  language="json"
+  code={`{
+  "notifications": {
+    "creation": true,
+    "reminders": {
+      "24_hours": true,
+      "2_hours": true,
+      "custom": "30_minutes"
+    },
+    "updates": true,
+    "cancellation": true
+  },
+  "channels": ["email", "sms", "push"],
+  "targeting": {
+    "roles": ["MEMBER", "ADMIN"],
+    "status": ["ACTIVE"],
+    "custom_filters": []
+  }
+}`}
+/>
+
+## Event Analytics and Reporting
+
+### Key Metrics
+- **RSVP Rate**: Percentage of eligible members who responded
+- **Attendance Rate**: Actual attendance vs. RSVP confirmations
+- **Engagement Score**: Overall member engagement with event
+- **Communication Effectiveness**: Open and response rates
+
+### Reports Available
+- **Event Summary**: Overview of event performance
+- **Attendee List**: Complete list of participants
+- **RSVP Timeline**: Response patterns over time
+- **Communication Analytics**: Message delivery and engagement
+
+## Best Practices
+
+### Event Planning
+- **Lead Time**: Create events at least 2 weeks in advance
+- **Clear Expectations**: Provide detailed information about what to expect
+- **Accessibility**: Consider member accessibility needs and accommodations
+- **Weather Contingency**: Have backup plans for outdoor events
+
+### RSVP Management
+- **Reasonable Deadlines**: Set RSVP deadlines that allow proper planning
+- **Waitlist Strategy**: Use waitlists for popular events to gauge interest
+- **Follow-up**: Send reminders to non-respondents
+- **Flexibility**: Allow RSVP changes within reason
+
+### Communication Strategy
+- **Multi-channel**: Use email, SMS, and in-app notifications
+- **Timing**: Send announcements during optimal engagement hours
+- **Personalization**: Tailor messages to different member segments
+- **Consistency**: Maintain consistent communication style and branding
+
+## Troubleshooting Common Issues
+
+### Low RSVP Rates
+- **Check timing**: Ensure events aren't scheduled during busy periods
+- **Improve descriptions**: Make event details more compelling
+- **Adjust communication**: Try different messaging approaches
+- **Survey members**: Ask for feedback on event preferences
+
+### Capacity Management
+- **Monitor trends**: Track typical attendance vs. RSVP ratios
+- **Adjust limits**: Set capacity based on historical data
+- **Waitlist management**: Actively manage waitlists and communicate status
+- **Venue flexibility**: Have backup venue options for popular events
+
+### Technical Issues
+- **RSVP problems**: Check member permissions and notification settings
+- **Display issues**: Verify event visibility settings and member roles
+- **Notification failures**: Review communication preferences and contact information
+- **Data sync**: Ensure event information is properly synchronized
+
+<PlanBadge plan="PRO" feature="Advanced Event Analytics" />
+
+Advanced event analytics and custom reporting features are available with Pro plans and above.
+
+## Related Topics
+
+- [RSVP Management](/docs/admin-guide/events/rsvp-management)
+- [Communication Tools](/docs/admin-guide/events/communication-tools)
+- [Member Management](/docs/admin-guide/members/)
+- [Engagement Analytics](/docs/admin-guide/events/engagement-analytics)

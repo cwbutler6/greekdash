@@ -1,0 +1,451 @@
+# Engagement Analytics
+
+Understand and improve your chapter's member engagement with comprehensive analytics, insights, and data-driven recommendations from GreekDash.
+
+## Analytics Overview
+
+### Key Engagement Metrics
+- **Event Participation**: RSVP rates, attendance, and engagement scores
+- **Communication Engagement**: Email opens, clicks, and response rates
+- **Platform Usage**: Login frequency, feature usage, and time spent
+- **Content Interaction**: Gallery views, file downloads, and sharing activity
+- **Member Lifecycle**: Onboarding progress, retention, and satisfaction
+
+### Analytics Dashboard Components
+- **Real-time Metrics**: Live engagement data and trends
+- **Historical Analysis**: Long-term patterns and seasonal trends
+- **Comparative Analytics**: Benchmarking against similar chapters
+- **Predictive Insights**: AI-powered predictions and recommendations
+- **Custom Reports**: Tailored analytics for specific needs
+
+## Event Engagement Analytics
+
+<StepGuide
+  title="Accessing Event Analytics"
+  steps={[
+    {
+      title: "Navigate to Analytics",
+      description: "From your admin dashboard, click on 'Analytics' and select 'Events' to view event engagement data.",
+      screenshot: "/images/docs/analytics/analytics-navigation.png"
+    },
+    {
+      title: "Select Time Period",
+      description: "Choose the time range for your analysis using the date picker controls.",
+      screenshot: "/images/docs/analytics/time-period-selection.png",
+      tips: [
+        "Compare similar time periods (semester to semester)",
+        "Look at both short-term and long-term trends",
+        "Consider academic calendar when analyzing data"
+      ]
+    },
+    {
+      title: "Review Key Metrics",
+      description: "Examine overall event performance metrics and trends.",
+      screenshot: "/images/docs/analytics/event-metrics-overview.png"
+    },
+    {
+      title: "Analyze Individual Events",
+      description: "Drill down into specific event performance and member participation.",
+      screenshot: "/images/docs/analytics/individual-event-analysis.png"
+    },
+    {
+      title: "Generate Reports",
+      description: "Create detailed reports for leadership review and planning purposes.",
+      screenshot: "/images/docs/analytics/report-generation.png"
+    }
+  ]}
+/>
+
+### Event Performance Metrics
+
+<AnnotatedScreenshot
+  src="/images/docs/analytics/event-performance-dashboard.png"
+  alt="Event performance analytics dashboard"
+  annotations={[
+    { x: 100, y: 80, text: "RSVP conversion rates" },
+    { x: 250, y: 120, text: "Attendance vs RSVP" },
+    { x: 400, y: 160, text: "Event popularity trends" },
+    { x: 150, y: 300, text: "Member participation patterns" },
+    { x: 350, y: 340, text: "Engagement scoring" }
+  ]}
+/>
+
+#### RSVP Analytics
+- **Response Rate**: Percentage of invited members who RSVP'd
+- **Response Time**: How quickly members respond to invitations
+- **RSVP Conversion**: Members who RSVP yes vs. total responses
+- **Last-minute Changes**: Rate of RSVP changes close to event date
+- **Waitlist Dynamics**: Waitlist conversion and management effectiveness
+
+#### Attendance Analytics
+- **Attendance Rate**: Actual attendance vs. confirmed RSVPs
+- **No-show Rate**: Members who RSVP'd but didn't attend
+- **Walk-in Rate**: Members who attended without RSVP
+- **Punctuality**: On-time arrival patterns and trends
+- **Duration**: How long members stay at events
+
+#### Event Type Performance
+- **Social Events**: Mixers, formals, and casual gatherings
+- **Educational Events**: Workshops, speakers, and training sessions
+- **Service Events**: Community service and philanthropy activities
+- **Meetings**: Chapter meetings and official business
+- **Recruitment Events**: Rush activities and new member events
+
+### Engagement Scoring System
+
+<CodeExample
+  title="Engagement Score Calculation"
+  language="json"
+  code={`{
+  "engagement_factors": {
+    "event_participation": {
+      "weight": 40,
+      "components": {
+        "rsvp_rate": 15,
+        "attendance_rate": 20,
+        "event_variety": 5
+      }
+    },
+    "communication_engagement": {
+      "weight": 25,
+      "components": {
+        "email_opens": 10,
+        "response_rate": 10,
+        "feedback_participation": 5
+      }
+    },
+    "platform_usage": {
+      "weight": 20,
+      "components": {
+        "login_frequency": 10,
+        "feature_usage": 5,
+        "profile_completeness": 5
+      }
+    },
+    "content_interaction": {
+      "weight": 15,
+      "components": {
+        "gallery_views": 5,
+        "file_downloads": 5,
+        "content_sharing": 5
+      }
+    }
+  },
+  "scoring_ranges": {
+    "highly_engaged": "80-100",
+    "moderately_engaged": "60-79",
+    "low_engagement": "40-59",
+    "at_risk": "0-39"
+  }
+}`}
+/>
+
+## Communication Analytics
+
+### Email and SMS Performance
+
+#### Delivery Metrics
+- **Delivery Rate**: Successfully delivered messages
+- **Bounce Rate**: Failed message deliveries
+- **Spam Rate**: Messages marked as spam
+- **Unsubscribe Rate**: Members opting out of communications
+
+#### Engagement Metrics
+- **Open Rate**: Percentage of recipients who opened messages
+- **Click-Through Rate**: Recipients who clicked links
+- **Response Rate**: Members who replied or took action
+- **Forward Rate**: Messages shared with others
+
+#### Channel Effectiveness
+- **Email Performance**: Detailed email campaign analytics
+- **SMS Engagement**: Text message response and engagement
+- **Push Notifications**: In-app notification effectiveness
+- **Multi-channel Impact**: Cross-channel communication effectiveness
+
+### Communication Timing Analysis
+
+<AnnotatedScreenshot
+  src="/images/docs/analytics/communication-timing.png"
+  alt="Communication timing analytics"
+  annotations={[
+    { x: 100, y: 80, text: "Optimal send times" },
+    { x: 250, y: 120, text: "Day-of-week performance" },
+    { x: 400, y: 160, text: "Seasonal trends" },
+    { x: 150, y: 300, text: "Member activity patterns" },
+    { x: 350, y: 340, text: "Response time analysis" }
+  ]}
+/>
+
+#### Optimal Timing Insights
+- **Best Send Times**: When members are most likely to engage
+- **Day of Week Analysis**: Performance by day of the week
+- **Seasonal Patterns**: Engagement changes throughout the year
+- **Member Timezone**: Optimization for member locations
+- **Academic Calendar**: Impact of school schedule on engagement
+
+## Member Engagement Profiles
+
+### Individual Member Analytics
+
+#### Engagement History
+- **Participation Timeline**: Member's engagement over time
+- **Event Attendance**: Complete attendance history and patterns
+- **Communication Interaction**: Response patterns and preferences
+- **Platform Usage**: Login patterns and feature utilization
+- **Content Contribution**: Photos, files, and content shared
+
+#### Engagement Segmentation
+- **Highly Engaged**: Active participants in most activities
+- **Moderately Engaged**: Regular but selective participation
+- **Occasionally Engaged**: Sporadic participation patterns
+- **At Risk**: Declining engagement requiring intervention
+- **New Members**: Recent joiners still establishing patterns
+
+### Cohort Analysis
+
+#### Member Lifecycle Stages
+- **New Member Onboarding**: First 90 days engagement patterns
+- **Established Members**: Long-term engagement stability
+- **Leadership Transition**: Engagement during role changes
+- **Senior Members**: Engagement patterns before graduation
+- **Alumni Transition**: Maintaining engagement post-graduation
+
+#### Retention Analytics
+- **Retention Rates**: Percentage of members remaining active
+- **Churn Prediction**: Early warning signs of disengagement
+- **Re-engagement Success**: Effectiveness of retention efforts
+- **Exit Analysis**: Understanding why members become inactive
+- **Lifecycle Value**: Long-term member contribution analysis
+
+## Predictive Analytics and Insights
+
+### AI-Powered Recommendations
+
+<CodeExample
+  title="Engagement Prediction Model"
+  language="json"
+  code={`{
+  "prediction_model": {
+    "risk_factors": [
+      {
+        "factor": "declining_event_attendance",
+        "weight": 0.3,
+        "threshold": "50% decrease over 30 days"
+      },
+      {
+        "factor": "reduced_communication_engagement",
+        "weight": 0.25,
+        "threshold": "No opens in last 14 days"
+      },
+      {
+        "factor": "platform_inactivity",
+        "weight": 0.2,
+        "threshold": "No login in 21 days"
+      },
+      {
+        "factor": "social_isolation",
+        "weight": 0.15,
+        "threshold": "No peer interactions in 30 days"
+      },
+      {
+        "factor": "academic_stress_indicators",
+        "weight": 0.1,
+        "threshold": "Exam periods, low GPA alerts"
+      }
+    ],
+    "intervention_triggers": {
+      "high_risk": "Score > 0.7",
+      "medium_risk": "Score 0.4-0.7",
+      "low_risk": "Score < 0.4"
+    }
+  }
+}`}
+/>
+
+#### Predictive Capabilities
+- **Churn Prediction**: Identify members at risk of leaving
+- **Event Success Forecasting**: Predict event attendance and engagement
+- **Optimal Timing**: Best times for communications and events
+- **Content Preferences**: What content will resonate with members
+- **Intervention Recommendations**: Suggested actions for at-risk members
+
+### Trend Analysis and Forecasting
+
+#### Seasonal Trends
+- **Academic Year Patterns**: Engagement changes throughout school year
+- **Holiday Impact**: How breaks and holidays affect participation
+- **Recruitment Cycles**: Engagement patterns during rush periods
+- **Graduation Effects**: Impact of member transitions on chapter
+- **External Events**: How campus and community events affect engagement
+
+#### Long-term Projections
+- **Growth Forecasting**: Predicted chapter growth and engagement
+- **Resource Planning**: Anticipated needs based on trends
+- **Event Planning**: Optimal event scheduling and types
+- **Communication Strategy**: Evolving communication preferences
+- **Technology Adoption**: Feature usage and platform evolution
+
+## Custom Reports and Dashboards
+
+### Report Builder Features
+
+<StepGuide
+  title="Creating Custom Analytics Reports"
+  steps={[
+    {
+      title: "Access Report Builder",
+      description: "Navigate to Analytics > Custom Reports to access the report creation tools.",
+      screenshot: "/images/docs/analytics/report-builder-access.png"
+    },
+    {
+      title: "Select Data Sources",
+      description: "Choose which data sources and metrics to include in your report.",
+      screenshot: "/images/docs/analytics/data-source-selection.png",
+      tips: [
+        "Combine multiple data sources for comprehensive insights",
+        "Consider your audience when selecting metrics",
+        "Include both quantitative and qualitative measures"
+      ]
+    },
+    {
+      title: "Configure Filters",
+      description: "Set up filters to focus on specific time periods, member groups, or event types.",
+      screenshot: "/images/docs/analytics/report-filters.png"
+    },
+    {
+      title: "Choose Visualization",
+      description: "Select charts, graphs, and tables that best represent your data.",
+      screenshot: "/images/docs/analytics/visualization-options.png"
+    },
+    {
+      title: "Schedule and Share",
+      description: "Set up automated report generation and sharing with leadership team.",
+      screenshot: "/images/docs/analytics/report-scheduling.png"
+    }
+  ]}
+/>
+
+### Dashboard Customization
+
+#### Widget Options
+- **Key Performance Indicators**: Important metrics at a glance
+- **Trend Charts**: Visual representation of changes over time
+- **Comparison Tables**: Side-by-side metric comparisons
+- **Heat Maps**: Visual representation of engagement patterns
+- **Progress Trackers**: Goal achievement and milestone tracking
+
+#### Dashboard Templates
+- **Executive Summary**: High-level overview for leadership
+- **Event Manager**: Detailed event performance analytics
+- **Communication Manager**: Communication effectiveness metrics
+- **Member Engagement**: Individual and cohort engagement analysis
+- **Recruitment Analytics**: Rush and new member onboarding metrics
+
+## Benchmarking and Comparisons
+
+### Industry Benchmarks
+
+#### Engagement Standards
+- **Event Attendance**: Industry averages for different event types
+- **Communication Rates**: Standard open and response rates
+- **Platform Usage**: Typical login and feature usage patterns
+- **Retention Rates**: Member retention benchmarks by organization type
+- **Growth Metrics**: Healthy chapter growth and engagement rates
+
+#### Comparative Analysis
+- **Similar Chapters**: Compare with chapters of similar size and type
+- **Regional Comparisons**: Performance vs. other chapters in region
+- **Historical Performance**: Your chapter's performance over time
+- **Best Practices**: Learn from high-performing chapters
+- **Industry Trends**: Broader trends in Greek life engagement
+
+### Goal Setting and Tracking
+
+<AnnotatedScreenshot
+  src="/images/docs/analytics/goal-tracking.png"
+  alt="Goal tracking dashboard"
+  annotations={[
+    { x: 100, y: 80, text: "Current performance" },
+    { x: 250, y: 120, text: "Goal targets" },
+    { x: 400, y: 160, text: "Progress indicators" },
+    { x: 150, y: 300, text: "Milestone tracking" },
+    { x: 350, y: 340, text: "Action recommendations" }
+  ]}
+/>
+
+#### SMART Goals Framework
+- **Specific**: Clear, well-defined engagement objectives
+- **Measurable**: Quantifiable metrics and targets
+- **Achievable**: Realistic goals based on historical data
+- **Relevant**: Goals aligned with chapter mission and values
+- **Time-bound**: Clear deadlines and milestone dates
+
+## Data Privacy and Security
+
+### Privacy Compliance
+- **Member Consent**: Ensure proper consent for data collection and analysis
+- **Data Anonymization**: Protect individual member privacy in reports
+- **Access Controls**: Limit analytics access to authorized personnel
+- **Data Retention**: Appropriate retention policies for analytics data
+- **Compliance Monitoring**: Regular audits of data usage and privacy
+
+### Security Measures
+- **Encrypted Analytics**: All analytics data encrypted in transit and at rest
+- **Audit Trails**: Complete logs of who accesses what analytics data
+- **Role-Based Access**: Different analytics access levels by role
+- **Secure Sharing**: Protected sharing of reports and insights
+- **Regular Updates**: Ongoing security updates and monitoring
+
+## Best Practices for Analytics Usage
+
+### Data-Driven Decision Making
+- **Regular Reviews**: Schedule monthly analytics reviews with leadership
+- **Action Planning**: Convert insights into specific action items
+- **Hypothesis Testing**: Use A/B testing to validate improvement strategies
+- **Continuous Monitoring**: Track progress on implemented changes
+- **Feedback Loops**: Gather member feedback on changes made
+
+### Avoiding Common Pitfalls
+- **Data Overload**: Focus on key metrics rather than tracking everything
+- **Correlation vs Causation**: Understand the difference in data interpretation
+- **Sample Size**: Ensure sufficient data for meaningful conclusions
+- **Seasonal Adjustments**: Account for natural fluctuations in engagement
+- **Privacy Respect**: Always prioritize member privacy and consent
+
+### Building Analytics Culture
+- **Leadership Buy-in**: Ensure leadership understands and values analytics
+- **Training Programs**: Educate officers on interpreting and using data
+- **Regular Communication**: Share insights with broader membership
+- **Success Stories**: Celebrate improvements driven by analytics
+- **Continuous Learning**: Stay updated on analytics best practices
+
+<PlanBadge plan="PRO" feature="Advanced Predictive Analytics" />
+
+AI-powered predictive analytics and custom dashboard features are available with Pro plans and above.
+
+## Integration with Other Systems
+
+### Event Management Integration
+- **Real-time Event Analytics**: Live event performance tracking
+- **RSVP Analytics**: Detailed RSVP pattern analysis
+- **Post-event Analysis**: Comprehensive event success measurement
+- **Event ROI**: Return on investment for different event types
+
+### Communication Integration
+- **Campaign Analytics**: Detailed communication campaign performance
+- **Message Optimization**: Data-driven communication improvements
+- **Audience Segmentation**: Analytics-driven member segmentation
+- **Response Tracking**: Complete communication engagement analysis
+
+### Member Management Integration
+- **Member Scoring**: Comprehensive member engagement scoring
+- **Lifecycle Analytics**: Member journey and lifecycle analysis
+- **Retention Prediction**: Early warning systems for member churn
+- **Leadership Analytics**: Officer and leadership effectiveness metrics
+
+## Related Topics
+
+- [Event Creation & Management](/docs/admin-guide/events/event-creation)
+- [Communication Tools](/docs/admin-guide/events/communication-tools)
+- [Member Management](/docs/admin-guide/members/)
+- [Financial Analytics](/docs/admin-guide/finance/reports)
