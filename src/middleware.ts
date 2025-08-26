@@ -8,10 +8,10 @@ export default withAuth(
   async function middleware(request: NextRequestWithAuth) {
     const token = await getToken({ req: request });
     const isAuthenticated = !!token;
-    
+
     // Get the pathname from the URL
     const { pathname } = request.nextUrl;
-    
+
     // Check if this request is coming from a session refresh or OAuth callback
     const referer = request.headers.get('referer');
     const isFromSessionRefresh = referer && referer.includes('/api/auth/refresh-session');
@@ -21,33 +21,37 @@ export default withAuth(
     // Allow public routes
     // Check if the path is just a chapterSlug (e.g., /alpha-beta-gamma) - this should be public
     const isChapterPublicPage = /^\/[a-zA-Z0-9-]+$/.test(pathname) && !pathname.startsWith("/api/");
-    
-    const isPublicRoute = 
-      pathname === "/" || 
-      pathname === "/login" || 
-      pathname === "/signup" || 
+
+    // Check if this is a docs route - all docs routes should be public
+    const isDocsRoute = pathname.startsWith("/docs");
+
+    const isPublicRoute =
+      pathname === "/" ||
+      pathname === "/login" ||
+      pathname === "/signup" ||
       pathname === "/social-signup" ||
       pathname === "/forgot-password" ||
       pathname === "/reset-password" ||
       pathname === "/api/auth" ||
       isChapterPublicPage ||
+      isDocsRoute ||
       isOAuthFlow;
-      
+
     // Special handling for OAuth flows and session refreshes
     if (isOAuthFlow || isFromSessionRefresh) {
       console.log('Allowing OAuth flow or session refresh to proceed');
       return NextResponse.next();
     }
-      
+
     // Redirect authenticated users away from login/signup pages
     if (isAuthenticated && (pathname === "/login" || pathname === "/signup" || pathname === "/social-signup")) {
       if (token.memberships && token.memberships.length > 0) {
         // User has memberships - redirect to their dashboard
         const membership = token.memberships[0];
-        const redirectPath = membership.role === 'ADMIN' || membership.role === 'OWNER' 
+        const redirectPath = membership.role === 'ADMIN' || membership.role === 'OWNER'
           ? `/${membership.chapterSlug}/admin`
           : `/${membership.chapterSlug}/portal`;
-        
+
         console.log('Redirecting authenticated user with memberships to:', redirectPath);
         return NextResponse.redirect(new URL(redirectPath, request.url));
       } else {
@@ -57,7 +61,7 @@ export default withAuth(
         return NextResponse.next();
       }
     }
-    
+
     if (!isAuthenticated && !isPublicRoute) {
       // Redirect to login if trying to access protected route without authentication
       console.log('Redirecting unauthenticated user to login');
@@ -66,15 +70,15 @@ export default withAuth(
 
     // Extract chapterSlug from URL for any chapter-specific routes
     const chapterRouteRegex = /^\/([a-zA-Z0-9-]+)\/(admin|portal|join|pending)/;
-    
+
     let chapterSlugFromUrl: string | null = null;
-    
+
     // Check if path matches a chapter-specific route pattern (e.g., /theta-iota/admin)
     const chapterRouteMatch = pathname.match(chapterRouteRegex);
     if (chapterRouteMatch && chapterRouteMatch[1]) {
       chapterSlugFromUrl = chapterRouteMatch[1];
     }
-    
+
     // If we have a chapter slug in the URL, verify user belongs to that chapter
     // All membership data should be included in the JWT token
     if (chapterSlugFromUrl && isAuthenticated && token.memberships) {
@@ -83,7 +87,7 @@ export default withAuth(
       const hasAccess = token.memberships.some(
         (m: { chapterSlug: string }) => m.chapterSlug === chapterSlugFromUrl
       );
-      
+
       if (!hasAccess) {
         // If user doesn't have access to this specific chapter, redirect to their first available chapter
         if (token.memberships.length > 0) {
@@ -99,7 +103,7 @@ export default withAuth(
         }
       }
     }
-    
+
     // Special handling for chapter routes when user has no memberships but might be in OAuth flow
     if (chapterSlugFromUrl && isAuthenticated && (!token.memberships || token.memberships.length === 0)) {
       // If this might be part of an OAuth flow or recent session update, allow it to proceed
@@ -130,14 +134,14 @@ export const config = {
     "/:chapterSlug/portal/:path*",
     "/:chapterSlug/join/:path*", // Join workflow is protected
     "/:chapterSlug/pending/:path*", // Pending approval workflow is protected
-    
+
     // Check auth pages to prevent logged-in users from going there
     "/login",
     "/signup",
     "/social-signup",
     "/settings/:path*",
-    
-    // Skip authentication check for API routes, public routes, and static files
-    "/((?!forgot-password|reset-password|api/auth|api/chapters/check-slug|api/contact|_next/static|_next/image|images|favicon.ico|[a-zA-Z0-9-]+$).*)",
+
+    // Skip authentication check for API routes, public routes, docs routes, and static files
+    "/((?!forgot-password|reset-password|docs|api/auth|api/chapters/check-slug|api/contact|_next/static|_next/image|images|favicon.ico|[a-zA-Z0-9-]+$).*)",
   ],
 };

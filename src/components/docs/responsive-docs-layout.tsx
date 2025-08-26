@@ -23,11 +23,19 @@ export function ResponsiveDocsLayout({
 }: ResponsiveDocsLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const pathname = usePathname();
   const toc = useTableOfContents();
 
+  // Hydration-safe client detection
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   // Detect mobile viewport
   useEffect(() => {
+    if (!isClient) return;
+    
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };
@@ -35,7 +43,7 @@ export function ResponsiveDocsLayout({
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  }, [isClient]);
 
   // Close sidebar when route changes
   useEffect(() => {
@@ -71,10 +79,81 @@ export function ResponsiveDocsLayout({
     '7xl': 'max-w-7xl'
   };
 
+  // Show loading state during hydration to prevent mismatch
+  if (!isClient) {
+    return (
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-center">
+          <div className="container flex h-14 items-center">
+            {/* Logo */}
+            <div className="mr-6 flex items-center space-x-2">
+              <span className="font-bold text-xl">GreekDash</span>
+              <span className="text-muted-foreground">Docs</span>
+            </div>
+
+            {/* Search - desktop version during SSR */}
+            <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+              <div className="w-full flex-1 md:w-auto md:flex-none">
+                <MobileOptimizedSearch showResults={false} />
+              </div>
+              
+              {/* CTA Button */}
+              <button className="hidden md:inline-flex h-9 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md text-sm font-medium transition-colors">
+                Start Free Trial
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <div className="flex">
+          {/* Desktop Sidebar - always show during SSR */}
+          <aside className="fixed inset-y-0 left-0 z-30 w-64 transform bg-background border-r transition-transform duration-300 ease-in-out translate-x-0 top-14">
+            <div className="h-full">
+              <DocsSidebar />
+            </div>
+          </aside>
+
+          {/* Main content */}
+          <main className="flex-1 min-w-0 ml-64">
+            <div className="px-4 py-6 lg:px-8">
+              <div className={cn('mx-auto', maxWidthClasses[maxWidth])}>
+                {/* Breadcrumbs */}
+                <DocsBreadcrumbs />
+
+                {/* Content Layout */}
+                <div className={cn(
+                  'grid gap-8',
+                  showTableOfContents && toc.length > 0
+                    ? 'lg:grid-cols-[1fr_250px]'
+                    : 'grid-cols-1'
+                )}>
+                  {/* Main Content */}
+                  <div className="min-w-0">
+                    {children}
+                  </div>
+
+                  {/* Desktop TOC */}
+                  {showTableOfContents && toc.length > 0 && (
+                    <aside className="hidden lg:block">
+                      <div className="sticky top-24">
+                        <TableOfContents items={toc} />
+                      </div>
+                    </aside>
+                  )}
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-center">
         <div className="container flex h-14 items-center">
           {/* Mobile menu button */}
           <MobileNavigationToggle
@@ -196,9 +275,9 @@ export function ResponsiveDocsPage({
 }) {
   return (
     <ResponsiveDocsLayout showTableOfContents={showTableOfContents}>
-      <div className={cn('space-y-6', className)}>
+      <div className={cn('space-y-6 mx-auto max-w-4xl', className)}>
         {/* Page Header */}
-        <div className="space-y-2">
+        <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold tracking-tight lg:text-4xl">
             {title}
           </h1>
@@ -210,7 +289,7 @@ export function ResponsiveDocsPage({
         </div>
         
         {/* Page Content */}
-        <div className="prose prose-gray dark:prose-invert max-w-none">
+        <div className="prose prose-gray dark:prose-invert max-w-none mx-auto">
           {children}
         </div>
       </div>
@@ -219,12 +298,19 @@ export function ResponsiveDocsPage({
 }
 
 /**
- * Hook to detect mobile viewport
+ * Hook to detect mobile viewport (hydration-safe)
  */
 export function useIsMobile() {
   const [isMobile, setIsMobile] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
+    
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };
@@ -232,7 +318,7 @@ export function useIsMobile() {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  }, [isClient]);
 
-  return isMobile;
+  return isClient ? isMobile : false;
 }
