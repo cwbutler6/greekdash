@@ -134,7 +134,42 @@ export function StepGuide({
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Step Navigation Sidebar */}
         <div className="lg:col-span-1">
-          <Card>
+          {/* Mobile Step Navigation - Horizontal scroll */}
+          <div className="lg:hidden mb-6">
+            <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-hide">
+              {steps.map((step, index) => (
+                <button
+                  key={step.id}
+                  onClick={() => handleStepClick(index)}
+                  className={cn(
+                    'flex-shrink-0 flex items-center gap-2 px-4 py-3 rounded-full text-sm font-medium transition-colors min-h-[48px] min-w-[120px]', // Larger touch targets
+                    'hover:bg-muted/50',
+                    currentStep === index && 'bg-primary text-primary-foreground',
+                    completedSteps.includes(step.id) && currentStep !== index && 'bg-green-50 text-green-700'
+                  )}
+                >
+                  {completedSteps.includes(step.id) ? (
+                    <CheckCircle className="h-4 w-4 text-green-600" />
+                  ) : (
+                    <div className={cn(
+                      'w-5 h-5 rounded-full border-2 flex items-center justify-center text-xs',
+                      currentStep === index 
+                        ? 'border-primary-foreground bg-primary-foreground text-primary' 
+                        : 'border-current'
+                    )}>
+                      {index + 1}
+                    </div>
+                  )}
+                  <span className="whitespace-nowrap truncate max-w-[80px]">
+                    {step.title}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Desktop Step Navigation */}
+          <Card className="hidden lg:block">
             <CardHeader>
               <CardTitle className="text-lg">Steps</CardTitle>
             </CardHeader>
@@ -251,6 +286,7 @@ export function StepGuide({
               variant="outline"
               onClick={handlePreviousStep}
               disabled={currentStep === 0}
+              className="min-h-[44px] px-6" // Larger touch target
             >
               <ChevronLeft className="h-4 w-4 mr-2" />
               Previous
@@ -258,10 +294,26 @@ export function StepGuide({
             <Button
               onClick={handleNextStep}
               disabled={currentStep === steps.length - 1}
+              className="min-h-[44px] px-6" // Larger touch target
             >
               Next
               <ChevronRight className="h-4 w-4 ml-2" />
             </Button>
+          </div>
+
+          {/* Mobile Progress Indicator */}
+          <div className="lg:hidden mt-6">
+            <div className="flex items-center justify-center gap-2">
+              <span className="text-sm text-muted-foreground">
+                Step {currentStep + 1} of {steps.length}
+              </span>
+            </div>
+            <div className="mt-2 w-full bg-muted rounded-full h-2">
+              <div 
+                className="bg-primary h-2 rounded-full transition-all duration-300"
+                style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
+              />
+            </div>
           </div>
         </div>
       </div>
