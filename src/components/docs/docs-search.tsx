@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { searchDocumentation, generateSearchIndex, trackSearchQuery, type SearchResult } from '@/lib/docs-search';
+import { SearchErrorBoundary } from './error-boundaries/search-error-boundary';
 
 interface DocsSearchProps {
   placeholder?: string;
@@ -172,8 +173,9 @@ export function DocsSearch({
   }, [selectedIndex]);
 
   return (
-    <div className="relative">
-      <form onSubmit={handleSubmit} className="relative">
+    <SearchErrorBoundary query={query}>
+      <div className="relative">
+        <form onSubmit={handleSubmit} className="relative">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
           ref={inputRef}
@@ -274,6 +276,7 @@ export function DocsSearch({
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </SearchErrorBoundary>
   );
 }

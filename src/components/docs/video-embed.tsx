@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { trackChapterEvent } from '@/lib/client-analytics';
 import { trackVideoEvent, trackVideoStart, trackVideoComplete, trackTranscriptInteraction, trackRelatedLinkClick } from '@/lib/video-analytics';
+import { VideoErrorBoundary } from './error-boundaries/video-error-boundary';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -219,9 +220,14 @@ export function VideoEmbed({
   }
 
   return (
-    <div className={cn('space-y-4', className)}>
-      {/* Video Player */}
-      <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
+    <VideoErrorBoundary 
+      videoId={videoIdClean} 
+      videoTitle={title}
+      showAlternatives={showRelatedContent}
+    >
+      <div className={cn('space-y-4', className)}>
+        {/* Video Player */}
+        <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
         {!isLoaded ? (
           <>
             {/* Video Thumbnail */}
@@ -297,7 +303,8 @@ export function VideoEmbed({
           )}
         </div>
       )}
-    </div>
+      </div>
+    </VideoErrorBoundary>
   );
 }
 

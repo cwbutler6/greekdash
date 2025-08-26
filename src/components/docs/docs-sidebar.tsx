@@ -31,6 +31,7 @@ import {
   isNavigationItemActive, 
   shouldExpandNavigationItem 
 } from '@/lib/docs-navigation';
+import { NavigationErrorBoundary } from './error-boundaries/navigation-error-boundary';
 
 interface DocsSidebarProps {
   onItemClick?: () => void;
@@ -297,8 +298,9 @@ export function DocsSidebar({ onItemClick }: DocsSidebarProps) {
   };
 
   return (
-    <nav className="h-full overflow-y-auto p-4">
-      <div className="space-y-6">
+    <NavigationErrorBoundary navigationContext="sidebar">
+      <nav className="h-full overflow-y-auto p-4">
+        <div className="space-y-6">
         {navigationSections.map((section) => (
           <div key={section.title}>
             <h3 className="mb-2 flex items-center gap-2 px-3 text-sm font-semibold text-muted-foreground">
@@ -310,7 +312,8 @@ export function DocsSidebar({ onItemClick }: DocsSidebarProps) {
             </div>
           </div>
         ))}
-      </div>
-    </nav>
+        </div>
+      </nav>
+    </NavigationErrorBoundary>
   );
 }
