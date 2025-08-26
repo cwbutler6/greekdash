@@ -79,76 +79,15 @@ export function ResponsiveDocsLayout({
     '7xl': 'max-w-7xl'
   };
 
-  // Show loading state during hydration to prevent mismatch
-  if (!isClient) {
-    return (
-      <div className="min-h-screen bg-background">
-        {/* Header */}
-        <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-center">
-          <div className="container flex h-14 items-center">
-            {/* Logo */}
-            <div className="mr-6 flex items-center space-x-2">
-              <span className="font-bold text-xl">GreekDash</span>
-              <span className="text-muted-foreground">Docs</span>
-            </div>
-
-            {/* Search - desktop version during SSR */}
-            <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-              <div className="w-full flex-1 md:w-auto md:flex-none">
-                <MobileOptimizedSearch showResults={false} />
-              </div>
-              
-              {/* CTA Button */}
-              <button className="hidden md:inline-flex h-9 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md text-sm font-medium transition-colors">
-                Start Free Trial
-              </button>
-            </div>
-          </div>
-        </header>
-
-        <div className="flex">
-          {/* Desktop Sidebar - always show during SSR */}
-          <aside className="fixed inset-y-0 left-0 z-30 w-64 transform bg-background border-r transition-transform duration-300 ease-in-out translate-x-0 top-14">
-            <div className="h-full">
-              <DocsSidebar />
-            </div>
-          </aside>
-
-          {/* Main content */}
-          <main className="flex-1 min-w-0 ml-64">
-            <div className="px-4 py-6 lg:px-8">
-              <div className={cn('mx-auto', maxWidthClasses[maxWidth])}>
-                {/* Breadcrumbs */}
-                <DocsBreadcrumbs />
-
-                {/* Content Layout */}
-                <div className={cn(
-                  'grid gap-8',
-                  showTableOfContents && toc.length > 0
-                    ? 'lg:grid-cols-[1fr_250px]'
-                    : 'grid-cols-1'
-                )}>
-                  {/* Main Content */}
-                  <div className="min-w-0">
-                    {children}
-                  </div>
-
-                  {/* Desktop TOC */}
-                  {showTableOfContents && toc.length > 0 && (
-                    <aside className="hidden lg:block">
-                      <div className="sticky top-24">
-                        <TableOfContents items={toc} />
-                      </div>
-                    </aside>
-                  )}
-                </div>
-              </div>
-            </div>
-          </main>
-        </div>
-      </div>
-    );
-  }
+  // Use suppressHydrationWarning for the dynamic parts
+  const showMobileToggle = isClient && isMobile;
+  const showDesktopSidebar = isClient && !isMobile;
+  const showMobileNav = isClient && isMobile;
+  const showMobileSearch = isClient && isMobile;
+  const showMobileTOC = isClient && isMobile && showTableOfContents && toc.length > 0;
+  const showDesktopTOC = isClient && showTableOfContents && !isMobile && toc.length > 0;
+  const showFloatingTOC = isClient && isMobile && showTableOfContents && toc.length > 0;
+  const useDesktopLayout = isClient && !isMobile;
 
   return (
     <div className="min-h-screen bg-background">
@@ -156,11 +95,15 @@ export function ResponsiveDocsLayout({
       <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 flex items-center justify-center">
         <div className="container flex h-14 items-center">
           {/* Mobile menu button */}
-          <MobileNavigationToggle
-            isOpen={sidebarOpen}
-            onToggle={handleSidebarToggle}
-            className="mr-2"
-          />
+          <div suppressHydrationWarning>
+            {showMobileToggle && (
+              <MobileNavigationToggle
+                isOpen={sidebarOpen}
+                onToggle={handleSidebarToggle}
+                className="mr-2"
+              />
+            )}
+          </div>
 
           {/* Logo */}
           <div className="mr-6 flex items-center space-x-2">
@@ -170,8 +113,8 @@ export function ResponsiveDocsLayout({
 
           {/* Search */}
           <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
-            <div className="w-full flex-1 md:w-auto md:flex-none">
-              {isMobile ? (
+            <div className="w-full flex-1 md:w-auto md:flex-none" suppressHydrationWarning>
+              {showMobileSearch ? (
                 <MobileOptimizedSearch 
                   showResults={false} 
                   isMobile={true}
@@ -191,52 +134,58 @@ export function ResponsiveDocsLayout({
 
       <div className="flex">
         {/* Desktop Sidebar */}
-        {!isMobile && (
-          <aside className="fixed inset-y-0 left-0 z-30 w-64 transform bg-background border-r transition-transform duration-300 ease-in-out translate-x-0 top-14">
-            <div className="h-full">
-              <DocsSidebar />
-            </div>
-          </aside>
-        )}
+        <div suppressHydrationWarning>
+          {showDesktopSidebar && (
+            <aside className="fixed inset-y-0 left-0 z-30 w-64 transform bg-background border-r transition-transform duration-300 ease-in-out translate-x-0 top-14">
+              <div className="h-full">
+                <DocsSidebar />
+              </div>
+            </aside>
+          )}
+        </div>
 
         {/* Mobile Navigation */}
-        {isMobile && (
-          <MobileNavigation
-            isOpen={sidebarOpen}
-            onToggle={handleSidebarToggle}
-            onClose={handleSidebarClose}
-          />
-        )}
+        <div suppressHydrationWarning>
+          {showMobileNav && (
+            <MobileNavigation
+              isOpen={sidebarOpen}
+              onToggle={handleSidebarToggle}
+              onClose={handleSidebarClose}
+            />
+          )}
+        </div>
 
         {/* Main content */}
         <main className={cn(
           'flex-1 min-w-0',
-          !isMobile && 'ml-64' // Account for desktop sidebar
-        )}>
+          useDesktopLayout && 'ml-64' // Account for desktop sidebar
+        )} suppressHydrationWarning>
           <div className="px-4 py-6 lg:px-8">
             <div className={cn('mx-auto', maxWidthClasses[maxWidth])}>
               {/* Breadcrumbs */}
               <DocsBreadcrumbs />
 
               {/* Mobile TOC */}
-              {isMobile && showTableOfContents && toc.length > 0 && (
-                <MobileTableOfContents items={toc} />
-              )}
+              <div suppressHydrationWarning>
+                {showMobileTOC && (
+                  <MobileTableOfContents items={toc} />
+                )}
+              </div>
 
               {/* Content Layout */}
               <div className={cn(
                 'grid gap-8',
-                showTableOfContents && !isMobile && toc.length > 0
+                showDesktopTOC
                   ? 'lg:grid-cols-[1fr_250px]'
                   : 'grid-cols-1'
-              )}>
+              )} suppressHydrationWarning>
                 {/* Main Content */}
                 <div className="min-w-0">
                   {children}
                 </div>
 
                 {/* Desktop TOC */}
-                {showTableOfContents && !isMobile && toc.length > 0 && (
+                {showDesktopTOC && (
                   <aside className="hidden lg:block">
                     <div className="sticky top-24">
                       <TableOfContents items={toc} />
@@ -250,9 +199,11 @@ export function ResponsiveDocsLayout({
       </div>
 
       {/* Floating TOC for mobile */}
-      {isMobile && showTableOfContents && toc.length > 0 && (
-        <FloatingTOC items={toc} />
-      )}
+      <div suppressHydrationWarning>
+        {showFloatingTOC && (
+          <FloatingTOC items={toc} />
+        )}
+      </div>
     </div>
   );
 }
