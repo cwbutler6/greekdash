@@ -119,9 +119,11 @@ export const featuresData: FeatureItem[] = [
 ];
 
 export const comparisonFeatures = [
+  // Core Limits
   {
     name: 'Active Members',
     description: 'Maximum number of active members',
+    category: 'members',
     plans: {
       FREE: 25,
       BASIC: 100,
@@ -132,6 +134,7 @@ export const comparisonFeatures = [
   {
     name: 'File Storage',
     description: 'Total file storage capacity',
+    category: 'members',
     plans: {
       FREE: '1 GB',
       BASIC: '10 GB',
@@ -139,8 +142,12 @@ export const comparisonFeatures = [
       ENTERPRISE: 'Unlimited'
     }
   },
+  
+  // Member Management
   {
     name: 'Member Directory',
+    description: 'Comprehensive member profiles and directory',
+    category: 'members',
     plans: {
       FREE: true,
       BASIC: true,
@@ -149,7 +156,9 @@ export const comparisonFeatures = [
     }
   },
   {
-    name: 'Event Management',
+    name: 'Member Invitations',
+    description: 'Send and manage member invitations',
+    category: 'members',
     plans: {
       FREE: true,
       BASIC: true,
@@ -158,8 +167,9 @@ export const comparisonFeatures = [
     }
   },
   {
-    name: 'Basic Communication',
-    description: 'Email notifications and basic messaging',
+    name: 'Role Management',
+    description: 'Assign and manage member roles and permissions',
+    category: 'members',
     plans: {
       FREE: true,
       BASIC: true,
@@ -168,9 +178,81 @@ export const comparisonFeatures = [
     }
   },
   {
-    name: 'Dues Collection',
+    name: 'Member Approval Workflow',
+    description: 'Structured approval process for new members',
+    category: 'members',
+    plans: {
+      FREE: true,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Lineage Tracking',
+    description: 'Track member relationships and lineage',
+    category: 'members',
     plans: {
       FREE: false,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  
+  // Event Management
+  {
+    name: 'Event Creation',
+    description: 'Create and manage chapter events',
+    category: 'events',
+    plans: {
+      FREE: true,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'RSVP Management',
+    description: 'Track event attendance and RSVPs',
+    category: 'events',
+    plans: {
+      FREE: true,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Event Analytics',
+    description: 'Detailed event attendance and engagement metrics',
+    category: 'events',
+    plans: {
+      FREE: false,
+      BASIC: false,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Recurring Events',
+    description: 'Set up recurring events and series',
+    category: 'events',
+    plans: {
+      FREE: false,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  
+  // Communication
+  {
+    name: 'Email Notifications',
+    description: 'Basic email notifications and messaging',
+    category: 'communication',
+    plans: {
+      FREE: true,
       BASIC: true,
       PRO: true,
       ENTERPRISE: true
@@ -178,6 +260,8 @@ export const comparisonFeatures = [
   },
   {
     name: 'SMS Messaging',
+    description: 'Send SMS messages to members',
+    category: 'communication',
     plans: {
       FREE: false,
       BASIC: true,
@@ -186,7 +270,66 @@ export const comparisonFeatures = [
     }
   },
   {
-    name: 'Advanced Analytics',
+    name: 'Broadcast Campaigns',
+    description: 'Send targeted messages to member groups',
+    category: 'communication',
+    plans: {
+      FREE: false,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Communication Analytics',
+    description: 'Track message delivery and engagement rates',
+    category: 'communication',
+    plans: {
+      FREE: false,
+      BASIC: false,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  
+  // Financial Management
+  {
+    name: 'Dues Collection',
+    description: 'Automated dues collection and payment processing',
+    category: 'finance',
+    plans: {
+      FREE: false,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Expense Tracking',
+    description: 'Track and categorize chapter expenses',
+    category: 'finance',
+    plans: {
+      FREE: false,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Financial Reports',
+    description: 'Generate financial statements and reports',
+    category: 'finance',
+    plans: {
+      FREE: false,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Budget Management',
+    description: 'Create and track chapter budgets',
+    category: 'finance',
     plans: {
       FREE: false,
       BASIC: false,
@@ -196,6 +339,32 @@ export const comparisonFeatures = [
   },
   {
     name: 'Treasury Management',
+    description: 'Advanced treasury and investment tracking',
+    category: 'finance',
+    plans: {
+      FREE: false,
+      BASIC: false,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  
+  // Analytics & Reports
+  {
+    name: 'Basic Analytics',
+    description: 'Basic member and event analytics',
+    category: 'analytics',
+    plans: {
+      FREE: true,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Advanced Analytics',
+    description: 'Comprehensive analytics and insights',
+    category: 'analytics',
     plans: {
       FREE: false,
       BASIC: false,
@@ -204,7 +373,79 @@ export const comparisonFeatures = [
     }
   },
   {
+    name: 'Custom Reports',
+    description: 'Create custom reports and dashboards',
+    category: 'analytics',
+    plans: {
+      FREE: false,
+      BASIC: false,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Data Export',
+    description: 'Export data in various formats',
+    category: 'analytics',
+    plans: {
+      FREE: false,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  
+  // Security & Compliance
+  {
+    name: 'Basic Security',
+    description: 'Standard security features and encryption',
+    category: 'security',
+    plans: {
+      FREE: true,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Audit Logging',
+    description: 'Comprehensive audit trails and logging',
+    category: 'security',
+    plans: {
+      FREE: false,
+      BASIC: false,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Advanced Access Control',
+    description: 'Granular permissions and access control',
+    category: 'security',
+    plans: {
+      FREE: false,
+      BASIC: false,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Compliance Reporting',
+    description: 'Generate compliance and governance reports',
+    category: 'security',
+    plans: {
+      FREE: false,
+      BASIC: false,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  
+  // Customization & Branding
+  {
     name: 'Custom Branding',
+    description: 'Custom colors, logos, and chapter branding',
+    category: 'customization',
     plans: {
       FREE: false,
       BASIC: true,
@@ -213,7 +454,9 @@ export const comparisonFeatures = [
     }
   },
   {
-    name: 'API Access',
+    name: 'Custom Domain',
+    description: 'Use your own custom domain',
+    category: 'customization',
     plans: {
       FREE: false,
       BASIC: false,
@@ -221,8 +464,34 @@ export const comparisonFeatures = [
       ENTERPRISE: true
     }
   },
+  
+  // Support & Services
+  {
+    name: 'Community Support',
+    description: 'Access to community forums and resources',
+    category: 'support',
+    plans: {
+      FREE: true,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'Email Support',
+    description: 'Email support with response within 24 hours',
+    category: 'support',
+    plans: {
+      FREE: false,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
   {
     name: 'Priority Support',
+    description: 'Priority support with faster response times',
+    category: 'support',
     plans: {
       FREE: false,
       BASIC: false,
@@ -232,6 +501,8 @@ export const comparisonFeatures = [
   },
   {
     name: 'Dedicated Account Manager',
+    description: 'Personal account manager for your chapter',
+    category: 'support',
     plans: {
       FREE: false,
       BASIC: false,
@@ -239,8 +510,34 @@ export const comparisonFeatures = [
       ENTERPRISE: true
     }
   },
+  
+  // Integrations & API
+  {
+    name: 'Basic Integrations',
+    description: 'Connect with popular third-party services',
+    category: 'integrations',
+    plans: {
+      FREE: true,
+      BASIC: true,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
+  {
+    name: 'API Access',
+    description: 'Full API access for custom integrations',
+    category: 'integrations',
+    plans: {
+      FREE: false,
+      BASIC: false,
+      PRO: true,
+      ENTERPRISE: true
+    }
+  },
   {
     name: 'Custom Integrations',
+    description: 'Custom-built integrations for your needs',
+    category: 'integrations',
     plans: {
       FREE: false,
       BASIC: false,

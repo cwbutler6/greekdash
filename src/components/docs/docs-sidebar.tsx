@@ -51,6 +51,42 @@ const navigationSections: NavigationSection[] = [
     ],
   },
   {
+    title: 'Platform Overview',
+    icon: <Zap className="h-4 w-4" />,
+    items: [
+      {
+        title: 'Overview',
+        href: '/docs/overview',
+      },
+      {
+        title: 'Feature Comparison',
+        href: '/docs/overview/features',
+        icon: <BarChart3 className="h-4 w-4" />,
+      },
+      {
+        title: 'Pricing Plans',
+        href: '/docs/overview/pricing',
+        icon: <DollarSign className="h-4 w-4" />,
+      },
+      {
+        title: 'ROI Calculator',
+        href: '/docs/overview/roi-calculator',
+        icon: <BarChart3 className="h-4 w-4" />,
+        badge: 'New',
+      },
+      {
+        title: 'Success Stories',
+        href: '/docs/overview/success-stories',
+        icon: <Users className="h-4 w-4" />,
+      },
+      {
+        title: 'Demo Videos',
+        href: '/docs/overview/demo-videos',
+        icon: <FileText className="h-4 w-4" />,
+      },
+    ],
+  },
+  {
     title: 'Admin Guide',
     icon: <Settings className="h-4 w-4" />,
     items: [

@@ -117,6 +117,7 @@ export function getBreadcrumbsFromPath(pathname: string): Array<{ title: string;
   const titleMap: Record<string, string> = {
     'docs': 'Documentation',
     'getting-started': 'Getting Started',
+    'overview': 'Platform Overview',
     'admin-guide': 'Admin Guide',
     'members': 'Members',
     'management': 'Management',
@@ -139,6 +140,10 @@ export function getBreadcrumbsFromPath(pathname: string): Array<{ title: string;
     'communication': 'Communication',
     'analytics': 'Analytics',
     'search': 'Search Results',
+    'pricing': 'Pricing Plans',
+    'roi-calculator': 'ROI Calculator',
+    'success-stories': 'Success Stories',
+    'demo-videos': 'Demo Videos',
   };
   
   // Always start with docs home
